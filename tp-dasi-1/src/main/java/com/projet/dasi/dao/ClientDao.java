@@ -25,17 +25,4 @@ public class ClientDao {
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Client.class);
         return query.getResultList();
     }
-    public Client authentifier(String mail, String mdp) {
-        String s = "SELECT c FROM Client c WHERE c.mail = :unMail AND c.motDePasse = :unMotDePasse";
-        TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Client.class);
-        query.setParameter("unMotDePasse", mdp);
-        query.setParameter("unMail", mail);    
-        List<Client> lc = query.getResultList();
-        Client c = null;
-        if (lc.size() > 0) {
-            c = lc.get(0);
-        }
-        return c;
-    }
-
 }
