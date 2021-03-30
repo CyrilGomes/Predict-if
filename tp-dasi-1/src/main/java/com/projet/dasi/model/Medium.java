@@ -77,7 +77,7 @@ public class Medium implements Serializable {
 
     @Override
     public String toString() {
-        return "-> Medium: id=" + id + ", denomination=" + denomination + ", presentation=" + presentation;
+        return "id=" + id + ", denomination=" + denomination + ", presentation=" + presentation;
     }
    
 }

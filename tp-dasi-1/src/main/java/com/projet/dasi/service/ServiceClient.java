@@ -5,6 +5,7 @@ import com.projet.dasi.dao.ClientDao;
 import com.projet.dasi.dao.JpaUtil;
 import com.projet.dasi.dao.ProfilAstralDao;
 import com.projet.dasi.model.Client;
+import com.projet.dasi.model.Client;
 import com.projet.dasi.model.ProfilAstral;
 import java.util.List;
 
