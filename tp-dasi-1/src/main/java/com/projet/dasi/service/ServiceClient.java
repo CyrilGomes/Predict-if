@@ -81,23 +81,4 @@ public class ServiceClient {
         return lc;
         
     }
-    
-    /* AUTHENTIFIER UN CLIENT */
-    public Client authentifier(String mail, String mdp) {
-        
-        Client c;
-        try {
-            JpaUtil.creerContextePersistance();
-            c = clientDao.authentifier(mail, mdp);      
-        }
-        catch (Exception ex) {
-            ex.printStackTrace(); 
-            c = null;
-        }
-        finally {
-            JpaUtil.fermerContextePersistance();
-        }
-        return c;
-        
-    }
 }
