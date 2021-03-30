@@ -1,6 +1,7 @@
 package com.projet.dasi.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,30 +19,27 @@ public class Client implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    private String nom;
-    
-    private String prenom;
-    
     @Column(unique=true)
     private String mail;
-    
     private String motDePasse;
-    
+    private String nom;
+    private String prenom;
     private String telephone;
-    
     private String codePostal;
+    private Date dateNaissance;
     
     @OneToOne
     private ProfilAstral profilAstral;
     
     /* Constructors */
-    public Client(String nom, String prenom, String mail, String motDePasse, String telephone, String codePostal) {
+    public Client(String nom, String prenom, String mail, String motDePasse, String telephone, String codePostal, Date dateNaissance) {
         this.nom = nom;
         this.prenom = prenom;
         this.mail = mail;
         this.motDePasse = motDePasse;
         this.telephone = telephone;
         this.codePostal = codePostal;
+        this.dateNaissance = dateNaissance;
         
     }
     public Client() {
@@ -105,6 +103,14 @@ public class Client implements Serializable {
 
     public void setProfilAstral(ProfilAstral profilAstral) {
         this.profilAstral = profilAstral;
+    }
+
+    public Date getDateNaissance() {
+        return dateNaissance;
+    }
+
+    public void setDateNaissance(Date dateNaissance) {
+        this.dateNaissance = dateNaissance;
     }
     
     /* Overrided methods */

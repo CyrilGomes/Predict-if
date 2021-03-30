@@ -8,14 +8,14 @@ public class ClientDao {
     
     public ClientDao() {}
     
-    public void creer(Client employe) {
-        JpaUtil.obtenirContextePersistance().persist(employe);
+    public void creer(Client client) {
+        JpaUtil.obtenirContextePersistance().persist(client);
     }
-    public void supprimer(Client employe) {
-        JpaUtil.obtenirContextePersistance().remove(employe);
+    public void supprimer(Client client) {
+        JpaUtil.obtenirContextePersistance().remove(client);
     }
-    public Client modifier(Client employe) {
-        return JpaUtil.obtenirContextePersistance().merge(employe);
+    public Client modifier(Client client) {
+        return JpaUtil.obtenirContextePersistance().merge(client);
     }
     public Client chercherParId(Long id) {
         return JpaUtil.obtenirContextePersistance().find(Client.class, id);

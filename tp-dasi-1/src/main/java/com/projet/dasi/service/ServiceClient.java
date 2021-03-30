@@ -20,7 +20,7 @@ public class ServiceClient {
             JpaUtil.creerContextePersistance();
             JpaUtil.ouvrirTransaction();
             clientDao.creer(c);
-            JpaUtil.validerTransaction();            
+            JpaUtil.validerTransaction();
         }
         catch (Exception ex) {
             JpaUtil.annulerTransaction();

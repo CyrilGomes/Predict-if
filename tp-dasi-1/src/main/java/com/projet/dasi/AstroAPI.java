@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import com.projet.dasi.model.ProfilAstral;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
@@ -38,7 +39,7 @@ import org.apache.http.message.BasicNameValuePair;
    <version>4.5.7</version>
 </dependency>
  */
-public class AstroTest {
+public class AstroAPI {
 
     final static String MA_CLE_ASTRO_API = "ASTRO-02-M0lGLURBU0ktQVNUUk8tQjAy";
 
@@ -49,17 +50,11 @@ public class AstroTest {
             = "https://servif-cocktail.insa-lyon.fr/WebDataGenerator/Astro";
 
     /*
-     * Constructeur
-     */
-    public AstroTest() {
-    }
-
-    /*
      * Exemple de Méthode pour appeler le Service Web Profil
      */
-    public List<String> getProfil(String prenom, Date dateNaissance) throws IOException {
+    public ProfilAstral getProfil(String prenom, Date dateNaissance) throws IOException {
 
-        ArrayList<String> result = new ArrayList<>();
+        //ArrayList<String> result = new ArrayList<>();
 
         JsonObject response = this.post(
                 ASTRO_API_URL,
@@ -70,13 +65,15 @@ public class AstroTest {
         );
 
         JsonObject profil = response.get("profil").getAsJsonObject();
+        
+        String signeAstro = profil.get("signe-zodiaque").getAsString();
+        String signeChinois = profil.get("signe-chinois").getAsString();
+        String couleur = profil.get("couleur").getAsString();
+        String animal = profil.get("animal").getAsString();
+        
+        ProfilAstral profilAstral = new ProfilAstral(signeAstro, signeChinois, couleur, animal);
 
-        result.add(profil.get("signe-zodiaque").getAsString());
-        result.add(profil.get("signe-chinois").getAsString());
-        result.add(profil.get("couleur").getAsString());
-        result.add(profil.get("animal").getAsString());
-
-        return result;
+        return profilAstral;
     }
 
     /*
