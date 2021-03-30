@@ -53,4 +53,8 @@ public class ProfilAstral implements Serializable {
     public String getAnimalTotem() {
         return AnimalTotem;
     }
+        @Override
+    public String toString() {
+        return "ProfilAstral{" + "SigneChinois=" + SigneChinois + ", Couleur=" + Couleur + ", SigneAstro=" + SigneAstro + ", AnimalTotem=" + AnimalTotem + '}';
+    }
 }
