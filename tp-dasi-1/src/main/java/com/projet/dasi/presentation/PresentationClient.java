@@ -28,7 +28,7 @@ public class PresentationClient {
 
         final Date dateNaissance;
         try {
-            dateNaissance = AstroAPI.JSON_DATE_FORMAT.parse(Saisie.lireChaine("Date de naissance"));
+            dateNaissance = AstroAPI.DATE_FORMAT.parse(Saisie.lireChaine("Date de naissance"));
 
             AstroAPI astroApi = new AstroAPI();
             final ProfilAstral profil = astroApi.getProfil(prenom, dateNaissance);

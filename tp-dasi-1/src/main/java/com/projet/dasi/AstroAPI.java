@@ -45,6 +45,7 @@ public class AstroAPI {
 
     public static final String ENCODING_UTF8 = "UTF-8";
     public static final SimpleDateFormat JSON_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
     public static final String ASTRO_API_URL
             = "https://servif-cocktail.insa-lyon.fr/WebDataGenerator/Astro";
