@@ -17,7 +17,7 @@ import javax.persistence.RollbackException;
  */
 public class JpaUtil {
 
-    public static final String PERSISTENCE_UNIT_NAME = "com.dtoma.persistenceUnit";
+    public static final String PERSISTENCE_UNIT_NAME = "ProjetDasiPU";
     private static EntityManagerFactory entityManagerFactory = null;
     
     /**
