@@ -160,17 +160,17 @@ public class AstroAPI {
             System.exit(-1);
         }
 
-        AstroTest astroApi = new AstroTest();
+        AstroAPI astroApi = new AstroAPI();
 
         String prenom = "Raphaël";
         Date dateNaissance = JSON_DATE_FORMAT.parse("1976-07-10");
 
-        List<String> profil = astroApi.getProfil(prenom, dateNaissance);
+       ProfilAstral profil = astroApi.getProfil(prenom, dateNaissance);
 
-        String signeZodiaque = profil.get(0);
-        String signeChinois = profil.get(1);
-        String couleur = profil.get(2);
-        String animal = profil.get(3);
+        String signeZodiaque = profil.getSigneAstro();
+        String signeChinois = profil.getSigneChinois();
+        String couleur = profil.getCouleur();
+        String animal = profil.getAnimalTotem();
 
         System.out.println("");
         System.out.println("~<[ Profil ]>~");
