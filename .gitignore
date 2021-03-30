@@ -24,3 +24,4 @@ hs_err_pid*
 /tp-dasi-1/target/
 
 /tp-dasi-1/src/main/resources/META-INF/persistence.xml
+tp-dasi-1/src/main/resources/META-INF/persistence.xml
