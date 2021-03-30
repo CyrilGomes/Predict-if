@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Column;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Client implements Serializable {
@@ -30,6 +31,7 @@ public class Client implements Serializable {
     
     private String codePostal;
     
+    @OneToOne
     private ProfilAstral profilAstral;
     
     /* Constructors */
