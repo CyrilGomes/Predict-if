@@ -1,4 +1,4 @@
-package util;
+package com.projet.dasi;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

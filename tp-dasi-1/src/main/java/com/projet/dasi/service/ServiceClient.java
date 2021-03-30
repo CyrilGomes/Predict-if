@@ -1,8 +1,8 @@
-package com.dtoma.dasi.td1.metier.service;
+package com.projet.dasi.service;
 
-import com.dtoma.dasi.td1.dao.ClientDao;
-import com.dtoma.dasi.td1.dao.JpaUtil;
-import com.dtoma.dasi.td1.metier.modele.Client;
+import com.projet.dasi.dao.ClientDao;
+import com.projet.dasi.dao.JpaUtil;
+import com.projet.dasi.model.Client;
 import java.util.List;
 
 public class ServiceClient {

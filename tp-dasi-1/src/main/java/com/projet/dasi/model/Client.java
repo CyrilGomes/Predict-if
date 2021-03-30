@@ -1,4 +1,4 @@
-package com.dtoma.dasi.td1.metier.modele;
+package com.projet.dasi.model;
 
 import java.io.Serializable;
 import javax.persistence.Entity;

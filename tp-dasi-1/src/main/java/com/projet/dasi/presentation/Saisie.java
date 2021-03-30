@@ -1,4 +1,4 @@
-package com.dtoma.dasi.td1.ihm.console;
+package com.projet.dasi.presentation;
 
 import java.io.BufferedReader;
 import java.io.IOException;

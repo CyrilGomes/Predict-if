@@ -1,8 +1,8 @@
-package com.dtoma.dasi.td1.dao;
+package com.projet.dasi.dao;
 
 import java.util.List;
 import javax.persistence.TypedQuery;
-import com.dtoma.dasi.td1.metier.modele.Client;
+import com.projet.dasi.model.Client;
 
 public class ClientDao {
     
