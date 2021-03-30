@@ -38,7 +38,7 @@ public class Astrologue extends Medium{
     public Astrologue(String presentation, String denomination, String formation, String promotion) {
         this.formation = formation;
         this.promotion = promotion;
-        this(presentation,denomination);
+        super(presentation,denomination);
     }
 
     public String toString() {
