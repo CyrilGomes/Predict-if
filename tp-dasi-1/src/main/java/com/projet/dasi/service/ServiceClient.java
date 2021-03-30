@@ -2,15 +2,18 @@ package com.projet.dasi.service;
 
 import com.projet.dasi.dao.ClientDao;
 import com.projet.dasi.dao.JpaUtil;
+import com.projet.dasi.dao.ProfilAstralDao;
 import com.projet.dasi.model.Client;
 import java.util.List;
 
 public class ServiceClient {
     
     ClientDao clientDao;
+    ProfilAstralDao profilAstralDao;
     
     public ServiceClient() {
         clientDao = new ClientDao();
+        profilAstralDao = new ProfilAstralDao();
     }
     
     /* INSCRIRE UN CLIENT */
@@ -20,6 +23,7 @@ public class ServiceClient {
             JpaUtil.creerContextePersistance();
             JpaUtil.ouvrirTransaction();
             clientDao.creer(c);
+            profilAstralDao.creer(c.getProfilAstral());
             JpaUtil.validerTransaction();
         }
         catch (Exception ex) {
