@@ -28,12 +28,10 @@ public class PresentationClient {
 
         final Date dateNaissance;
         try {
+            AstroAPI.DATE_FORMAT.setLenient(false);
             dateNaissance = AstroAPI.DATE_FORMAT.parse(Saisie.lireChaine("Date de naissance"));
 
-            AstroAPI astroApi = new AstroAPI();
-            final ProfilAstral profil = astroApi.getProfil(prenom, dateNaissance);
-
-            final Client c = new Client(nom, prenom, mail, motDePasse, telephone, codePostal, dateNaissance, profil);
+            final Client c = new Client(nom, prenom, mail, motDePasse, telephone, codePostal, dateNaissance);
 
             final ServiceClient serviceInscription = new ServiceClient();
             Client res = serviceInscription.inscrire(c);
@@ -47,8 +45,6 @@ public class PresentationClient {
             }
         } catch (ParseException e) {
             System.err.println("Mauvais format de date de naissance");
-        } catch (IOException e){
-            System.err.println("Echec de connexion à l'API");
         }
     }
 }

@@ -1,9 +1,11 @@
 package com.projet.dasi.service;
 
+import com.projet.dasi.AstroAPI;
 import com.projet.dasi.dao.ClientDao;
 import com.projet.dasi.dao.JpaUtil;
 import com.projet.dasi.dao.ProfilAstralDao;
 import com.projet.dasi.model.Client;
+import com.projet.dasi.model.ProfilAstral;
 import java.util.List;
 
 public class ServiceClient {
@@ -20,6 +22,10 @@ public class ServiceClient {
     public Client inscrire(Client c) {
         
         try {
+            AstroAPI astroApi = new AstroAPI();
+            ProfilAstral profil = astroApi.getProfil(c.getPrenom(), c.getDateNaissance());
+            c.setProfilAstral(profil);
+            
             JpaUtil.creerContextePersistance();
             JpaUtil.ouvrirTransaction();
             clientDao.creer(c);
