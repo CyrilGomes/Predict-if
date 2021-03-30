@@ -10,13 +10,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Column;
 
 /**
  *
  * @author yoann */
 @Entity
-public class ProfilAstral {
+public class ProfilAstral implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -26,11 +25,18 @@ public class ProfilAstral {
     private String SigneAstro;
     private String AnimalTotem;
 
+    public ProfilAstral() {
+    }
+    
     public ProfilAstral(String SigneAstro, String SigneChinois, String Couleur, String AnimalTotem) {
         this.SigneChinois = SigneChinois;
         this.Couleur = Couleur;
         this.SigneAstro = SigneAstro;
         this.AnimalTotem = AnimalTotem;
+    }
+
+    public Long getId() {
+        return id;
     }
     
     public String getSigneChinois() {
