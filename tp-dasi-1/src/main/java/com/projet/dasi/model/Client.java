@@ -33,11 +33,14 @@ public class Client implements Serializable {
     private ProfilAstral profilAstral;
     
     /* Constructors */
-    public Client(String nom, String prenom, String mail, String motDePasse) {
+    public Client(String nom, String prenom, String mail, String motDePasse, String telephone, String codePostal) {
         this.nom = nom;
         this.prenom = prenom;
         this.mail = mail;
         this.motDePasse = motDePasse;
+        this.telephone = telephone;
+        this.codePostal = codePostal;
+        
     }
     public Client() {
     }
