@@ -34,7 +34,7 @@ public class Client implements Serializable {
     private ProfilAstral profilAstral;
     
     /* Constructors */
-    public Client(String nom, String prenom, String mail, String motDePasse, String telephone, String codePostal, Date dateNaissance, ProfilAstral profilAstral) {
+    public Client(String nom, String prenom, String mail, String motDePasse, String telephone, String codePostal, Date dateNaissance) {
         this.nom = nom;
         this.prenom = prenom;
         this.mail = mail;
@@ -42,8 +42,6 @@ public class Client implements Serializable {
         this.telephone = telephone;
         this.codePostal = codePostal;
         this.dateNaissance = dateNaissance;
-        this.profilAstral = profilAstral;
-        
     }
     public Client() {
     }
