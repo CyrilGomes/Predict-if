@@ -5,6 +5,7 @@
  */
 package com.projet.dasi.model;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
@@ -12,6 +13,7 @@ import javax.persistence.Entity;
  * @author picka
  */
 @Entity
+@DiscriminatorValue("Cartomancien")
 public class Cartomancien extends Medium {
     
     Cartomancien(String presentation, String denomination){

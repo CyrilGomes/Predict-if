@@ -1,9 +1,11 @@
 package com.projet.dasi.model;
 
 import java.io.Serializable;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
+@DiscriminatorValue("Spirite")
 public class Spirite extends Medium implements Serializable {
 
     /* Attributes */
