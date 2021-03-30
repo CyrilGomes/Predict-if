@@ -23,7 +23,6 @@ public class ServiceClient {
             JpaUtil.creerContextePersistance();
             JpaUtil.ouvrirTransaction();
             clientDao.creer(c);
-            profilAstralDao.creer(c.getProfilAstral());
             JpaUtil.validerTransaction();
         }
         catch (Exception ex) {
@@ -66,7 +65,7 @@ public class ServiceClient {
             lc = clientDao.chercherTous();        
         }
         catch (Exception ex) {
-            ex.printStackTrace(); 
+            ex.printStackTrace();
             lc = null;
         }
         finally {

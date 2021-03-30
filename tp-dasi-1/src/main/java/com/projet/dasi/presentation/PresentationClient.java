@@ -18,7 +18,9 @@ import java.util.Date;
  * @author creep
  */
 public class PresentationClient {
+    
     public static void requeteCreationClient() {
+        
         final String nom = Saisie.lireChaine("Nom: ");
         final String prenom = Saisie.lireChaine("Prénom: ");
         final String mail = Saisie.lireChaine("Adresse mail: ");
@@ -40,15 +42,17 @@ public class PresentationClient {
 
             if (res != null) {
                 System.out.println("> Succès inscription");
-                System.out.println("-> Client: id=" + c.getId() + ";nom=" + c.getNom() + ";prenom=" + c.getPrenom() + ";mail=" + c.getMail() + ";motDePasse=" + c.getMotDePasse());
+                System.out.println(c.toString());
             } else {
                 System.out.println("> Echec inscription");
-                System.out.println("-> Client: id=" + c.getId() + ";nom=" + c.getNom() + ";prenom=" + c.getPrenom() + ";mail=" + c.getMail() + ";motDePasse=" + c.getMotDePasse());
+                System.out.println(c.toString());
             }
         } catch (ParseException e) {
             System.err.println("Mauvais format de date de naissance");
         } catch (IOException e){
             System.err.println("Echec de connexion à l'API");
         }
+        
     }
+    
 }

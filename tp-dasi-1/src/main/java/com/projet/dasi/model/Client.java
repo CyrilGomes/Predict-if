@@ -2,11 +2,13 @@ package com.projet.dasi.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -28,7 +30,7 @@ public class Client implements Serializable {
     private String codePostal;
     private Date dateNaissance;
     
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch=FetchType.EAGER)
     private ProfilAstral profilAstral;
     
     /* Constructors */
@@ -137,7 +139,21 @@ public class Client implements Serializable {
 
     @Override
     public String toString() {
-        return "persistence.Client[ id=" + id + " ]";
+        String clientToString = "-> Client: id=" + id + ", mail=" + mail + ", motDePasse=" + motDePasse + ", nom=" + nom + ", prenom=" + prenom + ", telephone=" + telephone + ", codePostal=" + codePostal + ", dateNaissance=" + dateNaissance.toString();
+        String profilAstralToString = profilAstral.toString();
+        return clientToString + "\n" + profilAstralToString;
     }
+ 
+    /*
+        private String mail;
+    private String motDePasse;
+    private String nom;
+    private String prenom;
+    private String telephone;
+    private String codePostal;
+    private Date dateNaissance;
     
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch=FetchType.EAGER)
+    private ProfilAstral profilAstral;
+    */
 }
