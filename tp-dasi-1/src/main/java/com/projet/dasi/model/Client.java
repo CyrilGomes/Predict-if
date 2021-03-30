@@ -26,6 +26,12 @@ public class Client implements Serializable {
     
     private String motDePasse;
     
+    private String telephone;
+    
+    private String codePostal;
+    
+    private ProfilAstral profilAstral;
+    
     /* Constructors */
     public Client(String nom, String prenom, String mail, String motDePasse) {
         this.nom = nom;
@@ -71,6 +77,30 @@ public class Client implements Serializable {
     public void setMotDePasse(String motDePasse) { 
         this.motDePasse = motDePasse; 
     }    
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public String getCodePostal() {
+        return codePostal;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public void setCodePostal(String codePostal) {
+        this.codePostal = codePostal;
+    }
+
+    public ProfilAstral getProfilAstral() {
+        return profilAstral;
+    }
+
+    public void setProfilAstral(ProfilAstral profilAstral) {
+        this.profilAstral = profilAstral;
+    }
     
     /* Overrided methods */
     @Override
