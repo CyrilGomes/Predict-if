@@ -17,6 +17,9 @@ import javax.persistence.Column;
  * @author yoann */
 @Entity
 public class ProfilAstral {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     
     private String SigneChinois;
     private String Couleur;
