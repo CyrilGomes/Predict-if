@@ -26,6 +26,9 @@ public class ProfilAstral {
     private String SigneAstro;
     private String AnimalTotem;
 
+    public ProfilAstral() {
+    }
+
     public ProfilAstral(String SigneAstro, String SigneChinois, String Couleur, String AnimalTotem) {
         this.SigneChinois = SigneChinois;
         this.Couleur = Couleur;
