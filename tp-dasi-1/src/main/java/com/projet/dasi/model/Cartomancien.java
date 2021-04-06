@@ -20,10 +20,9 @@ public class Cartomancien extends Medium {
         super(presentation, denomination);
     }
     
-    Cartomancien(){
-        
+    Cartomancien(){        
     }
-
+    
     @Override
     public String toString() {
         return "-> Cartomancien: " + this.toString();

@@ -42,7 +42,8 @@ public class Astrologue extends Medium {
     public void setPromotion(String promotion) {
         this.promotion = promotion;
     }
-    
+
+    @Override
     public String toString() {
         return "-> Astrologue: " + this.toString() + ", formation=" + formation + ", promotion=" + promotion;
     }

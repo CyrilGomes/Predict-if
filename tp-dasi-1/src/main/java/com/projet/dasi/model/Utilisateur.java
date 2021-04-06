@@ -104,7 +104,7 @@ public abstract class Utilisateur implements Serializable {
         this.dateNaissance = dateNaissance;
     }
     
-    /* Overrided methods */
+    /* Overriden methods */
     @Override
     public int hashCode() {
         int hash = 0;
