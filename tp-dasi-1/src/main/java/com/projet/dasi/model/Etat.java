@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.projet.dasi.dao;
+package com.projet.dasi.model;
 
 /**
  *
- * @author DT Mark
+ * @author creep
  */
-class Consultation {
-    
+public enum Etat {
+    EnAttente,
+    EnCours,
+    Termine,
+    Annule
 }

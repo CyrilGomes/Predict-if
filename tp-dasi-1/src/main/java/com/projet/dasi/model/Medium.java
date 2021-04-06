@@ -4,6 +4,8 @@ import java.io.Serializable;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Inheritance;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,17 +25,21 @@ public class Medium implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
     
+    @Enumerated(EnumType.STRING)
+    private Genre genre;
     private String denomination;
     private String presentation;
     
     /* Constructors */
-    public Medium(String denomination, String presentation) {
+    public Medium(String denomination, String presentation, Genre genre) {
         this.denomination = denomination;
         this.presentation = presentation;
+        this.genre = genre;
     }
     public Medium() {
     }
 
+    /* Getters / Setters */
     public String getDenomination() {
         return denomination;
     }
@@ -49,8 +55,15 @@ public class Medium implements Serializable {
     public void setPresentation(String presentation) {
         this.presentation = presentation;
     }
-        
-    /* Getters / Setters */
+
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
+
     public Long getId() {
         return id;
     }

@@ -30,14 +30,18 @@ public class Consultation implements Serializable {
     private Employe employe;
     @ManyToOne
     private Client client;
+    @ManyToOne
+    private Medium medium;
     @Id
     private Long id;
 
     public Consultation() {
     }
-    public Consultation(Employe employe, Client client) {
+    public Consultation(Employe employe, Client client, Medium medium) {
         this.employe = employe;
         this.client = client;
+        this.medium = medium;
+        this.etat = Etat.EnAttente;
     }
 
     public Date getDateDebut() {
@@ -95,5 +99,22 @@ public class Consultation implements Serializable {
     public void setClient(Client client) {
         this.client = client;
     }
+
+    public Medium getMedium() {
+        return medium;
+    }
+
+    public void setMedium(Medium medium) {
+        this.medium = medium;
+    }
+
+    @Override
+    public String toString() {
+        return "Consultation{" + "etat=" + etat + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", commentaire=" + commentaire + ", employe=" + employe + ", client=" + client + ", medium=" + medium + ", id=" + id + '}';
+    }
+
+
+    
+
     
 }

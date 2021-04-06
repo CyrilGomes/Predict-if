@@ -1,0 +1,51 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.projet.dasi.model;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+/**
+ *
+ * @author picka
+ */
+@Entity
+@DiscriminatorValue("Astrologue")
+public class Astrologue extends Medium {
+    
+    private String formation;
+    private String  promotion;
+    
+    public Astrologue() {
+    }
+    public Astrologue(String presentation, String denomination, Genre genre, String formation, String promotion) {
+        super(presentation, denomination, genre);
+        this.formation = formation;
+        this.promotion = promotion;
+    }
+
+    public String getFormation() {
+        return formation;
+    }
+
+    public void setFormation(String formation) {
+        this.formation = formation;
+    }
+
+    public String getPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(String promotion) {
+        this.promotion = promotion;
+    }
+
+    @Override
+    public String toString() {
+        return "-> Astrologue: " + this.toString() + ", formation=" + formation + ", promotion=" + promotion;
+    }
+    
+}
