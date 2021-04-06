@@ -11,12 +11,6 @@ public class MediumDao {
     public void creer(Medium medium) {
         JpaUtil.obtenirContextePersistance().persist(medium);
     }
-    public void supprimer(Medium medium) {
-        JpaUtil.obtenirContextePersistance().remove(medium);
-    }
-    public Medium modifier(Medium medium) {
-        return JpaUtil.obtenirContextePersistance().merge(medium);
-    }
     public Medium chercherParId(Long id) {
         return JpaUtil.obtenirContextePersistance().find(Medium.class, id);
     }

@@ -88,7 +88,7 @@ public class ServiceClient {
         Client c;
         try {
             JpaUtil.creerContextePersistance();
-            c = clientDao.authentifier(mail, mdp);      
+            c = clientDao.authentifier(mail, mdp);
         }
         catch (Exception ex) {
             ex.printStackTrace(); 
