@@ -59,7 +59,7 @@ public class ServiceMedium {
         List<Medium> lm;
         try {
             JpaUtil.creerContextePersistance();
-            lm = mediumDao.chercherParDenomination(denomination);        
+            lm = mediumDao.chercherParDenomination(denomination);
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -68,7 +68,7 @@ public class ServiceMedium {
         finally {
             JpaUtil.fermerContextePersistance();
         }
-        return lm;  
+        return lm;
     }
 
 }
