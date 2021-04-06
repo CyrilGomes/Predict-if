@@ -1,6 +1,7 @@
 package com.projet.dasi.service;
 
 import com.projet.dasi.AstroAPI;
+import com.projet.dasi.Message;
 import com.projet.dasi.dao.JpaUtil;
 import com.projet.dasi.dao.UtilisateurDao;
 import com.projet.dasi.model.Client;
@@ -33,8 +34,12 @@ public class ServiceApplication {
             utilisateurDao.creer(c);
 
             JpaUtil.validerTransaction();
+            Message.envoyerMail("contact.predict.if", c.getMail(), "Bienvenu chez PREDICT'IF", "Bonjour " + c.getPrenom() + ", nous vous confirmons votre inscription au service PREDICT’IF. Rendezvous vite sur notre site pour consulter votre profil astrologique et profiter des dons incroyables de nos médiums");
+
         } catch (Exception ex) {
             JpaUtil.annulerTransaction();
+            Message.envoyerMail("contact.predict.if", c.getMail(), "Echec de l’inscription chez PREDICT’IF", "Bonjour " + c.getPrenom() + ", votre inscription au service PREDICT’IF a malencontreusement échoué...\n"
+                    + "Merci de recommencer ultérieurement.");
             ex.printStackTrace();
             c = null;
         } finally {
@@ -48,7 +53,7 @@ public class ServiceApplication {
     public void creerEmployes() {
         try {
             JpaUtil.creerContextePersistance();
-            
+
             Employe emp1 = new Employe(Genre.Femme,
                     "Paola",
                     "Pritchard",
@@ -68,7 +73,7 @@ public class ServiceApplication {
                     "00000",
                     AstroAPI.DATE_FORMAT.parse("01/12/2000")
             );
-            
+
             JpaUtil.ouvrirTransaction();
             UtilisateurDao utilisateurDao = new UtilisateurDao();
             utilisateurDao.creer(emp1);
@@ -79,25 +84,23 @@ public class ServiceApplication {
         } catch (Exception e) {
             JpaUtil.annulerTransaction();
             e.printStackTrace();
-        } finally{
+        } finally {
             JpaUtil.fermerContextePersistance();
         }
     }
-    
+
     /* AUTHENTIFIER UN UTILISATEUR */
     public Utilisateur authentifier(String mail, String mdp) {
-        
+
         Utilisateur c;
         try {
             JpaUtil.creerContextePersistance();
             UtilisateurDao utilisateurDao = new UtilisateurDao();
-            c = utilisateurDao.authentifier(mail, mdp);      
-        }
-        catch (Exception ex) {
-            ex.printStackTrace(); 
+            c = utilisateurDao.authentifier(mail, mdp);
+        } catch (Exception ex) {
+            ex.printStackTrace();
             c = null;
-        }
-        finally {
+        } finally {
             JpaUtil.fermerContextePersistance();
         }
         return c;
