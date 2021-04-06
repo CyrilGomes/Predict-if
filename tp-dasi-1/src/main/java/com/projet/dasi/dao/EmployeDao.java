@@ -6,6 +6,7 @@
 package com.projet.dasi.dao;
 
 import com.projet.dasi.model.Employe;
+import com.projet.dasi.model.Etat;
 import com.projet.dasi.model.Genre;
 import com.projet.dasi.model.Utilisateur;
 import java.util.Date;
@@ -31,13 +32,12 @@ public class EmployeDao {
         String s = ""
                 + "SELECT e "
                 + "FROM Employe e "
-                + "WHERE e NOT IN ("
-                + "   SELECT emp "
-                + "   FROM Employe emp JOIN Consultation consul ON emp.id = consul.employe  "
-                + "   WHERE consul.etat = 'EnAttente'"
-                + ") AND e.genre = :unGenre";
+                + "WHERE e NOT IN (SELECT c.employe FROM Consultation c WHERE c.etat = :unEtat1 OR c.etat = :unEtat2) "
+                + "AND e.genre = :unGenre ";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Employe.class);
-        query.setParameter("unGenre", genre.toString());
+        query.setParameter("unGenre", genre);
+        query.setParameter("unEtat1", Etat.EnAttente);
+        query.setParameter("unEtat2", Etat.EnCours);
         return query.getResultList();
     }
     
@@ -45,9 +45,11 @@ public class EmployeDao {
         String s = ""
                 + "SELECT SUM(c.dateFin - c.dateDebut) "
                 + "FROM Consultation c "
-                + "WHERE c.etat = 'Termine' AND employe = :unEmploye";
+                + "WHERE c.etat = :unEtat "
+                + "AND employe = :unEmploye ";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Date.class);
-        query.setParameter("unEmploye", employe.getId());
+        query.setParameter("unEmploye", employe);
+        query.setParameter("unEtat", Etat.Termine);
         return query.getResultList();
     }
 }

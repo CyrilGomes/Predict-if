@@ -7,14 +7,18 @@ import com.projet.dasi.Message;
 import com.projet.dasi.dao.JpaUtil;
 import com.projet.dasi.dao.MediumDao;
 import com.projet.dasi.dao.UtilisateurDao;
+import com.projet.dasi.model.Astrologue;
+import com.projet.dasi.model.Cartomancien;
 import com.projet.dasi.model.Client;
 import com.projet.dasi.model.Consultation;
 import com.projet.dasi.model.Employe;
 import com.projet.dasi.model.Genre;
 import com.projet.dasi.model.Medium;
 import com.projet.dasi.model.ProfilAstral;
+import com.projet.dasi.model.Spirite;
 import com.projet.dasi.model.Utilisateur;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -56,9 +60,8 @@ public class ServiceApplication {
     /* CREER LES EMPLOYES */
     public void creerEmployes() {
         try {
-            JpaUtil.creerContextePersistance();
-
-            Employe emp1 = new Employe(Genre.Femme,
+            ArrayList<Employe> employes = new ArrayList<Employe>();
+            employes.add(new Employe(Genre.Femme,
                     "Paola",
                     "Pritchard",
                     "paola.pritchard@hotmail.com",
@@ -66,9 +69,8 @@ public class ServiceApplication {
                     "0102030405",
                     "00000",
                     AstroAPI.DATE_FORMAT.parse("01/12/2000")
-            );
-
-            Employe emp2 = new Employe(Genre.Homme,
+            ));
+            employes.add(new Employe(Genre.Homme,
                     "Martin",
                     "Teibo",
                     "martin.teibo@wanadoo.fr",
@@ -76,19 +78,64 @@ public class ServiceApplication {
                     "0102030405",
                     "00000",
                     AstroAPI.DATE_FORMAT.parse("01/12/2000")
-            );
+            ));
 
-            JpaUtil.ouvrirTransaction();
             UtilisateurDao utilisateurDao = new UtilisateurDao();
-            utilisateurDao.creer(emp1);
-            utilisateurDao.creer(emp2);
+            JpaUtil.creerContextePersistance();
+            JpaUtil.ouvrirTransaction();
+            for (Employe e : employes) {
+                utilisateurDao.creer(e);
+            }
             JpaUtil.validerTransaction();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
+        } 
+        catch (ParseException ex) {
+            ex.printStackTrace();
+        } 
+        catch (Exception ex) {
+            ex.printStackTrace();
             JpaUtil.annulerTransaction();
-            e.printStackTrace();
-        } finally {
+        } 
+        finally {
+            JpaUtil.fermerContextePersistance();
+        }
+    }
+    
+    /* CREER LES MEDIUMS */
+    public void creerMediums() {
+        try {
+            ArrayList<Medium> mediums = new ArrayList<Medium>();
+            mediums.add(new Cartomancien(
+                    "Sire Kartmalo", 
+                    "Voulez-vous voir un tour de magie?", 
+                    Genre.Homme
+            ));
+            mediums.add(new Astrologue(
+                    "Monsieur N'TOMA", 
+                    "Arrêtez de pleurer.", 
+                    Genre.Homme,
+                    "Institut Nouveau des Spirites Armateurs (INSA)",
+                    "2012"
+            ));
+            mediums.add(new Spirite(
+                    "Super Emma", 
+                    "Bouboule de crystal OWO", 
+                    Genre.Femme,
+                    "Boule de Crystal, Marques de Thé"
+            ));
+
+            MediumDao mediumDao = new MediumDao();
+            JpaUtil.creerContextePersistance();
+            JpaUtil.ouvrirTransaction();
+            for (Medium m : mediums) {
+                mediumDao.creer(m);
+            }
+            JpaUtil.validerTransaction();
+        } 
+        catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+        } 
+        finally {
             JpaUtil.fermerContextePersistance();
         }
     }
@@ -101,10 +148,12 @@ public class ServiceApplication {
             JpaUtil.creerContextePersistance();
             UtilisateurDao utilisateurDao = new UtilisateurDao();
             c = utilisateurDao.authentifier(mail, mdp);
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) {
             ex.printStackTrace();
             c = null;
-        } finally {
+        } 
+        finally {
             JpaUtil.fermerContextePersistance();
         }
         return c;
@@ -174,11 +223,15 @@ public class ServiceApplication {
         
         List<Employe> employesDisponiblesDeBonGenre;
         Consultation consultation;
+        
         try {
+            
             JpaUtil.creerContextePersistance();
+            
             employesDisponiblesDeBonGenre = employeDao.chercherEmployesDisponiblesEtDeGenre(medium.getGenre());
             Date tempsMin = new Date(100000);
             Employe employeChoisi = null;
+            
             for (Employe e : employesDisponiblesDeBonGenre) {
                 Date tempsDeTravail = (Date)employeDao.calculerTempsTravail(e).get(0);
                 if (tempsDeTravail.before(tempsMin)) {
@@ -186,7 +239,9 @@ public class ServiceApplication {
                     employeChoisi = e;
                 }
             }
+       
             consultation = new Consultation(employeChoisi, client, medium);
+            
             JpaUtil.creerContextePersistance();
             JpaUtil.ouvrirTransaction();
             consultationDao.creer(consultation);
@@ -195,6 +250,7 @@ public class ServiceApplication {
         }
         catch (Exception ex) {
             ex.printStackTrace();
+            JpaUtil.annulerTransaction();
             consultation = null;
         }
         finally {

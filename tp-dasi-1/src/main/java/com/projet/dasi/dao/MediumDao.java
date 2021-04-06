@@ -15,17 +15,17 @@ public class MediumDao {
         return JpaUtil.obtenirContextePersistance().find(Medium.class, id);
     }
     public List<Medium> chercherParType(String type) {
-        String s = "SELECT c FROM Medium c WHERE c.TYPE_MEDIUM = :type";
+        String s = "SELECT m FROM Medium m WHERE m.TYPE_MEDIUM = :type";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Medium.class);
         return query.getResultList();
     }
     public List<Medium> chercherParDenomination(String denomination) {
-        String s = "SELECT c FROM Medium c WHERE c.DENOMATION = :type";
+        String s = "SELECT m FROM Medium c WHERE m.DENOMATION = :type";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Medium.class);
         return query.getResultList();
     }
     public List<Medium> chercherTous() {
-        String s = "SELECT c FROM Medium c ORDER BY c.nom ASC";
+        String s = "SELECT m FROM Medium m ORDER BY m.nom ASC";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Medium.class);
         return query.getResultList();
     }
