@@ -8,9 +8,7 @@ package com.projet.dasi.presentation;
 import com.projet.dasi.AstroAPI;
 import com.projet.dasi.model.Client;
 import com.projet.dasi.model.Utilisateur;
-import com.projet.dasi.model.ProfilAstral;
-import com.projet.dasi.service.ServiceClient;
-import java.io.IOException;
+import com.projet.dasi.service.ServiceApplication;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -36,8 +34,8 @@ public class PresentationClient {
 
             final Client c = new Client(nom, prenom, mail, motDePasse, telephone, codePostal, dateNaissance);
 
-            final ServiceClient serviceInscription = new ServiceClient();
-            Utilisateur res = serviceInscription.inscrire(c);
+            final ServiceApplication serviceApplication = new ServiceApplication();
+            Utilisateur res = serviceApplication.inscrireClient(c);
 
             if (res != null) {
                 System.out.println("> Succès inscription");

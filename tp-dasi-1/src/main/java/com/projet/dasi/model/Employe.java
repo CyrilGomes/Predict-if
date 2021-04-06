@@ -17,7 +17,7 @@ import javax.persistence.Enumerated;
  * @author creep
  */
 @Entity
-public class Employe extends Utilisateur {    
+public class Employe extends Utilisateur {
     @Enumerated(EnumType.STRING)
     private Genre genre;
     
@@ -40,6 +40,6 @@ public class Employe extends Utilisateur {
 
     @Override
     public String toString() {
-        return "-> Employe: " + super.toString();
+        return "-> Employe: " + super.toString() + " " + genre.toString();
     }    
 }

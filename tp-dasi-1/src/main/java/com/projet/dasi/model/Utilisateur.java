@@ -2,16 +2,17 @@ package com.projet.dasi.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Temporal;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Utilisateur implements Serializable {
 
     /* Attributes */
@@ -28,6 +29,7 @@ public abstract class Utilisateur implements Serializable {
     private String prenom;
     private String telephone;
     private String codePostal;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateNaissance;
     
     /* Constructors */
