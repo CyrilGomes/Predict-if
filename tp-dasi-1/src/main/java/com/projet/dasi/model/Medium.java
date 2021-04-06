@@ -2,7 +2,6 @@ package com.projet.dasi.model;
 
 import java.io.Serializable;
 import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,23 +13,20 @@ import javax.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
- @DiscriminatorColumn(name="TYPE_MEDIUM")
- @DiscriminatorValue("Medium")
+@DiscriminatorColumn(name="typeMedium")
 public class Medium implements Serializable {
 
-    /* Attributes */
+    /* Attributs */
     private static final long serialVersionUID = 1L;
-        
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
-    
     @Enumerated(EnumType.STRING)
     private Genre genre;
     private String denomination;
     private String presentation;
-    
-    /* Constructors */
+
+    /* Constructeurs */
     public Medium(String denomination, String presentation, Genre genre) {
         this.denomination = denomination;
         this.presentation = presentation;
@@ -39,31 +35,25 @@ public class Medium implements Serializable {
     public Medium() {
     }
 
-    /* Getters / Setters */
+    /* Accesseurs */
     public String getDenomination() {
         return denomination;
     }
-
     public void setDenomination(String denomination) {
         this.denomination = denomination;
     }
-
     public String getPresentation() {
         return presentation;
     }
-
     public void setPresentation(String presentation) {
         this.presentation = presentation;
     }
-
     public Genre getGenre() {
         return genre;
     }
-
     public void setGenre(Genre genre) {
         this.genre = genre;
     }
-
     public Long getId() {
         return id;
     }
@@ -71,27 +61,7 @@ public class Medium implements Serializable {
         this.id = id;
     }
     
-    /* Overrided methods */
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Medium)) {
-            return false;
-        }
-        Medium other = (Medium) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
+    /* ToString */
     @Override
     public String toString() {
         return "id=" + id + ", denomination=" + denomination + ", presentation=" + presentation;

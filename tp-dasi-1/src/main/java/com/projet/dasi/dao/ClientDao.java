@@ -8,6 +8,7 @@ public class ClientDao {
     
     public ClientDao() {}
     
+    /* Chercher tous les clients de la DB */
     public List<Client> chercherTous() {
         String s = "SELECT c FROM Client c ORDER BY c.nom ASC";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Client.class);

@@ -1,32 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.projet.dasi;
 
 import com.projet.dasi.dao.ClientDao;
-import com.projet.dasi.dao.EmployeDao;
 import com.projet.dasi.dao.JpaUtil;
 import com.projet.dasi.dao.MediumDao;
-import com.projet.dasi.model.Cartomancien;
 import com.projet.dasi.model.Client;
 import com.projet.dasi.model.Consultation;
-import com.projet.dasi.model.Genre;
 import com.projet.dasi.model.Medium;
 import com.projet.dasi.model.Utilisateur;
 import com.projet.dasi.presentation.Saisie;
-import com.projet.dasi.service.ServiceApplication;
+import com.projet.dasi.service.ServicesApplication;
 import java.text.ParseException;
 import java.util.Date;
 
-/**
- *
- * @author creep
- */
 public class Main {
     
-    final static ServiceApplication serviceApplication = new ServiceApplication();
+    final static ServicesApplication servicesApplication = new ServicesApplication();
     
     public static void main(String[] args){
         
@@ -34,8 +22,8 @@ public class Main {
         
         // Créer un client test, des employés, et des médiums
         requeteCreationClient(false);
-        serviceApplication.creerEmployes();
-        serviceApplication.creerMediums();
+        servicesApplication.creerEmployes();
+        servicesApplication.creerMediums();
         
         // Authentifier le client test
         requeteAuthentification(false);
@@ -83,7 +71,7 @@ public class Main {
         }
         final Client c = new Client(nom, prenom, mail, motDePasse, telephone, codePostal, dateNaissance);
         
-        Utilisateur res = serviceApplication.inscrireClient(c);
+        Utilisateur res = servicesApplication.inscrireClient(c);
         if (res != null) {
             System.out.println("> Succès inscription");
             System.out.println(res.toString());
@@ -107,7 +95,7 @@ public class Main {
             motDePasse = "superCanardXXL";
         }
         
-        Utilisateur res = serviceApplication.authentifier(mail, motDePasse);
+        Utilisateur res = servicesApplication.authentifier(mail, motDePasse);
         if(res != null){
             System.out.println("Connexion réussie");
             System.out.println(res);
@@ -121,12 +109,12 @@ public class Main {
     public static void requeteDemandeConsultation() {
         
         MediumDao mediumDao = new MediumDao();
-        Medium medium = (Medium)mediumDao.chercherTous().get(0);
-        
         ClientDao clientDao = new ClientDao();  
+        JpaUtil.creerContextePersistance();
+        Medium medium = (Medium)mediumDao.chercherTous().get(0);
         Client client = (Client)clientDao.chercherTous().get(0);
         
-        Consultation res = serviceApplication.demanderConsultation(client, medium);
+        Consultation res = servicesApplication.demanderConsultation(client, medium);
         if (res != null) {
             System.out.println("> Succès demande consultation");
             System.out.println(res.toString());

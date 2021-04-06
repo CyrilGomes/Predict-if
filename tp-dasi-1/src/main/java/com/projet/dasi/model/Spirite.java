@@ -8,12 +8,12 @@ import javax.persistence.Entity;
 @DiscriminatorValue("Spirite")
 public class Spirite extends Medium implements Serializable {
 
-    /* Attributes */
+    /* Attributs */
     private static final long serialVersionUID = 1L;
     
     private String support;
     
-    /* Constructors */
+    /* Constructeurs */
     public Spirite(String denomination, String presentation, Genre genre, String support) {
         super(denomination, presentation, genre);
         this.support = support;
@@ -21,9 +21,10 @@ public class Spirite extends Medium implements Serializable {
     public Spirite() {
     }
 
+    /* ToString */
     @Override
     public String toString() {
-        return this.toString() + ", support=" + support;
+        return "-> Cartomancien: " + super.toString() + ", support=" + support;
     }
 
 }

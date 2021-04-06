@@ -9,25 +9,22 @@ import com.projet.dasi.model.Employe;
 import com.projet.dasi.model.Etat;
 import com.projet.dasi.model.Genre;
 import com.projet.dasi.model.Utilisateur;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.TypedQuery;
 
-/**
- *
- * @author creep
- */
 public class EmployeDao {
 
     public EmployeDao() {
     }
     
+    /* Chercher tous les employés de la DB */
     public List<Employe> chercherTous() {
-        String s = "SELECT emp FROM Employe emp ORDER BY emp.nom ASC";
+        String s = "SELECT e FROM EMPLOYE e ORDER BY e.NOM ASC";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Utilisateur.class);
         return query.getResultList();
     }
     
+    /* Chercher les employés disponibles et du genre donné*/
     public List<Employe> chercherEmployesDisponiblesEtDeGenre(Genre genre) {
         String s = ""
                 + "SELECT e "
@@ -41,15 +38,14 @@ public class EmployeDao {
         return query.getResultList();
     }
     
-    public List<Date> calculerTempsTravail(Employe employe) {
+    /* Obtenir le nombre total de consultations qu'a fait un employé donné*/
+    public Integer obtenirNombreConsultationsFinies(Employe employe) {
         String s = ""
-                + "SELECT SUM(c.dateFin - c.dateDebut) "
-                + "FROM Consultation c "
-                + "WHERE c.etat = :unEtat "
-                + "AND employe = :unEmploye ";
-        TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Date.class);
+                + "SELECT SUM(c.id) FROM Consultation c "
+                + "WHERE c.etat = :unEtat AND c.employe = :unEmploye ";
+        TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Integer.class);
         query.setParameter("unEmploye", employe);
         query.setParameter("unEtat", Etat.Termine);
-        return query.getResultList();
+        return (Integer)query.getSingleResult();
     }
 }

@@ -19,47 +19,57 @@ import com.projet.dasi.model.Spirite;
 import com.projet.dasi.model.Utilisateur;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class ServiceApplication {
+public class ServicesApplication {
 
-    public ServiceApplication() {
+    public ServicesApplication() {
     }
 
-    /* INSCRIRE UN CLIENT */
-    public Client inscrireClient(Client c) {
-
+    /* Inscrire un client */
+    public Client inscrireClient(Client client) {
+        
+        // Créer les DAOs et le contexte de persistance
+        UtilisateurDao utilisateurDao = new UtilisateurDao();
+        JpaUtil.creerContextePersistance();
+        
         try {
+            // Générer un Profil Astral et l'attribuer au client à inscrire
             AstroAPI astroApi = new AstroAPI();
-            ProfilAstral profil = astroApi.getProfil(c.getPrenom(), c.getDateNaissance());
-            c.setProfilAstral(profil);
+            ProfilAstral profil = astroApi.getProfil(client.getPrenom(), client.getDateNaissance());
+            client.setProfilAstral(profil);
 
-            JpaUtil.creerContextePersistance();
+            // Persister le client
             JpaUtil.ouvrirTransaction();
-
-            UtilisateurDao utilisateurDao = new UtilisateurDao();
-            utilisateurDao.creer(c);
-
+            utilisateurDao.creer(client);
             JpaUtil.validerTransaction();
-            Message.envoyerMail("contact.predict.if", c.getMail(), "Bienvenu chez PREDICT'IF", "Bonjour " + c.getPrenom() + ", nous vous confirmons votre inscription au service PREDICT’IF. Rendezvous vite sur notre site pour consulter votre profil astrologique et profiter des dons incroyables de nos médiums");
+            
+            // Le notifier de son inscription
+            Message.envoyerMail("contact.predict.if", client.getMail(), "Bienvenu chez PREDICT'IF", "Bonjour " + client.getPrenom() + ", nous vous confirmons votre inscription au service PREDICT’IF. Rendezvous vite sur notre site pour consulter votre profil astrologique et profiter des dons incroyables de nos médiums");
 
-        } catch (Exception ex) {
-            JpaUtil.annulerTransaction();
-            Message.envoyerMail("contact.predict.if", c.getMail(), "Echec de l’inscription chez PREDICT’IF", "Bonjour " + c.getPrenom() + ", votre inscription au service PREDICT’IF a malencontreusement échoué...\n"
-                    + "Merci de recommencer ultérieurement.");
+        } 
+        catch (Exception ex) {
             ex.printStackTrace();
-            c = null;
-        } finally {
+            JpaUtil.annulerTransaction();
+            Message.envoyerMail("contact.predict.if", client.getMail(), "Echec de l’inscription chez PREDICT’IF", "Bonjour " + client.getPrenom() + ", votre inscription au service PREDICT’IF a malencontreusement échoué... \nMerci de recommencer ultérieurement.");
+            client = null;
+        } 
+        finally {
             JpaUtil.fermerContextePersistance();
         }
-        return c;
+        return client;
 
     }
 
     /* CREER LES EMPLOYES */
     public void creerEmployes() {
+
+        // Créer les DAOs et le contexte de persistance
+        UtilisateurDao utilisateurDao = new UtilisateurDao();
+        JpaUtil.creerContextePersistance();
+            
         try {
+            // Ajouter des employés à une liste (en dur)
             ArrayList<Employe> employes = new ArrayList<Employe>();
             employes.add(new Employe(Genre.Femme,
                     "Paola",
@@ -80,8 +90,7 @@ public class ServiceApplication {
                     AstroAPI.DATE_FORMAT.parse("01/12/2000")
             ));
 
-            UtilisateurDao utilisateurDao = new UtilisateurDao();
-            JpaUtil.creerContextePersistance();
+            // Persister les employés
             JpaUtil.ouvrirTransaction();
             for (Employe e : employes) {
                 utilisateurDao.creer(e);
@@ -102,7 +111,13 @@ public class ServiceApplication {
     
     /* CREER LES MEDIUMS */
     public void creerMediums() {
+        
+        // Créer les DAOs et le contexte de persistance
+        MediumDao mediumDao = new MediumDao();
+        JpaUtil.creerContextePersistance();
+        
         try {
+            // Ajouter des médiums à une liste (en dur)
             ArrayList<Medium> mediums = new ArrayList<Medium>();
             mediums.add(new Cartomancien(
                     "Sire Kartmalo", 
@@ -123,8 +138,7 @@ public class ServiceApplication {
                     "Boule de Crystal, Marques de Thé"
             ));
 
-            MediumDao mediumDao = new MediumDao();
-            JpaUtil.creerContextePersistance();
+            // Persister les médiums
             JpaUtil.ouvrirTransaction();
             for (Medium m : mediums) {
                 mediumDao.creer(m);
@@ -143,110 +157,134 @@ public class ServiceApplication {
     /* AUTHENTIFIER UN UTILISATEUR */
     public Utilisateur authentifier(String mail, String mdp) {
 
-        Utilisateur c;
+        // Créer les DAOs et le contexte de persistance
+        UtilisateurDao utilisateurDao = new UtilisateurDao();
+        JpaUtil.creerContextePersistance();
+        
+        Utilisateur utilisateur;
         try {
-            JpaUtil.creerContextePersistance();
-            UtilisateurDao utilisateurDao = new UtilisateurDao();
-            c = utilisateurDao.authentifier(mail, mdp);
+            // Authentifier un utilisateur avec le mail et le mot de passe donnés
+            utilisateur = utilisateurDao.authentifier(mail, mdp);
         } 
         catch (Exception ex) {
             ex.printStackTrace();
-            c = null;
+            utilisateur = null;
         } 
         finally {
             JpaUtil.fermerContextePersistance();
         }
-        return c;
+        return utilisateur;
+        
     }
     
     /* LISTER TOUS LES MEDIUMS */
     public List<Medium> obtenirMediums() {
         
+        // Créer les DAOs et le contexte de persistance
         MediumDao mediumDao = new MediumDao();
-        List<Medium> lm;
+        JpaUtil.creerContextePersistance();
+        
+        List<Medium> listeMediums;
         try {
-            JpaUtil.creerContextePersistance();
-            lm = mediumDao.chercherTous();        
+            // Récupérer tous les médiums (triés par ordre croissant de dénomination)
+            listeMediums = mediumDao.chercherTous();        
         }
         catch (Exception ex) {
             ex.printStackTrace();
-            lm = null;
+            listeMediums = null;
         }
         finally {
             JpaUtil.fermerContextePersistance();
         }
-        return lm;  
+        return listeMediums;  
+        
     }
     
     /* LISTER TOUS LES MEDIUMS SELON LEUR TYPE */
     public List<Medium> obtenirMediumsSelonType(String type) {
         
+        // Créer les DAOs et le contexte de persistance
         MediumDao mediumDao = new MediumDao();
-        List<Medium> lm;
+        JpaUtil.creerContextePersistance();
+        
+        List<Medium> listeMediums;
         try {
-            JpaUtil.creerContextePersistance();
-            lm = mediumDao.chercherParType(type);        
+            // Récupérer tous les médiums du type donné
+            listeMediums = mediumDao.chercherParType(type);        
         }
         catch (Exception ex) {
             ex.printStackTrace();
-            lm = null;
+            listeMediums = null;
         }
         finally {
             JpaUtil.fermerContextePersistance();
         }
-        return lm;  
+        return listeMediums;
+        
     }
     
     /* LISTER TOUS LES MEDIUMS SELON LEUR DÉNOMINATION */
     public List<Medium> obtenirMediumsSelonDenomination(String denomination) {
+        
+        // Créer les DAOs et le contexte de persistance
         MediumDao mediumDao = new MediumDao();
-        List<Medium> lm;
+        JpaUtil.creerContextePersistance();
+        
+        List<Medium> listeMediums;
         try {
-            JpaUtil.creerContextePersistance();
-            lm = mediumDao.chercherParDenomination(denomination);
+            // Récupérer tous les médiums d'une dénomination similaire à celle donnée
+            listeMediums = mediumDao.chercherParDenomination(denomination);
         }
         catch (Exception ex) {
             ex.printStackTrace();
-            lm = null;
+            listeMediums = null;
         }
         finally {
             JpaUtil.fermerContextePersistance();
         }
-        return lm;
+        return listeMediums;
+        
     }
     
     /* DEMANDER CONSULTATION */
     public Consultation demanderConsultation(Client client, Medium medium) {
         
+        // Créer les DAOs et le contexte de persistance
         EmployeDao employeDao = new EmployeDao();
         ConsultationDao consultationDao = new ConsultationDao();
+        JpaUtil.creerContextePersistance();
         
-        List<Employe> employesDisponiblesDeBonGenre;
         Consultation consultation;
-        
         try {
-            
-            JpaUtil.creerContextePersistance();
-            
-            employesDisponiblesDeBonGenre = employeDao.chercherEmployesDisponiblesEtDeGenre(medium.getGenre());
-            Date tempsMin = new Date(100000);
-            Employe employeChoisi = null;
-            
-            for (Employe e : employesDisponiblesDeBonGenre) {
-                Date tempsDeTravail = (Date)employeDao.calculerTempsTravail(e).get(0);
-                if (tempsDeTravail.before(tempsMin)) {
-                    tempsMin = tempsDeTravail;
-                    employeChoisi = e;
+            // Obtenir les employés qui sont disponibles et qui sont du bon genre
+            List<Employe> employesDisponiblesDeBonGenre = employeDao.chercherEmployesDisponiblesEtDeGenre(medium.getGenre());
+            // S'il y en a, 
+            if (employesDisponiblesDeBonGenre.size() > 0) {
+                // Chercher celui qui a fait le moins de consultations
+                Integer nbConsultationsMin = Integer.MAX_VALUE;
+                Employe employe = null;
+                for (Employe e : employesDisponiblesDeBonGenre) {
+                    Integer nbConsultations = employeDao.obtenirNombreConsultationsFinies(e);
+                    if (nbConsultations != null && nbConsultations < nbConsultationsMin) {
+                        nbConsultationsMin = nbConsultations;
+                        employe = e;
+                    }
                 }
+                // Si personne n'a fait de consultations, prendre le premier
+                if (nbConsultationsMin == Integer.MAX_VALUE) {
+                    employe = employesDisponiblesDeBonGenre.get(0);
+                }
+                // Créer une consultation avec l'employé choisi
+                consultation = new Consultation(employe, client, medium);
+                // La persister
+                JpaUtil.ouvrirTransaction();
+                consultationDao.creer(consultation);
+                JpaUtil.validerTransaction();
             }
-       
-            consultation = new Consultation(employeChoisi, client, medium);
-            
-            JpaUtil.creerContextePersistance();
-            JpaUtil.ouvrirTransaction();
-            consultationDao.creer(consultation);
-            JpaUtil.validerTransaction();
-            
+            // Si aucun employé disponible et de bon genre, consultation impossible
+            else {
+                consultation = null;
+            }
         }
         catch (Exception ex) {
             ex.printStackTrace();
