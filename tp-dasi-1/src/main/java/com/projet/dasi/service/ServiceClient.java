@@ -99,11 +99,6 @@ public class ServiceClient {
         }
         return c;
         
-    }
-    /* RETOURNER LE PROFIL ASTRAL D'UN CLIENT */
-    public ProfilAstral obtenirProfilAstral(Client c) {
-        return c.getProfilAstral();
-    }
-    
+    } 
     
 }
