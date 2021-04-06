@@ -1,12 +1,8 @@
 package com.projet.dasi.service;
 
-import com.projet.dasi.AstroAPI;
-import com.projet.dasi.dao.MediumDao;
 import com.projet.dasi.dao.JpaUtil;
 import com.projet.dasi.dao.MediumDao;
-import com.projet.dasi.dao.ProfilAstralDao;
 import com.projet.dasi.model.Medium;
-import com.projet.dasi.model.ProfilAstral;
 import java.util.List;
 
 public class ServiceMedium {
