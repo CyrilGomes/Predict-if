@@ -20,55 +20,55 @@ public class ServiceMedium {
     /* LISTER TOUS LES MEDIUMS */
     public List<Medium> obtenirMediums() {
         
-        List<Medium> lc;
+        List<Medium> lm;
         try {
             JpaUtil.creerContextePersistance();
-            lc = mediumDao.chercherTous();        
+            lm = mediumDao.chercherTous();        
         }
         catch (Exception ex) {
             ex.printStackTrace();
-            lc = null;
+            lm = null;
         }
         finally {
             JpaUtil.fermerContextePersistance();
         }
-        return lc;  
+        return lm;  
     }
     
     /* LISTER TOUS LES MEDIUMS SELON LEUR TYPE */
     public List<Medium> obtenirMediumsSelonType(String type) {
         
-        List<Medium> lc;
+        List<Medium> lm;
         try {
             JpaUtil.creerContextePersistance();
-            lc = mediumDao.chercherParType(type);        
+            lm = mediumDao.chercherParType(type);        
         }
         catch (Exception ex) {
             ex.printStackTrace();
-            lc = null;
+            lm = null;
         }
         finally {
             JpaUtil.fermerContextePersistance();
         }
-        return lc;  
+        return lm;  
     }
     
     /* LISTER TOUS LES MEDIUMS SELON LEUR DÉNOMINATION */
     public List<Medium> obtenirMediumsSelonDenomination(String denomination) {
         
-        List<Medium> lc;
+        List<Medium> lm;
         try {
             JpaUtil.creerContextePersistance();
-            lc = mediumDao.chercherParDenomination(denomination);        
+            lm = mediumDao.chercherParDenomination(denomination);        
         }
         catch (Exception ex) {
             ex.printStackTrace();
-            lc = null;
+            lm = null;
         }
         finally {
             JpaUtil.fermerContextePersistance();
         }
-        return lc;  
+        return lm;  
     }
 
 }

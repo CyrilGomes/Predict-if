@@ -8,6 +8,8 @@ package com.projet.dasi.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -18,11 +20,12 @@ import javax.persistence.ManyToOne;
 @Entity
 
 public class Consultation implements Serializable {
-    enum Etat {ATTENTE,ENCOURS,VALIDE,ANNULE};
+    
+    @Enumerated(EnumType.STRING)
+    private Etat etat;
     private Date dateDebut;
     private Date dateFin;
     private String commentaire;
-    private Etat etat;
     @ManyToOne
     private Employe employe;
     @ManyToOne
@@ -32,12 +35,10 @@ public class Consultation implements Serializable {
 
     public Consultation() {
     }
-
     public Consultation(Employe employe, Client client) {
         this.employe = employe;
         this.client = client;
     }
-
 
     public Date getDateDebut() {
         return dateDebut;
