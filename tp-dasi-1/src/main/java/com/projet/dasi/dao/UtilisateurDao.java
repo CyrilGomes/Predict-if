@@ -18,9 +18,22 @@ public class UtilisateurDao {
     public UtilisateurDao() {
     }
     
+    public void creer(Utilisateur utilisateur) {
+        JpaUtil.obtenirContextePersistance().persist(utilisateur);
+    }
+    
+    public void supprimer(Utilisateur utilisateur) {
+        JpaUtil.obtenirContextePersistance().remove(utilisateur);
+    }
+    public Utilisateur modifier(Utilisateur utilisateur) {
+        return JpaUtil.obtenirContextePersistance().merge(utilisateur);
+    }
+    public Utilisateur chercherParId(Long id) {
+        return JpaUtil.obtenirContextePersistance().find(Utilisateur.class, id);
+    }
     
     public Utilisateur authentifier(String mail, String mdp) {
-        String s = "SELECT c FROM Client c WHERE c.mail = :unMail AND c.motDePasse = :unMotDePasse";
+        String s = "SELECT u from Utilisateur u WHERE u.mail = :unMail AND u.motDePasse = :unMotDePasse";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Utilisateur.class);
         query.setParameter("unMotDePasse", mdp);
         query.setParameter("unMail", mail);    

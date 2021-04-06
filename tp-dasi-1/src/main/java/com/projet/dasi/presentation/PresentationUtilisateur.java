@@ -6,7 +6,7 @@
 package com.projet.dasi.presentation;
 
 import com.projet.dasi.model.Utilisateur;
-import com.projet.dasi.service.ServiceUtilisateur;
+import com.projet.dasi.service.ServiceApplication;
 
 /**
  *
@@ -17,8 +17,8 @@ public class PresentationUtilisateur {
         final String mail = Saisie.lireChaine("Adresse mail: ");
         final String motDePasse = Saisie.lireChaine("Mot de passe: ");
         
-        ServiceUtilisateur serviceUtilisateur = new ServiceUtilisateur();
-        Utilisateur u = serviceUtilisateur.authentifier(mail, motDePasse);
+        ServiceApplication serviceApplication = new ServiceApplication();
+        Utilisateur u = serviceApplication.authentifier(mail, motDePasse);
         if(u != null){
             System.out.println("Connexion réussie");
             System.out.println(u);

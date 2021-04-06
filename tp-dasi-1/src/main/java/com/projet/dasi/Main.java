@@ -6,8 +6,8 @@
 package com.projet.dasi;
 
 import com.projet.dasi.dao.JpaUtil;
-import com.projet.dasi.presentation.PresentationClient;
 import com.projet.dasi.presentation.PresentationUtilisateur;
+import com.projet.dasi.service.ServiceApplication;
 
 /**
  *
@@ -17,6 +17,7 @@ public class Main {
     public static void main(String[] args){
         JpaUtil.init();
         //PresentationClient.requeteCreationClient();
+        //new ServiceApplication().creerEmployes();
         PresentationUtilisateur.requeteAuthentification();
         JpaUtil.destroy();
     }
