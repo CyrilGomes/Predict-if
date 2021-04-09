@@ -27,7 +27,7 @@ public class MediumDao {
     
     /* Chercher les médiums d'un type donné*/
     public List<Medium> chercherParType(String type) {
-        String s = "SELECT m FROM Medium m WHERE m.typeMedium = :unType";
+        String s = "SELECT m FROM Medium m WHERE m.typeMedium = :unType ORDER BY m.denomination ASC";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Medium.class);
         query.setParameter("unType", type);
         return query.getResultList();
@@ -35,9 +35,9 @@ public class MediumDao {
     
     /* Chercher le(s) médium(s) d'une dénomination donnée */
     public List<Medium> chercherParDenomination(String denomination) {
-        String s = "SELECT m FROM Medium c WHERE m.denomination LIKE %:uneDenomination%";
+        String s = "SELECT m FROM Medium m WHERE m.denomination LIKE :uneDenomination";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Medium.class);
-        query.setParameter("uneDenomination", denomination);
+        query.setParameter("uneDenomination", "%"+denomination+"%");
         return query.getResultList();
     }
 

@@ -6,6 +6,7 @@ import com.projet.dasi.dao.MediumDao;
 import com.projet.dasi.model.Client;
 import com.projet.dasi.model.Consultation;
 import com.projet.dasi.model.Medium;
+import com.projet.dasi.model.Spirite;
 import com.projet.dasi.model.Utilisateur;
 import com.projet.dasi.presentation.Saisie;
 import com.projet.dasi.service.ServicesApplication;
@@ -111,7 +112,7 @@ public class Main {
         MediumDao mediumDao = new MediumDao();
         ClientDao clientDao = new ClientDao();  
         JpaUtil.creerContextePersistance();
-        Medium medium = (Medium)mediumDao.chercherTous().get(0);
+        Medium medium = (Medium)mediumDao.chercherParType("Cartomancien").get(0);
         Client client = (Client)clientDao.chercherTous().get(0);
         
         Consultation res = servicesApplication.demanderConsultation(client, medium);

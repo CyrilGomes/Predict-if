@@ -1,6 +1,7 @@
 package com.projet.dasi.model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -21,6 +22,8 @@ public class Medium implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
+    @Column
+    private String typeMedium;
     @Enumerated(EnumType.STRING)
     private Genre genre;
     private String denomination;
