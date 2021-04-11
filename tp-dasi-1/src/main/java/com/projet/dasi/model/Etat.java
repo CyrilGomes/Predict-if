@@ -1,7 +1,8 @@
 package com.projet.dasi.model;
 
 public enum Etat {
-    EnAttente,
+    EnAttenteEmploye,
+    EnAttenteClient,
     EnCours,
     Termine,
     Annule

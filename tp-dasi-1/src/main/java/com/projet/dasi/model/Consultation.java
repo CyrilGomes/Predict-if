@@ -34,7 +34,7 @@ public class Consultation implements Serializable {
         this.employe = employe;
         this.client = client;
         this.medium = medium;
-        this.etat = Etat.EnAttente;
+        this.etat = Etat.EnAttenteEmploye;
     }
     public Consultation() {
     }

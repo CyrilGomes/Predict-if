@@ -19,7 +19,7 @@ public class EmployeDao {
     
     /* Chercher tous les employés de la DB */
     public List<Employe> chercherTous() {
-        String s = "SELECT e FROM EMPLOYE e ORDER BY e.NOM ASC";
+        String s = "SELECT e FROM Employe e ORDER BY e.nom ASC";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Utilisateur.class);
         return query.getResultList();
     }
@@ -29,23 +29,26 @@ public class EmployeDao {
         String s = ""
                 + "SELECT e "
                 + "FROM Employe e "
-                + "WHERE e NOT IN (SELECT c.employe FROM Consultation c WHERE c.etat = :unEtat1 OR c.etat = :unEtat2) "
-                + "AND e.genre = :unGenre ";
+                + "WHERE e.genre = :unGenre AND NOT EXISTS ( "
+                + "     SELECT c.employe FROM Consultation c "
+                + "     WHERE c.employe = e AND c.etat IN (:unEtat1, :unEtat2, :unEtat3)"
+                + ") ";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Employe.class);
         query.setParameter("unGenre", genre);
-        query.setParameter("unEtat1", Etat.EnAttente);
-        query.setParameter("unEtat2", Etat.EnCours);
+        query.setParameter("unEtat1", Etat.EnAttenteEmploye);
+        query.setParameter("unEtat2", Etat.EnAttenteClient);
+        query.setParameter("unEtat3", Etat.EnCours);
         return query.getResultList();
     }
     
     /* Obtenir le nombre total de consultations qu'a fait un employé donné*/
     public Integer obtenirNombreConsultationsFinies(Employe employe) {
         String s = ""
-                + "SELECT SUM(c.id) FROM Consultation c "
+                + "SELECT COALESCE(SUM(c.id), 0) FROM Consultation c "
                 + "WHERE c.etat = :unEtat AND c.employe = :unEmploye ";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Integer.class);
         query.setParameter("unEmploye", employe);
         query.setParameter("unEtat", Etat.Termine);
-        return (Integer)query.getSingleResult();
+        return ((Long)query.getSingleResult()).intValue();
     }
 }

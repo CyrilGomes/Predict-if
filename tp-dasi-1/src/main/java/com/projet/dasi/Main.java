@@ -1,10 +1,15 @@
 package com.projet.dasi;
 
 import com.projet.dasi.dao.ClientDao;
+import com.projet.dasi.dao.ConsultationDao;
+import com.projet.dasi.dao.EmployeDao;
 import com.projet.dasi.dao.JpaUtil;
 import com.projet.dasi.dao.MediumDao;
 import com.projet.dasi.model.Client;
 import com.projet.dasi.model.Consultation;
+import com.projet.dasi.model.Employe;
+import com.projet.dasi.model.Etat;
+import com.projet.dasi.model.Genre;
 import com.projet.dasi.model.Medium;
 import com.projet.dasi.model.Spirite;
 import com.projet.dasi.model.Utilisateur;
@@ -12,6 +17,7 @@ import com.projet.dasi.presentation.Saisie;
 import com.projet.dasi.service.ServicesApplication;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 
 public class Main {
     
@@ -22,7 +28,8 @@ public class Main {
         JpaUtil.init();
         
         // Créer un client test, des employés, et des médiums
-        requeteCreationClient(false);
+        //requeteCreationClient();
+        servicesApplication.creerClients();
         servicesApplication.creerEmployes();
         servicesApplication.creerMediums();
         
@@ -41,35 +48,20 @@ public class Main {
         final String nom, prenom, mail, motDePasse, telephone, codePostal;
         Date dateNaissance = new Date();
         AstroAPI.DATE_FORMAT.setLenient(false);
-        
-        if (saisie) {
-            nom = Saisie.lireChaine("Nom: ");
-            prenom = Saisie.lireChaine("Prénom: ");
-            mail = Saisie.lireChaine("Adresse mail: ");
-            motDePasse = Saisie.lireChaine("Mot de passe: ");
-            telephone = Saisie.lireChaine("Numéro de téléphone: ");
-            codePostal = Saisie.lireChaine("Code postal");
-            try {
-                dateNaissance = AstroAPI.DATE_FORMAT.parse(Saisie.lireChaine("Date de naissance"));
-            } 
-            catch (ParseException e) {
-                System.err.println("Mauvais format de date de naissance");
-            }
+
+        nom = Saisie.lireChaine("Nom: ");
+        prenom = Saisie.lireChaine("Prénom: ");
+        mail = Saisie.lireChaine("Adresse mail: ");
+        motDePasse = Saisie.lireChaine("Mot de passe: ");
+        telephone = Saisie.lireChaine("Numéro de téléphone: ");
+        codePostal = Saisie.lireChaine("Code postal");
+        try {
+            dateNaissance = AstroAPI.DATE_FORMAT.parse(Saisie.lireChaine("Date de naissance"));
+        } 
+        catch (ParseException e) {
+            System.err.println("Mauvais format de date de naissance");
         }
-        else {
-            nom = "Bertrand";
-            prenom = "Usclat";
-            mail = "bertrand.usclat@yahoo.ro";
-            motDePasse = "superCanardXXL";
-            telephone = "0685123975";
-            codePostal = "69200";
-            try {
-                dateNaissance = AstroAPI.DATE_FORMAT.parse("25/06/1965");
-            } 
-            catch (ParseException e) {
-                System.err.println("Mauvais format de date de naissance");
-            }
-        }
+
         final Client c = new Client(nom, prenom, mail, motDePasse, telephone, codePostal, dateNaissance);
         
         Utilisateur res = servicesApplication.inscrireClient(c);
@@ -111,17 +103,34 @@ public class Main {
         
         MediumDao mediumDao = new MediumDao();
         ClientDao clientDao = new ClientDao();  
+        EmployeDao employeDao = new EmployeDao();
+        ConsultationDao consultationDao = new ConsultationDao();
         JpaUtil.creerContextePersistance();
-        Medium medium = (Medium)mediumDao.chercherParType("Cartomancien").get(0);
-        Client client = (Client)clientDao.chercherTous().get(0);
         
+        // Conditions de test       
+        Medium medium = (Medium)mediumDao.chercherParType("Astrologue").get(0);
+        Client client = (Client)clientDao.chercherTous().get(0);
+        Employe empPrec = (Employe)employeDao.chercherTous().get(0);
+        Consultation prec = new Consultation(empPrec, client, medium);
+        prec.setEtat(Etat.Termine);
+        try {
+            JpaUtil.ouvrirTransaction();
+            consultationDao.creer(prec);
+            JpaUtil.validerTransaction();
+        }
+        catch(Exception ex) {
+           ex.printStackTrace();
+           JpaUtil.annulerTransaction();
+        }
+        System.out.println(empPrec);
+        
+        // Test de demande de consultation
         Consultation res = servicesApplication.demanderConsultation(client, medium);
         if (res != null) {
             System.out.println("> Succès demande consultation");
             System.out.println(res.toString());
         } else {
             System.out.println("> Echec demande consultation");
-            System.out.println(res.toString());
         }
         
     }

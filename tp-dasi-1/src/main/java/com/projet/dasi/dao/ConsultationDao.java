@@ -1,5 +1,6 @@
 package com.projet.dasi.dao;
 
+import com.projet.dasi.model.Client;
 import java.util.List;
 import javax.persistence.TypedQuery;
 import com.projet.dasi.model.Consultation;
@@ -25,4 +26,12 @@ public class ConsultationDao {
         return query.getResultList();
     }
 
+    /* Chercher les consultations d'un certain client */
+    public List<Consultation> chercherParClient(Client client) {
+        String s = "SELECT c FROM Consultation c WHERE c.client = :unClient ORDER BY c.nom ASC";
+        TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Consultation.class);
+        query.setParameter("unClient", client);
+        return query.getResultList();
+    }
+    
 }

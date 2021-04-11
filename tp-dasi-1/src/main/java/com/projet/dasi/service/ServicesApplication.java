@@ -61,6 +61,48 @@ public class ServicesApplication {
 
     }
 
+    /* DEBUG: CREER DES CLIENTS*/
+    public void creerClients() {
+        
+         // Créer les DAOs et le contexte de persistance
+        UtilisateurDao utilisateurDao = new UtilisateurDao();
+            
+        try {
+            // Ajouter des employés à une liste (en dur)
+            ArrayList<Client> clients = new ArrayList<Client>();
+            clients.add(new Client(
+                    "Bertrand",
+                    "Usclat",
+                    "bertrand.usclat@yahoo.ro",
+                    "superCanardXXL",
+                    "0685123975",
+                    "69200",
+                    AstroAPI.DATE_FORMAT.parse("25/06/1965")
+            ));
+            clients.add(new Client(
+                    "Jeannine",
+                    "Odoux",
+                    "jeannette_xxx@trashmail.fr",
+                    "secretPassword",
+                    "0782953267",
+                    "32100",
+                    AstroAPI.DATE_FORMAT.parse("20/08/1985")
+            ));
+
+            // Inscrire les clients 
+            for (Client c : clients) {
+                inscrireClient(c);
+            }
+        } 
+        catch (ParseException ex) {
+            ex.printStackTrace();
+        } 
+        catch (Exception ex) {
+            ex.printStackTrace();
+        } 
+        
+    }
+    
     /* CREER LES EMPLOYES */
     public void creerEmployes() {
 
@@ -71,19 +113,28 @@ public class ServicesApplication {
         try {
             // Ajouter des employés à une liste (en dur)
             ArrayList<Employe> employes = new ArrayList<Employe>();
-            employes.add(new Employe(Genre.Femme,
-                    "Paola",
-                    "Pritchard",
-                    "paola.pritchard@hotmail.com",
+            employes.add(new Employe(Genre.Homme,
+                    "Martin",
+                    "Teibo",
+                    "martin.teibo@wanadoo.fr",
                     "12345",
                     "0102030405",
                     "00000",
                     AstroAPI.DATE_FORMAT.parse("01/12/2000")
             ));
             employes.add(new Employe(Genre.Homme,
-                    "Martin",
-                    "Teibo",
-                    "martin.teibo@wanadoo.fr",
+                    "Jammy",
+                    "Bombaz",
+                    "awesome.man@bing.uk",
+                    "12345",
+                    "0102030405",
+                    "00000",
+                    AstroAPI.DATE_FORMAT.parse("01/12/2000")
+            ));
+            employes.add(new Employe(Genre.Femme,
+                    "Paola",
+                    "Pritchard",
+                    "paola.pritchard@hotmail.com",
                     "12345",
                     "0102030405",
                     "00000",
