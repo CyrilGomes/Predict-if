@@ -27,18 +27,6 @@ import org.apache.http.message.BasicNameValuePair;
  * @author DASI Team
  *
  */
-/* DÉPENDANCES Maven:
-<dependency>
-   <groupId>com.google.code.gson</groupId>
-   <artifactId>gson</artifactId>
-   <version>2.8.5</version>
-</dependency>
-<dependency>
-   <groupId>org.apache.httpcomponents</groupId>
-   <artifactId>httpclient</artifactId>
-   <version>4.5.7</version>
-</dependency>
- */
 public class AstroAPI {
 
     final static String MA_CLE_ASTRO_API = "ASTRO-02-M0lGLURBU0ktQVNUUk8tQjAy";
@@ -47,11 +35,10 @@ public class AstroAPI {
     public static final SimpleDateFormat JSON_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
-    public static final String ASTRO_API_URL
-            = "https://servif-cocktail.insa-lyon.fr/WebDataGenerator/Astro";
+    public static final String ASTRO_API_URL = "https://servif-cocktail.insa-lyon.fr/WebDataGenerator/Astro";
 
     /*
-     * Exemple de Méthode pour appeler le Service Web Profil
+     * Méthode pour appeler le Service Web Profil
      */
     public ProfilAstral getProfil(String prenom, Date dateNaissance) throws IOException {
 
@@ -78,9 +65,9 @@ public class AstroAPI {
     }
 
     /*
-     * Exemple de Méthode pour appeler le Service Web Prédictions
+     * Méthode pour appeler le Service Web Prédictions
      */
-    public List<String> getPredictions(String couleur, String animal, int amour, int sante, int travail) throws IOException {
+    public List<String> getPredictions(ProfilAstral profil, int amour, int sante, int travail) throws IOException {
 
         ArrayList<String> result = new ArrayList<>();
 
@@ -88,8 +75,8 @@ public class AstroAPI {
                 ASTRO_API_URL,
                 new BasicNameValuePair("service", "predictions"),
                 new BasicNameValuePair("key", MA_CLE_ASTRO_API),
-                new BasicNameValuePair("couleur", couleur),
-                new BasicNameValuePair("animal", animal),
+                new BasicNameValuePair("couleur", profil.getCouleur()),
+                new BasicNameValuePair("animal", profil.getAnimalTotem()),
                 new BasicNameValuePair("niveau-amour", Integer.toString(amour)),
                 new BasicNameValuePair("niveau-sante", Integer.toString(sante)),
                 new BasicNameValuePair("niveau-travail", Integer.toString(travail))
@@ -166,7 +153,7 @@ public class AstroAPI {
         String prenom = "Raphaël";
         Date dateNaissance = JSON_DATE_FORMAT.parse("1976-07-10");
 
-       ProfilAstral profil = astroApi.getProfil(prenom, dateNaissance);
+        ProfilAstral profil = astroApi.getProfil(prenom, dateNaissance);
 
         String signeZodiaque = profil.getSigneAstro();
         String signeChinois = profil.getSigneChinois();
@@ -186,7 +173,7 @@ public class AstroAPI {
         int niveauSante = 1;
         int niveauTravail = 2;
 
-        List<String> predictions = astroApi.getPredictions(couleur, animal, niveauAmour, niveauSante, niveauTravail);
+        List<String> predictions = astroApi.getPredictions(profil, niveauAmour, niveauSante, niveauTravail);
 
         System.out.println("");
         System.out.println("~<[ Prédictions ]>~");
@@ -200,7 +187,7 @@ public class AstroAPI {
         niveauSante = 3;
         niveauTravail = 4;
 
-        predictions = astroApi.getPredictions(couleur, animal, niveauAmour, niveauSante, niveauTravail);
+        predictions = astroApi.getPredictions(profil, niveauAmour, niveauSante, niveauTravail);
 
         System.out.println("");
         System.out.println("~<[ Prédictions ]>~");

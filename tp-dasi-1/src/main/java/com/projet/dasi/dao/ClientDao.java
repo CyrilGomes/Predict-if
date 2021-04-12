@@ -14,4 +14,10 @@ public class ClientDao {
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Client.class);
         return query.getResultList();
     }
+    
+    /* Mettre à jour un client dans la DB */
+    public Client mettreAJour(Client client) {
+        return JpaUtil.obtenirContextePersistance().merge(client);
+    }
+    
 }

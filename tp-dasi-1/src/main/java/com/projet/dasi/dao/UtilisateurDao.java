@@ -13,10 +13,12 @@ public class UtilisateurDao {
     public void creer(Utilisateur utilisateur) {
         JpaUtil.obtenirContextePersistance().persist(utilisateur);
     }
+    
     /* Supprimer un utilisateur de la DB */
     public void supprimer(Utilisateur utilisateur) {
         JpaUtil.obtenirContextePersistance().remove(utilisateur);
     }
+    
     /* Mettre à jour un utilisateur dans la DB */
     public Utilisateur mettreAJour(Utilisateur utilisateur) {
         return JpaUtil.obtenirContextePersistance().merge(utilisateur);

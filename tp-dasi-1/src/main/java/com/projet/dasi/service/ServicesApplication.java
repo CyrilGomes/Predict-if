@@ -3,7 +3,8 @@ package com.projet.dasi.service;
 import com.projet.dasi.AstroAPI;
 import com.projet.dasi.dao.ConsultationDao;
 import com.projet.dasi.dao.EmployeDao;
-import com.projet.dasi.Message;
+import com.projet.dasi.presentation.Message;
+import com.projet.dasi.dao.ClientDao;
 import com.projet.dasi.dao.JpaUtil;
 import com.projet.dasi.dao.MediumDao;
 import com.projet.dasi.dao.UtilisateurDao;
@@ -12,56 +13,25 @@ import com.projet.dasi.model.Cartomancien;
 import com.projet.dasi.model.Client;
 import com.projet.dasi.model.Consultation;
 import com.projet.dasi.model.Employe;
+import com.projet.dasi.model.Etat;
 import com.projet.dasi.model.Genre;
 import com.projet.dasi.model.Medium;
 import com.projet.dasi.model.ProfilAstral;
 import com.projet.dasi.model.Spirite;
 import com.projet.dasi.model.Utilisateur;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ServicesApplication {
 
     public ServicesApplication() {
     }
 
-    /* Inscrire un client */
-    public Client inscrireClient(Client client) {
-        
-        // Créer les DAOs et le contexte de persistance
-        UtilisateurDao utilisateurDao = new UtilisateurDao();
-        JpaUtil.creerContextePersistance();
-        
-        try {
-            // Générer un Profil Astral et l'attribuer au client à inscrire
-            AstroAPI astroApi = new AstroAPI();
-            ProfilAstral profil = astroApi.getProfil(client.getPrenom(), client.getDateNaissance());
-            client.setProfilAstral(profil);
-
-            // Persister le client
-            JpaUtil.ouvrirTransaction();
-            utilisateurDao.creer(client);
-            JpaUtil.validerTransaction();
-            
-            // Le notifier de son inscription
-            Message.envoyerMail("contact.predict.if", client.getMail(), "Bienvenu chez PREDICT'IF", "Bonjour " + client.getPrenom() + ", nous vous confirmons votre inscription au service PREDICT’IF. Rendezvous vite sur notre site pour consulter votre profil astrologique et profiter des dons incroyables de nos médiums");
-
-        } 
-        catch (Exception ex) {
-            ex.printStackTrace();
-            JpaUtil.annulerTransaction();
-            Message.envoyerMail("contact.predict.if", client.getMail(), "Echec de l’inscription chez PREDICT’IF", "Bonjour " + client.getPrenom() + ", votre inscription au service PREDICT’IF a malencontreusement échoué... \nMerci de recommencer ultérieurement.");
-            client = null;
-        } 
-        finally {
-            JpaUtil.fermerContextePersistance();
-        }
-        return client;
-
-    }
-
-    /* DEBUG: CREER DES CLIENTS*/
+    /* DEBUG: Creer des clients */
     public void creerClients() {
         
          // Créer les DAOs et le contexte de persistance
@@ -103,7 +73,7 @@ public class ServicesApplication {
         
     }
     
-    /* CREER LES EMPLOYES */
+    /* Créer les employes */
     public void creerEmployes() {
 
         // Créer les DAOs et le contexte de persistance
@@ -160,7 +130,7 @@ public class ServicesApplication {
         }
     }
     
-    /* CREER LES MEDIUMS */
+    /* Créer les mediums */
     public void creerMediums() {
         
         // Créer les DAOs et le contexte de persistance
@@ -204,8 +174,43 @@ public class ServicesApplication {
             JpaUtil.fermerContextePersistance();
         }
     }
+    
+    /* Inscrire un client */
+    public Client inscrireClient(Client client) {
+        
+        // Créer les DAOs et le contexte de persistance
+        UtilisateurDao utilisateurDao = new UtilisateurDao();
+        JpaUtil.creerContextePersistance();
+        
+        try {
+            // Générer un Profil Astral et l'attribuer au client à inscrire
+            AstroAPI astroApi = new AstroAPI();
+            ProfilAstral profil = astroApi.getProfil(client.getPrenom(), client.getDateNaissance());
+            client.setProfilAstral(profil);
 
-    /* AUTHENTIFIER UN UTILISATEUR */
+            // Persister le client
+            JpaUtil.ouvrirTransaction();
+            utilisateurDao.creer(client);
+            JpaUtil.validerTransaction();
+            
+            // Le notifier de son inscription
+            Message.envoyerMail("contact.predict.if", client.getMail(), "Bienvenu chez PREDICT'IF", "Bonjour " + client.getPrenom() + ", nous vous confirmons votre inscription au service PREDICT’IF. Rendezvous vite sur notre site pour consulter votre profil astrologique et profiter des dons incroyables de nos médiums");
+
+        } 
+        catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+            Message.envoyerMail("contact.predict.if", client.getMail(), "Echec de l’inscription chez PREDICT’IF", "Bonjour " + client.getPrenom() + ", votre inscription au service PREDICT’IF a malencontreusement échoué... \nMerci de recommencer ultérieurement.");
+            client = null;
+        } 
+        finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return client;
+
+    }
+
+    /* Authentifier un utilisateur */
     public Utilisateur authentifier(String mail, String mdp) {
 
         // Créer les DAOs et le contexte de persistance
@@ -228,7 +233,7 @@ public class ServicesApplication {
         
     }
     
-    /* LISTER TOUS LES MEDIUMS */
+    /* Lister tous les mediums */
     public List<Medium> obtenirMediums() {
         
         // Créer les DAOs et le contexte de persistance
@@ -251,7 +256,7 @@ public class ServicesApplication {
         
     }
     
-    /* LISTER TOUS LES MEDIUMS SELON LEUR TYPE */
+    /* Lister tous les mediums selon leur type */
     public List<Medium> obtenirMediumsSelonType(String type) {
         
         // Créer les DAOs et le contexte de persistance
@@ -274,7 +279,7 @@ public class ServicesApplication {
         
     }
     
-    /* LISTER TOUS LES MEDIUMS SELON LEUR DÉNOMINATION */
+    /* Lister tous les mediums selon leur dénomination */
     public List<Medium> obtenirMediumsSelonDenomination(String denomination) {
         
         // Créer les DAOs et le contexte de persistance
@@ -297,7 +302,7 @@ public class ServicesApplication {
         
     }
     
-    /* DEMANDER CONSULTATION */
+    /* Demander consultation */
     public Consultation demanderConsultation(Client client, Medium medium) {
         
         // Créer les DAOs et le contexte de persistance
@@ -348,4 +353,247 @@ public class ServicesApplication {
         return consultation;
         
     }
+    
+    /* Obtenir la consultation assignée à employé */
+    public Consultation obtenirConsultationAttribueeAEmploye(Employe employe) {
+        
+        // Créer les DAOs et le contexte de persistance
+        ConsultationDao consultationDao = new ConsultationDao();
+        JpaUtil.creerContextePersistance();
+        
+        Consultation consultation;
+        try {
+            // Récupérer tous les médiums d'une dénomination similaire à celle donnée
+            consultation = consultationDao.chercherEnCoursParEmploye(employe);
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            consultation = null;
+        }
+        finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return consultation;
+        
+    }
+    
+    /* Signaler le début d'une consultation (employé est prêt et attend appel client) */
+    public boolean signalerDebutConsultation(Consultation consultation) {
+        
+        // Créer les DAOs et le contexte de persistance
+        ConsultationDao consultationDao = new ConsultationDao();
+        JpaUtil.creerContextePersistance();
+        
+        // Modifier la consultation
+        boolean reussite = true;
+        consultation.setEtat(Etat.EnAttenteClient);
+        
+        // Mettre à jour la modification
+        try {
+            JpaUtil.ouvrirTransaction();
+            consultationDao.mettreAJour(consultation);
+            JpaUtil.validerTransaction();
+        } 
+        catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+            reussite = false;
+        } 
+        finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return reussite;
+        
+    }
+
+    /* Débuter ou terminer une consultation (selon son état) */
+    public boolean demarrerOuTerminerConsultation(Consultation consultation) {
+        
+        // Créer les DAOs et le contexte de persistance
+        ConsultationDao consultationDao = new ConsultationDao();
+        JpaUtil.creerContextePersistance();
+        
+        // Modifier la consultation
+        boolean reussite = true;
+        consultation.setEtat((consultation.getEtat() == Etat.EnCours) ? Etat.Termine : Etat.EnCours);
+        
+        // Mettre à jour la modification
+        try {
+            JpaUtil.ouvrirTransaction();
+            consultationDao.mettreAJour(consultation);
+            JpaUtil.validerTransaction();
+        } 
+        catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+            reussite = false;
+        } 
+        finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return reussite;
+        
+    }
+    
+    /* Annuler une consultation */
+    public boolean annulerConsultation(Consultation consultation) {
+        
+        // Créer les DAOs et le contexte de persistance
+        ConsultationDao consultationDao = new ConsultationDao();
+        JpaUtil.creerContextePersistance();
+        
+        // Modifier la consultation
+        boolean reussite = true;
+        consultation.setEtat(Etat.Annule);
+        
+        // Mettre à jour la modification
+        try {
+            JpaUtil.ouvrirTransaction();
+            consultationDao.mettreAJour(consultation);
+            JpaUtil.validerTransaction();
+        } 
+        catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+            reussite = false;
+        } 
+        finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return reussite;
+        
+    }
+    
+    /* Sauvegarder le commentaire d'une consultation */
+    public boolean sauvegarderCommentaireConsultation(Consultation consultation, String commentaire) {
+        
+        // Créer les DAOs et le contexte de persistance
+        ConsultationDao consultationDao = new ConsultationDao();
+        JpaUtil.creerContextePersistance();
+        
+        // Modifier la consultation
+        boolean reussite = true;
+        consultation.setCommentaire(commentaire);
+        
+        // Mettre à jour la modification
+        try {
+            JpaUtil.ouvrirTransaction();
+            consultationDao.mettreAJour(consultation);
+            JpaUtil.validerTransaction();
+        } 
+        catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+            reussite = false;
+        } 
+        finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return reussite;
+        
+    }
+    
+    /* Obtenir l'historique de consultations d'un client */
+    public List<Consultation> obtenirHistoriqueConsultationsClient(Client client)  {
+     
+        // Créer les DAOs et le contexte de persistance
+        ConsultationDao consultationDao = new ConsultationDao();
+        JpaUtil.creerContextePersistance();
+        
+        List<Consultation> listeConsultations;
+        try {
+            // Récupérer tous les médiums d'une dénomination similaire à celle donnée
+            listeConsultations = consultationDao.chercherParClient(client);
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            listeConsultations = null;
+        }
+        finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return listeConsultations;
+        
+    }
+    
+    /* Obtenir l'historique de consultations d'un client selon un médium donné */
+    public List<Consultation> obtenirHistoriqueConsultationsClientSelonMedium(Client client, Medium medium)  {
+     
+        // Créer les DAOs et le contexte de persistance
+        ConsultationDao consultationDao = new ConsultationDao();
+        JpaUtil.creerContextePersistance();
+        
+        List<Consultation> listeConsultations;
+        try {
+            // Récupérer tous les médiums d'une dénomination similaire à celle donnée
+            listeConsultations = consultationDao.chercherParClientEtMedium(client, medium);
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            listeConsultations = null;
+        }
+        finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return listeConsultations;
+        
+    }
+ 
+    /* Sauvegarder la modification d'un profil de Client */
+    public boolean modifierProfil(Client client, String nom, String prenom, String dateNaissance, String codePostal, String telephone, String email, String motDePasse) {
+        
+        // Créer les DAOs et le contexte de persistance
+        ClientDao clientDao = new ClientDao();
+        JpaUtil.creerContextePersistance();
+        
+        // Modifier la consultation
+        boolean reussite = true;
+        client.setNom(nom);
+        client.setPrenom(prenom);
+        client.setCodePostal(codePostal);
+        client.setTelephone(telephone);
+        client.setMail(email);
+        client.setMotDePasse(motDePasse);
+        try {
+            client.setDateNaissance(AstroAPI.DATE_FORMAT.parse(dateNaissance));
+        }
+        catch (ParseException ex) {
+            ex.printStackTrace();
+            reussite = false;
+        }
+        
+        // Mettre à jour la modification
+        try {
+            JpaUtil.ouvrirTransaction();
+            clientDao.mettreAJour(client);
+            JpaUtil.validerTransaction();
+        } 
+        catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+            reussite = false;
+        } 
+        finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return reussite;
+        
+    }
+    
+    /* Générer des prédictions pour un client selon des scores donnés */
+    public List<String> genererPredictionsClient(Client client, int amour, int sante, int travail) {
+        
+        AstroAPI astroApi = new AstroAPI();
+        List<String> predictions;
+        try {
+            predictions = astroApi.getPredictions(client.getProfilAstral(), amour, sante, travail);
+        } 
+        catch (IOException ex) {
+            ex.printStackTrace();
+            predictions = null;
+        }
+        return predictions;
+        
+    }
+    
 }
