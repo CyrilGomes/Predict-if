@@ -70,4 +70,15 @@ public class ConsultationDao {
         return (Consultation)query.getSingleResult();
     }
     
+    /* Chercher, pour chaque employé, le nombre de clients associés */
+    public List<Object[]> chercherNbClientParEmploye(){
+        String s = "SELECT e.nom, e.prenom, COUNT(DISTINCT c.client) " +
+                   "FROM Consultation c " +
+                   "JOIN c.employe e " +
+                   "WHERE c.etat = :etat " +
+                   "GROUP BY e.nom, e.prenom";
+        TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Consultation.class);
+        query.setParameter("etat", Etat.Termine);
+        return query.getResultList();
+    }
 }

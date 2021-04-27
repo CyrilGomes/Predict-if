@@ -1,5 +1,7 @@
 package com.projet.dasi.service;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.projet.dasi.AstroAPI;
 import com.projet.dasi.dao.ConsultationDao;
 import com.projet.dasi.dao.EmployeDao;
@@ -606,6 +608,29 @@ public class ServicesApplication {
         }
         return predictions;
         
+    }
+    
+    /* Générer les statistiques de répartition des clients par employés */
+    public JsonObject genererStatistiquesRepartitionClients(){
+        ConsultationDao consultationDao = new ConsultationDao();
+        JsonObject statistiques = new JsonObject();
+        List<Object[]> listeStatistiques;
+        
+        JpaUtil.creerContextePersistance();
+        listeStatistiques = consultationDao.chercherNbClientParEmploye();
+        JpaUtil.fermerContextePersistance();
+        if(listeStatistiques != null){
+            JsonArray jsonArray = new JsonArray();
+            listeStatistiques.forEach(infosEmploye -> {
+                JsonObject jsonInfosEmploye = new JsonObject();
+                jsonInfosEmploye.addProperty("Nom", (String)infosEmploye[0] + " " + (String)infosEmploye[1]);
+                jsonInfosEmploye.addProperty("nbClients", (long)infosEmploye[2]);
+                jsonArray.add(jsonInfosEmploye);
+            });
+            statistiques.add("listeEmployes", jsonArray);
+        }
+        
+        return statistiques;
     }
     
 }
