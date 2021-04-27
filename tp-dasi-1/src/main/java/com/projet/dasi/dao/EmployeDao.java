@@ -44,7 +44,7 @@ public class EmployeDao {
     /* Obtenir le nombre total de consultations qu'a fait un employé donné*/
     public Integer obtenirNombreConsultationsFinies(Employe employe) {
         String s = ""
-                + "SELECT COALESCE(SUM(c.id), 0) FROM Consultation c "
+                + "SELECT COALESCE(SUM(1), 0) FROM Consultation c "
                 + "WHERE c.etat = :unEtat AND c.employe = :unEmploye ";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Integer.class);
         query.setParameter("unEmploye", employe);

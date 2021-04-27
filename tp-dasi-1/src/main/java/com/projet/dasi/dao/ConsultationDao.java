@@ -7,6 +7,8 @@ import com.projet.dasi.model.Consultation;
 import com.projet.dasi.model.Employe;
 import com.projet.dasi.model.Etat;
 import com.projet.dasi.model.Medium;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ConsultationDao {
     
@@ -38,10 +40,10 @@ public class ConsultationDao {
     public List<Consultation> chercherParClient(Client client) {
         String s = ""
                 + "SELECT c FROM Consultation c "
-                + "WHERE c.client = :unClient "
-                + "ORDER BY c.nom ASC ";
+                + "WHERE c.client = :unClient AND c.etat = :unEtat";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Consultation.class);
         query.setParameter("unClient", client);
+        query.setParameter("unEtat", Etat.Termine);
         return query.getResultList();
     }
     
@@ -49,11 +51,11 @@ public class ConsultationDao {
     public List<Consultation> chercherParClientEtMedium(Client client, Medium medium) {
         String s = ""
                 + "SELECT c FROM Consultation c "
-                + "WHERE c.client = :unClient AND c.medium = :unMedium"
-                + "ORDER BY c.nom ASC ";
+                + "WHERE c.client = :unClient AND c.medium = :unMedium AND c.etat = :unEtat";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Consultation.class);
         query.setParameter("unClient", client);
         query.setParameter("unMedium", medium);
+        query.setParameter("unEtat", Etat.Termine);
         return query.getResultList();
     }
     
@@ -69,5 +71,26 @@ public class ConsultationDao {
         query.setParameter("unEtat3", Etat.EnCours);
         return (Consultation)query.getSingleResult();
     }
+    
+    /* Chercher le nombre de consultations attribuées à chaque médiums */
+    public List<Object[]> obtenirNombreConsultationsParMedium() {
+        String s = ""
+                + "SELECT c.medium, COUNT(c) FROM Consultation c "
+                + "GROUP BY c.medium ";
+        TypedQuery<Object[]> query = JpaUtil.obtenirContextePersistance().createQuery(s, Object[].class);
+        return query.getResultList();
+    }    
+    
+    /* Chercher le top 5 des médiums avec le plus de consultations */
+    public List<Object[]> obtenirTop5NombreConsultationsParMedium() {
+        String s = ""
+                + "SELECT c.medium, COUNT(c) AS s FROM Consultation c "
+                + "GROUP BY c.medium "
+                + "ORDER BY s ";
+        TypedQuery<Object[]> query = JpaUtil.obtenirContextePersistance().createQuery(s, Object[].class);
+        query.setFirstResult(0);
+        query.setMaxResults(5);
+        return query.getResultList();
+    } 
     
 }

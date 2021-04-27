@@ -1,5 +1,8 @@
 package com.projet.dasi.service;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.projet.dasi.AstroAPI;
 import com.projet.dasi.dao.ConsultationDao;
 import com.projet.dasi.dao.EmployeDao;
@@ -19,6 +22,7 @@ import com.projet.dasi.model.Medium;
 import com.projet.dasi.model.ProfilAstral;
 import com.projet.dasi.model.Spirite;
 import com.projet.dasi.model.Utilisateur;
+import com.projet.dasi.presentation.Saisie;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -174,6 +178,46 @@ public class ServicesApplication {
         finally {
             JpaUtil.fermerContextePersistance();
         }
+    }
+    
+    public void creerConsultations() {
+        
+        // Créer les DAOs et le contexte de persistance
+        ConsultationDao consultationDao = new ConsultationDao();
+        EmployeDao employeDao = new EmployeDao();
+        MediumDao mediumDao = new MediumDao();
+        ClientDao clientDao = new ClientDao();
+        JpaUtil.creerContextePersistance();
+        
+        // Obtenir tous les cients, employes, mediums
+        List<Employe> employes = employeDao.chercherTous();
+        List<Medium> mediums = mediumDao.chercherTous();
+        List<Client> clients = clientDao.chercherTous();
+        
+        // Créer PLEIN  de consultations
+        try {
+            JpaUtil.ouvrirTransaction();
+            for (Employe e : employes) {
+                //if(Math.random() < 0.5) continue;
+                for (Medium m : mediums) {
+                    //if(Math.random() < 0.5) continue;
+                    for (Client c : clients) {
+                        //if(Math.random() < 0.5) continue;
+                        Consultation consultation = new Consultation(e, c, m);
+                        consultation.setEtat(Etat.Termine);
+                        consultation.setDateDebut(new Date());
+                        consultation.setDateFin(new Date((new Date()).getTime() + 60*1000));
+                        consultationDao.creer(consultation);
+                    }
+                }
+            }
+            JpaUtil.validerTransaction();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+        }
+        
     }
     
     /* Inscrire un client */
@@ -333,6 +377,7 @@ public class ServicesApplication {
                 }
                 // Créer une consultation avec l'employé choisi
                 consultation = new Consultation(employe, client, medium);
+                Saisie.lireChaine("PAUSE");
                 // La persister
                 JpaUtil.ouvrirTransaction();
                 consultationDao.creer(consultation);
@@ -393,7 +438,7 @@ public class ServicesApplication {
         // Mettre à jour la modification
         try {
             JpaUtil.ouvrirTransaction();
-            consultationDao.mettreAJour(consultation);
+            consultation = consultationDao.mettreAJour(consultation);
             JpaUtil.validerTransaction();
         } 
         catch (Exception ex) {
@@ -432,7 +477,7 @@ public class ServicesApplication {
         // Mettre à jour la modification
         try {
             JpaUtil.ouvrirTransaction();
-            consultationDao.mettreAJour(consultation);
+            consultation = consultationDao.mettreAJour(consultation);
             JpaUtil.validerTransaction();
         } 
         catch (Exception ex) {
@@ -461,7 +506,7 @@ public class ServicesApplication {
         // Mettre à jour la modification
         try {
             JpaUtil.ouvrirTransaction();
-            consultationDao.mettreAJour(consultation);
+            consultation = consultationDao.mettreAJour(consultation);
             JpaUtil.validerTransaction();
         } 
         catch (Exception ex) {
@@ -490,7 +535,7 @@ public class ServicesApplication {
         // Mettre à jour la modification
         try {
             JpaUtil.ouvrirTransaction();
-            consultationDao.mettreAJour(consultation);
+            consultation = consultationDao.mettreAJour(consultation);
             JpaUtil.validerTransaction();
         } 
         catch (Exception ex) {
@@ -606,6 +651,88 @@ public class ServicesApplication {
         }
         return predictions;
         
+    }
+    
+    public JsonObject genererStatistiquesMedium(boolean top5) {
+        
+        // Créer les DAOs et le contexte de persistance
+        ConsultationDao consultationDao = new ConsultationDao();
+        JpaUtil.creerContextePersistance();
+        
+        // Obtenir les statistiques
+        List<Object[]> liste;
+        try {
+            // Récupérer tous les médiums d'une dénomination similaire à celle donnée
+            if (top5) {
+                liste = consultationDao.obtenirTop5NombreConsultationsParMedium();
+            }
+            else {
+                liste = consultationDao.obtenirNombreConsultationsParMedium();
+            }
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            liste = null;
+        }
+        finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        
+        // Construire le JSON Object
+        JsonObject jsonObject = new JsonObject();
+        if (liste != null) {
+            JsonArray stats = new JsonArray();
+            for (Object[] coupleStats : liste) {
+                Medium medium = (Medium)coupleStats[0];
+                String denominationMedium = medium.getDenomination();
+                String nombreConsultations = coupleStats[1].toString();
+                JsonObject data = new JsonObject();
+                data.add("denominationMedium", new JsonPrimitive(denominationMedium));
+                data.add("nombreConsultations", new JsonPrimitive(nombreConsultations));
+                stats.add(data);
+            }
+            jsonObject.add("listeMediums", stats);
+        }
+        else {
+            jsonObject = null;
+        }
+        return jsonObject;
+        
+    }
+    
+    public JsonObject genererStatistiquesClient() {
+        
+        // Créer les DAOs et le contexte de persistance
+        ConsultationDao consultationDao = new ConsultationDao();
+        ClientDao clientDao = new ClientDao();
+        JpaUtil.creerContextePersistance();
+        
+        JsonObject jsonObject = new JsonObject();
+        JsonArray stats = new JsonArray();
+        
+        // Boucler sur tous les clients
+        List<Client> clients = clientDao.chercherTous();
+        for (Client cli : clients) {
+            // Obtenir leur historique de consultations
+            List<Consultation> historiqueConsultations = consultationDao.chercherParClient(cli);
+            long somme = 0;
+            // Calculer la somme de leur temps d'appel
+            for (Consultation con : historiqueConsultations) {
+                Date debut = con.getDateDebut();
+                Date fin = con.getDateFin();
+                long diff = Math.abs(fin.getTime() - debut.getTime());
+                somme += diff;
+            }
+            Date temps = new Date(somme);
+            // Ajouter les données de chaque client au JSON
+            JsonObject data = new JsonObject();
+            data.add("client", new JsonPrimitive(cli.getNom()));
+            data.add("tempsAppelTotal", new JsonPrimitive(temps.getMinutes()));
+            stats.add(data);
+        }
+        jsonObject.add("listeClients", stats);
+        return jsonObject;
+       
     }
     
 }

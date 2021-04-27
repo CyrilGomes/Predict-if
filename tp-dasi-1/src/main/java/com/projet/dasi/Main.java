@@ -1,5 +1,6 @@
 package com.projet.dasi;
 
+import com.google.gson.JsonObject;
 import com.projet.dasi.dao.ClientDao;
 import com.projet.dasi.dao.ConsultationDao;
 import com.projet.dasi.dao.EmployeDao;
@@ -32,11 +33,13 @@ public class Main {
         servicesApplication.creerClients();
         servicesApplication.creerEmployes();
         servicesApplication.creerMediums();
+        servicesApplication.creerConsultations();
         
         // Authentifier le client test
         requeteAuthentification(false);
         
         // Tester l'attribution des consultations et leur manipulations
+        /*
         Consultation c = requeteDemandeConsultation();
         requeteManipulerConsultation(c, 0); // signaler début
         requeteManipulerConsultation(c, 1); // démarrer
@@ -44,6 +47,8 @@ public class Main {
         requeteManipulerConsultation(c, 1); // arrêter
         requeteManipulerConsultation(c, 2); // annuler (impossible après arrêter?)
         requeteManipulerConsultation(c, 3); // sauvegarder un commentaire
+        */
+        requeteStatistiques();
         
         JpaUtil.destroy();
         
@@ -195,6 +200,28 @@ public class Main {
         
         System.out.println(action + "; " + consultation);
         
+    }
+    
+    public static void requeteStatistiques() {
+        
+        JsonObject res = servicesApplication.genererStatistiquesMedium(true);
+        if (res != null) {
+            System.out.println("> Succès demande statistiques");
+            System.out.println(res.toString());
+        }
+        else {
+            System.out.println("> Échec demande statistiques");
+        }
+        
+        res = servicesApplication.genererStatistiquesClient();
+        if (res != null) {
+            System.out.println("> Succès demande statistiques");
+            System.out.println(res.toString());
+        }
+        else {
+            System.out.println("> Échec demande statistiques");
+        }
+
     }
 
     
