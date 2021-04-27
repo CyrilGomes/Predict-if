@@ -732,7 +732,30 @@ public class ServicesApplication {
         }
         jsonObject.add("listeClients", stats);
         return jsonObject;
-       
+    
+    }
+    
+    /* Générer les statistiques de répartition des clients par employés */
+    public JsonObject genererStatistiquesRepartitionClients(){
+        ConsultationDao consultationDao = new ConsultationDao();
+        JsonObject statistiques = new JsonObject();
+        List<Object[]> listeStatistiques;
+        
+        JpaUtil.creerContextePersistance();
+        listeStatistiques = consultationDao.chercherNbClientParEmploye();
+        JpaUtil.fermerContextePersistance();
+        if(listeStatistiques != null){
+            JsonArray jsonArray = new JsonArray();
+            listeStatistiques.forEach(infosEmploye -> {
+                JsonObject jsonInfosEmploye = new JsonObject();
+                jsonInfosEmploye.addProperty("Nom", (String)infosEmploye[0] + " " + (String)infosEmploye[1]);
+                jsonInfosEmploye.addProperty("nbClients", (long)infosEmploye[2]);
+                jsonArray.add(jsonInfosEmploye);
+            });
+            statistiques.add("listeEmployes", jsonArray);
+        }
+        
+        return statistiques;
     }
     
 }
