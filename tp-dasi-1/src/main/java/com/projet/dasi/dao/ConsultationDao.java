@@ -94,7 +94,7 @@ public class ConsultationDao {
     } 
     
     /* Chercher, pour chaque employé, le nombre de clients associés */
-    public List<Object[]> chercherNbClientParEmploye(){
+    public List<Object[]> obtenirNombreClientsParEmploye(){
         String s = "SELECT e.nom, e.prenom, COUNT(DISTINCT c.client) " +
                    "FROM Consultation c " +
                    "JOIN c.employe e " +

@@ -84,7 +84,7 @@ public class ServicesApplication {
         // Créer les DAOs et le contexte de persistance
         UtilisateurDao utilisateurDao = new UtilisateurDao();
         JpaUtil.creerContextePersistance();
-            
+        
         try {
             // Ajouter des employés à une liste (en dur)
             ArrayList<Employe> employes = new ArrayList<Employe>();
@@ -737,12 +737,14 @@ public class ServicesApplication {
     
     /* Générer les statistiques de répartition des clients par employés */
     public JsonObject genererStatistiquesRepartitionClients(){
+        
+        // Créer les DAOs et le contexte de persistance
         ConsultationDao consultationDao = new ConsultationDao();
         JsonObject statistiques = new JsonObject();
         List<Object[]> listeStatistiques;
         
         JpaUtil.creerContextePersistance();
-        listeStatistiques = consultationDao.chercherNbClientParEmploye();
+        listeStatistiques = consultationDao.obtenirNombreClientsParEmploye();
         JpaUtil.fermerContextePersistance();
         if(listeStatistiques != null){
             JsonArray jsonArray = new JsonArray();
