@@ -22,6 +22,7 @@ import com.projet.dasi.model.Utilisateur;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -387,6 +388,7 @@ public class ServicesApplication {
         // Modifier la consultation
         boolean reussite = true;
         consultation.setEtat(Etat.EnAttenteClient);
+        consultation.setDateDebut(new Date());
         
         // Mettre à jour la modification
         try {
@@ -415,7 +417,17 @@ public class ServicesApplication {
         
         // Modifier la consultation
         boolean reussite = true;
-        consultation.setEtat((consultation.getEtat() == Etat.EnCours) ? Etat.Termine : Etat.EnCours);
+        if (consultation.getEtat() == Etat.EnAttenteClient) {
+            consultation.setEtat(Etat.EnCours); // Démarrer
+            consultation.setDateDebut(new Date());
+        }
+        else if (consultation.getEtat() == Etat.EnCours) {
+            consultation.setEtat(Etat.Termine); // Terminer
+            consultation.setDateFin(new Date());
+        }
+        else {
+            reussite = false;
+        }
         
         // Mettre à jour la modification
         try {

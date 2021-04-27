@@ -29,7 +29,7 @@ public class ConsultationDao {
     
     /* Chercher toutes les consultations de la DB */
     public List<Consultation> chercherTous() {
-        String s = "SELECT c FROM Consultation c ORDER BY c.nom ASC";
+        String s = "SELECT c FROM Consultation c";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Consultation.class);
         return query.getResultList();
     }
@@ -61,8 +61,7 @@ public class ConsultationDao {
     public Consultation chercherEnCoursParEmploye(Employe employe) {
         String s = ""
                 + "SELECT c FROM Consultation c "
-                + "WHERE c.employe = :unEmploye AND c.etat IN (:unEtat1, :unEtat2, :unEtat3) "
-                + "ORDER BY c.nom ASC";
+                + "WHERE c.employe = :unEmploye AND c.etat IN (:unEtat1, :unEtat2, :unEtat3) ";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Consultation.class);
         query.setParameter("unEmploye", employe);
         query.setParameter("unEtat1", Etat.EnAttenteEmploye);

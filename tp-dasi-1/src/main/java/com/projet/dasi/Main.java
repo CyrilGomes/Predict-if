@@ -23,7 +23,7 @@ public class Main {
     
     final static ServicesApplication servicesApplication = new ServicesApplication();
     
-    public static void main(String[] args){
+    public static void main(String[] args) throws InterruptedException {
         
         JpaUtil.init();
         
@@ -36,8 +36,14 @@ public class Main {
         // Authentifier le client test
         requeteAuthentification(false);
         
-        // Tester la demande d'une consultation
-        requeteDemandeConsultation();
+        // Tester l'attribution des consultations et leur manipulations
+        Consultation c = requeteDemandeConsultation();
+        requeteManipulerConsultation(c, 0); // signaler début
+        requeteManipulerConsultation(c, 1); // démarrer
+        Thread.sleep(4000); //attendre le temps d'une consultation...
+        requeteManipulerConsultation(c, 1); // arrêter
+        requeteManipulerConsultation(c, 2); // annuler (impossible après arrêter?)
+        requeteManipulerConsultation(c, 3); // sauvegarder un commentaire
         
         JpaUtil.destroy();
         
@@ -99,7 +105,7 @@ public class Main {
         
     }
 
-    public static void requeteDemandeConsultation() {
+    public static Consultation requeteDemandeConsultation() {
         
         MediumDao mediumDao = new MediumDao();
         ClientDao clientDao = new ClientDao();  
@@ -107,12 +113,12 @@ public class Main {
         ConsultationDao consultationDao = new ConsultationDao();
         JpaUtil.creerContextePersistance();
         
-        // Conditions de test       
+        // Conditions de test (consultations déjà existantes)
         Medium medium = (Medium)mediumDao.chercherParType("Astrologue").get(0);
         Client client = (Client)clientDao.chercherTous().get(0);
         Employe empPrec = (Employe)employeDao.chercherTous().get(0);
         Consultation prec = new Consultation(empPrec, client, medium);
-        prec.setEtat(Etat.Termine);
+        prec.setEtat(Etat.Termine); //Changer en fonction du test
         try {
             JpaUtil.ouvrirTransaction();
             consultationDao.creer(prec);
@@ -121,6 +127,9 @@ public class Main {
         catch(Exception ex) {
            ex.printStackTrace();
            JpaUtil.annulerTransaction();
+        }
+        finally {
+            JpaUtil.fermerContextePersistance();
         }
         System.out.println(empPrec);
         
@@ -132,6 +141,59 @@ public class Main {
         } else {
             System.out.println("> Echec demande consultation");
         }
+        
+        JpaUtil.creerContextePersistance();
+        Employe emp = (Employe)employeDao.chercherTous().get(1); // Cet employé a normalement été sélectionné 
+        JpaUtil.fermerContextePersistance();
+        return servicesApplication.obtenirConsultationAttribueeAEmploye(emp);
+    }
+    
+    public static void requeteDemandePredictions() {
+        
+        ClientDao clientDao = new ClientDao();  
+        JpaUtil.creerContextePersistance();
+        
+        Client client = (Client)clientDao.chercherTous().get(0);
+        System.out.println(client);
+        
+        JpaUtil.fermerContextePersistance();
+        
+        List<String> res = servicesApplication.genererPredictionsClient(client, 5, 2, 1);
+        if (res != null) {
+            System.out.println("> Succès demande prédictions");
+            for (String s : res) {
+                System.out.println(s);
+            }
+        } else {
+            System.out.println("> Echec demande prédictions");
+        }
+           
+    }
+    
+    public static void requeteManipulerConsultation(Consultation consultation, int action) {
+        
+        String commentaire = "coucou ceci est un commentaire";
+        
+        switch (action) {
+            // Signaler début
+            case 0:
+                servicesApplication.signalerDebutConsultation(consultation);
+                break;
+            // Démarrer / Arrêter
+            case 1:
+                servicesApplication.demarrerOuTerminerConsultation(consultation);
+                break;
+            // Annuler
+            case 2:
+                servicesApplication.annulerConsultation(consultation);
+                break;
+            // Sauvegarder commentaires
+            case 3:
+                servicesApplication.sauvegarderCommentaireConsultation(consultation, commentaire);
+                break;
+        }
+        
+        System.out.println(action + "; " + consultation);
         
     }
 
