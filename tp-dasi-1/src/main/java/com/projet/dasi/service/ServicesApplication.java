@@ -22,14 +22,11 @@ import com.projet.dasi.model.Medium;
 import com.projet.dasi.model.ProfilAstral;
 import com.projet.dasi.model.Spirite;
 import com.projet.dasi.model.Utilisateur;
-import com.projet.dasi.presentation.Saisie;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ServicesApplication {
 
@@ -198,11 +195,11 @@ public class ServicesApplication {
         try {
             JpaUtil.ouvrirTransaction();
             for (Employe e : employes) {
-                //if(Math.random() < 0.5) continue;
+                if(Math.random() < 0.5) continue;
                 for (Medium m : mediums) {
-                    //if(Math.random() < 0.5) continue;
+                    if(Math.random() < 0.5) continue;
                     for (Client c : clients) {
-                        //if(Math.random() < 0.5) continue;
+                        if(Math.random() < 0.5) continue;
                         Consultation consultation = new Consultation(e, c, m);
                         consultation.setEtat(Etat.Termine);
                         consultation.setDateDebut(new Date());
@@ -262,18 +259,11 @@ public class ServicesApplication {
         UtilisateurDao utilisateurDao = new UtilisateurDao();
         JpaUtil.creerContextePersistance();
         
-        Utilisateur utilisateur;
-        try {
-            // Authentifier un utilisateur avec le mail et le mot de passe donnés
-            utilisateur = utilisateurDao.authentifier(mail, mdp);
-        } 
-        catch (Exception ex) {
-            ex.printStackTrace();
-            utilisateur = null;
-        } 
-        finally {
-            JpaUtil.fermerContextePersistance();
-        }
+        // Authentifier un utilisateur avec le mail et le mot de passe donnés
+        Utilisateur utilisateur = utilisateurDao.authentifier(mail, mdp);
+
+        JpaUtil.fermerContextePersistance();
+        
         return utilisateur;
         
     }
@@ -285,18 +275,11 @@ public class ServicesApplication {
         MediumDao mediumDao = new MediumDao();
         JpaUtil.creerContextePersistance();
         
-        List<Medium> listeMediums;
-        try {
-            // Récupérer tous les médiums (triés par ordre croissant de dénomination)
-            listeMediums = mediumDao.chercherTous();        
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-            listeMediums = null;
-        }
-        finally {
-            JpaUtil.fermerContextePersistance();
-        }
+        // Récupérer tous les médiums (triés par ordre croissant de dénomination)
+        List<Medium> listeMediums = mediumDao.chercherTous();        
+
+        JpaUtil.fermerContextePersistance();
+        
         return listeMediums;  
         
     }
@@ -308,18 +291,11 @@ public class ServicesApplication {
         MediumDao mediumDao = new MediumDao();
         JpaUtil.creerContextePersistance();
         
-        List<Medium> listeMediums;
-        try {
-            // Récupérer tous les médiums du type donné
-            listeMediums = mediumDao.chercherParType(type);        
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-            listeMediums = null;
-        }
-        finally {
-            JpaUtil.fermerContextePersistance();
-        }
+        // Récupérer tous les médiums du type donné
+        List<Medium> listeMediums = mediumDao.chercherParType(type);        
+
+        JpaUtil.fermerContextePersistance();
+        
         return listeMediums;
         
     }
@@ -331,18 +307,11 @@ public class ServicesApplication {
         MediumDao mediumDao = new MediumDao();
         JpaUtil.creerContextePersistance();
         
-        List<Medium> listeMediums;
-        try {
-            // Récupérer tous les médiums d'une dénomination similaire à celle donnée
-            listeMediums = mediumDao.chercherParDenomination(denomination);
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-            listeMediums = null;
-        }
-        finally {
-            JpaUtil.fermerContextePersistance();
-        }
+        // Récupérer tous les médiums d'une dénomination similaire à celle donnée
+        List<Medium> listeMediums = mediumDao.chercherParDenomination(denomination);
+
+        JpaUtil.fermerContextePersistance();
+        
         return listeMediums;
         
     }
@@ -356,46 +325,46 @@ public class ServicesApplication {
         JpaUtil.creerContextePersistance();
         
         Consultation consultation;
-        try {
-            // Obtenir les employés qui sont disponibles et qui sont du bon genre
-            List<Employe> employesDisponiblesDeBonGenre = employeDao.chercherEmployesDisponiblesEtDeGenre(medium.getGenre());
-            // S'il y en a, 
-            if (employesDisponiblesDeBonGenre.size() > 0) {
-                // Chercher celui qui a fait le moins de consultations
-                Integer nbConsultationsMin = Integer.MAX_VALUE;
-                Employe employe = null;
-                for (Employe e : employesDisponiblesDeBonGenre) {
-                    Integer nbConsultations = employeDao.obtenirNombreConsultationsFinies(e);
-                    if (nbConsultations != null && nbConsultations < nbConsultationsMin) {
-                        nbConsultationsMin = nbConsultations;
-                        employe = e;
-                    }
+        
+        // Obtenir les employés qui sont disponibles et qui sont du bon genre
+        List<Employe> employesDisponiblesDeBonGenre = employeDao.chercherEmployesDisponiblesEtDeGenre(medium.getGenre());
+        // S'il y en a, 
+        if (employesDisponiblesDeBonGenre.size() > 0) {
+            // Chercher celui qui a fait le moins de consultations
+            Integer nbConsultationsMin = Integer.MAX_VALUE;
+            Employe employe = null;
+            for (Employe e : employesDisponiblesDeBonGenre) {
+                Integer nbConsultations = employeDao.obtenirNombreConsultationsFinies(e);
+                if (nbConsultations != null && nbConsultations < nbConsultationsMin) {
+                    nbConsultationsMin = nbConsultations;
+                    employe = e;
                 }
-                // Si personne n'a fait de consultations, prendre le premier
-                if (nbConsultationsMin == Integer.MAX_VALUE) {
-                    employe = employesDisponiblesDeBonGenre.get(0);
-                }
-                // Créer une consultation avec l'employé choisi
-                consultation = new Consultation(employe, client, medium);
-                Saisie.lireChaine("PAUSE");
+            }
+            // Si personne n'a fait de consultations, prendre le premier
+            if (nbConsultationsMin == Integer.MAX_VALUE) {
+                employe = employesDisponiblesDeBonGenre.get(0);
+            }
+            // Créer une consultation avec l'employé choisi
+            consultation = new Consultation(employe, client, medium);
+            try {
                 // La persister
                 JpaUtil.ouvrirTransaction();
                 consultationDao.creer(consultation);
                 JpaUtil.validerTransaction();
             }
-            // Si aucun employé disponible et de bon genre, consultation impossible
-            else {
+            catch (Exception ex) {
+                ex.printStackTrace();
+                JpaUtil.annulerTransaction();
                 consultation = null;
             }
         }
-        catch (Exception ex) {
-            ex.printStackTrace();
-            JpaUtil.annulerTransaction();
+        // Si aucun employé disponible et de bon genre, consultation impossible
+        else {
             consultation = null;
         }
-        finally {
-            JpaUtil.fermerContextePersistance();
-        }
+
+        JpaUtil.fermerContextePersistance();
+
         return consultation;
         
     }
@@ -407,18 +376,11 @@ public class ServicesApplication {
         ConsultationDao consultationDao = new ConsultationDao();
         JpaUtil.creerContextePersistance();
         
-        Consultation consultation;
-        try {
-            // Récupérer tous les médiums d'une dénomination similaire à celle donnée
-            consultation = consultationDao.chercherEnCoursParEmploye(employe);
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-            consultation = null;
-        }
-        finally {
-            JpaUtil.fermerContextePersistance();
-        }
+        // Récupérer tous les médiums d'une dénomination similaire à celle donnée
+        Consultation consultation = consultationDao.chercherEnCoursParEmploye(employe);
+
+        JpaUtil.fermerContextePersistance();
+        
         return consultation;
         
     }
@@ -462,16 +424,18 @@ public class ServicesApplication {
         
         // Modifier la consultation
         boolean reussite = true;
-        if (consultation.getEtat() == Etat.EnAttenteClient) {
-            consultation.setEtat(Etat.EnCours); // Démarrer
-            consultation.setDateDebut(new Date());
-        }
-        else if (consultation.getEtat() == Etat.EnCours) {
-            consultation.setEtat(Etat.Termine); // Terminer
-            consultation.setDateFin(new Date());
-        }
-        else {
-            reussite = false;
+        switch (consultation.getEtat()) {
+            case EnAttenteClient:
+                consultation.setEtat(Etat.EnCours); // Démarrer
+                consultation.setDateDebut(new Date());
+                break;
+            case EnCours:
+                consultation.setEtat(Etat.Termine); // Terminer
+                consultation.setDateFin(new Date());
+                break;
+            default:
+                reussite = false;
+                break;
         }
         
         // Mettre à jour la modification
@@ -557,18 +521,11 @@ public class ServicesApplication {
         ConsultationDao consultationDao = new ConsultationDao();
         JpaUtil.creerContextePersistance();
         
-        List<Consultation> listeConsultations;
-        try {
-            // Récupérer tous les médiums d'une dénomination similaire à celle donnée
-            listeConsultations = consultationDao.chercherParClient(client);
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-            listeConsultations = null;
-        }
-        finally {
-            JpaUtil.fermerContextePersistance();
-        }
+        // Récupérer tous les médiums d'une dénomination similaire à celle donnée
+        List<Consultation> listeConsultations = consultationDao.chercherParClient(client);
+       
+        JpaUtil.fermerContextePersistance();
+            
         return listeConsultations;
         
     }
@@ -580,18 +537,11 @@ public class ServicesApplication {
         ConsultationDao consultationDao = new ConsultationDao();
         JpaUtil.creerContextePersistance();
         
-        List<Consultation> listeConsultations;
-        try {
-            // Récupérer tous les médiums d'une dénomination similaire à celle donnée
-            listeConsultations = consultationDao.chercherParClientEtMedium(client, medium);
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-            listeConsultations = null;
-        }
-        finally {
-            JpaUtil.fermerContextePersistance();
-        }
+        // Récupérer tous les médiums d'une dénomination similaire à celle donnée
+        List<Consultation> listeConsultations = consultationDao.chercherParClientEtMedium(client, medium);
+        
+        JpaUtil.fermerContextePersistance();
+        
         return listeConsultations;
         
     }
@@ -659,24 +609,16 @@ public class ServicesApplication {
         ConsultationDao consultationDao = new ConsultationDao();
         JpaUtil.creerContextePersistance();
         
-        // Obtenir les statistiques
-        List<Object[]> liste;
-        try {
-            // Récupérer tous les médiums d'une dénomination similaire à celle donnée
-            if (top5) {
-                liste = consultationDao.obtenirTop5NombreConsultationsParMedium();
-            }
-            else {
-                liste = consultationDao.obtenirNombreConsultationsParMedium();
-            }
+        // Récupérer tous les médiums d'une dénomination similaire à celle donnée
+        List<Object[]> liste; 
+        if (top5) {
+            liste = consultationDao.obtenirTop5NombreConsultationsParMedium();
         }
-        catch (Exception ex) {
-            ex.printStackTrace();
-            liste = null;
+        else {
+            liste = consultationDao.obtenirNombreConsultationsParMedium();
         }
-        finally {
-            JpaUtil.fermerContextePersistance();
-        }
+        
+        JpaUtil.fermerContextePersistance();
         
         // Construire le JSON Object
         JsonObject jsonObject = new JsonObject();

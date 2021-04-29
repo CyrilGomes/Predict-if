@@ -7,8 +7,6 @@ import com.projet.dasi.model.Consultation;
 import com.projet.dasi.model.Employe;
 import com.projet.dasi.model.Etat;
 import com.projet.dasi.model.Medium;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ConsultationDao {
     
