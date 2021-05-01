@@ -355,7 +355,7 @@ public class ServicesApplication {
         ConsultationDao consultationDao = new ConsultationDao();
         JpaUtil.creerContextePersistance();
         
-        // Récupérer tous les médiums d'une dénomination similaire à celle donnée
+        // Récupérer la consultation en cours assignée à l'employé donné
         Consultation consultation = consultationDao.chercherEnCoursParEmploye(employe);
 
         JpaUtil.fermerContextePersistance();
@@ -592,6 +592,7 @@ public class ServicesApplication {
         
     }
     
+    /* Générer les statistiques des médiums les plus populaires (top 5 ou tous les médiums)*/
     public JsonObject genererStatistiquesMediumsPopulaires(boolean top5) {
         
         // Créer les DAOs et le contexte de persistance
@@ -628,6 +629,7 @@ public class ServicesApplication {
         
     }
     
+    /* Générer les statistiques de temps d'appel par client */
     public JsonObject genererStatistiquesTempsAppelClients() {
         
         // Créer les DAOs et le contexte de persistance

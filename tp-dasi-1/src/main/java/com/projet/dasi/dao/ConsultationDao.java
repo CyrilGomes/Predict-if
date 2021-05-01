@@ -79,8 +79,7 @@ public class ConsultationDao {
     public List<Object[]> obtenirNombreConsultationsParMedium() {
         String s = ""
                 + "SELECT c.medium, COUNT(c) AS s FROM Consultation c "
-                + "GROUP BY c.medium "
-                + "ORDER BY s DESC";
+                + "GROUP BY c.medium ";
         TypedQuery<Object[]> query = JpaUtil.obtenirContextePersistance().createQuery(s, Object[].class);
         return query.getResultList();
     }    
