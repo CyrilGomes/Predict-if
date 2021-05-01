@@ -2,17 +2,10 @@ package com.projet.dasi;
 
 import com.google.gson.JsonObject;
 import com.projet.dasi.dao.ClientDao;
-import com.projet.dasi.dao.ConsultationDao;
-import com.projet.dasi.dao.EmployeDao;
 import com.projet.dasi.dao.JpaUtil;
-import com.projet.dasi.dao.MediumDao;
 import com.projet.dasi.model.Client;
 import com.projet.dasi.model.Consultation;
-import com.projet.dasi.model.Employe;
-import com.projet.dasi.model.Etat;
-import com.projet.dasi.model.Genre;
 import com.projet.dasi.model.Medium;
-import com.projet.dasi.model.Spirite;
 import com.projet.dasi.model.Utilisateur;
 import com.projet.dasi.presentation.Saisie;
 import com.projet.dasi.service.ServicesApplication;
@@ -29,10 +22,12 @@ public class Main {
         
         JpaUtil.init();
         
-        // Créer un client test, des employés, et des médiums
-        //requeteCreationClient();
+        // Créer des employés, et des médiums
         servicesApplication.initialiserEmployes();
         servicesApplication.initialiserMediums();
+        
+        // Générer des clients tests et des consultations
+        //requeteCreationClient();
         servicesApplication.genererClients();
         servicesApplication.genererConsultations();
         
@@ -45,13 +40,14 @@ public class Main {
             if (c != null) {
                 requeteManipulerConsultation(c, 0); // signaler début
                 requeteManipulerConsultation(c, 1); // démarrer
-                Thread.sleep(4000); //attendre le temps d'une consultation...
+                Thread.sleep(2000); //attendre 2 secondes le temps d'une consultation...
                 requeteManipulerConsultation(c, 1); // arrêter
                 requeteManipulerConsultation(c, 2); // annuler (impossible après arrêter?)
                 requeteManipulerConsultation(c, 3); // sauvegarder un commentaire
             }
         }
         
+        // Tester la génération de statistiques
         requeteStatistiques();
         
         JpaUtil.destroy();

@@ -2,7 +2,6 @@ package com.projet.dasi.service;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import com.projet.dasi.AstroAPI;
 import com.projet.dasi.dao.ConsultationDao;
 import com.projet.dasi.dao.EmployeDao;
