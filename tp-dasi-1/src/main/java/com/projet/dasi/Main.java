@@ -23,6 +23,7 @@ import java.util.List;
 public class Main {
     
     final static ServicesApplication servicesApplication = new ServicesApplication();
+    static Utilisateur utilisateurConnecte;
     
     public static void main(String[] args) throws InterruptedException {
         
@@ -30,24 +31,27 @@ public class Main {
         
         // Créer un client test, des employés, et des médiums
         //requeteCreationClient();
-        servicesApplication.creerClients();
-        servicesApplication.creerEmployes();
-        servicesApplication.creerMediums();
-        servicesApplication.creerConsultations();
+        servicesApplication.initialiserEmployes();
+        servicesApplication.initialiserMediums();
+        servicesApplication.genererClients();
+        servicesApplication.genererConsultations();
         
         // Authentifier le client test
-        requeteAuthentification(false);
+        utilisateurConnecte = requeteAuthentification(false);
         
         // Tester l'attribution des consultations et leur manipulations
-        /*
-        Consultation c = requeteDemandeConsultation();
-        requeteManipulerConsultation(c, 0); // signaler début
-        requeteManipulerConsultation(c, 1); // démarrer
-        Thread.sleep(4000); //attendre le temps d'une consultation...
-        requeteManipulerConsultation(c, 1); // arrêter
-        requeteManipulerConsultation(c, 2); // annuler (impossible après arrêter?)
-        requeteManipulerConsultation(c, 3); // sauvegarder un commentaire
-        */
+        if (utilisateurConnecte != null) {
+            Consultation c = requeteDemandeConsultation(false);
+            if (c != null) {
+                requeteManipulerConsultation(c, 0); // signaler début
+                requeteManipulerConsultation(c, 1); // démarrer
+                Thread.sleep(4000); //attendre le temps d'une consultation...
+                requeteManipulerConsultation(c, 1); // arrêter
+                requeteManipulerConsultation(c, 2); // annuler (impossible après arrêter?)
+                requeteManipulerConsultation(c, 3); // sauvegarder un commentaire
+            }
+        }
+        
         requeteStatistiques();
         
         JpaUtil.destroy();
@@ -86,7 +90,7 @@ public class Main {
 
     }
 
-    public static void requeteAuthentification(boolean saisie) {
+    public static Utilisateur requeteAuthentification(boolean saisie) {
         
         final String mail, motDePasse;
         
@@ -107,50 +111,42 @@ public class Main {
         else{
             System.out.println("Echec de connexion");
         }
+        return res; 
         
     }
 
-    public static Consultation requeteDemandeConsultation() {
+    public static Consultation requeteDemandeConsultation(boolean saisie) {
         
-        MediumDao mediumDao = new MediumDao();
-        ClientDao clientDao = new ClientDao();  
-        EmployeDao employeDao = new EmployeDao();
-        ConsultationDao consultationDao = new ConsultationDao();
-        JpaUtil.creerContextePersistance();
+        final String denominationMedium;
         
-        // Conditions de test (consultations déjà existantes)
-        Medium medium = (Medium)mediumDao.chercherParType("Astrologue").get(0);
-        Client client = (Client)clientDao.chercherTous().get(0);
-        Employe empPrec = (Employe)employeDao.chercherTous().get(0);
-        Consultation prec = new Consultation(empPrec, client, medium);
-        prec.setEtat(Etat.Termine); //Changer en fonction du test
-        try {
-            JpaUtil.ouvrirTransaction();
-            consultationDao.creer(prec);
-            JpaUtil.validerTransaction();
+        if (saisie) {
+            denominationMedium = Saisie.lireChaine("Médium à consulter: ");
         }
-        catch(Exception ex) {
-           ex.printStackTrace();
-           JpaUtil.annulerTransaction();
+        else {
+            denominationMedium = "Mme Irma";
         }
-        finally {
-            JpaUtil.fermerContextePersistance();
+
+        List<Medium> mediums = servicesApplication.obtenirMediumsSelonDenomination(denominationMedium);
+        Medium medium = null;
+        Consultation res = null;
+        if (mediums.size() > 0) {
+            medium = mediums.get(0);
         }
-        System.out.println(empPrec);
-        
-        // Test de demande de consultation
-        Consultation res = servicesApplication.demanderConsultation(client, medium);
-        if (res != null) {
-            System.out.println("> Succès demande consultation");
-            System.out.println(res.toString());
-        } else {
-            System.out.println("> Echec demande consultation");
+        if (medium != null) {
+            res = servicesApplication.demanderConsultation((Client)utilisateurConnecte, medium);
+            if (res != null) {
+                System.out.println("> Succès demande consultation");
+                System.out.println(res.toString());
+            } else {
+                System.out.println("> Echec demande consultation");
+            }
+        }
+        else {
+            System.out.println("> Le médium entré n'a pas été trouvé");
         }
         
-        JpaUtil.creerContextePersistance();
-        Employe emp = (Employe)employeDao.chercherTous().get(1); // Cet employé a normalement été sélectionné 
-        JpaUtil.fermerContextePersistance();
-        return servicesApplication.obtenirConsultationAttribueeAEmploye(emp);
+        return res;
+        
     }
     
     public static void requeteDemandePredictions() {
@@ -204,22 +200,31 @@ public class Main {
     
     public static void requeteStatistiques() {
         
-        JsonObject res = servicesApplication.genererStatistiquesMedium(true);
+        JsonObject res = servicesApplication.genererStatistiquesMediumsPopulaires(true);
         if (res != null) {
-            System.out.println("> Succès demande statistiques");
+            System.out.println("> Succès demande statistiques mediums");
             System.out.println(res.toString());
         }
         else {
-            System.out.println("> Échec demande statistiques");
+            System.out.println("> Échec demande statistiques mediums");
         }
         
-        res = servicesApplication.genererStatistiquesClient();
+        res = servicesApplication.genererStatistiquesTempsAppelClients();
         if (res != null) {
-            System.out.println("> Succès demande statistiques");
+            System.out.println("> Succès demande statistiques clients");
             System.out.println(res.toString());
         }
         else {
-            System.out.println("> Échec demande statistiques");
+            System.out.println("> Échec demande statistiques clients");
+        }
+        
+        res = servicesApplication.genererStatistiquesRepartitionClientsParEmploye();
+        if (res != null) {
+            System.out.println("> Succès demande statistiques employes");
+            System.out.println(res.toString());
+        }
+        else {
+            System.out.println("> Échec demande statistiques employes");
         }
 
     }

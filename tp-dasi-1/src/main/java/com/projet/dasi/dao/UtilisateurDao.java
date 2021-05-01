@@ -34,7 +34,12 @@ public class UtilisateurDao {
         String s = "SELECT u from Utilisateur u WHERE u.mail = :unMail AND u.motDePasse = :unMotDePasse";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Utilisateur.class);
         query.setParameter("unMotDePasse", mdp);
-        query.setParameter("unMail", mail);    
-        return (Utilisateur)query.getSingleResult();
+        query.setParameter("unMail", mail);  
+        List<Utilisateur> utilisateurs = query.getResultList();
+        Utilisateur utilisateur = null;
+        if (utilisateurs.size() > 0) {
+            utilisateur = utilisateurs.get(0);
+        }
+        return utilisateur;
     }
 }

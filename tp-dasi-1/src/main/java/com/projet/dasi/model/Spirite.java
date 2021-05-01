@@ -14,8 +14,8 @@ public class Spirite extends Medium implements Serializable {
     private String support;
     
     /* Constructeurs */
-    public Spirite(String denomination, String presentation, Genre genre, String support) {
-        super(denomination, presentation, genre);
+    public Spirite(Genre genre, String denomination, String presentation, String support) {
+        super(genre, denomination, presentation);
         this.support = support;
     }
     public Spirite() {

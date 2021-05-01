@@ -35,7 +35,7 @@ public class ConsultationDao {
     }
 
     /* Chercher les consultations d'un certain client */
-    public List<Consultation> chercherParClient(Client client) {
+    public List<Consultation> chercherTermineParClient(Client client) {
         String s = ""
                 + "SELECT c FROM Consultation c "
                 + "WHERE c.client = :unClient AND c.etat = :unEtat";
@@ -46,7 +46,7 @@ public class ConsultationDao {
     }
     
     /* Chercher les consultations d'un certain client avec un certain médium */
-    public List<Consultation> chercherParClientEtMedium(Client client, Medium medium) {
+    public List<Consultation> chercherTermineParClientEtMedium(Client client, Medium medium) {
         String s = ""
                 + "SELECT c FROM Consultation c "
                 + "WHERE c.client = :unClient AND c.medium = :unMedium AND c.etat = :unEtat";
@@ -67,14 +67,20 @@ public class ConsultationDao {
         query.setParameter("unEtat1", Etat.EnAttenteEmploye);
         query.setParameter("unEtat2", Etat.EnAttenteClient);
         query.setParameter("unEtat3", Etat.EnCours);
-        return (Consultation)query.getSingleResult();
+        List<Consultation> consultations = query.getResultList();
+        Consultation consultation = null;
+        if (consultations.size() > 0) {
+            consultation = consultations.get(0);
+        }
+        return consultation;
     }
     
     /* Chercher le nombre de consultations attribuées à chaque médiums */
     public List<Object[]> obtenirNombreConsultationsParMedium() {
         String s = ""
-                + "SELECT c.medium, COUNT(c) FROM Consultation c "
-                + "GROUP BY c.medium ";
+                + "SELECT c.medium, COUNT(c) AS s FROM Consultation c "
+                + "GROUP BY c.medium "
+                + "ORDER BY s DESC";
         TypedQuery<Object[]> query = JpaUtil.obtenirContextePersistance().createQuery(s, Object[].class);
         return query.getResultList();
     }    
@@ -84,7 +90,7 @@ public class ConsultationDao {
         String s = ""
                 + "SELECT c.medium, COUNT(c) AS s FROM Consultation c "
                 + "GROUP BY c.medium "
-                + "ORDER BY s ";
+                + "ORDER BY s DESC ";
         TypedQuery<Object[]> query = JpaUtil.obtenirContextePersistance().createQuery(s, Object[].class);
         query.setFirstResult(0);
         query.setMaxResults(5);

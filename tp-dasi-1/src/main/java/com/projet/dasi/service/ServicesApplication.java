@@ -24,6 +24,7 @@ import com.projet.dasi.model.Spirite;
 import com.projet.dasi.model.Utilisateur;
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,51 +33,9 @@ public class ServicesApplication {
 
     public ServicesApplication() {
     }
-
-    /* DEBUG: Creer des clients */
-    public void creerClients() {
-        
-         // Créer les DAOs et le contexte de persistance
-        UtilisateurDao utilisateurDao = new UtilisateurDao();
-            
-        try {
-            // Ajouter des employés à une liste (en dur)
-            ArrayList<Client> clients = new ArrayList<Client>();
-            clients.add(new Client(
-                    "Bertrand",
-                    "Usclat",
-                    "bertrand.usclat@yahoo.ro",
-                    "superCanardXXL",
-                    "0685123975",
-                    "69200",
-                    AstroAPI.DATE_FORMAT.parse("25/06/1965")
-            ));
-            clients.add(new Client(
-                    "Jeannine",
-                    "Odoux",
-                    "jeannette_xxx@trashmail.fr",
-                    "secretPassword",
-                    "0782953267",
-                    "32100",
-                    AstroAPI.DATE_FORMAT.parse("20/08/1985")
-            ));
-
-            // Inscrire les clients 
-            for (Client c : clients) {
-                inscrireClient(c);
-            }
-        } 
-        catch (ParseException ex) {
-            ex.printStackTrace();
-        } 
-        catch (Exception ex) {
-            ex.printStackTrace();
-        } 
-        
-    }
     
-    /* Créer les employes */
-    public void creerEmployes() {
+    /* Créer les employes dans la BD */
+    public void initialiserEmployes() {
 
         // Créer les DAOs et le contexte de persistance
         UtilisateurDao utilisateurDao = new UtilisateurDao();
@@ -85,34 +44,23 @@ public class ServicesApplication {
         try {
             // Ajouter des employés à une liste (en dur)
             ArrayList<Employe> employes = new ArrayList<Employe>();
-            employes.add(new Employe(Genre.Homme,
-                    "Martin",
-                    "Teibo",
-                    "martin.teibo@wanadoo.fr",
-                    "12345",
-                    "0102030405",
-                    "00000",
-                    AstroAPI.DATE_FORMAT.parse("01/12/2000")
-            ));
-            employes.add(new Employe(Genre.Homme,
-                    "Jammy",
-                    "Bombaz",
-                    "awesome.man@bing.uk",
-                    "12345",
-                    "0102030405",
-                    "00000",
-                    AstroAPI.DATE_FORMAT.parse("01/12/2000")
-            ));
-            employes.add(new Employe(Genre.Femme,
-                    "Paola",
-                    "Pritchard",
-                    "paola.pritchard@hotmail.com",
-                    "12345",
-                    "0102030405",
-                    "00000",
-                    AstroAPI.DATE_FORMAT.parse("01/12/2000")
-            ));
-
+            employes.add(new Employe(Genre.Femme, "Camille", "Martin", "camcam.marmar@yahoo.fr", ")arkIsland48", "0785552975", "84230", AstroAPI.DATE_FORMAT.parse("18/11/1990")));
+            employes.add(new Employe(Genre.Homme, "Martin", "Teibo", "martin.teibo@wanadoo.fr", "blu3Amber73", "0655583971", "69230", AstroAPI.DATE_FORMAT.parse("13/08/2000")));
+            employes.add(new Employe(Genre.Homme, "Jammy", "Bombaz", "jammy-man@bing.uk", "o)dSoap89", "0765552655", "56812", AstroAPI.DATE_FORMAT.parse("19/10/1982")));
+            employes.add(new Employe(Genre.Femme, "Paola", "Pritchard", "paola.pritchard@hotmail.com", "=reshBoot79", "0700555359", "13657", AstroAPI.DATE_FORMAT.parse("01/12/2000")));
+            employes.add(new Employe(Genre.Femme, "Victoire-Michèle", "Lejeune", "v.michele.lejeune@gmail.fr", "goldNor+h37", "0928423954", "97048", AstroAPI.DATE_FORMAT.parse("15/06/1976")));
+            employes.add(new Employe(Genre.Femme, "Monique", "Gonzalez", "mogonzalez42@yahoo.com", "oliveNoi$e90", "0178385422", "42681", AstroAPI.DATE_FORMAT.parse("28/05/1990")));
+            employes.add(new Employe(Genre.Homme, "Yves", "Vincent", "yves.vinvin@wanadoo.fr", "oliveNoi$e90", "0770733813", "93112", AstroAPI.DATE_FORMAT.parse("09/07/1993")));
+            employes.add(new Employe(Genre.Homme, "Richard-Patrick", "Denis", "patriri.denis@gmail.fr", "whit3Robin72", "0913135610", "67318", AstroAPI.DATE_FORMAT.parse("27/05/1951")));
+            employes.add(new Employe(Genre.Homme, "Louis", "Guyot-Perrin", "louis-gprrin@hotmail.fr", "dar<Mass11", "0667981441", "51414", AstroAPI.DATE_FORMAT.parse("04/10/1992")));
+            employes.add(new Employe(Genre.Femme, "Suzanne", "Jacob", "zazanne.jacob@gmail.com", "lushMus+ang36", "0651663718", "42681", AstroAPI.DATE_FORMAT.parse("14/07/1983")));   
+            employes.add(new Employe(Genre.Homme, "Dimitri", "Rolland", "dimirolan84@yahoo.com", "fh7rdm3g", "0761596478", "35370", AstroAPI.DATE_FORMAT.parse("03/05/1984")));
+            employes.add(new Employe(Genre.Homme, "Florence", "Pottier", "flora.potter@wanadoo.fr", "ujvz6wpw", "0673861235", "69490", AstroAPI.DATE_FORMAT.parse("26/07/1987")));
+            employes.add(new Employe(Genre.Femme, "Marie", "Doucet", "douce-maria@gmail.fr", "a5m66iqt", "0614336007", "02590", AstroAPI.DATE_FORMAT.parse("31/01/1987")));
+            employes.add(new Employe(Genre.Femme, "Jennifer", "Gouatloude", "filo.jennie@hotmail.fr", "inleqz42", "0600923533", "22300", AstroAPI.DATE_FORMAT.parse("15/05/1964")));
+            employes.add(new Employe(Genre.Homme, "Paul", "Diaz", "paulotdiaz79@gmail.com", "7a4dlcad", "0907265287", "52170", AstroAPI.DATE_FORMAT.parse("04/01/1979")));
+            employes.add(new Employe(Genre.Femme, "Jacinthe", "Auger", "jacinthedu29@hotmail.fr", "9nyiyqyd", "0638284835", "29260", AstroAPI.DATE_FORMAT.parse("06/11/1978")));
+            
             // Persister les employés
             JpaUtil.ouvrirTransaction();
             for (Employe e : employes) {
@@ -132,8 +80,8 @@ public class ServicesApplication {
         }
     }
     
-    /* Créer les mediums */
-    public void creerMediums() {
+    /* Créer les mediums dans la BD */
+    public void initialiserMediums() {
         
         // Créer les DAOs et le contexte de persistance
         MediumDao mediumDao = new MediumDao();
@@ -142,25 +90,19 @@ public class ServicesApplication {
         try {
             // Ajouter des médiums à une liste (en dur)
             ArrayList<Medium> mediums = new ArrayList<Medium>();
-            mediums.add(new Cartomancien(
-                    "Sire Kartmalo", 
-                    "Voulez-vous voir un tour de magie?", 
-                    Genre.Homme
-            ));
-            mediums.add(new Astrologue(
-                    "Monsieur N'TOMA", 
-                    "Arrêtez de pleurer.", 
-                    Genre.Homme,
-                    "Institut Nouveau des Spirites Armateurs (INSA)",
-                    "2012"
-            ));
-            mediums.add(new Spirite(
-                    "Super Emma", 
-                    "Bouboule de crystal OWO", 
-                    Genre.Femme,
-                    "Boule de Crystal, Marques de Thé"
-            ));
-
+            mediums.add(new Spirite(Genre.Femme, "Gwenaëlle", "Spécialiste des grandes conversations au-delà de TOUTES les frontières.", "Boule de Crystal"));
+            mediums.add(new Spirite(Genre.Homme, "Professeur Tran", "Votre avenir est devant vous : regardons-le ensemble !", "Marc de café, boule de cristal, oreilles de lapin"));
+            mediums.add(new Spirite(Genre.Femme, "Super Emma", "Regardez ma bouboule OwO.", "Boule de Crystal, Marques de Thé"));
+            mediums.add(new Spirite(Genre.Homme, "Barkaba Junior", "Explorons votre inconscient pour révéler les grands secrets de votre avenir !", "Marques de thé, pattes d'igouanes"));
+            mediums.add(new Cartomancien(Genre.Femme, "Mme Irma", "Comprenez votre entourage grâce à mes cartes ! Résultats rapides..."));
+            mediums.add(new Cartomancien(Genre.Femme, "Endora", "Mes cartes répondront à toutes vos questions personnelles."));
+            mediums.add(new Cartomancien(Genre.Homme, "Sire Kartmalo", "Voulez-vous voir un tour de magie ?"));
+            mediums.add(new Cartomancien(Genre.Homme, "Le Grand Maître", "Je détiens le contrôle absolu sur les cartes."));
+            mediums.add(new Astrologue(Genre.Femme, "Serena", "Basée à Champigny-sur-Marne, Serena vous révèlera votre avenir pour éclairer votre passé.", "École Normale Supérieure d’Astrologie (ENS-Astro)", "2006"));
+            mediums.add(new Astrologue(Genre.Homme, "Mr M", "Avenir, avenir, que nous réserves-tu ? N'attendez plus, demandez à me consulter!", "nstitut des Nouveaux Savoirs Astrologiques (ENE)", "2010"));
+            mediums.add(new Astrologue(Genre.Homme, "Monsieur N'TOMA", "Arrêtez de pleurer. Je vais résoudre vos problèmes.", "École Nouvelle des Étoiles (ENE)", "2015"));
+            mediums.add(new Astrologue(Genre.Femme, "Lady Chalala", "Trouve des solutions à tous vos problèmes d'impuissance, de finances, de mariage, et de dos", "Formation Intensive aux Métiers Interstellaires (FIMI)", "2012"));
+            
             // Persister les médiums
             JpaUtil.ouvrirTransaction();
             for (Medium m : mediums) {
@@ -177,7 +119,31 @@ public class ServicesApplication {
         }
     }
     
-    public void creerConsultations() {
+    /* DEBUG: Générer des clients dans la BD */
+    public void genererClients() {
+            
+        try {
+            // Ajouter des employés à une liste (en dur)
+            ArrayList<Client> clients = new ArrayList<Client>();
+            clients.add(new Client("Bertrand", "Usclat", "bertrand.usclat@yahoo.ro", "superCanardXXL", "0685123975", "69200", AstroAPI.DATE_FORMAT.parse("25/06/1965")));
+            clients.add(new Client("Jeannine", "Odoux", "jeannette_xxx@trashmail.fr", "secretPassword", "0782953267", "32100", AstroAPI.DATE_FORMAT.parse("20/08/1985")));
+
+            // Inscrire les clients 
+            for (Client c : clients) {
+                inscrireClient(c);
+            }
+        } 
+        catch (ParseException ex) {
+            ex.printStackTrace();
+        } 
+        catch (Exception ex) {
+            ex.printStackTrace();
+        } 
+        
+    }
+    
+    /* DEBUG: Générer des consultations finies dans la BD */
+    public void genererConsultations() {
         
         // Créer les DAOs et le contexte de persistance
         ConsultationDao consultationDao = new ConsultationDao();
@@ -191,19 +157,19 @@ public class ServicesApplication {
         List<Medium> mediums = mediumDao.chercherTous();
         List<Client> clients = clientDao.chercherTous();
         
-        // Créer PLEIN  de consultations
+        // Créer PLEIN de consultations
         try {
             JpaUtil.ouvrirTransaction();
             for (Employe e : employes) {
-                if(Math.random() < 0.5) continue;
+                if(Math.random() < 0.4) continue;
                 for (Medium m : mediums) {
-                    if(Math.random() < 0.5) continue;
+                    if(Math.random() < 0.4) continue;
                     for (Client c : clients) {
-                        if(Math.random() < 0.5) continue;
+                        if(Math.random() < 0.4) continue;
                         Consultation consultation = new Consultation(e, c, m);
                         consultation.setEtat(Etat.Termine);
                         consultation.setDateDebut(new Date());
-                        consultation.setDateFin(new Date((new Date()).getTime() + 60*1000));
+                        consultation.setDateFin(new Date((new Date()).getTime() + (int)(Math.random()*20)*60*1000));
                         consultationDao.creer(consultation);
                     }
                 }
@@ -236,13 +202,19 @@ public class ServicesApplication {
             JpaUtil.validerTransaction();
             
             // Le notifier de son inscription
-            Message.envoyerMail("contact.predict.if", client.getMail(), "Bienvenu chez PREDICT'IF", "Bonjour " + client.getPrenom() + ", nous vous confirmons votre inscription au service PREDICT’IF. Rendezvous vite sur notre site pour consulter votre profil astrologique et profiter des dons incroyables de nos médiums");
+            Message.envoyerMail(
+                "contact.predict.if", client.getMail(), "Bienvenu chez PREDICT'IF", 
+                "Bonjour " + client.getPrenom() + ", nous vous confirmons votre inscription au service PREDICT’IF. Rendez-vous vite sur notre site pour consulter votre profil astrologique et profiter des dons incroyables de nos médiums"
+            );
 
         } 
         catch (Exception ex) {
             ex.printStackTrace();
             JpaUtil.annulerTransaction();
-            Message.envoyerMail("contact.predict.if", client.getMail(), "Echec de l’inscription chez PREDICT’IF", "Bonjour " + client.getPrenom() + ", votre inscription au service PREDICT’IF a malencontreusement échoué... \nMerci de recommencer ultérieurement.");
+            Message.envoyerMail(
+                "contact.predict.if", client.getMail(), "Echec de l’inscription chez PREDICT’IF", 
+                "Bonjour " + client.getPrenom() + ", votre inscription au service PREDICT’IF a malencontreusement échoué... \nMerci de recommencer ultérieurement."
+            );
             client = null;
         } 
         finally {
@@ -364,6 +336,14 @@ public class ServicesApplication {
         }
 
         JpaUtil.fermerContextePersistance();
+        
+        // Notifier l'employé de la demande de consultation
+        if (consultation != null) {
+            Message.envoyerNotification(
+                consultation.getEmploye().getTelephone(),
+                "Bonjour " + consultation.getEmploye().getPrenom() + ". Consultation requise pour " + consultation.getClient().getPrenom() + " " + consultation.getClient().getNom() + ". Médium à incarner : " + consultation.getMedium().getDenomination()
+            );
+        }
 
         return consultation;
         
@@ -411,6 +391,16 @@ public class ServicesApplication {
         finally {
             JpaUtil.fermerContextePersistance();
         }
+        
+        // Notifier le client qu'il peut appeler le médium
+        if (reussite) {
+            SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy à HH'h'mm");  
+            Message.envoyerNotification(
+                consultation.getClient().getTelephone(),
+                "Bonjour " + consultation.getClient().getPrenom() + ". J’ai bien reçu votre demande de consultation du " + formatDate.format(consultation.getDateDebut()) + ". Vous pouvez dès à présent me contacter au " + consultation.getEmploye().getTelephone() + ". A tout de suite ! Médiumiquement vôtre, " + consultation.getMedium().getDenomination() 
+            );
+        }
+        
         return reussite;
         
     }
@@ -522,7 +512,7 @@ public class ServicesApplication {
         JpaUtil.creerContextePersistance();
         
         // Récupérer tous les médiums d'une dénomination similaire à celle donnée
-        List<Consultation> listeConsultations = consultationDao.chercherParClient(client);
+        List<Consultation> listeConsultations = consultationDao.chercherTermineParClient(client);
        
         JpaUtil.fermerContextePersistance();
             
@@ -538,7 +528,7 @@ public class ServicesApplication {
         JpaUtil.creerContextePersistance();
         
         // Récupérer tous les médiums d'une dénomination similaire à celle donnée
-        List<Consultation> listeConsultations = consultationDao.chercherParClientEtMedium(client, medium);
+        List<Consultation> listeConsultations = consultationDao.chercherTermineParClientEtMedium(client, medium);
         
         JpaUtil.fermerContextePersistance();
         
@@ -603,60 +593,57 @@ public class ServicesApplication {
         
     }
     
-    public JsonObject genererStatistiquesMedium(boolean top5) {
+    public JsonObject genererStatistiquesMediumsPopulaires(boolean top5) {
         
         // Créer les DAOs et le contexte de persistance
         ConsultationDao consultationDao = new ConsultationDao();
         JpaUtil.creerContextePersistance();
         
         // Récupérer tous les médiums d'une dénomination similaire à celle donnée
-        List<Object[]> liste; 
+        List<Object[]> listeStatistiques; 
         if (top5) {
-            liste = consultationDao.obtenirTop5NombreConsultationsParMedium();
+            listeStatistiques = consultationDao.obtenirTop5NombreConsultationsParMedium();
         }
         else {
-            liste = consultationDao.obtenirNombreConsultationsParMedium();
+            listeStatistiques = consultationDao.obtenirNombreConsultationsParMedium();
         }
         
         JpaUtil.fermerContextePersistance();
         
         // Construire le JSON Object
-        JsonObject jsonObject = new JsonObject();
-        if (liste != null) {
-            JsonArray stats = new JsonArray();
-            for (Object[] coupleStats : liste) {
-                Medium medium = (Medium)coupleStats[0];
-                String denominationMedium = medium.getDenomination();
-                String nombreConsultations = coupleStats[1].toString();
-                JsonObject data = new JsonObject();
-                data.add("denominationMedium", new JsonPrimitive(denominationMedium));
-                data.add("nombreConsultations", new JsonPrimitive(nombreConsultations));
-                stats.add(data);
+        JsonObject statistiques = new JsonObject();
+        if (listeStatistiques != null) {
+            JsonArray jsonArray = new JsonArray();
+            for (Object[] coupleStats : listeStatistiques) {
+                JsonObject jsonInfosMedium = new JsonObject();
+                jsonInfosMedium.addProperty("denomination", ((Medium)coupleStats[0]).getDenomination());
+                jsonInfosMedium.addProperty("nombreConsultations", coupleStats[1].toString());
+                jsonArray.add(jsonInfosMedium);
             }
-            jsonObject.add("listeMediums", stats);
+            statistiques.add("listeMediums", jsonArray);
         }
         else {
-            jsonObject = null;
+            statistiques = null;
         }
-        return jsonObject;
+        return statistiques;
         
     }
     
-    public JsonObject genererStatistiquesClient() {
+    public JsonObject genererStatistiquesTempsAppelClients() {
         
         // Créer les DAOs et le contexte de persistance
         ConsultationDao consultationDao = new ConsultationDao();
         ClientDao clientDao = new ClientDao();
         JpaUtil.creerContextePersistance();
         
-        JsonObject jsonObject = new JsonObject();
-        JsonArray stats = new JsonArray();
+        JsonObject statistiques = new JsonObject();
+        JsonArray jsonArray = new JsonArray();
         
         // Boucler sur tous les clients
         List<Client> clients = clientDao.chercherTous();
         for (Client cli : clients) {
             // Obtenir leur historique de consultations
-            List<Consultation> historiqueConsultations = consultationDao.chercherParClient(cli);
+            List<Consultation> historiqueConsultations = consultationDao.chercherTermineParClient(cli);
             long somme = 0;
             // Calculer la somme de leur temps d'appel
             for (Consultation con : historiqueConsultations) {
@@ -667,33 +654,39 @@ public class ServicesApplication {
             }
             Date temps = new Date(somme);
             // Ajouter les données de chaque client au JSON
-            JsonObject data = new JsonObject();
-            data.add("client", new JsonPrimitive(cli.getNom()));
-            data.add("tempsAppelTotal", new JsonPrimitive(temps.getMinutes()));
-            stats.add(data);
+            JsonObject jsonInfosClient = new JsonObject();
+            jsonInfosClient.addProperty("nom", cli.getNom());
+            jsonInfosClient.addProperty("tempsAppelTotal", temps.getMinutes());
+            jsonArray.add(jsonInfosClient);
         }
-        jsonObject.add("listeClients", stats);
-        return jsonObject;
+        
+        JpaUtil.fermerContextePersistance();
+        
+        statistiques.add("listeClients", jsonArray);
+        return statistiques;
     
     }
     
     /* Générer les statistiques de répartition des clients par employés */
-    public JsonObject genererStatistiquesRepartitionClients(){
+    public JsonObject genererStatistiquesRepartitionClientsParEmploye() {
         
         // Créer les DAOs et le contexte de persistance
         ConsultationDao consultationDao = new ConsultationDao();
-        JsonObject statistiques = new JsonObject();
-        List<Object[]> listeStatistiques;
-        
         JpaUtil.creerContextePersistance();
-        listeStatistiques = consultationDao.obtenirNombreClientsParEmploye();
+        
+        // Récupérer une liste d'employés avec le nombre de clients distincts qu'ils ont géré
+        List<Object[]> listeStatistiques = consultationDao.obtenirNombreClientsParEmploye();
+        
         JpaUtil.fermerContextePersistance();
-        if(listeStatistiques != null){
+        
+        // Construire le JSON Object
+        JsonObject statistiques = new JsonObject();
+        if (listeStatistiques != null){
             JsonArray jsonArray = new JsonArray();
             listeStatistiques.forEach(infosEmploye -> {
                 JsonObject jsonInfosEmploye = new JsonObject();
-                jsonInfosEmploye.addProperty("Nom", (String)infosEmploye[0] + " " + (String)infosEmploye[1]);
-                jsonInfosEmploye.addProperty("nbClients", (long)infosEmploye[2]);
+                jsonInfosEmploye.addProperty("nom", (String)infosEmploye[0] + " " + (String)infosEmploye[1]);
+                jsonInfosEmploye.addProperty("nombreClients", (long)infosEmploye[2]);
                 jsonArray.add(jsonInfosEmploye);
             });
             statistiques.add("listeEmployes", jsonArray);

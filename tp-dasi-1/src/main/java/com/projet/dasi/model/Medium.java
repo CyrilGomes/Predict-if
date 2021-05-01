@@ -30,10 +30,10 @@ public class Medium implements Serializable {
     private String presentation;
 
     /* Constructeurs */
-    public Medium(String denomination, String presentation, Genre genre) {
+    public Medium(Genre genre, String denomination, String presentation) {
+        this.genre = genre;
         this.denomination = denomination;
         this.presentation = presentation;
-        this.genre = genre;
     }
     public Medium() {
     }

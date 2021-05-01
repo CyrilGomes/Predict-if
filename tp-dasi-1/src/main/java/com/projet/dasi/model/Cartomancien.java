@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 public class Cartomancien extends Medium {
     
     /* Constructeurs */
-    public Cartomancien(String presentation, String denomination, Genre genre) {
-        super(presentation, denomination, genre);
+    public Cartomancien(Genre genre, String denomination, String presentation) {
+        super(genre, denomination, presentation);
     }
     public Cartomancien() {
     }

@@ -49,6 +49,6 @@ public class EmployeDao {
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Integer.class);
         query.setParameter("unEmploye", employe);
         query.setParameter("unEtat", Etat.Termine);
-        return ((Long)query.getSingleResult()).intValue();
+        return (Integer)query.getSingleResult();
     }
 }
