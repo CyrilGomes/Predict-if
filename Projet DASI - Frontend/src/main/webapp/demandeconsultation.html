@@ -13,7 +13,7 @@ and open the template in the editor.
     <body>
         <h1>Bienvenue, </h1><h1 id="nomClient"></h1>
         <h2>Consultez un médium maintenant :</h2>
-        
+
         <span>
             Filtre:
             <select name="listeMedium">
@@ -23,11 +23,56 @@ and open the template in the editor.
                 <option value="spirite">Spirite</option>
             </select>
         </span>
-        
+
         <span>
             <label for="searchName">Rechercher un médium : </label>
             <input type="search" id="searchName">
         </span>
+        
+        <div id="listeMediums"></div>
 
+        <script>
+            $(document).ready(function () {
+                $.ajax({
+                url: './ActionServlet',
+                        method: 'GET',
+                        data: {
+                        todo: 'listeMediums'
+                        },
+                        dataType: 'json'
+                })
+                .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    var htmlString = "";
+                    htmlString += "<table>\n";
+                    for (var medium in response.listeMediums) {
+                        htmlString += "<tr><div>";
+                        htmlString += "<h2>" + medium.typeMedium + "</h2>";
+                        htmlString += "<p>" + medium.presentation + "<br>";
+                        
+                        switch(medium.typeMedium){
+                            case "Astrologue":
+                                htmlString += "Formation : " + medium.formation;
+                                break;
+                                
+                            case "Spirite":
+                                htmlString += "Support : " + medium.support;
+                                break;
+                        }
+                        
+                        htmlString += "</p></div></tr>";
+                    }
+                    htmlString += "</table>";
+                    
+                    $('listeMediums').html(htmlString);
+                })
+                .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                console.log('Error', error); // LOG dans Console Javascript
+                        alert("Erreur lors de l'appel AJAX");
+                })
+                .always(function () { // Fonction toujours appelée
+
+                });
+            });
+        </script>
     </body>
 </html>
