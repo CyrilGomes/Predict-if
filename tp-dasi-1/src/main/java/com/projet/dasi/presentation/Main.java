@@ -1,6 +1,7 @@
-package com.projet.dasi;
+package com.projet.dasi.presentation;
 
 import com.google.gson.JsonObject;
+import com.projet.dasi.AstroAPI;
 import com.projet.dasi.dao.ClientDao;
 import com.projet.dasi.dao.JpaUtil;
 import com.projet.dasi.model.Client;
