@@ -17,11 +17,11 @@ com\projet\dasi\model\Astrologue_.class
 com\projet\dasi\model\Spirite_.class
 com\projet\dasi\model\Employe_.class
 com\projet\dasi\model\Astrologue.class
-com\projet\dasi\Main.class
 com\projet\dasi\dao\JpaUtil.class
 com\projet\dasi\model\ProfilAstral_.class
 com\projet\dasi\dao\JpaUtil$1.class
 com\projet\dasi\model\Client.class
+com\projet\dasi\presentation\Main.class
 com\projet\dasi\dao\MediumDao.class
 com\projet\dasi\service\ServicesApplication$1.class
 com\projet\dasi\dao\ClientDao.class
