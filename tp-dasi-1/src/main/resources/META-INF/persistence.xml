@@ -12,11 +12,11 @@
     <class>com.projet.dasi.model.Spirite</class>
     <class>com.projet.dasi.model.Utilisateur</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/DASI-TP"/>
-      <property name="javax.persistence.jdbc.user" value="dtoma"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/DASI"/>
+      <property name="javax.persistence.jdbc.user" value="Thibaud"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
-      <property name="javax.persistence.jdbc.password" value="password"/>
-      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="javax.persistence.jdbc.password" value="thibaud"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>
 </persistence>
