@@ -30,6 +30,7 @@ tp-dasi-1/src/main/resources/META-INF/persistence.xml
 nbproject/private/
 build/
 nbbuild/
+target/
 dist/
 nbdist/
 nbactions.xml
