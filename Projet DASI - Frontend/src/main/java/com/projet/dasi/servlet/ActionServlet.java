@@ -8,6 +8,9 @@ package com.projet.dasi.servlet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.projet.dasi.actions.Action;
+import com.projet.dasi.actions.ConnexionAction;
+import com.projet.dasi.actions.InscriptionAction;
 import com.projet.dasi.dao.JpaUtil;
 import com.projet.dasi.model.Utilisateur;
 import java.io.IOException;
@@ -40,15 +43,20 @@ public class ActionServlet extends HttpServlet {
         response.setContentType("json");
         try (PrintWriter out = response.getWriter()) {
             String typeRequete = (String) request.getParameter("todo");
-            if (typeRequete.equals("connecter")) {
-                ServicesApplication serviceApplication = new ServicesApplication();
-                Utilisateur u = serviceApplication.authentifier((String) request.getParameter("login"), (String) request.getParameter("password"));
-                
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                JsonObject result = new JsonObject();
-                result.addProperty("connexion", u != null); 
-                result.add("client", gson.toJsonTree(u));
-                out.println(gson.toJson(result));
+            ServicesApplication serviceApplication = new ServicesApplication();
+            Action action = null;
+            switch (typeRequete) {
+                case "connexion":
+                    action = new ConnexionAction(serviceApplication);
+                    action.execute(request);
+                    out.println(request.getAttribute("result"));
+                    break;
+                case "inscription":
+                    action = new InscriptionAction(serviceApplication);
+                    action.execute(request);
+                    out.println(request.getAttribute("result"));
+                    break;
+
             }
         }
     }
