@@ -21,12 +21,5 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-/Projet DASI - Backend/target/
-Projet DASI - Backend/target/
-/Projet DASI - Backend/src/main/resources/META-INF/persistence.xml
-Projet DASI - Backend/src/main/resources/META-INF/persistence.xml
-
-/Projet DASI - Frontend/src/main/resources/META-INF/persistence.xml
-Projet DASI - Frontend/src/main/resources/META-INF/persistence.xml
-/Projet DASI - Frontend/target/
-Projet DASI - Frontend/target/
+target/
+persistence.xml
