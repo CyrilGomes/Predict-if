@@ -1,56 +1,139 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 4 mai 2021, 17:02:54
-    Author     : Cyril
-*/
+/* ----------------------------------------------------------------- */
+/* HEADER STYLES */
+/* ----------------------------------------------------------------- */
 
-/* Style the header with a grey background and some padding */
+/* Header BG box */
 .header {
-  overflow: hidden;
-  background-color: #f1f1f1;
-  padding: 20px 10px;
+    overflow: hidden;
+    background: linear-gradient(90deg, #583D72 20%, #612A75);
+    padding: 0px 20px;
 }
-
-/* Style the header links */
-.header a {
-  float: left;
-  color: black;
-  text-align: center;
-  padding: 12px;
-  text-decoration: none;
-  font-size: 18px;
-  line-height: 25px;
-  border-radius: 4px;
-}
-
-/* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
+/* Header logo */
 .header a.logo {
-  font-size: 25px;
-  font-weight: bold;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 24px 42px 24px 0px;
+    box-shadow: -20px 0 0 0 #FF8E71;
+    font-family: "Georgia";
+    background: #FF8E71;
+    border-radius: 0px 30px 30px 0px;
 }
-
-/* Change the background color on mouse-over */
-.header a:hover {
-  background-color: #ddd;
-  color: black;
+/* Header buttons */
+.header a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 24px 12px;
+    text-decoration: none;
+    font-size: 24px;
+    line-height: 25px;
+    font-family: "Lato";
+    border-style: none solid none solid;
+    border-color: rgba(0, 0, 0, 0);
+    border-width: 3px;
 }
-
-/* Style the active/current link*/
-.header a.active {
-  background-color: dodgerblue;
-  color: white;
+/* Header button hover */
+.header-right a:hover {
+    background-color: #995ab3;
+    border-style: none solid none solid;
+    border-color: white;
+    border-width: 3px;
 }
-
-/* Float the link section to the right */
+/* Header button selected */
+.header-right a.active {
+    background-color: #995ab3;
+    border-style: none solid none solid;
+    border-color: white;
+    border-width: 3px;
+}
+/* Header button alignment */
 .header-right {
   float: right;
 }
 
-/* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
+/* ----------------------------------------------------------------- */
+/* IMAGE BANNER STYLES */
+/* ----------------------------------------------------------------- */
+
+/* Banner image */
+.banner-image {
+    background-image: url(boule-crystal.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    padding: 0rem 0rem 4rem 0rem;
+}
+/* Banner text panel */
+.banner-text {
+    color: black;
+    font-family: "Lato";
+    display: table-cell;
+    vertical-align: middle;
+    width: 50%;
+    padding: 1rem;
+}
+/* Banner header */
+.banner-text h1 {
+     font-size: 50px;
+}
+/* Banner paragraphs */
+.banner-text p {
+     font-size: 26px;
+}
+/* Banner button */
+.banner-text a {
+    padding: 12px 26px;
+    background: #583D72;
+    text-decoration: none;
+    border: solid;
+    border-width: 3px;
+    border-color: #583D72;
+    border-radius: 6px;
+    font-family: "Lato";
+    font-size: 24px;
+    color: white;
+    box-shadow: -4px 4px 0 0 #FF8E71;
+}
+/* Banner button hover */
+.banner-text a:hover {
+    background: #995ab3;
+    border-color: white;
+}
+
+/* ----------------------------------------------------------------- */
+/* POPUP STYLES */
+/* ----------------------------------------------------------------- */
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+#popupConnexion {
+  height: 50%;
+  width: 50%;
+  margin: 0 auto;
+  padding: 5px 25px;
+  position: relative;
+  z-index: 10;
+  display: none;
+  background: white;
+  border: none;
+  border-radius: 10px;
+}
+#popupConnexion:target, #popupConnexion:target + #overlay {
+  display:block;
+  opacity:2;
+}
+
+/* ----------------------------------------------------------------- */
+/* RESPONSIVENESS */
+/* ----------------------------------------------------------------- */
 @media screen and (max-width: 500px) {
   .header a {
     float: none;
