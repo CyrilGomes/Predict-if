@@ -1,10 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -45,7 +39,7 @@ and open the template in the editor.
                         url: './ActionServlet',
                         method: 'POST',
                         data: {
-                            todo: 'connecter',
+                            todo: 'connexion',
                             login: champLogin,
                             password: champPassword
                         },
@@ -54,12 +48,10 @@ and open the template in the editor.
                     .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
                         console.log('Response',response); // LOG dans Console Javascript
                         if (response.connexion) {
-                            $('#notification').html("Connexion de " + response.client.prenom + " " + response.client.nom + " (ID " + response.client.id + ")");  // Message pour le paragraphe de notification
-                            // TODO: afficher les informations du client dans la notification
-                            // Exemple: Connexion de Ada Lovelace (ID 1)
+                            $('#notification').html("Connexion réussie!");  
                         }
                         else {
-                            $('#notification').html("Erreur de Connexion"); // Message pour le paragraphe de notification
+                            $('#notification').html("Erreur de Connexion"); 
                         }
                     })
                     .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX

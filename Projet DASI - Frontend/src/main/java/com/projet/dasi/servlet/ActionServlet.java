@@ -1,18 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.projet.dasi.servlet;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
+import com.project.dasi.serialisations.ConnexionSerialisation;
+import com.project.dasi.serialisations.InscriptionSerialisation;
+import com.project.dasi.serialisations.Serialisation;
 import com.projet.dasi.actions.Action;
 import com.projet.dasi.actions.ConnexionAction;
 import com.projet.dasi.actions.InscriptionAction;
 import com.projet.dasi.dao.JpaUtil;
-import com.projet.dasi.model.Utilisateur;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -22,43 +16,40 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.projet.dasi.service.ServicesApplication;
 
-/**
- *
- * @author creep
- */
 @WebServlet(urlPatterns = {"/ActionServlet"})
 public class ActionServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("json");
-        try (PrintWriter out = response.getWriter()) {
-            String typeRequete = (String) request.getParameter("todo");
-            ServicesApplication serviceApplication = new ServicesApplication();
-            Action action = null;
-            switch (typeRequete) {
-                case "connexion":
-                    action = new ConnexionAction(serviceApplication);
-                    action.execute(request);
-                    out.println(request.getAttribute("result"));
-                    break;
-                case "inscription":
-                    action = new InscriptionAction(serviceApplication);
-                    action.execute(request);
-                    out.println(request.getAttribute("result"));
-                    break;
-
-            }
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        request.getSession(true);
+        request.setCharacterEncoding("UTF-8");
+        String typeRequete = request.getParameter("todo");
+        
+        Action action = null;
+        Serialisation serialisation = null;
+           
+        switch (typeRequete) {
+            
+            case "connexion":
+                action = new ConnexionAction();
+                serialisation = new ConnexionSerialisation();
+                break;
+                
+            case "inscription":
+                action = new InscriptionAction();
+                serialisation = new InscriptionSerialisation();
+                break;
+                
         }
+        
+        if (action != null && serialisation != null) {
+            action.executer(request);
+            serialisation.serialiser(request, response);
+        }
+        else {
+            response.sendError(400, "Bad Request (pas d'action ou de sérialisation à traiter)");
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

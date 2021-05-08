@@ -1,44 +1,41 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.projet.dasi.actions;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import com.projet.dasi.AstroAPI;
 import com.projet.dasi.model.Client;
 import com.projet.dasi.model.Utilisateur;
 import com.projet.dasi.service.ServicesApplication;
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
-/**
- *
- * @author Cyril
- */
 public class InscriptionAction extends Action {
 
-    public InscriptionAction(ServicesApplication service) {
-        super(service);
-    }
-
     @Override
-    public void execute(HttpServletRequest request) {
+    public void executer(HttpServletRequest request) {
+        
+        ServicesApplication service = new ServicesApplication();
+        
+        // Récupération des paramètres de la requête
+        String nom = request.getParameter("nom");
+        String prenom = request.getParameter("prenom");
+        String email = request.getParameter("email");
+        String mdp = request.getParameter("mdp");
+        String tel = request.getParameter("tel");
+        String codePostal = request.getParameter("codePostal");
+        Date dateNaissance = new Date();
         try {
-            Client c = new Client(request.getParameter("nom"), request.getParameter("prenom"),
-                    request.getParameter("email"), request.getParameter("mdp"),
-                    request.getParameter("tel"), request.getParameter("codePostal"), AstroAPI.DATE_FORMAT.parse(request.getParameter("dateNaissance")));
-            Utilisateur u = service.inscrireClient(c);
+            dateNaissance = AstroAPI.JSON_DATE_FORMAT.parse(request.getParameter("dateNaissance"));
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        // Appel services
+        Client nouveauClient = new Client(nom, prenom, email, mdp, tel, codePostal, dateNaissance);
+        Utilisateur utilisateur = service.inscrireClient(nouveauClient);
 
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            JsonObject result = new JsonObject();
-            result.addProperty("inscription", u != null);
-            result.add("client", gson.toJsonTree(u));
-            request.setAttribute("result", gson.toJson(result));
-        } catch(Exception e)
-        {}
+        // Stoquage des résultats dans les attributs de la requête
+        request.setAttribute("utilisateur", utilisateur);
+
 
     }
 

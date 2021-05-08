@@ -1,16 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -80,26 +68,26 @@ and open the template in the editor.
                         },
                         dataType: 'json'
                     })
-                            .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
-                                console.log('Response', response); // LOG dans Console Javascript
-                                if (response.connexion) {
-                                    $('#notification').html("Inscription réussie!"+
-                                            "Vous recevrez un mail de confirmation suite auquel vous pourrez vous <a href='connexion.html'>Connecter</a>");  // Message pour le paragraphe de notification
-                                    // TODO: afficher les informations du client dans la notification
-                                    // Exemple: Connexion de Ada Lovelace (ID 1)
-                                } else {
-                                    $('#notification').html("Erreur d'Inscription !"); // Message pour le paragraphe de notification
-                                }
-                            })
-                                    .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
-                                        console.log('Error', error); // LOG dans Console Javascript
-                                        alert("Erreur lors de l'appel AJAX");
-                                    })
-                                    .always(function () { // Fonction toujours appelée
+                    .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                        console.log('Response', response); // LOG dans Console Javascript
+                        if (response.inscription) {
+                            $('#notification').html(
+                                    "Inscription réussie!"+
+                                    "Vous recevrez un mail de confirmation suite auquel vous pourrez vous <a href='connexion.html'>Connecter</a>");  
+                        } 
+                        else {
+                            $('#notification').html("Erreur d'Inscription !");
+                        }
+                    })
+                    .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                        console.log('Error', error); // LOG dans Console Javascript
+                        alert("Erreur lors de l'appel AJAX");
+                    })
+                    .always(function () { // Fonction toujours appelée
 
-                                    });
-                        });
                     });
+                });
+            });
         </script>
     </body>
 </html>
