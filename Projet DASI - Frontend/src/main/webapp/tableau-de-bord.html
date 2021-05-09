@@ -30,7 +30,7 @@
             url: './ActionServlet',
                     method: 'POST',
                     data: {
-                        todo: 'obtenirConsultationAttribueeAEmploye'
+                        todo: 'obtenirConsultationAttribuee'
                     },
                     dataType: 'json'
             })
@@ -59,7 +59,7 @@
             })
             .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
                 console.log('Response', response);
-                // TODO: populer/générer le graphique 1 avec les informations statistiques et le montrer
+                // TODO: populer/générer le graphique 1 avec les informations statistiques et le montrer (piechart de mediums)
             })
             .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
                 console.log('Error', error);
@@ -80,7 +80,7 @@
             })
             .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
                 console.log('Response', response);
-                // TODO: populer/générer le graphique 2 avec les informations statistiques et le montrer
+                // TODO: populer/générer le graphique 2 avec les informations statistiques et le montrer (histogramme d'employés)
             })
             .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
                 console.log('Error', error);
@@ -95,13 +95,13 @@
             url: './ActionServlet',
                     method: 'POST',
                     data: {
-                        todo: 'genererStatistiquesRepartitionClientsParEmploye'
+                        todo: 'genererStatistiquesMediumsPopulaires'
                     },
                     dataType: 'json'
             })
             .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
                 console.log('Response', response);
-                // TODO: populer/générer le graphique 3 avec les informations statistiques et le montrer
+                // TODO: populer/générer le graphique 3 avec les informations statistiques et le montrer (histogramme de médiums)
             })
             .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
                 console.log('Error', error);
@@ -116,13 +116,13 @@
             url: './ActionServlet',
                     method: 'POST',
                     data: {
-                        todo: 'genererStatistiquesRepartitionClientsParEmploye'
+                        todo: 'genererStatistiquesTempsAppelClients'
                     },
                     dataType: 'json'
             })
             .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
                 console.log('Response', response);
-                // TODO: populer/générer le graphique 4 avec les informations statistiques et le montrer
+                // TODO: populer/générer le graphique 4 avec les informations statistiques et le montrer (histogramme de clients)
             })
             .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
                 console.log('Error', error);

@@ -2,10 +2,12 @@ package com.projet.dasi.servlet;
 
 import com.project.dasi.serialisations.ConnexionSerialisation;
 import com.project.dasi.serialisations.InscriptionSerialisation;
+import com.project.dasi.serialisations.ObtenirConsultationAttribueeSerialisation;
 import com.project.dasi.serialisations.Serialisation;
 import com.projet.dasi.actions.Action;
 import com.projet.dasi.actions.ConnexionAction;
 import com.projet.dasi.actions.InscriptionAction;
+import com.projet.dasi.actions.ObtenirConsultationAttribueeAction;
 import com.projet.dasi.dao.JpaUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -38,6 +40,11 @@ public class ActionServlet extends HttpServlet {
             case "inscription":
                 action = new InscriptionAction();
                 serialisation = new InscriptionSerialisation();
+                break;
+                
+            case "obtenirConsultationAttribuee":
+                action = new ObtenirConsultationAttribueeAction();
+                serialisation = new ObtenirConsultationAttribueeSerialisation();
                 break;
                 
         }
