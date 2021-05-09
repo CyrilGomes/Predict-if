@@ -1,15 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.projet.dasi.servlet;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
+import com.project.dasi.serialisations.ConnexionSerialisation;
+import com.project.dasi.serialisations.InscriptionSerialisation;
+import com.project.dasi.serialisations.Serialisation;
+import com.projet.dasi.actions.Action;
+import com.projet.dasi.actions.ConnexionAction;
+import com.projet.dasi.actions.InscriptionAction;
 import com.projet.dasi.dao.JpaUtil;
-import com.projet.dasi.model.Utilisateur;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,38 +16,40 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.projet.dasi.service.ServicesApplication;
 
-/**
- *
- * @author creep
- */
 @WebServlet(urlPatterns = {"/ActionServlet"})
 public class ActionServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("json");
-        try (PrintWriter out = response.getWriter()) {
-            String typeRequete = (String) request.getParameter("todo");
-            if (typeRequete.equals("connecter")) {
-                ServicesApplication serviceApplication = new ServicesApplication();
-                Utilisateur u = serviceApplication.authentifier((String) request.getParameter("login"), (String) request.getParameter("password"));
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        request.getSession(true);
+        request.setCharacterEncoding("UTF-8");
+        String typeRequete = request.getParameter("todo");
+        
+        Action action = null;
+        Serialisation serialisation = null;
+           
+        switch (typeRequete) {
+            
+            case "connexion":
+                action = new ConnexionAction();
+                serialisation = new ConnexionSerialisation();
+                break;
                 
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                JsonObject result = new JsonObject();
-                result.addProperty("connexion", u != null); 
-                result.add("client", gson.toJsonTree(u));
-                out.println(gson.toJson(result));
-            }
+            case "inscription":
+                action = new InscriptionAction();
+                serialisation = new InscriptionSerialisation();
+                break;
+                
         }
+        
+        if (action != null && serialisation != null) {
+            action.executer(request);
+            serialisation.serialiser(request, response);
+        }
+        else {
+            response.sendError(400, "Bad Request (pas d'action ou de sérialisation à traiter)");
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -63,8 +62,7 @@ public class ActionServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -89,19 +87,8 @@ public class ActionServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }
