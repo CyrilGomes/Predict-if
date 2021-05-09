@@ -6,32 +6,35 @@ and open the template in the editor.
 -->
 <html>
     <head>
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+
         <title>Mon compte</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
     <body>
         <div>
-                    <!-- HEADER -->
+        <!-- HEADER -->
         <div class="header">
             <a href="index.html" class="logo">Predict'IF</a>
-            <div class="header-right">
-                <a href="#" id="boutonPopupInscription1">S'inscrire</a>
+            <div class="header-right">  <!-- TODO rediriger vers les pages de l'en-tête qui correspondent -->
+                <a href="#" id="boutonPopupInscription1">Tableau de Bord </a>
                 <a href="#" id="nameUser">Nom utilisateur</a>
             </div>
         </div>
         <h1>Mon compte</h1> <br />
-        Nom :  <input type="text" id="champ-nom" value="nom" size="20" disabled="disabled"/>    Prénom : <input type="text" id="champ-prenom" value="prenom" size="20" disabled="disabled"/><br />
-        Date de Naissance :  <input type="text" id="champ-datenaissance" value="date" size="20" disabled="disabled"/>    Code Postal :<input type="text" value="cp" id="champ-CP" size="20" disabled="disabled" /> <br />
-        Téléphone : <input type="text" id="champ-tel" value="tel" size="20" disabled="" />  <br />
-        <hr />
-        Adresse Mail : <input type="text" id="champ-mail" size="20" disabled="disabled" /><br />
-        Mot de Passe : <input type="text" id="champ-mdp" size="20" disabled="disabled" /> <br />
-        <hr />
-        <form>
-            <input type="button" id="button-modif" value="Modifier" onclick="modif()" />
-        </form>
+        <div class="Compte">
+            Nom :  <input type="text" id="champ-nom" value="nom" size="20" disabled="disabled"/>    Prénom : <input type="text" id="champ-prenom" value="prenom" size="20" disabled="disabled"/><br />
+            Date de Naissance :  <input type="text" id="champ-datenaissance" value="date" size="20" disabled="disabled"/>    Code Postal :<input type="text" value="cp" id="champ-CP" size="20" disabled="disabled" /> <br />
+            Téléphone : <input type="text" id="champ-tel" value="tel" size="20" disabled="" />  <br />
+            <hr />
+            Adresse Mail : <input type="text" id="champ-mail" size="20" disabled="disabled" /><br />
+            Mot de Passe : <input type="text" id="champ-mdp" size="20" disabled="disabled" /> <br />
+            <hr />
+            <form>
+                <input type="button" id="button-modif" value="Modifier" onclick="modif()" />
+            </form>
+        </div>
         <script>
  
             function modif()
