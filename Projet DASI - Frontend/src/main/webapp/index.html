@@ -23,7 +23,7 @@
             <div class="banner-text"> </div>
             <div class="banner-text">
                 <h1><strong>Il est temps de regarder votre avenir droit dans les yeux.</strong></h1>
-                <p>Explorez les tréfonds de votre esprit accompagné de médiums professionnels certifiés</p>
+                <p>Explorez les tréfonds de votre esprit accompagné de médiums<br />professionnels certifiés</p>
                 <p><strong>Un voyant à votre service, maintenant, par téléphone</strong></p>
                 <br />
                 <button id="boutonPopupConnexion2">Commencer l'aventure, faire appel</button>
@@ -60,33 +60,42 @@
                 <span id="fermerPopupInscription" class="fermerPopup">&times;</span>
                 <h1><span class="ligne">S'inscrire</span></h1>
                 <br/>
-                <table>
-                    <tr>
-                        <td><strong>Nom :</strong> <div><input type="text" id="champ-nom-inscription" /></div></td>
-                        <td><strong>Prénom :</strong> <div><input type="text" id="champ-prenom-inscription" /></div></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Date de Naissance :</strong> <div><input type="date" id="champ-date-naissance-inscription" /></div></td>
-                        <td><strong>Code Postal :</strong> <div><input type="text" id="champ-code-postal-inscription" /></div></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Telephone :</strong> <div><input type="tel" id="champ-tel-inscription" /></div></td>
-                        <td></td>
-                    </tr>
-                </table>
-                <br />
-                <hr />
-                <table>
-                    <tr>
-                        <td><strong>Adresse Mail :</strong> <div><input type="text" id="champ-mail-inscription" /></div></td>
-                        <td><strong>Mot de Passe :</strong> <div><input type="password" id="champ-mdp-inscription" /></div></td>
-                    </tr>
-                    <tr>
-                        <td colspan=2><div><button id="bouton-inscription">Inscription</button></div></td>
-                    </tr>
-                </table>
-                <p id="messageSuccesInscription"></p>
-                <p id="messageErreurInscription" class="texteErreur"></p>
+                <div id="formulaireInscription">
+                    <table>
+                        <tr>
+                            <td><strong>Nom :</strong> <div><input type="text" id="champ-nom-inscription" /></div></td>
+                            <td><strong>Prénom :</strong> <div><input type="text" id="champ-prenom-inscription" /></div></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Date de Naissance :</strong> <div><input type="date" id="champ-date-naissance-inscription" /></div></td>
+                            <td><strong>Code Postal :</strong> <div><input type="text" id="champ-code-postal-inscription" /></div></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Telephone :</strong> <div><input type="tel" id="champ-tel-inscription" /></div></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <br />
+                    <hr />
+                    <table>
+                        <tr>
+                            <td><strong>Adresse Mail :</strong> <div><input type="text" id="champ-mail-inscription" /></div></td>
+                            <td><strong>Mot de Passe :</strong> <div><input type="password" id="champ-mdp-inscription" /></div></td>
+                        </tr>
+                        <tr>
+                            <td colspan=2><div><button id="bouton-inscription">Inscription</button></div></td>
+                        </tr>
+                    </table>
+                    <p id="messageErreurInscription" class="texteErreur"></p>
+                </div> 
+                <div id="confirmationInscription" style="display: none;">
+                    <hr /><br />
+                    <p><strong>
+                        Inscription réussie!
+                        <br /><br />
+                        Vous recevrez un mail de confirmation suite auquel vous pourrez vous <a href="#" id="boutonPopupConnexion3" class="hyperlien">Connecter</a>.
+                    </strong></p>
+                </div>
             </div>
         </div>
 
@@ -98,10 +107,17 @@
 
                     console.log("clic sur le bouton de connexion");
                     $('#bouton-connexion').html("Connexion...");
+                    $('#messageErreurConnexion').html("");
 
                     // Récupération de la valeur des champs du formulaire
                     var champMail = $('#champ-mail-connexion').val();
                     var champMdp = $('#champ-mdp-connexion').val();
+
+                    if (champMail == '' || champMdp == '') {
+                        $('#messageErreurConnexion').html("Veuillez compléter tous les champs");
+                        $('#bouton-connexion').html("Connexion");
+                        return;
+                    }
 
                     // Appel AJAX
                     $.ajax({
@@ -120,7 +136,6 @@
                                     // TODO: rediriger vers la page Demande Consultation
                                 } else {
                                     $('#messageErreurConnexion').html("Erreur de connexion. Veuillez réessayer");
-                                    $('#bouton-connexion').html("Connexion");
                                 }
                             })
                             .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
@@ -128,15 +143,17 @@
                                 alert("Erreur lors de l'appel AJAX");
                             })
                             .always(function () { // Fonction toujours appelée
+                                $('#bouton-connexion').html("Connexion");
                             });
                 });
 
                 /* SERVICE INSCRIPTION */
                 $('#bouton-inscription').on('click', function () {
-
+                    
                     console.log("clic sur le bouton de inscription");
                     $('#bouton-inscription').html("Inscription...");
-
+                    $('#messageErreurInscription').html("");
+                    
                     // Récupération de la valeur des champs du formulaire
                     var champNom = $('#champ-nom-inscription').val();
                     var champPrenom = $('#champ-prenom-inscription').val();
@@ -145,6 +162,12 @@
                     var champTel = $('#champ-tel-inscription').val();
                     var champMail = $('#champ-mail-inscription').val();
                     var champMdp = $('#champ-mdp-inscription').val();
+
+                    if (champNom == '' || champPrenom == '' || champDateNaissance == '' || champCodePostal == '' || champTel == '' || champMail == '' || champMdp == '') {
+                        $('#messageErreurInscription').html("Veuillez compléter tous les champs");
+                        $('#bouton-inscription').html("Inscription");
+                        return;
+                    }
 
                     // Appel AJAX
                     $.ajax({
@@ -166,28 +189,28 @@
                             .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
                                 console.log('Response', response);
                                 if (response.inscription) {
-                                    var str = "<strong>Inscription réussie!</strong><br />Vous recevrez un mail de confirmation suite auquel vous pourrez vous Connecter.<br/><br/>(je n'arrive pas encore à remplaçer tout le div par ce texte du coup je l'ai simplement append, ça me rend fou)";
-                                    $('#messageSuccesInscription').html(str);
-                                    $('#bouton-inscription').html("Inscription");
+                                    formulaireInscription.style.display = "none";
+                                    confirmationInscription.style.display = "block";
                                 } else {
                                     $('#messageErreurInscription').html("Erreur d'inscription. Veuillez réessayer");
-                                    $('#bouton-inscription').html("Inscription");
                                 }
                             })
                             .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
-                                console.log('Error', error); 
+                                console.log('Error', error);
                                 alert("Erreur lors de l'appel AJAX");
                             })
                             .always(function () { // Fonction toujours appelée
-
+                                $('#bouton-inscription').html("Inscription");
                             });
                 });
 
             });
-            
+
             /* POPUP DE CONNEXION */
             // Fonction d'ouverture du popup
             function showPopupConnexion() {
+                // Désafficher popup inscription
+                overlayInscription.style.display = "none";
                 // Afficher
                 overlayConnexion.style.display = "block";
                 // Reset les éléments
@@ -203,18 +226,21 @@
             // Attribuer les fonctions 
             $('#boutonPopupConnexion1').click(showPopupConnexion);
             $('#boutonPopupConnexion2').click(showPopupConnexion);
+            $('#boutonPopupConnexion3').click(showPopupConnexion);
             $('#fermerPopupConnexion').click(hidePopupConnexion);
-            
+
             /* POPUP D'INSCRIPTION*/
             // Fonction d'ouverture du popup
             function showPopupInscription() {
+                // Reset les divs 
+                formulaireInscription.style.display = "block";
+                confirmationInscription.style.display = "none";
                 // Désafficher popup connexion
                 overlayConnexion.style.display = "none";
                 // Afficher
                 overlayInscription.style.display = "block";
                 // Reset les éléments
                 $('#messageErreurInscription').html("");
-                $('#messageSuccesInscription').html("");
                 $('#bouton-inscription').html("Inscription");
                 $('#champ-nom-inscription').val('');
                 $('#champ-prenom-inscription').val('');
@@ -229,11 +255,11 @@
             function hidePopupInscription() {
                 overlayInscription.style.display = "none";
             }
-             // Attribuer les fonctions 
+            // Attribuer les fonctions 
             $('#boutonPopupInscription1').click(showPopupInscription);
             $('#boutonPopupInscription2').click(showPopupInscription);
             $('#fermerPopupInscription').click(hidePopupInscription);
-            
+
             /* FERMETURE AUTOMATIQUE DES POPUPS*/
             window.onclick = function (event) {
                 if (event.target === overlayConnexion) {
