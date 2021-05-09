@@ -28,26 +28,29 @@ and open the template in the editor.
         Adresse Mail : <input type="text" id="champ-mail" size="20" disabled="disabled" /><br />
         Mot de Passe : <input type="text" id="champ-mdp" size="20" disabled="disabled" /> <br />
         <hr />
-        <script type="text/javascript">
+        <form>
+            <input type="button" id="button-modif" value="Modifier" onclick="modif()" />
+        </form>
+        <script>
  
             function modif()
             {
-                var protec = document.getElementById("champ-nom");
-                protec.disabled = false;
-                protec = document.getElementById("champ-prenom");
-                protec.disabled = false;
-                protec = document.getElementById("champ-tel");
-                protec.disabled = false;
-                protec = document.getElementById("champ-datenaissance");
-                protec.disabled = false;
-                protec = document.getElementById("champ-CP");
-                protec.disabled = false;
-                protec = document.getElementById("champ-mail");
-                protec.disabled = false;
-                protec = document.getElementById("champ-mdp");
-                protec.disabled = false;
+                if(document.getElementById("button-modif").value == "Modifier"){
+                    document.getElementById("button-modif").value = "Sauvegarder";
+                }else{
+                    document.getElementById("button-modif").value = "Modifier";
+                }
+                document.getElementById("champ-prenom").disabled = !document.getElementById("champ-prenom").disabled;
+                document.getElementById("champ-nom").disabled = !document.getElementById("champ-nom").disabled;
+                document.getElementById("champ-tel").disabled = !document.getElementById("champ-tel").disabled ;
+                document.getElementById("champ-datenaissance").disabled = !document.getElementById("champ-datenaissance").disabled;
+                document.getElementById("champ-CP").disabled = !document.getElementById("champ-CP").disabled;
+                document.getElementById("champ-mail").disabled = !document.getElementById("champ-mail").disabled;
+                document.getElementById("champ-mdp").disabled = !document.getElementById("champ-mdp").disabled;
+
                 
             }
+           
   
         </script>
  
