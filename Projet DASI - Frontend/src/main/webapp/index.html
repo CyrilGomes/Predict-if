@@ -113,6 +113,7 @@
                     var champMail = $('#champ-mail-connexion').val();
                     var champMdp = $('#champ-mdp-connexion').val();
 
+                    // Si les champs sont vides, arrêter
                     if (champMail == '' || champMdp == '') {
                         $('#messageErreurConnexion').html("Veuillez compléter tous les champs");
                         $('#bouton-connexion').html("Connexion");
@@ -162,7 +163,8 @@
                     var champTel = $('#champ-tel-inscription').val();
                     var champMail = $('#champ-mail-inscription').val();
                     var champMdp = $('#champ-mdp-inscription').val();
-
+                    
+                    // Si les champs sont vides, arrêter
                     if (champNom == '' || champPrenom == '' || champDateNaissance == '' || champCodePostal == '' || champTel == '' || champMail == '' || champMdp == '') {
                         $('#messageErreurInscription').html("Veuillez compléter tous les champs");
                         $('#bouton-inscription').html("Inscription");
