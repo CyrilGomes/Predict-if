@@ -21,13 +21,35 @@ and open the template in the editor.
             </div>
         </div>
         <h1>Mon compte</h1> <br />
-        Nom :  <input type="text" id="champ-nom" size="20" />    Prénom : <input type="text" id="champ-prenom" size="20" /><br />
-        Date de Naissance :  <input type="text" id="champ-datenaissance" size="20" />    Code Postal :<input type="text" id="champ-CP" size="20" /> <br />
-        Téléphone : <input type="text" id="champ-tel" size="20" />  <br />
+        Nom :  <input type="text" id="champ-nom" value="nom" size="20" disabled="disabled"/>    Prénom : <input type="text" id="champ-prenom" value="prenom" size="20" disabled="disabled"/><br />
+        Date de Naissance :  <input type="text" id="champ-datenaissance" value="date" size="20" disabled="disabled"/>    Code Postal :<input type="text" value="cp" id="champ-CP" size="20" disabled="disabled" /> <br />
+        Téléphone : <input type="text" id="champ-tel" value="tel" size="20" disabled="" />  <br />
         <hr />
-        Adresse Mail : <input type="text" id="champ-mail" size="20" /><br />
-        Mot de Passe : <input type="text" id="champ-mdp" size="20" /> <br />
+        Adresse Mail : <input type="text" id="champ-mail" size="20" disabled="disabled" /><br />
+        Mot de Passe : <input type="text" id="champ-mdp" size="20" disabled="disabled" /> <br />
         <hr />
+        <script type="text/javascript">
+ 
+            function modif()
+            {
+                var protec = document.getElementById("champ-nom");
+                protec.disabled = false;
+                protec = document.getElementById("champ-prenom");
+                protec.disabled = false;
+                protec = document.getElementById("champ-tel");
+                protec.disabled = false;
+                protec = document.getElementById("champ-datenaissance");
+                protec.disabled = false;
+                protec = document.getElementById("champ-CP");
+                protec.disabled = false;
+                protec = document.getElementById("champ-mail");
+                protec.disabled = false;
+                protec = document.getElementById("champ-mdp");
+                protec.disabled = false;
+                
+            }
+  
+        </script>
  
         
         </div>
