@@ -31,20 +31,19 @@
     border-style: none solid none solid;
     border-color: rgba(0, 0, 0, 0);
     border-width: 3px;
+    border-radius: 6px;
 }
 /* Header button hover */
 .header-right a:hover {
     background-color: #995ab3;
     border-style: none solid none solid;
     border-color: white;
-    border-width: 3px;
 }
 /* Header button selected */
 .header-right a.active {
     background-color: #995ab3;
     border-style: none solid none solid;
     border-color: white;
-    border-width: 3px;
 }
 /* Header button alignment */
 .header-right {
@@ -86,8 +85,8 @@
     padding: 12px 26px;
     background: #583D72;
     text-decoration: none;
-    border: solid;
-    border-width: 3px;
+    border-style: none solid none solid;
+    border-width: 3x;
     border-color: #583D72;
     border-radius: 6px;
     font-family: "Lato";
@@ -104,31 +103,43 @@
 /* ----------------------------------------------------------------- */
 /* POPUP STYLES */
 /* ----------------------------------------------------------------- */
-#overlay {
-  position: absolute;
-  top: 0;
+/* Overlay des popups (background assombri) */
+.popup {
+  display: none; /* Hidden by default */
+  position: fixed; 
+  z-index: 1; 
   left: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 5;
-  width: 100%;
-  height: 100%;
-  display: none;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
-#popupConnexion {
-  height: 50%;
-  width: 50%;
-  margin: 0 auto;
-  padding: 5px 25px;
-  position: relative;
-  z-index: 10;
-  display: none;
+/* Boites des popups */
+.popupConnexion, .popupInscription {
   background: white;
-  border: none;
-  border-radius: 10px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%; 
 }
-#popupConnexion:target, #popupConnexion:target + #overlay {
-  display:block;
-  opacity:2;
+/* Bouton fermer les popups */
+.fermerPopup {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.fermerPopup:hover,
+.fermerPopup:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 /* ----------------------------------------------------------------- */

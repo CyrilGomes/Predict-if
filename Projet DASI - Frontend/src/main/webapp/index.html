@@ -4,6 +4,8 @@
         <title>Predicti'if Accueil</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="main.css">
+        <!-- Librairie Javascript: jQuery (v3.4.1) -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
     <body>
         
@@ -11,8 +13,8 @@
         <div class="header">
             <a href="index.html" class="logo">Predict'IF</a>
             <div class="header-right">
-                <a href="connexion.html">Se connecter</a>
-                <a href="inscription.html">S'inscrire</a>
+                <a href="#" id="boutonPopupConnexion1">Se connecter</a>
+                <a href="#" id="boutonPopupInscription1">S'inscrire</a>
             </div>
         </div>
         
@@ -24,22 +26,81 @@
                 <p>Explorez les tréfonds de votre esprit accompagné de médiums professionnels certifiés</p>
                 <p><strong>Un voyant à votre service, maintenant, par téléphone</strong></p>
                 <br />
-                <a href="#popupConnexion">Commencer l'aventure, faire appel</a>
+                <a href="#" id="boutonPopupConnexion2">Commencer l'aventure, faire appel</a>
             </div>
         </div>
         
         <!-- Popup de connexion -->
-        <div id="popupConnexion">
-            <h1>Connexion</h1>
-            <p id="notification">Veuillez saisir votre identifiant (adresse mail) et votre mot de passe.</p>
-            Identifiant: <input type="text" id="champ-login" size="40" />
-            <br/>
-            Mot de passe: <input type="password" id="champ-password" />
-            <br/>
-            <button id="bouton-connexion">Connexion</button>
-            <p><a href="#">Retour à la page d'Accueil</a></p>
+        <div id="overlayConnexion" class="popup">
+            <div class="popupConnexion">
+                <span id="fermerPopupConnexion" class="fermerPopup">&times;</span>
+                <h1>Connexion</h1>
+                <p id="notification">Veuillez saisir votre identifiant (adresse mail) et votre mot de passe.</p>
+                Identifiant: <input type="text" id="champ-login" size="40" />
+                <br/>
+                Mot de passe: <input type="password" id="champ-password" />
+                <br/>
+                <button id="bouton-connexion">Connexion</button>
+                <p>Vous n'avez pas de compte? <a href="#" id="boutonPopupInscription2">Inscrivez-vous</a> en deux clics</p>
+            </div>
         </div>
-        <div id="overlay"></div>
+        
+         <!-- Popup d'inscription -->
+        <div id="overlayInscription" class="popup">
+            <div class="popupInscription">
+                <span id="fermerPopupInscription" class="fermerPopup">&times;</span>
+                <h1>Inscription</h1>
+                <p id="notification">Veuillez saisir votre identifiant (adresse mail) et votre mot de passe.</p>
+                Nom <input type="text" id="champ-nom" size="40" />
+                <br/>
+                Prénom: <input type="text" id="champ-prenom" />
+                <br/>
+                Date de naissance: <input type="date" id="champ-date-naissance" size="40" />
+                <br/>
+                Code Postal: <input type="text" id="champ-code-postal" />
+                <br/>
+                Téléphone <input type="tel" id="champ-tel" size="40" />
+                <br/>
+                Adresse Mail <input type="email" id="champ-email" />
+                <br/>
+                Mot de passe <input type="password" id="champ-mdp" size="40" />
+                <br/>
+                <button id="bouton-inscription">Inscription</button>
+            </div>
+        </div>
+
+        <script>
+            // Ouvrir ou fermer le popup de connexion
+            $('#boutonPopupConnexion1').click(function () {
+                overlayConnexion.style.display = "block";
+            });
+            $('#boutonPopupConnexion2').click(function () {
+                overlayConnexion.style.display = "block";
+            });
+            $('#fermerPopupConnexion').click(function () {
+                overlayConnexion.style.display = "none";
+            });
+            // Ouvrir ou fermer le popup d'inscription
+            $('#boutonPopupInscription1').click(function () {
+              overlayInscription.style.display = "block";
+            });
+            $('#boutonPopupInscription2').click(function () {
+                overlayConnexion.style.display = "none";
+                overlayInscription.style.display = "block";
+            });
+            $('#fermerPopupInscription').click(function () {
+                overlayInscription.style.display = "none";
+            });
+            // Fermer les popups (click en dehors)
+            window.onclick = function(event) {
+                if (event.target === overlayConnexion) {
+                    overlayConnexion.style.display = "none";
+                }
+                if (event.target === overlayInscription) {
+                    overlayInscription.style.display = "none";
+                }
+            };
+        </script>
         
     </body>
 </html>
