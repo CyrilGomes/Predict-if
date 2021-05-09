@@ -1,4 +1,47 @@
 /* ----------------------------------------------------------------- */
+/* BASE STYLES */
+/* ----------------------------------------------------------------- */
+body {
+    font-family: "Lato";
+}
+button {
+    background: #583D72;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    color: white;
+}
+button:hover {
+    background: #995ab3;
+    box-shadow: -4px 4px 0 0 #FF8E71;
+}
+.hyperlien {
+    color: dodgerblue;
+}
+.ligne {
+    box-shadow: 0px 10px #d0ebda
+}
+label{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 250px;
+    text-align: right;
+}
+input {
+  display: inline-block;
+  float: left;
+}
+hr {
+    width: 65%;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+}
+.texteErreur {
+    color: red;
+}
+
+/* ----------------------------------------------------------------- */
 /* HEADER STYLES */
 /* ----------------------------------------------------------------- */
 
@@ -27,7 +70,6 @@
     text-decoration: none;
     font-size: 24px;
     line-height: 25px;
-    font-family: "Lato";
     border-style: none solid none solid;
     border-color: rgba(0, 0, 0, 0);
     border-width: 3px;
@@ -47,7 +89,7 @@
 }
 /* Header button alignment */
 .header-right {
-  float: right;
+    float: right;
 }
 
 /* ----------------------------------------------------------------- */
@@ -66,7 +108,6 @@
 /* Banner text panel */
 .banner-text {
     color: black;
-    font-family: "Lato";
     display: table-cell;
     vertical-align: middle;
     width: 50%;
@@ -74,28 +115,27 @@
 }
 /* Banner header */
 .banner-text h1 {
-     font-size: 50px;
+    font-size: 50px;
 }
 /* Banner paragraphs */
 .banner-text p {
-     font-size: 26px;
+    font-size: 26px;
 }
 /* Banner button */
-.banner-text a {
+.banner-text button {
     padding: 12px 26px;
     background: #583D72;
-    text-decoration: none;
     border-style: none solid none solid;
     border-width: 3x;
     border-color: #583D72;
     border-radius: 6px;
-    font-family: "Lato";
     font-size: 24px;
+    font-weight: normal;
     color: white;
     box-shadow: -4px 4px 0 0 #FF8E71;
 }
 /* Banner button hover */
-.banner-text a:hover {
+.banner-text button:hover {
     background: #995ab3;
     border-color: white;
 }
@@ -105,53 +145,87 @@
 /* ----------------------------------------------------------------- */
 /* Overlay des popups (background assombri) */
 .popup {
-  display: none; /* Hidden by default */
-  position: fixed; 
-  z-index: 1; 
-  left: 0;
-  top: 0;
-  width: 100%; 
-  height: 100%; 
-  overflow: auto; 
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    display: none; /* Hidden by default */
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 /* Boites des popups */
 .popupConnexion, .popupInscription {
-  background: white;
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px;
-  border: 1px solid #888;
-  width: 50%; 
+    background: white;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #888;
+    border-radius: 6px;
+}
+.popupConnexion {
+    width: 33%; 
+}
+.popupInscription {
+    width: 40%;
 }
 /* Bouton fermer les popups */
 .fermerPopup {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
 }
 .fermerPopup:hover,
 .fermerPopup:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
+/* Tableaux de formulaires */
+.popupConnexion table, .popupInscription table {
+    width: 80%; 
+    margin-left: auto; 
+    margin-right: auto;
+    border-spacing: 12px;
+    border-collapse: separate;
+    table-layout: fixed;
+}
+.popupConnexion td, .popupInscription td {
+    height: 30px;
+    color: #583D72;
+    font-size: 20px;
+    text-align: left;
+}
+.popupConnexion td[colspan="2"], .popupInscription td[colspan="2"] {
+    height: 40px;
+    padding: 12px 0px;
+}
+.popupConnexion input, .popupInscription input, 
+.popupConnexion div, .popupInscription div, 
+.popupConnexion button, .popupInscription button  {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
 
 /* ----------------------------------------------------------------- */
 /* RESPONSIVENESS */
 /* ----------------------------------------------------------------- */
 @media screen and (max-width: 500px) {
-  .header a {
-    float: none;
-    display: block;
-    text-align: left;
-  }
-  .header-right {
-    float: none;
-  }
+    .header a {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+    .header-right {
+        float: none;
+    }
 }
