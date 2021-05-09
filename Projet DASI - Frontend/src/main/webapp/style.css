@@ -40,7 +40,30 @@ hr {
 .texteErreur {
     color: red;
 }
-
+.Compte {
+    width: 500px;
+    font-size: 10px;
+    font-weight: bold;
+    font-family: "Georgia";
+    border: solid;
+    border-image: linear-gradient(0deg, #583D72 30%, #FF8E71) 10;
+    border-image-repeat: stretch;
+    border-width: 10px;
+    border-radius: 5px 5px 5px 5px;
+}
+.Compte::before{
+    width: 500px;
+    font-size: 20px;
+    margin-top:-50px;
+    margin-left:-10px;
+    position:absolute;
+    background-color: #FF8E71;
+    content: "Mon Compte";
+    border: solid #FF8E71;
+    font-weight: bold;
+    border-width: 10px;
+    border-radius: 5px 5px 5px 5px;
+}
 /* ----------------------------------------------------------------- */
 /* HEADER STYLES */
 /* ----------------------------------------------------------------- */
@@ -213,14 +236,6 @@ hr {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-}
-.Compte {
-    font-size: 10px;
-    font-weight: bold;
-    font-family: "Georgia";
-    border-color: blueviolet;
-    border-width: 10px;
-    border-radius: 5px 10px 0 5px;
 }
 
 
