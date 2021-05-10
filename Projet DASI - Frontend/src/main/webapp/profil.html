@@ -25,41 +25,69 @@ and open the template in the editor.
         <br />
         <br />
         <br />
+        <div class='flex-container'>
         <div class="Compte">
-            <table>
+            <table style="border-spacing: 10px 20px;">
                 <tr>
                     <td>Nom : </td>
-                    <td> <input type="text" id="champ-nom" value="nom" size="20" disabled="disabled"/> </td>
+                    <td> <input type="text" class="Text" id="champ-nom" value="nom" size="28" disabled="disabled"/> </td>
                     <td>Prénom : </td>
-                    <td> <input type="text" id="champ-prenom" value="prenom" size="20" disabled="disabled"/> </td>
+                    <td> <input type="text" id="champ-prenom" class="Text" value="prenom" size="28" disabled="disabled"/> </td>
                 </tr>
                 <tr>
                     <td>Date de Naissance : </td>
-                    <td> <input type="text" id="champ-datenaissance" value="date" size="20" disabled="disabled"/> </td>
+                    <td> <input type="text" class="Text" id="champ-datenaissance" value="date" size="28" disabled="disabled"/> </td>
                     <td>Code Postal : </td>
-                    <td> <input type="text" value="cp" id="champ-CP" size="20" disabled="disabled" /> </td>
+                    <td> <input type="text" class="Text" value="cp" id="champ-CP" size="28" disabled="disabled" /> </td>
                 </tr>
                 <tr>
                     <td> Téléphone : </td>
-                    <td> <input type="text" id="champ-tel" value="tel" size="20" disabled="" /> </td>
+                    <td> <input type="text" class="Text" id="champ-tel" value="tel" size="28" disabled="" /> </td>
                     <td></td>
                     <td></td>
                 </tr>
             </table>
-            <table>
+            <hr>
+            <table style="border-spacing: 10px 20px;">
                     
                     <tr>
                         <td>Adresse Mail : </td>
-                        <td > <input type="text" id="champ-mail" size="20" disabled="disabled" /> </td>
+                        <td > <input type="text" class="Text" id="champ-mail" size="85" disabled="disabled" /> </td>
                     </tr>
                     <tr>
                         <td>Mot de Passe : </td>
-                        <td> <input type="text" id="champ-mdp" size="20" disabled="disabled" /> </td>
+                        <td> <input type="text" class="Text" id="champ-mdp" size="85" disabled="disabled" /> </td>
                     </tr>
             </table>
+            <hr>
             <form>
-                <input type="button" id="button-modif" value="Modifier" onclick="modif()" />
+                <input type="button"  class="monBouton" id="button-modif" value="Modifier" onclick="modif()" />
             </form>
+            
+        </div>
+        <div class="ProfilAstral"> 
+            <table style="border-spacing: 10px 20px;">
+                <tr>
+                    <td>
+                        Couleur chance <br>
+                        <font color="black">
+                        > Violey </font><br>
+                        <br>
+                        Signe chinois <br>
+                        <font color="black">
+                        > Rat (miskine) </font><br>
+                        <br>
+                        Animal totem<br>
+                        <font color="black">
+                        > Tardigrade </font> <br>
+                        <br>
+                        Signe astrologique <br>
+                        <font color="black">
+                        > Cancer <br> </font>
+                    </td>
+                </tr>
+            </table>
+        </div>
         </div>
         <script>
  

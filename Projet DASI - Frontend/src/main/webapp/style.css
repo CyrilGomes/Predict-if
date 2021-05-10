@@ -1,17 +1,131 @@
 /* ----------------------------------------------------------------- */
 /* BASE STYLES */
 /* ----------------------------------------------------------------- */
+
 body {
     font-family: "Lato";
 }
-button {
-    background: #583D72;
-    border-radius: 6px;
-    font-size: 18px;
-    font-weight: bold;
-    border: none;
-    color: white;
+.flex-container {
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    }
+
+.flex-item:nth-child(1) {
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
 }
+
+
+.flex-item:nth-child(2) {
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
+}
+
+.Compte {
+    width: 1300px;
+    margin-top:70px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #583D72;
+    font-family: "Calibri";
+    border: solid;
+    border-image: linear-gradient(0deg, #583D72 30%, #FF8E71) 10;
+    border-image-repeat: stretch;
+    border-width: 10px;
+    border-radius: 5px 5px 5px 5px;
+}
+.ProfilAstral {
+    width: 375px;
+    margin-top:70px;
+    margin-left: 100px;
+    font-size: 25px;
+    font-weight: bold;
+    color: #583D72;
+    font-family: "Calibri";
+    border: solid;
+    border-image: linear-gradient(0deg, #583D72 30%, #FF8E71) 10;
+    border-image-repeat: stretch;
+    border-width: 10px;
+    border-radius: 5px 5px 5px 5px;
+
+}
+.ProfilAstral::before{
+    width: 375px;
+    font-size: 40px;
+    margin-top:-70px;
+    margin-left:-10px;
+    font-weight: bold;
+    position:absolute;
+    color: black;
+    background-color: #FF8E71;
+    content: "Mon Profil Astral";
+    font-family: "Calibri";
+    border: solid #FF8E71;
+    font-weight: bold;
+    border-width: 10px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.Compte::before{
+    grid-area: Compte;
+    width: 1300px;
+    font-size: 40px;
+    margin-top:-70px;
+    margin-left:-10px;
+    font-weight: bold;
+    position:absolute;
+    color: black;
+    background-color: #FF8E71;
+    content: "Mon Compte";
+    font-family: "Calibri";
+    border: solid #FF8E71;
+    font-weight: bold;
+    border-width: 10px;
+    border-radius: 5px 5px 5px 5px;
+}
+.monBouton {
+    background-color:#583D72;
+    width: 225px;
+    color:white;
+    font-size: 30px;
+    border: solid;
+    border-width: 10px;
+    border-radius: 5px 5px 5px 5px;
+    border-color: #583D72;
+    margin-left: 1000px;
+    margin-bottom: -30px;
+}
+
 button:hover {
     background: #995ab3;
     box-shadow: -4px 4px 0 0 #FF8E71;
@@ -34,36 +148,13 @@ input {
   float: left;
 }
 hr {
-    width: 65%;
+    width: 80%;
     border: 1px solid rgba(0, 0, 0, 0.3);
 }
 .texteErreur {
     color: red;
 }
-.Compte {
-    width: 500px;
-    font-size: 10px;
-    font-weight: bold;
-    font-family: "Georgia";
-    border: solid;
-    border-image: linear-gradient(0deg, #583D72 30%, #FF8E71) 10;
-    border-image-repeat: stretch;
-    border-width: 10px;
-    border-radius: 5px 5px 5px 5px;
-}
-.Compte::before{
-    width: 500px;
-    font-size: 20px;
-    margin-top:-50px;
-    margin-left:-10px;
-    position:absolute;
-    background-color: #FF8E71;
-    content: "Mon Compte";
-    border: solid #FF8E71;
-    font-weight: bold;
-    border-width: 10px;
-    border-radius: 5px 5px 5px 5px;
-}
+
 /* ----------------------------------------------------------------- */
 /* HEADER STYLES */
 /* ----------------------------------------------------------------- */
@@ -115,6 +206,7 @@ hr {
     float: right;
 }
 
+
 /* ----------------------------------------------------------------- */
 /* IMAGE BANNER STYLES */
 /* ----------------------------------------------------------------- */
@@ -163,81 +255,6 @@ hr {
     border-color: white;
 }
 
-/* ----------------------------------------------------------------- */
-/* POPUP STYLES */
-/* ----------------------------------------------------------------- */
-/* Overlay des popups (background assombri) */
-.popup {
-    display: none; /* Hidden by default */
-    position: fixed; 
-    z-index: 1; 
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-/* Boites des popups */
-.popupConnexion, .popupInscription {
-    background: white;
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    text-align: center;
-    border: 1px solid #888;
-    border-radius: 6px;
-}
-.popupConnexion {
-    width: 33%; 
-}
-.popupInscription {
-    width: 40%;
-}
-/* Bouton fermer les popups */
-.fermerPopup {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-.fermerPopup:hover,
-.fermerPopup:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-/* Tableaux de formulaires */
-.popupConnexion table, .popupInscription table {
-    width: 80%; 
-    margin-left: auto; 
-    margin-right: auto;
-    border-spacing: 12px;
-    border-collapse: separate;
-    table-layout: fixed;
-}
-.popupConnexion td, .popupInscription td {
-    height: 30px;
-    color: #583D72;
-    font-size: 20px;
-    text-align: left;
-}
-.popupConnexion td[colspan="2"], .popupInscription td[colspan="2"] {
-    height: 40px;
-    padding: 12px 0px;
-}
-.popupConnexion input, .popupInscription input, 
-.popupConnexion div, .popupInscription div, 
-.popupConnexion button, .popupInscription button  {
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-}
-
 
 /* ----------------------------------------------------------------- */
 /* RESPONSIVENESS */
@@ -251,4 +268,8 @@ hr {
     .header-right {
         float: none;
     }
+}
+
+.Text {
+    font-size: 20px;
 }
