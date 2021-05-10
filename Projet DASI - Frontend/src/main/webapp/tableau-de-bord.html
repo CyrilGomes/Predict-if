@@ -21,20 +21,37 @@
             </div>
         </div>
 
-           <div class="chartPanel">
-        <div class="chart">
-            <canvas id="statistiquesMediums"></canvas>
+        <!-- Contenu de la page -->
+        <div class="panelContainer">
+            <!-- Affichage Consultation attribuée -->
+            <div class="panel">
+                <div class="panelHeader">Demande de Consultation</div>
+                <div class="panelContent" id="consultationAttribuee">
+                    <p><strong> THIS IS A WORK IN PROGRESS <br />.<br />.<br />.<br />.<br />.</strong></p>
+                </div>
+            </div>
+            <!-- Affichage statistiques agence -->
+            <div class="panel">
+                <div class="panelHeader">Mon Agence</div>
+                <div class="panelContent" id="monAgence">
+                    <div class="graphique">
+                        <canvas id="statistiquesMediumsPopulaires"></canvas>
+                    </div>
+                    <div class="graphique">
+                        <canvas id="statistiquesMediums"></canvas>
+                    </div>
+                    <div class="graphique">
+                        <canvas id="statistiquesEmployes"></canvas>
+                    </div>
+
+                    <div class="graphique">
+                        <canvas id="statistiquesClients"></canvas>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="chart">
-            <canvas id="statistiquesEmployes"></canvas>
-        </div>
-        <div class="chart">
-            <canvas id="statistiquesMediumsPopulaires"></canvas>
-        </div>
-        <div class="chart">
-            <canvas id="statistiquesClients"></canvas>
-        </div>
-           </div>
+
 
         <script>
             $(document).ready(function () {
@@ -70,6 +87,7 @@
                         })
                         .always(function () {
                         });
+
                 // OBTENIR CONSULTATION ATTRIBUEE 
                 // Appel AJAX
                 $.ajax({
@@ -94,6 +112,7 @@
                         })
                         .always(function () {
                         });
+
                 // OBTENIR STATISTIQUES 1 (mediums et leurs clients) 
                 // Appel AJAX
                 $.ajax({
@@ -122,7 +141,7 @@
                                 datasets: [{
                                         data: nombreConsultations,
                                         backgroundColor: couleurs,
-                                        hoverOffset: 20,
+                                        hoverOffset: 10,
                                     }]
                             };
                             const config = {
@@ -159,6 +178,7 @@
                         })
                         .always(function () {
                         });
+
                 // OBTENIR STATISTIQUE 2 (employes et leurs clients) 
                 // Appel AJAX
                 $.ajax({
@@ -230,6 +250,7 @@
                         })
                         .always(function () {
                         });
+
                 // OBTENIR STATISTIQUE 3 (mediums les plus populaires) 
                 // Appel AJAX
                 $.ajax({
@@ -303,6 +324,7 @@
                         })
                         .always(function () {
                         });
+
                 // OBTENIR STATISTIQUE 4 (clients et leurs temps d'appel) 
                 // Appel AJAX
                 $.ajax({
@@ -377,6 +399,7 @@
                         })
                         .always(function () {
                         });
+
                 /* SERVICE signalerDebutConsultation */
                 $('#bouton-je-suis-pret').on('click', function () {
                     // Appel AJAX
