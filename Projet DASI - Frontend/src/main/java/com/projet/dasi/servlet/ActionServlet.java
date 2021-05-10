@@ -1,22 +1,20 @@
 package com.projet.dasi.servlet;
 
-import com.project.dasi.serialisations.ConnexionSerialisation;
-import com.project.dasi.serialisations.InscriptionSerialisation;
+import com.project.dasi.serialisations.ObtenirUtilisateurSerialisation;
 import com.project.dasi.serialisations.ObtenirConsultationAttribueeSerialisation;
 import com.project.dasi.serialisations.Serialisation;
 import com.projet.dasi.actions.Action;
 import com.projet.dasi.actions.ConnexionAction;
 import com.projet.dasi.actions.InscriptionAction;
 import com.projet.dasi.actions.ObtenirConsultationAttribueeAction;
+import com.projet.dasi.actions.ObtenirUtilisateurCourantAction;
 import com.projet.dasi.dao.JpaUtil;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.projet.dasi.service.ServicesApplication;
 
 @WebServlet(urlPatterns = {"/ActionServlet"})
 public class ActionServlet extends HttpServlet {
@@ -32,14 +30,19 @@ public class ActionServlet extends HttpServlet {
            
         switch (typeRequete) {
             
+            case "obtenirUtilisateurCourant":
+                action = new ObtenirUtilisateurCourantAction();
+                serialisation = new ObtenirUtilisateurSerialisation();
+                break;
+            
             case "connexion":
                 action = new ConnexionAction();
-                serialisation = new ConnexionSerialisation();
+                serialisation = new ObtenirUtilisateurSerialisation();
                 break;
                 
             case "inscription":
                 action = new InscriptionAction();
-                serialisation = new InscriptionSerialisation();
+                serialisation = new ObtenirUtilisateurSerialisation();
                 break;
                 
             case "obtenirConsultationAttribuee":

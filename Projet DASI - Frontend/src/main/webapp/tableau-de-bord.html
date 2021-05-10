@@ -13,9 +13,9 @@
         <div class="header">
             <a href="index.html" class="logo">Predict'IF</a>
             <div class="header-right">
-                <a href="#" id="boutonProfil">Profil</a>
-                <a href="#" id="boutonTableauDeBord">Tableau de Bord</a>
                 <a href="#" id="boutonConsultationEnCours">Consultation en cours</a>
+                <a href="#" id="boutonTableauDeBord">Tableau de Bord</a>
+                <a href="#" id="boutonProfil">Profil</a>
             </div>
         </div>
 
@@ -24,7 +24,33 @@
 
             /* INITIALISATION */
 
-            /* OBTENIR CONSULTATION ATTRIBUEE */
+            // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER 
+            // Appel AJAX
+            $.ajax({
+            url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'obtenirUtilisateurCourant'
+                    },
+                    dataType: 'json'
+            })
+            .done(function (response) { 
+                console.log('Response', response);
+                // Si l'utilisateur n'est pas loggé ou qu'il n'est pas un employé...
+                if (!(response.utilisateur && response.type == "employe")) {
+                    // Rediriger vers l'accueil
+                    window.location.replace("index.html");
+                }
+            })
+            .fail(function (error) {
+                console.log('Error', error);
+                alert("Erreur lors de l'appel AJAX");
+            })
+            .always(function () { 
+            });
+            
+            /*
+            // OBTENIR CONSULTATION ATTRIBUEE 
             // Appel AJAX
             $.ajax({
             url: './ActionServlet',
@@ -34,20 +60,24 @@
                     },
                     dataType: 'json'
             })
-            .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+            .done(function (response) { 
                 console.log('Response', response);
+                // Si une consultation a été attribuée à l'utilisateur courant...
                 if (response.consultation) {
-                    // TODO: populer un div avec les informations de la consultation en cours et le montrer
+                    // Populer un div avec les informations de la consultation en cours et le montrer
+                    // TODO
                 }
             })
-            .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+            .fail(function (error) { 
                 console.log('Error', error);
                 alert("Erreur lors de l'appel AJAX");
             })
-            .always(function () { // Fonction toujours appelée
+            .always(function () { 
             });
+            */
             
-            /* OBTENIR STATISTIQUES 1 (mediums et leurs clients) */
+            /*
+            // OBTENIR STATISTIQUES 1 (mediums et leurs clients) 
             // Appel AJAX
             $.ajax({
             url: './ActionServlet',
@@ -57,18 +87,18 @@
                     },
                     dataType: 'json'
             })
-            .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+            .done(function (response) { 
                 console.log('Response', response);
                 // TODO: populer/générer le graphique 1 avec les informations statistiques et le montrer (piechart de mediums)
             })
-            .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+            .fail(function (error) { 
                 console.log('Error', error);
                 alert("Erreur lors de l'appel AJAX");
             })
-            .always(function () { // Fonction toujours appelée
+            .always(function () { 
             });
             
-            /* OBTENIR STATISTIQUE 2 (employes et leurs clients) */
+            // OBTENIR STATISTIQUE 2 (employes et leurs clients) 
             // Appel AJAX
             $.ajax({
             url: './ActionServlet',
@@ -78,18 +108,18 @@
                     },
                     dataType: 'json'
             })
-            .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+            .done(function (response) { 
                 console.log('Response', response);
                 // TODO: populer/générer le graphique 2 avec les informations statistiques et le montrer (histogramme d'employés)
             })
-            .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+            .fail(function (error) { 
                 console.log('Error', error);
                 alert("Erreur lors de l'appel AJAX");
             })
-            .always(function () { // Fonction toujours appelée
+            .always(function () { 
             });
             
-            /* OBTENIR STATISTIQUE 3 (mediums les plus populaires) */
+            // OBTENIR STATISTIQUE 3 (mediums les plus populaires) 
             // Appel AJAX
             $.ajax({
             url: './ActionServlet',
@@ -99,18 +129,18 @@
                     },
                     dataType: 'json'
             })
-            .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+            .done(function (response) { 
                 console.log('Response', response);
                 // TODO: populer/générer le graphique 3 avec les informations statistiques et le montrer (histogramme de médiums)
             })
-            .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+            .fail(function (error) { 
                 console.log('Error', error);
                 alert("Erreur lors de l'appel AJAX");
             })
-            .always(function () { // Fonction toujours appelée
+            .always(function () { 
             });
             
-            /* OBTENIR STATISTIQUE 4 (clients et leurs temps d'appel) */
+            // OBTENIR STATISTIQUE 4 (clients et leurs temps d'appel) 
             // Appel AJAX
             $.ajax({
             url: './ActionServlet',
@@ -120,16 +150,17 @@
                     },
                     dataType: 'json'
             })
-            .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+            .done(function (response) { 
                 console.log('Response', response);
                 // TODO: populer/générer le graphique 4 avec les informations statistiques et le montrer (histogramme de clients)
             })
-            .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+            .fail(function (error) { 
                 console.log('Error', error);
                 alert("Erreur lors de l'appel AJAX");
             })
-            .always(function () { // Fonction toujours appelée
+            .always(function () { 
             });
+            */
                     
             /* SERVICE signalerDebutConsultation */
             $('#bouton-je-suis-pret').on('click', function () {
@@ -142,19 +173,19 @@
                         },
                         dataType: 'json'
                 })
-                .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                .done(function (response) {
                     console.log('Response', response);
                     // TODO: rediriger vers la page Consultation en Cours
                 })
-                .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                .fail(function (error) { 
                     console.log('Error', error);
                     alert("Erreur lors de l'appel AJAX");
                 })
-                .always(function () { // Fonction toujours appelée
+                .always(function () { 
                 });
-            })
-            ;
-
+            });
+            
+            });
         </script>
 
     </body>

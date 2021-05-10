@@ -102,7 +102,7 @@
         <script>
             $(document).ready(function () {
 
-                /* SERVICE CONNEXION */
+                // SERVICE CONNEXION 
                 $('#bouton-connexion').on('click', function () {
 
                     console.log("clic sur le bouton de connexion");
@@ -131,24 +131,37 @@
                         },
                         dataType: 'json'
                     })
-                            .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
-                                console.log('Response', response);
-                                if (response.connexion) {
-                                    // TODO: rediriger vers la page Demande Consultation
-                                } else {
-                                    $('#messageErreurConnexion').html("Erreur de connexion. Veuillez réessayer");
-                                }
-                            })
-                            .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
-                                console.log('Error', error);
-                                alert("Erreur lors de l'appel AJAX");
-                            })
-                            .always(function () { // Fonction toujours appelée
-                                $('#bouton-connexion').html("Connexion");
-                            });
+                    .done(function (response) { 
+                        console.log('Response', response);
+                        // Si la connexion a réussi (utilisateur retourné)...
+                        if (response.utilisateur) {
+                            // S'il est de type client...
+                            if (response.type == "client") {
+                                // Rediriger vers la page Demande Consultation
+                                // TODO
+                            }
+                            // S'il est de type employé...
+                            else { 
+                                // Rediriger vers la page Tableau de Bord
+                                window.location.replace("tableau-de-bord.html");
+                            }
+                        } 
+                        // Sinon...
+                        else {
+                            // Afficher un message d'erreur
+                            $('#messageErreurConnexion').html("Erreur de connexion. Veuillez réessayer");
+                        }
+                    })
+                    .fail(function (error) { 
+                        console.log('Error', error);
+                        alert("Erreur lors de l'appel AJAX");
+                    })
+                    .always(function () { 
+                        $('#bouton-connexion').html("Connexion");
+                    });
                 });
 
-                /* SERVICE INSCRIPTION */
+                // SERVICE INSCRIPTION 
                 $('#bouton-inscription').on('click', function () {
                     
                     console.log("clic sur le bouton de inscription");
@@ -188,27 +201,32 @@
                         },
                         dataType: 'json'
                     })
-                            .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
-                                console.log('Response', response);
-                                if (response.inscription) {
-                                    formulaireInscription.style.display = "none";
-                                    confirmationInscription.style.display = "block";
-                                } else {
-                                    $('#messageErreurInscription').html("Erreur d'inscription. Veuillez réessayer");
-                                }
-                            })
-                            .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
-                                console.log('Error', error);
-                                alert("Erreur lors de l'appel AJAX");
-                            })
-                            .always(function () { // Fonction toujours appelée
-                                $('#bouton-inscription').html("Inscription");
-                            });
+                    .done(function (response) { 
+                        console.log('Response', response);
+                        // Si l'inscription a réussi (utilisateur retourné)...
+                        if (response.utilisateur) {
+                            // Cacher le formulaire et afficher la confirmation d'inscription
+                            formulaireInscription.style.display = "none";
+                            confirmationInscription.style.display = "block";
+                        }
+                        // Sinon...
+                        else {
+                            // Afficher un message d'erreur
+                            $('#messageErreurInscription').html("Erreur d'inscription. Veuillez réessayer");
+                        }
+                    })
+                    .fail(function (error) { 
+                        console.log('Error', error);
+                        alert("Erreur lors de l'appel AJAX");
+                    })
+                    .always(function () { 
+                        $('#bouton-inscription').html("Inscription");
+                    });
                 });
 
             });
 
-            /* POPUP DE CONNEXION */
+            // POPUP DE CONNEXION 
             // Fonction d'ouverture du popup
             function showPopupConnexion() {
                 // Désafficher popup inscription
@@ -231,7 +249,7 @@
             $('#boutonPopupConnexion3').click(showPopupConnexion);
             $('#fermerPopupConnexion').click(hidePopupConnexion);
 
-            /* POPUP D'INSCRIPTION*/
+            // POPUP D'INSCRIPTION
             // Fonction d'ouverture du popup
             function showPopupInscription() {
                 // Reset les divs 
@@ -262,7 +280,7 @@
             $('#boutonPopupInscription2').click(showPopupInscription);
             $('#fermerPopupInscription').click(hidePopupInscription);
 
-            /* FERMETURE AUTOMATIQUE DES POPUPS*/
+            // FERMETURE AUTOMATIQUE DES POPUPS
             window.onclick = function (event) {
                 if (event.target === overlayConnexion) {
                     hidePopupConnexion();
