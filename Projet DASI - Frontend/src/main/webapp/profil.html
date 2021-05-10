@@ -6,11 +6,12 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <link rel="stylesheet" href="style.css" type="text/css"/>
+        <link rel="stylesheet" href="profil.css" type="text/css"/>
 
         <title>Mon compte</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
     <body>
         <div>
@@ -36,7 +37,7 @@ and open the template in the editor.
                 </tr>
                 <tr>
                     <td>Date de Naissance : </td>
-                    <td> <input type="text" class="Text" id="champ-datenaissance" value="date" size="28" disabled="disabled"/> </td>
+                    <td> <input type="date" id="champ-datenaissance" class="Text" size="28" disabled="disabled" /> </td>
                     <td>Code Postal : </td>
                     <td> <input type="text" class="Text" value="cp" id="champ-CP" size="28" disabled="disabled" /> </td>
                 </tr>
@@ -65,7 +66,7 @@ and open the template in the editor.
             </form>
             
         </div>
-        <div class="ProfilAstral"> 
+            <div class="ProfilAstral"> 
             <table style="border-spacing: 10px 20px;">
                 <tr>
                     <td>
@@ -97,6 +98,30 @@ and open the template in the editor.
                     document.getElementById("button-modif").value = "Sauvegarder";
                 }else{
                     document.getElementById("button-modif").value = "Modifier";
+                    var champNom = $('#champ-nom').val();
+                    var champPrenom = $('#champ-prenom').val();
+                    var champDateNaissance = $('#champ-datenaissance').val();
+                    var champCodePostal = $('#champ-CP').val();
+                    var champTel = $('#champ-tel').val();
+                    var champMail = $('#champ-mail').val();
+                    var champMdp = $('#champ-mdp').val();
+
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'sauvegarderDonnees',
+                            nom: champNom,
+                            prenom: champPrenom,
+                            dateNaissance: champDateNaissance,
+                            codePostal: champCodePostal,
+                            tel: champTel,
+                            email: champMail,
+                            mdp: champMdp
+
+                        },
+                        dataType: 'json'
+                    });
                 }
                 document.getElementById("champ-prenom").disabled = !document.getElementById("champ-prenom").disabled;
                 document.getElementById("champ-nom").disabled = !document.getElementById("champ-nom").disabled;
@@ -108,6 +133,25 @@ and open the template in the editor.
 
                 
             }
+            $(document).ready(function () {
+
+                var response = $.ajax({
+                    url: './ActionServlet',
+                    method: 'GET',
+                    data: {
+                        todo: 'obtenirInfoProfil'
+                    },
+                    dataType: 'json'
+                });
+                document.getElementById("champ-nom").value = response.property.nom;
+                document.getElementById("champ-prenom").value = response.property.prenom;
+                document.getElementById("champ-tel").value = response.property.telephone;
+                document.getElementById("champ-datenaissance").value = response.property.date-de-naissance;
+                document.getElementById("champ-CP").value = response.property.code-postal;
+                document.getElementById("champ-mail").value = response.property.mail;
+                document.getElementById("champ-mdp").value = response.property.mot-de-passe;
+            });
+
            
   
         </script>

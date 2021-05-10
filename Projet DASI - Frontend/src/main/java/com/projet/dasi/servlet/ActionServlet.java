@@ -4,12 +4,14 @@ import com.project.dasi.serialisations.GenererStatistiquesSerialisation;
 import com.project.dasi.serialisations.ObtenirUtilisateurSerialisation;
 import com.project.dasi.serialisations.ObtenirConsultationAttribueeSerialisation;
 import com.project.dasi.serialisations.Serialisation;
+import com.project.dasi.serialisations.ObtenirInfoProfilSerialisation;
 import com.projet.dasi.actions.Action;
 import com.projet.dasi.actions.ConnexionAction;
 import com.projet.dasi.actions.GenererStatistiquesAction;
 import com.projet.dasi.actions.InscriptionAction;
 import com.projet.dasi.actions.ObtenirConsultationAttribueeAction;
 import com.projet.dasi.actions.ObtenirUtilisateurCourantAction;
+import com.projet.dasi.actions.SauvegarderDonneesAction;
 import com.projet.dasi.dao.JpaUtil;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -35,6 +37,16 @@ public class ActionServlet extends HttpServlet {
             case "obtenirUtilisateurCourant":
                 action = new ObtenirUtilisateurCourantAction();
                 serialisation = new ObtenirUtilisateurSerialisation();
+                break;
+            
+            case "sauvegarderDonnees":
+                action = new SauvegarderDonneesAction();
+                serialisation = new ObtenirUtilisateurSerialisation();
+                break;
+                
+            case "obtenirInfoProfil":
+                action = new ObtenirUtilisateurCourantAction();
+                serialisation = new ObtenirInfoProfilSerialisation();
                 break;
             
             case "connexion":

@@ -5,6 +5,9 @@
 body {
     font-family: "Lato";
 }
+.date{
+    font-size: 30px; 
+}
 .flex-container {
     display: -ms-inline-flexbox;
     display: -webkit-inline-flex;
@@ -77,7 +80,6 @@ body {
     border-image-repeat: stretch;
     border-width: 10px;
     border-radius: 5px 5px 5px 5px;
-
 }
 .ProfilAstral::before{
     width: 375px;
