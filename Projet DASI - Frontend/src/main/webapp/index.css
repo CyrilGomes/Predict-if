@@ -196,6 +196,9 @@ hr {
     font-size: 20px;
     text-align: left;
 }
+.popupInscription td {
+    padding: 4px 0px;
+}
 .popupConnexion td[colspan="2"], .popupInscription td[colspan="2"] {
     height: 40px;
     padding: 12px 0px;
@@ -206,6 +209,9 @@ hr {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+}
+.popupInscription input {
+    height: 65%
 }
 
 /* ----------------------------------------------------------------- */
