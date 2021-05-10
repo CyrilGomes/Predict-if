@@ -189,7 +189,6 @@ hr {
     margin-right: auto;
     border-spacing: 12px;
     border-collapse: separate;
-    table-layout: fixed;
 }
 .popupConnexion td, .popupInscription td {
     height: 30px;
@@ -208,6 +207,25 @@ hr {
     height: 100%;
     box-sizing: border-box;
 }
+
+/* ----------------------------------------------------------------- */
+/* FORMULAIRES */
+/* ----------------------------------------------------------------- */
+.label {
+    margin: 2px;
+    flex-grow: 1;
+}
+.input {
+    margin: 2px;
+    flex-grow: 4;
+}
+.labeledInput {
+    display: flex;
+    flex-direction: row;
+    padding: 2px;
+    justify-content: space-between;
+}
+    
 
 
 /* ----------------------------------------------------------------- */

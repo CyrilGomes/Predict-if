@@ -31,26 +31,30 @@ public class ObtenirConsultationAttribueeSerialisation extends Serialisation {
         // Populer le container
         container.addProperty("consultation", consultation != null);
         
-        // Sérialiser le client de la consultation
-        Client client = consultation.getClient();
-        ProfilAstral profil = client.getProfilAstral();
-        JsonObject clientData = new JsonObject();
-        JsonObject profilData = new JsonObject();
-        profilData.addProperty("signeAstro", profil.getSigneAstro());
-        profilData.addProperty("signeChinois", profil.getSigneChinois());
-        profilData.addProperty("couleur", profil.getCouleur());
-        profilData.addProperty("animalTotem", profil.getAnimalTotem());
-        clientData.addProperty("prenom", client.getPrenom());
-        clientData.addProperty("nom", client.getNom());
-        clientData.add("profil", profilData);
-        container.add("client", clientData);
+        if (consultation != null) {
         
-        // Sérialiser le médium de la consultation
-        Medium medium = consultation.getMedium();
-        JsonObject mediumData = (JsonObject)gson.toJsonTree(medium);
-        if (medium instanceof Cartomancien) { mediumData.addProperty("type", "cartomancien"); }
-        if (medium instanceof Spirite) { mediumData.addProperty("type", "spirite"); }
-        if (medium instanceof Astrologue) { mediumData.addProperty("type", "astrologue"); }
+            // Sérialiser le client de la consultation
+            Client client = consultation.getClient();
+            ProfilAstral profil = client.getProfilAstral();
+            JsonObject clientData = new JsonObject();
+            JsonObject profilData = new JsonObject();
+            profilData.addProperty("signeAstro", profil.getSigneAstro());
+            profilData.addProperty("signeChinois", profil.getSigneChinois());
+            profilData.addProperty("couleur", profil.getCouleur());
+            profilData.addProperty("animalTotem", profil.getAnimalTotem());
+            clientData.addProperty("prenom", client.getPrenom());
+            clientData.addProperty("nom", client.getNom());
+            clientData.add("profil", profilData);
+            container.add("client", clientData);
+
+            // Sérialiser le médium de la consultation
+            Medium medium = consultation.getMedium();
+            JsonObject mediumData = (JsonObject)gson.toJsonTree(medium);
+            if (medium instanceof Cartomancien) { mediumData.addProperty("type", "cartomancien"); }
+            if (medium instanceof Spirite) { mediumData.addProperty("type", "spirite"); }
+            if (medium instanceof Astrologue) { mediumData.addProperty("type", "astrologue"); }
+        
+        }
         
         // L'écrire sur le flux de sortie
         PrintWriter out = this.getWriter(response);

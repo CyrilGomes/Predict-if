@@ -1,10 +1,12 @@
 package com.projet.dasi.servlet;
 
+import com.project.dasi.serialisations.GenererStatistiquesSerialisation;
 import com.project.dasi.serialisations.ObtenirUtilisateurSerialisation;
 import com.project.dasi.serialisations.ObtenirConsultationAttribueeSerialisation;
 import com.project.dasi.serialisations.Serialisation;
 import com.projet.dasi.actions.Action;
 import com.projet.dasi.actions.ConnexionAction;
+import com.projet.dasi.actions.GenererStatistiquesAction;
 import com.projet.dasi.actions.InscriptionAction;
 import com.projet.dasi.actions.ObtenirConsultationAttribueeAction;
 import com.projet.dasi.actions.ObtenirUtilisateurCourantAction;
@@ -50,6 +52,10 @@ public class ActionServlet extends HttpServlet {
                 serialisation = new ObtenirConsultationAttribueeSerialisation();
                 break;
                 
+            case "genererStatistiques":
+                action = new GenererStatistiquesAction();
+                serialisation = new GenererStatistiquesSerialisation();
+                break;
         }
         
         if (action != null && serialisation != null) {
@@ -62,15 +68,6 @@ public class ActionServlet extends HttpServlet {
         
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
@@ -88,14 +85,6 @@ public class ActionServlet extends HttpServlet {
         super.destroy();
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);

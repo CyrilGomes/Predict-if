@@ -3,11 +3,13 @@
     <head>
         <title>Tableau de Bord Employé</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="tableau-de-bord.css">
         <!-- Librairie Javascript: jQuery (v3.4.1) -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <!-- Librairie Javascript: Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
-    <body>
+    <body style="display: none;">
 
         <!-- HEADER -->
         <div class="header">
@@ -19,172 +21,392 @@
             </div>
         </div>
 
+           <div class="chartPanel">
+        <div class="chart">
+            <canvas id="statistiquesMediums"></canvas>
+        </div>
+        <div class="chart">
+            <canvas id="statistiquesEmployes"></canvas>
+        </div>
+        <div class="chart">
+            <canvas id="statistiquesMediumsPopulaires"></canvas>
+        </div>
+        <div class="chart">
+            <canvas id="statistiquesClients"></canvas>
+        </div>
+           </div>
+
         <script>
             $(document).ready(function () {
 
-            /* INITIALISATION */
+                // INITIALISATION 
 
-            // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER 
-            // Appel AJAX
-            $.ajax({
-            url: './ActionServlet',
+                // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER 
+                // Appel AJAX
+                $.ajax({
+                    url: './ActionServlet',
                     method: 'POST',
                     data: {
                         todo: 'obtenirUtilisateurCourant'
                     },
                     dataType: 'json'
-            })
-            .done(function (response) { 
-                console.log('Response', response);
-                // Si l'utilisateur n'est pas loggé ou qu'il n'est pas un employé...
-                if (!(response.utilisateur && response.type == "employe")) {
-                    // Rediriger vers l'accueil
-                    window.location.replace("index.html");
-                }
-            })
-            .fail(function (error) {
-                console.log('Error', error);
-                alert("Erreur lors de l'appel AJAX");
-            })
-            .always(function () { 
-            });
-            
-            /*
-            // OBTENIR CONSULTATION ATTRIBUEE 
-            // Appel AJAX
-            $.ajax({
-            url: './ActionServlet',
+                })
+                        .done(function (response) {
+                            console.log('Response', response);
+                            // Si l'utilisateur n'est pas loggé ou qu'il n'est pas un employé...
+                            if (!(response.utilisateur && response.type == "employe")) {
+                                // Rediriger vers l'accueil
+                                window.location.replace("index.html");
+                            }
+                            // Si tout va bien...
+                            else {
+                                // Afficher la page 
+                                $('body').css({"display": "block"});
+                            }
+                        })
+                        .fail(function (error) {
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+                        .always(function () {
+                        });
+                // OBTENIR CONSULTATION ATTRIBUEE 
+                // Appel AJAX
+                $.ajax({
+                    url: './ActionServlet',
                     method: 'POST',
                     data: {
                         todo: 'obtenirConsultationAttribuee'
                     },
                     dataType: 'json'
-            })
-            .done(function (response) { 
-                console.log('Response', response);
-                // Si une consultation a été attribuée à l'utilisateur courant...
-                if (response.consultation) {
-                    // Populer un div avec les informations de la consultation en cours et le montrer
-                    // TODO
-                }
-            })
-            .fail(function (error) { 
-                console.log('Error', error);
-                alert("Erreur lors de l'appel AJAX");
-            })
-            .always(function () { 
-            });
-            */
-            
-            /*
-            // OBTENIR STATISTIQUES 1 (mediums et leurs clients) 
-            // Appel AJAX
-            $.ajax({
-            url: './ActionServlet',
-                    method: 'POST',
-                    data: {
-                        todo: 'genererStatistiquesMediums'
-                    },
-                    dataType: 'json'
-            })
-            .done(function (response) { 
-                console.log('Response', response);
-                // TODO: populer/générer le graphique 1 avec les informations statistiques et le montrer (piechart de mediums)
-            })
-            .fail(function (error) { 
-                console.log('Error', error);
-                alert("Erreur lors de l'appel AJAX");
-            })
-            .always(function () { 
-            });
-            
-            // OBTENIR STATISTIQUE 2 (employes et leurs clients) 
-            // Appel AJAX
-            $.ajax({
-            url: './ActionServlet',
-                    method: 'POST',
-                    data: {
-                        todo: 'genererStatistiquesRepartitionClientsParEmploye'
-                    },
-                    dataType: 'json'
-            })
-            .done(function (response) { 
-                console.log('Response', response);
-                // TODO: populer/générer le graphique 2 avec les informations statistiques et le montrer (histogramme d'employés)
-            })
-            .fail(function (error) { 
-                console.log('Error', error);
-                alert("Erreur lors de l'appel AJAX");
-            })
-            .always(function () { 
-            });
-            
-            // OBTENIR STATISTIQUE 3 (mediums les plus populaires) 
-            // Appel AJAX
-            $.ajax({
-            url: './ActionServlet',
-                    method: 'POST',
-                    data: {
-                        todo: 'genererStatistiquesMediumsPopulaires'
-                    },
-                    dataType: 'json'
-            })
-            .done(function (response) { 
-                console.log('Response', response);
-                // TODO: populer/générer le graphique 3 avec les informations statistiques et le montrer (histogramme de médiums)
-            })
-            .fail(function (error) { 
-                console.log('Error', error);
-                alert("Erreur lors de l'appel AJAX");
-            })
-            .always(function () { 
-            });
-            
-            // OBTENIR STATISTIQUE 4 (clients et leurs temps d'appel) 
-            // Appel AJAX
-            $.ajax({
-            url: './ActionServlet',
-                    method: 'POST',
-                    data: {
-                        todo: 'genererStatistiquesTempsAppelClients'
-                    },
-                    dataType: 'json'
-            })
-            .done(function (response) { 
-                console.log('Response', response);
-                // TODO: populer/générer le graphique 4 avec les informations statistiques et le montrer (histogramme de clients)
-            })
-            .fail(function (error) { 
-                console.log('Error', error);
-                alert("Erreur lors de l'appel AJAX");
-            })
-            .always(function () { 
-            });
-            */
-                    
-            /* SERVICE signalerDebutConsultation */
-            $('#bouton-je-suis-pret').on('click', function () {
+                })
+                        .done(function (response) {
+                            console.log('Response', response);
+                            // Si une consultation a été attribuée à l'utilisateur courant...
+                            if (response.consultation) {
+                                // Populer un div avec les informations de la consultation en cours et le montrer
+                                // TODO
+                            }
+                        })
+                        .fail(function (error) {
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+                        .always(function () {
+                        });
+                // OBTENIR STATISTIQUES 1 (mediums et leurs clients) 
                 // Appel AJAX
                 $.ajax({
-                url: './ActionServlet',
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'genererStatistiques',
+                        type: 'mediums'
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) {
+                            console.log('Response', response);
+                            // Générer le graphique 1 avec les informations statistiques et le montrer (piechart de mediums)
+                            var denomination = [];
+                            var nombreConsultations = [];
+                            var couleurs = [];
+                            for (i in response.listeMediums) {
+                                var mediumData = response.listeMediums[i]
+                                denomination.push(mediumData.denomination);
+                                nombreConsultations.push(mediumData.nombreConsultations);
+                                couleurs.push(randomColor(0.8));
+                            }
+                            const data = {
+                                labels: denomination,
+                                datasets: [{
+                                        data: nombreConsultations,
+                                        backgroundColor: couleurs,
+                                        hoverOffset: 20,
+                                    }]
+                            };
+                            const config = {
+                                type: 'doughnut',
+                                data: data,
+                                options: {
+                                    aspectRatio: 1.75,
+                                    plugins: {
+                                        title: {
+                                            display: true,
+                                            position: 'bottom',
+                                            color: 'rgb(0, 0, 0)',
+                                            padding: {
+                                                top: 30,
+                                                bottom: 0
+                                            },
+                                            font: {
+                                                size: 20,
+                                                family: 'Lato'
+                                            },
+                                            text: 'Répartition des consultations par médium'
+                                        },
+                                        legend: {
+                                            position: 'right'
+                                        }
+                                    }
+                                }
+                            };
+                            new Chart($('#statistiquesMediums'), config);
+                        })
+                        .fail(function (error) {
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+                        .always(function () {
+                        });
+                // OBTENIR STATISTIQUE 2 (employes et leurs clients) 
+                // Appel AJAX
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'genererStatistiques',
+                        type: 'clientsParEmploye'
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) {
+                            console.log('Response', response);
+                            // Générer le graphique 2 avec les informations statistiques et le montrer (radar d'employés)
+                            var noms = [];
+                            var nombreClients = [];
+                            var couleurs = [];
+                            for (i in response.listeEmployes) {
+                                var employeData = response.listeEmployes[i];
+                                noms.push(employeData.nom);
+                                nombreClients.push(employeData.nombreClients);
+                            }
+                            const data = {
+                                labels: noms,
+                                datasets: [{
+                                        data: nombreClients,
+                                        fill: true,
+                                        backgroundColor: 'rgba(255, 99, 132, 0.4)',
+                                        borderColor: 'rgb(255, 99, 132)',
+                                        pointBackgroundColor: 'rgb(255, 99, 132)',
+                                        pointBorderColor: '#fff'
+                                    }]
+                            };
+                            const config = {
+                                type: 'radar',
+                                data: data,
+                                options: {
+                                    elements: {
+                                        line: {
+                                            borderWidth: 2
+                                        }
+                                    },
+                                    plugins: {
+                                        title: {
+                                            display: true,
+                                            position: 'bottom',
+                                            color: 'rgb(0, 0, 0)',
+                                            padding: {
+                                                top: 20,
+                                                bottom: 0
+                                            },
+                                            font: {
+                                                size: 20,
+                                                family: 'Lato'
+                                            },
+                                            text: 'Répartition des clients par employé'
+                                        },
+                                        legend: {
+                                            display: false
+                                        }
+                                    }
+                                }
+                            };
+                            new Chart($('#statistiquesEmployes'), config);
+                        })
+                        .fail(function (error) {
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+                        .always(function () {
+                        });
+                // OBTENIR STATISTIQUE 3 (mediums les plus populaires) 
+                // Appel AJAX
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'genererStatistiques',
+                        type: 'mediumsPopulaires'
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) {
+                            console.log('Response', response);
+                            // Générer le graphique 3 avec les informations statistiques et le montrer (histogramme de médiums)
+                            var denomination = [];
+                            var nombreConsultations = [];
+                            var couleurs = [];
+                            for (i in response.listeMediums) {
+                                var mediumData = response.listeMediums[i]
+                                denomination.push(mediumData.denomination);
+                                nombreConsultations.push(mediumData.nombreConsultations);
+                                couleurs.push(randomColor(0.8));
+                            }
+                            const data = {
+                                labels: denomination,
+                                datasets: [{
+                                        data: nombreConsultations,
+                                        backgroundColor: couleurs
+                                    }]
+                            };
+                            const config = {
+                                type: 'bar',
+                                data: data,
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true,
+                                            title: {
+                                                display: true,
+                                                text: 'Nombre de consultations'
+                                            }
+                                        }
+
+                                    },
+                                    plugins: {
+                                        title: {
+                                            display: true,
+                                            position: 'bottom',
+                                            color: 'rgb(0, 0, 0)',
+                                            padding: {
+                                                top: 20,
+                                                bottom: 0
+                                            },
+                                            font: {
+                                                size: 20,
+                                                family: 'Lato'
+                                            },
+                                            text: 'Top 5 des médiums les plus populaires'
+                                        },
+                                        legend: {
+                                            display: false
+                                        }
+                                    }
+                                }
+                            };
+                            new Chart($('#statistiquesMediumsPopulaires'), config);
+                        })
+                        .fail(function (error) {
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+                        .always(function () {
+                        });
+                // OBTENIR STATISTIQUE 4 (clients et leurs temps d'appel) 
+                // Appel AJAX
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'genererStatistiques',
+                        type: 'tempsAppelClients'
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) {
+                            console.log('Response', response);
+                            // Générer le graphique 4 avec les informations statistiques et le montrer (histogramme de clients)
+                            var noms = [];
+                            var tempsAppelTotal = [];
+                            var couleurs = [];
+                            for (i in response.listeClients) {
+                                var clientData = response.listeClients[i];
+                                noms.push(clientData.nom);
+                                tempsAppelTotal.push(clientData.tempsAppelTotal);
+                                couleurs.push(randomColor(0.8));
+                            }
+                            const data = {
+                                labels: noms,
+                                datasets: [{
+                                        data: tempsAppelTotal,
+                                        backgroundColor: couleurs
+                                    }]
+                            };
+                            const config = {
+                                type: 'bar',
+                                data: data,
+                                options: {
+                                    indexAxis: 'y',
+                                    scales: {
+                                        x: {
+                                            beginAtZero: true,
+                                            title: {
+                                                display: true,
+                                                text: 'Minutes passées au téléphone'
+                                            }
+                                        }
+
+                                    },
+                                    plugins: {
+                                        title: {
+                                            display: true,
+                                            position: 'bottom',
+                                            color: 'rgb(0, 0, 0)',
+                                            padding: {
+                                                top: 20,
+                                                bottom: 0
+                                            },
+                                            font: {
+                                                size: 20,
+                                                family: 'Lato'
+                                            },
+                                            text: 'Temps passé en consultation pour chaque client'
+                                        },
+                                        legend: {
+                                            display: false
+                                        }
+                                    }
+                                }
+                            };
+                            new Chart($('#statistiquesClients'), config);
+                        })
+                        .fail(function (error) {
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+                        .always(function () {
+                        });
+                /* SERVICE signalerDebutConsultation */
+                $('#bouton-je-suis-pret').on('click', function () {
+                    // Appel AJAX
+                    $.ajax({
+                        url: './ActionServlet',
                         method: 'POST',
                         data: {
                             todo: 'signalerDebutConsultation'
                         },
                         dataType: 'json'
-                })
-                .done(function (response) {
-                    console.log('Response', response);
-                    // TODO: rediriger vers la page Consultation en Cours
-                })
-                .fail(function (error) { 
-                    console.log('Error', error);
-                    alert("Erreur lors de l'appel AJAX");
-                })
-                .always(function () { 
+                    })
+                            .done(function (response) {
+                                console.log('Response', response);
+                                // TODO: rediriger vers la page Consultation en Cours
+                            })
+                            .fail(function (error) {
+                                console.log('Error', error);
+                                alert("Erreur lors de l'appel AJAX");
+                            })
+                            .always(function () {
+                            });
                 });
-            });
-            
+
+                // FONCTIONS DE COULEURS
+                var randomColor = function (alpha) {
+                    var r = Math.floor(Math.random() * 255);
+                    var g = Math.floor(Math.random() * 255);
+                    var b = Math.floor(Math.random() * 255);
+                    return "rgba(" + r + "," + g + "," + b + "," + alpha + ")";
+                };
             });
         </script>
 

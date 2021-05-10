@@ -3,7 +3,7 @@
     <head>
         <title>Predicti'if Accueil</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="index.css">
         <!-- Librairie Javascript: jQuery (v3.4.1) -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
@@ -63,6 +63,14 @@
                 <div id="formulaireInscription">
                     <table>
                         <tr>
+                            <!--
+                            <td>
+                                <div class="labelledInput">
+                                    <div class="label"><strong>Nom :</strong></div> 
+                                    <div class="input"><input type="text" id="champ-nom-inscription" /></div>
+                                </div>
+                            </td>
+                            -->
                             <td><strong>Nom :</strong> <div><input type="text" id="champ-nom-inscription" /></div></td>
                             <td><strong>Prénom :</strong> <div><input type="text" id="champ-prenom-inscription" /></div></td>
                         </tr>
@@ -91,10 +99,10 @@
                 <div id="confirmationInscription" style="display: none;">
                     <hr /><br />
                     <p><strong>
-                        Inscription réussie!
-                        <br /><br />
-                        Vous recevrez un mail de confirmation suite auquel vous pourrez vous <a href="#" id="boutonPopupConnexion3" class="hyperlien">Connecter</a>.
-                    </strong></p>
+                            Inscription réussie!
+                            <br /><br />
+                            Vous recevrez un mail de confirmation suite auquel vous pourrez vous <a href="#" id="boutonPopupConnexion3" class="hyperlien">Connecter</a>.
+                        </strong></p>
                 </div>
             </div>
         </div>
@@ -131,43 +139,43 @@
                         },
                         dataType: 'json'
                     })
-                    .done(function (response) { 
-                        console.log('Response', response);
-                        // Si la connexion a réussi (utilisateur retourné)...
-                        if (response.utilisateur) {
-                            // S'il est de type client...
-                            if (response.type == "client") {
-                                // Rediriger vers la page Demande Consultation
-                                // TODO
-                            }
-                            // S'il est de type employé...
-                            else { 
-                                // Rediriger vers la page Tableau de Bord
-                                window.location.replace("tableau-de-bord.html");
-                            }
-                        } 
-                        // Sinon...
-                        else {
-                            // Afficher un message d'erreur
-                            $('#messageErreurConnexion').html("Erreur de connexion. Veuillez réessayer");
-                        }
-                    })
-                    .fail(function (error) { 
-                        console.log('Error', error);
-                        alert("Erreur lors de l'appel AJAX");
-                    })
-                    .always(function () { 
-                        $('#bouton-connexion').html("Connexion");
-                    });
+                            .done(function (response) {
+                                console.log('Response', response);
+                                // Si la connexion a réussi (utilisateur retourné)...
+                                if (response.utilisateur) {
+                                    // S'il est de type client...
+                                    if (response.type == "client") {
+                                        // Rediriger vers la page Demande Consultation
+                                        // TODO
+                                    }
+                                    // S'il est de type employé...
+                                    else {
+                                        // Rediriger vers la page Tableau de Bord
+                                        window.location.replace("tableau-de-bord.html");
+                                    }
+                                }
+                                // Sinon...
+                                else {
+                                    // Afficher un message d'erreur
+                                    $('#messageErreurConnexion').html("Erreur de connexion. Veuillez réessayer");
+                                }
+                            })
+                            .fail(function (error) {
+                                console.log('Error', error);
+                                alert("Erreur lors de l'appel AJAX");
+                            })
+                            .always(function () {
+                                $('#bouton-connexion').html("Connexion");
+                            });
                 });
 
                 // SERVICE INSCRIPTION 
                 $('#bouton-inscription').on('click', function () {
-                    
+
                     console.log("clic sur le bouton de inscription");
                     $('#bouton-inscription').html("Inscription...");
                     $('#messageErreurInscription').html("");
-                    
+
                     // Récupération de la valeur des champs du formulaire
                     var champNom = $('#champ-nom-inscription').val();
                     var champPrenom = $('#champ-prenom-inscription').val();
@@ -176,7 +184,7 @@
                     var champTel = $('#champ-tel-inscription').val();
                     var champMail = $('#champ-mail-inscription').val();
                     var champMdp = $('#champ-mdp-inscription').val();
-                    
+
                     // Si les champs sont vides, arrêter
                     if (champNom == '' || champPrenom == '' || champDateNaissance == '' || champCodePostal == '' || champTel == '' || champMail == '' || champMdp == '') {
                         $('#messageErreurInscription').html("Veuillez compléter tous les champs");
@@ -201,27 +209,27 @@
                         },
                         dataType: 'json'
                     })
-                    .done(function (response) { 
-                        console.log('Response', response);
-                        // Si l'inscription a réussi (utilisateur retourné)...
-                        if (response.utilisateur) {
-                            // Cacher le formulaire et afficher la confirmation d'inscription
-                            formulaireInscription.style.display = "none";
-                            confirmationInscription.style.display = "block";
-                        }
-                        // Sinon...
-                        else {
-                            // Afficher un message d'erreur
-                            $('#messageErreurInscription').html("Erreur d'inscription. Veuillez réessayer");
-                        }
-                    })
-                    .fail(function (error) { 
-                        console.log('Error', error);
-                        alert("Erreur lors de l'appel AJAX");
-                    })
-                    .always(function () { 
-                        $('#bouton-inscription').html("Inscription");
-                    });
+                            .done(function (response) {
+                                console.log('Response', response);
+                                // Si l'inscription a réussi (utilisateur retourné)...
+                                if (response.utilisateur) {
+                                    // Cacher le formulaire et afficher la confirmation d'inscription
+                                    formulaireInscription.style.display = "none";
+                                    confirmationInscription.style.display = "block";
+                                }
+                                // Sinon...
+                                else {
+                                    // Afficher un message d'erreur
+                                    $('#messageErreurInscription').html("Erreur d'inscription. Veuillez réessayer");
+                                }
+                            })
+                            .fail(function (error) {
+                                console.log('Error', error);
+                                alert("Erreur lors de l'appel AJAX");
+                            })
+                            .always(function () {
+                                $('#bouton-inscription').html("Inscription");
+                            });
                 });
 
             });
