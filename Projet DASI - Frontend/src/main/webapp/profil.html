@@ -66,25 +66,21 @@ and open the template in the editor.
             </form>
             
         </div>
-            <div class="ProfilAstral"> 
+            <div class="ProfilAstral" id ="pa"> 
             <table style="border-spacing: 10px 20px;">
                 <tr>
                     <td>
                         Couleur chance <br>
-                        <font color="black">
-                        > Violey </font><br>
+                        <div id="couleur"> </div>
                         <br>
                         Signe chinois <br>
-                        <font color="black">
-                        > Rat (miskine) </font><br>
+                        <div id="signeChinois"> </div>
                         <br>
                         Animal totem<br>
-                        <font color="black">
-                        > Tardigrade </font> <br>
+                        <div id="animalTotem"> </div>
                         <br>
                         Signe astrologique <br>
-                        <font color="black">
-                        > Cancer <br> </font>
+                        <div id="signeAstro"> </div>
                     </td>
                 </tr>
             </table>
@@ -95,9 +91,9 @@ and open the template in the editor.
             function modif()
             {
                 if(document.getElementById("button-modif").value == "Modifier"){
-                    document.getElementById("button-modif").value = "Sauvegarder";
+                    $('#button-modif').val("Sauvegarder");
                 }else{
-                    document.getElementById("button-modif").value = "Modifier";
+                    $('#button-modif').val("Modifier");
                     var champNom = $('#champ-nom').val();
                     var champPrenom = $('#champ-prenom').val();
                     var champDateNaissance = $('#champ-datenaissance').val();
@@ -135,21 +131,34 @@ and open the template in the editor.
             }
             $(document).ready(function () {
 
-                var response = $.ajax({
+                $.ajax({
                     url: './ActionServlet',
-                    method: 'GET',
+                    method: 'POST',
                     data: {
                         todo: 'obtenirInfoProfil'
                     },
                     dataType: 'json'
-                });
-                document.getElementById("champ-nom").value = response.property.nom;
-                document.getElementById("champ-prenom").value = response.property.prenom;
-                document.getElementById("champ-tel").value = response.property.telephone;
-                document.getElementById("champ-datenaissance").value = response.property.date-de-naissance;
-                document.getElementById("champ-CP").value = response.property.code-postal;
-                document.getElementById("champ-mail").value = response.property.mail;
-                document.getElementById("champ-mdp").value = response.property.mot-de-passe;
+                })
+                        .done(function(response){
+                            if(response.property.type == "client"){
+                                $('#animalTotem').val("> "+ response.property.animalTotem);
+                                $('#signeAstro').val("> "+response.property.signeAstro);
+                                $('#couleur').val("> "+response.property.couleur);
+                                $('#signeChinois').val("> "+response.property.signeChinois);
+                                $('#pa').css({'display' : "inline-block"});
+                            }
+                            $('#champ-nom').val(response.property.nom);
+                            $('#champ-prenom').val(response.property.prenom);
+                            $('#champ-tel').val(response.property.telephone);
+                            $('#champ-datenaissance').val(response.property.date-de-naissance);
+                            $('#champ-CP').val(response.property.code-postal);
+                            $('#champ-mail').val(response.property.mail);
+                            $('#champ-mdp').val(response.property.mot-de-passe);
+                        })
+                        .fail(function (error) {
+                                console.log('Error', error);
+                                alert("Erreur lors de l'appel AJAX");
+                        });
             });
 
            

@@ -80,6 +80,7 @@ body {
     border-image-repeat: stretch;
     border-width: 10px;
     border-radius: 5px 5px 5px 5px;
+    display: none;
 }
 .ProfilAstral::before{
     width: 375px;
