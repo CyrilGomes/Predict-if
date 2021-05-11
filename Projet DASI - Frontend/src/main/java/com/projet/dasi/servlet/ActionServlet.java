@@ -47,6 +47,9 @@ public class ActionServlet extends HttpServlet {
                 serialisation = new ListeMediumSerialisation();
                 break;
                 
+            case "demanderConsultation":
+                break;
+                
         }
         
         if (action != null && serialisation != null) {
