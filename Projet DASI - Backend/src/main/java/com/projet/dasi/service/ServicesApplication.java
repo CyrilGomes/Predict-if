@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class ServicesApplication {
 
@@ -127,6 +128,8 @@ public class ServicesApplication {
             ArrayList<Client> clients = new ArrayList<Client>();
             clients.add(new Client("Bertrand", "Usclat", "bertrand.usclat@yahoo.ro", "superCanardXXL", "0685123975", "69200", AstroAPI.DATE_FORMAT.parse("25/06/1965")));
             clients.add(new Client("Jeannine", "Odoux", "jeannette_xxx@trashmail.fr", "secretPassword", "0782953267", "32100", AstroAPI.DATE_FORMAT.parse("20/08/1985")));
+            clients.add(new Client("Claude", "Vanony", "claude.vanony@yahoo.co", "incroyableTalent", "0562948325", "69000", AstroAPI.DATE_FORMAT.parse("25/09/1984")));
+            clients.add(new Client("Michelle", "Degoureaux", "michie@gmail.fr", "oublieMonMotDePasse", "0895362845", "42510", AstroAPI.DATE_FORMAT.parse("23/07/1966")));
 
             // Inscrire les clients 
             for (Client c : clients) {
@@ -594,7 +597,7 @@ public class ServicesApplication {
     }
     
     /* Générer les statistiques des médiums les plus populaires (top 5 ou tous les médiums)*/
-    public HashMap<String, Integer> genererStatistiquesMediumsPopulaires(boolean top5) {
+    public LinkedHashMap<String, Long> genererStatistiquesMediumsPopulaires(boolean top5) {
         
         // Créer les DAOs et le contexte de persistance
         ConsultationDao consultationDao = new ConsultationDao();
@@ -611,10 +614,11 @@ public class ServicesApplication {
         
         JpaUtil.fermerContextePersistance();
         
-        HashMap<String, Integer> statistiques = new HashMap();
+        // Construire la Map
+        LinkedHashMap<String, Long> statistiques = new LinkedHashMap();
         if (listeStatistiques != null) {
             for (Object[] coupleStats : listeStatistiques) {
-                statistiques.put(((Medium)coupleStats[0]).getDenomination(), (Integer)coupleStats[1]);
+                statistiques.put(((Medium)coupleStats[0]).getDenomination(), (Long)coupleStats[1]);
             }
         }
         else {
@@ -625,7 +629,7 @@ public class ServicesApplication {
     }
     
     /* Générer les statistiques de temps d'appel par client */
-    public HashMap<String, Integer> genererStatistiquesTempsAppelClients() {
+    public LinkedHashMap<String, Long> genererStatistiquesTempsAppelClients() {
         
         // Créer les DAOs et le contexte de persistance
         ConsultationDao consultationDao = new ConsultationDao();
@@ -634,7 +638,7 @@ public class ServicesApplication {
         
         // Boucler sur tous les clients
         List<Client> clients = clientDao.chercherTous();
-        HashMap<String, Integer> statistiques = new HashMap();
+        LinkedHashMap<String, Long> statistiques = new LinkedHashMap();
         for (Client cli : clients) {
             // Obtenir leur historique de consultations
             List<Consultation> historiqueConsultations = consultationDao.chercherTermineParClient(cli);
@@ -647,7 +651,7 @@ public class ServicesApplication {
                 somme += diff;
             }
             Date temps = new Date(somme);
-            statistiques.put(cli.getNom(), temps.getMinutes());
+            statistiques.put(cli.getPrenom() + " " + cli.getNom(), new Long(temps.getMinutes()));
         }
         
         JpaUtil.fermerContextePersistance();
@@ -656,7 +660,7 @@ public class ServicesApplication {
     }
     
     /* Générer les statistiques de répartition des clients par employés */
-    public HashMap<String, Integer> genererStatistiquesRepartitionClientsParEmploye() {
+    public LinkedHashMap<String, Long> genererStatistiquesRepartitionClientsParEmploye() {
         
         // Créer les DAOs et le contexte de persistance
         ConsultationDao consultationDao = new ConsultationDao();
@@ -667,11 +671,11 @@ public class ServicesApplication {
         
         JpaUtil.fermerContextePersistance();
         
-        // Construire le JSON Object
-        HashMap<String, Integer> statistiques = new HashMap();
+        // Construire la Map
+        LinkedHashMap<String, Long> statistiques = new LinkedHashMap();
         if (listeStatistiques != null){
             listeStatistiques.forEach(infosEmploye -> {
-                statistiques.put((String)infosEmploye[0] + " " + (String)infosEmploye[1], (int)infosEmploye[2]);
+                statistiques.put((String)infosEmploye[0] + " " + (String)infosEmploye[1], (Long)infosEmploye[2]);
             });
         }
         

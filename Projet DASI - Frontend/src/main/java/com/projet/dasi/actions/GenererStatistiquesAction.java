@@ -1,12 +1,8 @@
 package com.projet.dasi.actions;
 
-import com.google.gson.JsonObject;
-import com.projet.dasi.model.Consultation;
-import com.projet.dasi.model.Employe;
 import com.projet.dasi.service.ServicesApplication;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 public class GenererStatistiquesAction extends Action {
 
@@ -19,19 +15,19 @@ public class GenererStatistiquesAction extends Action {
         String type = request.getParameter("type");
         
         // Appel services
-        HashMap<String, Integer> data;
+        LinkedHashMap<String, Long> data;
         switch (type) {
             case "mediums":
-                data = (HashMap<String,Integer>)service.genererStatistiquesMediumsPopulaires(false);
+                data = service.genererStatistiquesMediumsPopulaires(false);
                 break;
             case "mediumsPopulaires":
-                data = (HashMap<String,Integer>)service.genererStatistiquesMediumsPopulaires(true);
+                data = service.genererStatistiquesMediumsPopulaires(true);
                 break;
             case "clientsParEmploye":
-                data = (HashMap<String,Integer>)service.genererStatistiquesRepartitionClientsParEmploye();
+                data = service.genererStatistiquesRepartitionClientsParEmploye();
                 break;
             case "tempsAppelClients":
-                data = (HashMap<String,Integer>)service.genererStatistiquesTempsAppelClients();
+                data = service.genererStatistiquesTempsAppelClients();
                 break;
             default:
                 data = null;
