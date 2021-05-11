@@ -189,13 +189,15 @@ hr {
     margin-right: auto;
     border-spacing: 12px;
     border-collapse: separate;
-    table-layout: fixed;
 }
 .popupConnexion td, .popupInscription td {
     height: 30px;
     color: #583D72;
     font-size: 20px;
     text-align: left;
+}
+.popupInscription td {
+    padding: 4px 0px;
 }
 .popupConnexion td[colspan="2"], .popupInscription td[colspan="2"] {
     height: 40px;
@@ -208,7 +210,9 @@ hr {
     height: 100%;
     box-sizing: border-box;
 }
-
+.popupInscription input {
+    height: 65%
+}
 
 /* ----------------------------------------------------------------- */
 /* RESPONSIVENESS */
