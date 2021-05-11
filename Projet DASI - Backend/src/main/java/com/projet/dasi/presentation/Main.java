@@ -216,10 +216,10 @@ public class Main {
             System.out.println("> Échec demande statistiques clients");
         }
         
-        HashMap<String, Long> res2 = servicesApplication.genererStatistiquesRepartitionClientsParEmploye();
+        res = servicesApplication.genererStatistiquesRepartitionClientsParEmploye();
         if (res != null) {
             System.out.println("> Succès demande statistiques employes");
-            System.out.println(res2.toString());
+            System.out.println(res.toString());
         }
         else {
             System.out.println("> Échec demande statistiques employes");

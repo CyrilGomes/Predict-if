@@ -656,7 +656,7 @@ public class ServicesApplication {
     }
     
     /* Générer les statistiques de répartition des clients par employés */
-    public HashMap<String, Long> genererStatistiquesRepartitionClientsParEmploye() {
+    public HashMap<String, Integer> genererStatistiquesRepartitionClientsParEmploye() {
         
         // Créer les DAOs et le contexte de persistance
         ConsultationDao consultationDao = new ConsultationDao();
@@ -668,10 +668,10 @@ public class ServicesApplication {
         JpaUtil.fermerContextePersistance();
         
         // Construire le JSON Object
-        HashMap<String, Long> statistiques = new HashMap();
+        HashMap<String, Integer> statistiques = new HashMap();
         if (listeStatistiques != null){
             listeStatistiques.forEach(infosEmploye -> {
-                statistiques.put((String)infosEmploye[0] + " " + (String)infosEmploye[1], (long)infosEmploye[2]);
+                statistiques.put((String)infosEmploye[0] + " " + (String)infosEmploye[1], (int)infosEmploye[2]);
             });
         }
         
