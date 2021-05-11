@@ -74,10 +74,9 @@ hr {
 /* Header button hover */
 .header-right a:hover {
     background-color: #995ab3;
-    border-color: white;
 }
 /* Header button selected */
-.header-right a.active {
+.currentPage {
     background-color: #995ab3;
     border-color: white;
 }
