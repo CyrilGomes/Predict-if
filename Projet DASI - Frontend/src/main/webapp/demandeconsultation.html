@@ -8,7 +8,7 @@ and open the template in the editor.
     <head>
         <title>Predicti'if Demander une consultation</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="index.css">
         <!-- Librairie Javascript: jQuery (v3.4.1) -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
@@ -20,7 +20,6 @@ and open the template in the editor.
                 <a href="#" id="boutondemanderconsultation">Demander consultation</a>
                 <a href="#" id="boutonhistorique">Historique</a>
                 <a href="#" id="boutonprofil">
-                    <img class="icon" src="AvatarProfil.png"/>
                     <span id="nomClient"></span>
                 </a>
             </div>
@@ -67,7 +66,12 @@ and open the template in the editor.
                     dataType: 'json'
                 })
                         .done(function (response) {
-
+                            if(response.status){
+                                alert("Demande de consultation réussie");
+                            }
+                            else{
+                                alert("Echec de demande de consultation");
+                            }
                         })
                         .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
                             console.log('Error', error); // LOG dans Console Javascript
