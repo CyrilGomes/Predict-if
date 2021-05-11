@@ -1,7 +1,7 @@
 package com.projet.dasi.servlet;
 
 import com.project.dasi.serialisations.GenererStatistiquesSerialisation;
-import com.project.dasi.serialisations.ObtenirUtilisateurSerialisation;
+import com.project.dasi.serialisations.ObtenirTypeUtilisateurSerialisation;
 import com.project.dasi.serialisations.ObtenirConsultationAttribueeSerialisation;
 import com.project.dasi.serialisations.ObtenirHistoriqueSerialisation;
 import com.project.dasi.serialisations.Serialisation;
@@ -38,7 +38,7 @@ public class ActionServlet extends HttpServlet {
             
             case "obtenirUtilisateurCourant":
                 action = new ObtenirUtilisateurCourantAction();
-                serialisation = new ObtenirUtilisateurSerialisation();
+                serialisation = new ObtenirTypeUtilisateurSerialisation();
                 break;
             case "obtenirListeConsultations":
                 action = new ObtenirHistoriqueAction();
@@ -57,12 +57,12 @@ public class ActionServlet extends HttpServlet {
             
             case "connexion":
                 action = new ConnexionAction();
-                serialisation = new ObtenirUtilisateurSerialisation();
+                serialisation = new ObtenirTypeUtilisateurSerialisation();
                 break;
                 
             case "inscription":
                 action = new InscriptionAction();
-                serialisation = new ObtenirUtilisateurSerialisation();
+                serialisation = new ObtenirTypeUtilisateurSerialisation();
                 break;
                 
             case "obtenirConsultationAttribuee":

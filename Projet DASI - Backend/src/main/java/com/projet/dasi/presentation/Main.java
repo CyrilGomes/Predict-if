@@ -12,6 +12,7 @@ import com.projet.dasi.presentation.Saisie;
 import com.projet.dasi.service.ServicesApplication;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class Main {
@@ -197,7 +198,7 @@ public class Main {
     
     public static void requeteStatistiques() {
         
-        JsonObject res = servicesApplication.genererStatistiquesMediumsPopulaires(true);
+        HashMap<String, Integer> res = servicesApplication.genererStatistiquesMediumsPopulaires(true);
         if (res != null) {
             System.out.println("> Succès demande statistiques mediums");
             System.out.println(res.toString());

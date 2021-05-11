@@ -7,12 +7,15 @@ import com.projet.dasi.model.Astrologue;
 import com.projet.dasi.model.Cartomancien;
 import com.projet.dasi.model.Client;
 import com.projet.dasi.model.Consultation;
+import com.projet.dasi.model.Employe;
+import com.projet.dasi.model.Genre;
 import com.projet.dasi.model.Medium;
 import com.projet.dasi.model.ProfilAstral;
 import com.projet.dasi.model.Spirite;
 import com.projet.dasi.model.Utilisateur;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,6 +30,14 @@ public class ObtenirConsultationAttribueeSerialisation extends Serialisation {
         
         // Récupérer les attributs de la requête
         Consultation consultation = (Consultation)request.getAttribute("consultation");
+        
+        //TEST
+        Employe employeLogge = (Employe)request.getSession().getAttribute("utilisateur");
+        Medium mediumTest = new Cartomancien(Genre.Homme, "ASTROMAN", "LE CHRIST COSMIQUE");
+        ProfilAstral profilAstralTest = new ProfilAstral("OSEF", "PLEASE", "LAISSEZ MOI", "TRANQUILLE");
+        Client clientTest = new Client("NOM", "PRENOM", "ceciEstMonMail@gmail.com", "secretMdp", "0695932520", "69230", new Date());
+        clientTest.setProfilAstral(profilAstralTest);
+        consultation = new Consultation(employeLogge, clientTest, mediumTest);
         
         // Populer le container
         container.addProperty("consultation", consultation != null);
@@ -53,6 +64,7 @@ public class ObtenirConsultationAttribueeSerialisation extends Serialisation {
             if (medium instanceof Cartomancien) { mediumData.addProperty("type", "cartomancien"); }
             if (medium instanceof Spirite) { mediumData.addProperty("type", "spirite"); }
             if (medium instanceof Astrologue) { mediumData.addProperty("type", "astrologue"); }
+            container.add("medium", mediumData);
         
         }
         

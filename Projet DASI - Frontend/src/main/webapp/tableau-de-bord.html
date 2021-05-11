@@ -21,20 +21,55 @@
             </div>
         </div>
 
-           <div class="chartPanel">
-        <div class="chart">
-            <canvas id="statistiquesMediums"></canvas>
+        <!-- Contenu de la page -->
+        <div class="panelContainer">
+            <!-- Affichage Consultation attribuée -->
+            <div class="panel">
+                <div class="panelHeader">Demande de Consultation</div> 
+                <div class="panelContent" id="consultationAttribuee">
+                    <div id="informationsConsultation"> 
+                        <div class="consultationPanel"> 
+                            <div class="consultationPanelHeader"> 
+                                Client : 
+                            </div>
+                            <div class="consultationPanelContent" id="client"> 
+                                trululu
+                            </div>
+                        </div> 
+                        <div class="consultationPanel"> 
+                            <div class="consultationPanelHeader">
+                                Médium à incarner : 
+                            </div>
+                            <div class="consultationPanelContent" id="medium">
+                                trululu
+                            </div>
+                        </div>
+                    </div>
+                    <p id="messageConsultation"> </p>
+                </div>
+            </div>
+            <!-- Affichage statistiques agence -->
+            <div class="panel">
+                <div class="panelHeader">Mon Agence</div>
+                <div class="panelContent" id="monAgence">
+                    <div class="graphique">
+                        <canvas id="statistiquesMediumsPopulaires"></canvas>
+                    </div>
+                    <div class="graphique">
+                        <canvas id="statistiquesMediums"></canvas>
+                    </div>
+                    <div class="graphique">
+                        <canvas id="statistiquesEmployes"></canvas>
+                    </div>
+
+                    <div class="graphique">
+                        <canvas id="statistiquesClients"></canvas>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="chart">
-            <canvas id="statistiquesEmployes"></canvas>
-        </div>
-        <div class="chart">
-            <canvas id="statistiquesMediumsPopulaires"></canvas>
-        </div>
-        <div class="chart">
-            <canvas id="statistiquesClients"></canvas>
-        </div>
-           </div>
+
 
         <script>
             $(document).ready(function () {
@@ -70,6 +105,7 @@
                         })
                         .always(function () {
                         });
+
                 // OBTENIR CONSULTATION ATTRIBUEE 
                 // Appel AJAX
                 $.ajax({
@@ -85,7 +121,23 @@
                             // Si une consultation a été attribuée à l'utilisateur courant...
                             if (response.consultation) {
                                 // Populer un div avec les informations de la consultation en cours et le montrer
-                                // TODO
+                                $('#client').html(
+                                        response.client.prenom + ' ' + response.client.nom + '<br />' +
+                                        '> Signe Astrologique : ' + response.client.profil.signeAstro + '<br />' +
+                                        '> Signe Zodiaque Chinois : ' + response.client.profil.signeChinois + '<br />' + 
+                                        '> Couleur Porte-Bonheur : ' + response.client.profil.couleur + '<br />' +
+                                        '> Animal Totem : ' + response.client.profil.animalTotem + '<br />' + 
+                                        'Voir son historique complet <br /><br />'
+                                );
+                                $('#medium').html(
+                                        response.medium.denomination + '<br />' +
+                                        response.medium.presentation + '<br />' + 
+                                        response.medium.type + '<br />'
+                                );
+                            } else {
+                                // Signaler le fait qu'il n'y ait aucune consultation à traiter
+                                $('#messageConsultation').html("Il n'y a aucune demande de consultation pour vous.");
+                                $('#informationsConsultation').css({"display": "none"});
                             }
                         })
                         .fail(function (error) {
@@ -94,6 +146,7 @@
                         })
                         .always(function () {
                         });
+
                 // OBTENIR STATISTIQUES 1 (mediums et leurs clients) 
                 // Appel AJAX
                 $.ajax({
@@ -122,7 +175,7 @@
                                 datasets: [{
                                         data: nombreConsultations,
                                         backgroundColor: couleurs,
-                                        hoverOffset: 20,
+                                        hoverOffset: 10,
                                     }]
                             };
                             const config = {
@@ -159,6 +212,7 @@
                         })
                         .always(function () {
                         });
+
                 // OBTENIR STATISTIQUE 2 (employes et leurs clients) 
                 // Appel AJAX
                 $.ajax({
@@ -230,6 +284,7 @@
                         })
                         .always(function () {
                         });
+
                 // OBTENIR STATISTIQUE 3 (mediums les plus populaires) 
                 // Appel AJAX
                 $.ajax({
@@ -303,6 +358,7 @@
                         })
                         .always(function () {
                         });
+
                 // OBTENIR STATISTIQUE 4 (clients et leurs temps d'appel) 
                 // Appel AJAX
                 $.ajax({
@@ -377,6 +433,7 @@
                         })
                         .always(function () {
                         });
+
                 /* SERVICE signalerDebutConsultation */
                 $('#bouton-je-suis-pret').on('click', function () {
                     // Appel AJAX
