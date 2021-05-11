@@ -7,7 +7,7 @@
         <!-- Librairie Javascript: jQuery (v3.4.1) -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
-    <body>
+    <body style="display: none;">
 
         <!-- HEADER -->
         <div class="header">
@@ -102,6 +102,34 @@
         <script>
             $(document).ready(function () {
 
+                // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER 
+                // Appel AJAX
+                /*
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'obtenirUtilisateurCourant'
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) {
+                            console.log('Response', response);
+                            // Si l'utilisateur est déjà logué
+                            if (response.utilisateur) {
+                                // Changer les boutons du header et le lien du bouton
+                                window.location.replace("index.html");
+                            }
+                        })
+                        .fail(function (error) {
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+                        .always(function () {
+                            // Afficher la page 
+                            $('body').css({"display": "block"});
+                        });
+                */
                 // SERVICE CONNEXION 
                 $('#bouton-connexion').on('click', function () {
 
