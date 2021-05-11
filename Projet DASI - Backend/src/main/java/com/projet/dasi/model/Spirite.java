@@ -21,6 +21,14 @@ public class Spirite extends Medium implements Serializable {
     public Spirite() {
     }
 
+    public String getSupport() {
+        return support;
+    }
+
+    public void setSupport(String support) {
+        this.support = support;
+    }
+
     /* ToString */
     @Override
     public String toString() {

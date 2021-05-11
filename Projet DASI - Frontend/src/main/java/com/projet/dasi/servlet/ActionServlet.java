@@ -1,5 +1,7 @@
 package com.projet.dasi.servlet;
 
+import com.project.dasi.serialisations.DemandeConsultationSerialisation;
+import com.project.dasi.serialisations.ListeMediumSerialisation;
 import com.project.dasi.serialisations.GenererStatistiquesSerialisation;
 import com.project.dasi.serialisations.ObtenirTypeUtilisateurSerialisation;
 import com.project.dasi.serialisations.ObtenirConsultationAttribueeSerialisation;
@@ -7,9 +9,11 @@ import com.project.dasi.serialisations.ObtenirHistoriqueSerialisation;
 import com.project.dasi.serialisations.Serialisation;
 import com.project.dasi.serialisations.ObtenirInfoProfilSerialisation;
 import com.projet.dasi.actions.Action;
+import com.projet.dasi.actions.ActionDemandeConsultation;
 import com.projet.dasi.actions.ConnexionAction;
 import com.projet.dasi.actions.GenererStatistiquesAction;
 import com.projet.dasi.actions.InscriptionAction;
+import com.projet.dasi.actions.ListeMediumAction;
 import com.projet.dasi.actions.ObtenirConsultationAttribueeAction;
 import com.projet.dasi.actions.ObtenirHistoriqueAction;
 import com.projet.dasi.actions.ObtenirUtilisateurCourantAction;
@@ -63,6 +67,16 @@ public class ActionServlet extends HttpServlet {
             case "inscription":
                 action = new InscriptionAction();
                 serialisation = new ObtenirTypeUtilisateurSerialisation();
+                break;
+                
+            case "listeMediums":
+                action = new ListeMediumAction();
+                serialisation = new ListeMediumSerialisation();
+                break;
+                
+            case "demanderConsultation":
+                action = new ActionDemandeConsultation();
+                serialisation = new DemandeConsultationSerialisation();
                 break;
                 
             case "obtenirConsultationAttribuee":
