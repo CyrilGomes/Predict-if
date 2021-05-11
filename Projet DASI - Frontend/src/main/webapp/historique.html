@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="profil.css" type="text/css"/>
+
+        <title>Mon compte</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    </head>
+    <body>
+        <!-- HEADER -->
+        <div class="header">
+            <a href="index.html" class="logo">Predict'IF</a>
+            <div class="header-right">  <!-- TODO rediriger vers les pages de l'en-tête qui correspondent -->
+                <a href="#" id="tableauBord">Tableau de Bord </a>
+                <a href="#" id="nameUser"></a>
+            </div>
+            <div>
+                <h1>Mon historique de consultations</h1>
+                <div class="Liste-Historique">
+                    
+                </div>
+            </div>
+        </div>
+        <script>
+                $(document).ready(function () {
+
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'obtenirInfoProfil'
+                    },
+                    dataType: 'json'
+                })
+                        .done(function(response){
+                            if(response.property.type == "client"){
+                                $('#animalTotem').val("> "+ response.property.animalTotem);
+                                $('#signeAstro').val("> "+response.property.signeAstro);
+                                $('#couleur').val("> "+response.property.couleur);
+                                $('#signeChinois').val("> "+response.property.signeChinois);
+                                $('#pa').css({'display' : "inline-block"});
+                            }
+                            $('#champ-nom').val(response.property.nom)
+                            $('#nameUser').val(response.property.prenom);
+                            $('#champ-prenom').val(response.property.prenom);
+                            $('#champ-tel').val(response.property.telephone);
+                            $('#champ-datenaissance').val(response.property.date-de-naissance);
+                            $('#champ-CP').val(response.property.code-postal);
+                            $('#champ-mail').val(response.property.mail);
+                            $('#champ-mdp').val(response.property.mot-de-passe);
+                        })
+                        .fail(function (error) {
+                                console.log('Error', error);
+                                alert("Erreur lors de l'appel AJAX");
+                        });
+            });
+           
+  
+        </script>
+    </body>
+</html>

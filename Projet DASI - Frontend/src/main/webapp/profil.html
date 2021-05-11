@@ -19,8 +19,8 @@ and open the template in the editor.
         <div class="header">
             <a href="index.html" class="logo">Predict'IF</a>
             <div class="header-right">  <!-- TODO rediriger vers les pages de l'en-tête qui correspondent -->
-                <a href="#" id="boutonPopupInscription1">Tableau de Bord </a>
-                <a href="#" id="nameUser">Nom utilisateur</a>
+                <a href="tableau-de-bord.html" id="tableauBord">Tableau de Bord </a>
+                <a href="profil.html" id="nameUser"></a>
             </div>
         </div>
         <br />
@@ -147,7 +147,8 @@ and open the template in the editor.
                                 $('#signeChinois').val("> "+response.property.signeChinois);
                                 $('#pa').css({'display' : "inline-block"});
                             }
-                            $('#champ-nom').val(response.property.nom);
+                            $('#champ-nom').val(response.property.nom)
+                            $('#nameUser').val(response.property.prenom);
                             $('#champ-prenom').val(response.property.prenom);
                             $('#champ-tel').val(response.property.telephone);
                             $('#champ-datenaissance').val(response.property.date-de-naissance);
