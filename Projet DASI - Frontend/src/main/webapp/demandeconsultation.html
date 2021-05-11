@@ -52,6 +52,32 @@ and open the template in the editor.
         <div id="listeMediums"></div>
 
         <script>
+            $('body').on('click', 'a.boutonRDV', function () {
+                var mediumId = $(this).attr('id');
+                var buttonState = $('#' + mediumId).html();
+                $('#' + mediumId).html("Demande en cours...");
+
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'demanderConsultation',
+                        id: mediumId
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) {
+
+                        })
+                        .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                            console.log('Error', error); // LOG dans Console Javascript
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+                        .always(function () {
+                            $('#' + mediumId).html(buttonState);
+                        });
+            });
+
             $(document).ready(function () {
                 $.ajax({
                     url: './ActionServlet',
@@ -83,7 +109,7 @@ and open the template in the editor.
                                 }
 
                                 htmlString += "<br>";
-                                htmlString += "<a style='padding: 5px;' href='?todo=demandeConsultation&idMedium=" + medium.id + "'><button>Prendre RDV</button></a>";
+                                htmlString += "<a id='" + medium.id + "' class='boutonRDV'><button>Prendre RDV</button></a>";
                                 htmlString += "</p></div></tr>";
                             }
                             htmlString += "</table>";
