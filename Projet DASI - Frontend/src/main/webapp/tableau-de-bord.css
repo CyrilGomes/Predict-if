@@ -73,12 +73,14 @@ hr {
 /* Header button hover */
 .header-right a:hover {
     background-color: #995ab3;
-    border-color: white;
 }
 /* Header button selected */
-.header-right a.active {
-    background-color: #995ab3;
+.currentPage {
+    border-style: solid;
+    border-width: 0px 3px 0px 3px;
     border-color: white;
+    background-color: #995ab3;
+    
 }
 /* Header button alignment */
 .header-right {
