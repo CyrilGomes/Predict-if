@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.projet.dasi.model.Consultation;
 import com.projet.dasi.model.Employe;
 import com.projet.dasi.service.ServicesApplication;
+import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -18,23 +19,26 @@ public class GenererStatistiquesAction extends Action {
         String type = request.getParameter("type");
         
         // Appel services
-        JsonObject data = new JsonObject();
+        HashMap<String, Integer> data;
         switch (type) {
             case "mediums":
-                data = (JsonObject)service.genererStatistiquesMediumsPopulaires(false);
+                data = (HashMap<String,Integer>)service.genererStatistiquesMediumsPopulaires(false);
                 break;
             case "mediumsPopulaires":
-                data = (JsonObject)service.genererStatistiquesMediumsPopulaires(true);
+                data = (HashMap<String,Integer>)service.genererStatistiquesMediumsPopulaires(true);
                 break;
             case "clientsParEmploye":
-                data = (JsonObject)service.genererStatistiquesRepartitionClientsParEmploye();
+                data = (HashMap<String,Integer>)service.genererStatistiquesRepartitionClientsParEmploye();
                 break;
             case "tempsAppelClients":
-                data = (JsonObject)service.genererStatistiquesTempsAppelClients();
+                data = (HashMap<String,Integer>)service.genererStatistiquesTempsAppelClients();
+                break;
+            default:
+                data = null;
                 break;
         }
         
-        // Stoquage des résultats dans les attributs de la requête
+        // Stockage des résultats dans les attributs de la requête
         request.setAttribute("statistiques", data);
 
     }
