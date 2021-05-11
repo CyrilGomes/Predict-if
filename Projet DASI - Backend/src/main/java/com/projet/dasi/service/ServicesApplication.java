@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.HashMap;
 
 public class ServicesApplication {
 
@@ -593,7 +594,7 @@ public class ServicesApplication {
     }
     
     /* Générer les statistiques des médiums les plus populaires (top 5 ou tous les médiums)*/
-    public JsonObject genererStatistiquesMediumsPopulaires(boolean top5) {
+    public HashMap<String, Integer> genererStatistiquesMediumsPopulaires(boolean top5) {
         
         // Créer les DAOs et le contexte de persistance
         ConsultationDao consultationDao = new ConsultationDao();
@@ -610,17 +611,11 @@ public class ServicesApplication {
         
         JpaUtil.fermerContextePersistance();
         
-        // Construire le JSON Object
-        JsonObject statistiques = new JsonObject();
+        HashMap<String, Integer> statistiques = new HashMap();
         if (listeStatistiques != null) {
-            JsonArray jsonArray = new JsonArray();
             for (Object[] coupleStats : listeStatistiques) {
-                JsonObject jsonInfosMedium = new JsonObject();
-                jsonInfosMedium.addProperty("denomination", ((Medium)coupleStats[0]).getDenomination());
-                jsonInfosMedium.addProperty("nombreConsultations", coupleStats[1].toString());
-                jsonArray.add(jsonInfosMedium);
+                statistiques.put(((Medium)coupleStats[0]).getDenomination(), (Integer)coupleStats[1]);
             }
-            statistiques.add("listeMediums", jsonArray);
         }
         else {
             statistiques = null;
@@ -630,18 +625,16 @@ public class ServicesApplication {
     }
     
     /* Générer les statistiques de temps d'appel par client */
-    public JsonObject genererStatistiquesTempsAppelClients() {
+    public HashMap<String, Integer> genererStatistiquesTempsAppelClients() {
         
         // Créer les DAOs et le contexte de persistance
         ConsultationDao consultationDao = new ConsultationDao();
         ClientDao clientDao = new ClientDao();
         JpaUtil.creerContextePersistance();
         
-        JsonObject statistiques = new JsonObject();
-        JsonArray jsonArray = new JsonArray();
-        
         // Boucler sur tous les clients
         List<Client> clients = clientDao.chercherTous();
+        HashMap<String, Integer> statistiques = new HashMap();
         for (Client cli : clients) {
             // Obtenir leur historique de consultations
             List<Consultation> historiqueConsultations = consultationDao.chercherTermineParClient(cli);
@@ -654,22 +647,16 @@ public class ServicesApplication {
                 somme += diff;
             }
             Date temps = new Date(somme);
-            // Ajouter les données de chaque client au JSON
-            JsonObject jsonInfosClient = new JsonObject();
-            jsonInfosClient.addProperty("nom", cli.getNom());
-            jsonInfosClient.addProperty("tempsAppelTotal", temps.getMinutes());
-            jsonArray.add(jsonInfosClient);
+            statistiques.put(cli.getNom(), temps.getMinutes());
         }
         
         JpaUtil.fermerContextePersistance();
-        
-        statistiques.add("listeClients", jsonArray);
         return statistiques;
     
     }
     
     /* Générer les statistiques de répartition des clients par employés */
-    public JsonObject genererStatistiquesRepartitionClientsParEmploye() {
+    public HashMap<String, Long> genererStatistiquesRepartitionClientsParEmploye() {
         
         // Créer les DAOs et le contexte de persistance
         ConsultationDao consultationDao = new ConsultationDao();
@@ -681,16 +668,11 @@ public class ServicesApplication {
         JpaUtil.fermerContextePersistance();
         
         // Construire le JSON Object
-        JsonObject statistiques = new JsonObject();
+        HashMap<String, Long> statistiques = new HashMap();
         if (listeStatistiques != null){
-            JsonArray jsonArray = new JsonArray();
             listeStatistiques.forEach(infosEmploye -> {
-                JsonObject jsonInfosEmploye = new JsonObject();
-                jsonInfosEmploye.addProperty("nom", (String)infosEmploye[0] + " " + (String)infosEmploye[1]);
-                jsonInfosEmploye.addProperty("nombreClients", (long)infosEmploye[2]);
-                jsonArray.add(jsonInfosEmploye);
+                statistiques.put((String)infosEmploye[0] + " " + (String)infosEmploye[1], (long)infosEmploye[2]);
             });
-            statistiques.add("listeEmployes", jsonArray);
         }
         
         return statistiques;
