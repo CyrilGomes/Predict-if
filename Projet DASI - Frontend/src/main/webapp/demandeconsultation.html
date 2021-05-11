@@ -6,72 +6,97 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Demander une consultation</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Predicti'if Demander une consultation</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="main.css">
+        <!-- Librairie Javascript: jQuery (v3.4.1) -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
     <body>
-        <h1>Bienvenue, </h1><h1 id="nomClient"></h1>
-        <h2>Consultez un médium maintenant :</h2>
+        <!-- HEADER -->
+        <div class="header">
+            <a href="index.html" class="logo">Predict'IF</a>
+            <div class="header-right">
+                <a href="#" id="boutondemanderconsultation">Demander consultation</a>
+                <a href="#" id="boutonhistorique">Historique</a>
+                <a href="#" id="boutonprofil">
+                    <img class="icon" src="AvatarProfil.png"/>
+                    <span id="nomClient"></span>
+                </a>
+            </div>
+        </div>
 
-        <span>
-            Filtre:
-            <select name="listeMedium">
-                <option value="tous">Tous types</option>
-                <option value="astrologue">Astrologue</option>
-                <option value="cartomancien">Cartomancien</option>
-                <option value="spirite">Spirite</option>
-            </select>
-        </span>
+        <div>
+            <div>
+                <h1>Bienvenue, </h1><h1 id="nomClient"></h1>
+                <h2>Consultez un médium maintenant :</h2>
+            </div>
 
-        <span>
-            <label for="searchName">Rechercher un médium : </label>
-            <input type="search" id="searchName">
-        </span>
-        
+            <div style="margin: 5px;">
+                <span style="margin: 5px;">
+                    Filtre:
+                    <select name="listeMedium">
+                        <option value="tous">Tous types</option>
+                        <option value="astrologue">Astrologue</option>
+                        <option value="cartomancien">Cartomancien</option>
+                        <option value="spirite">Spirite</option>
+                    </select>
+                </span>
+
+                <span style="margin: 5px;">
+                    <input type="search" placeholder="Chercher par nom..." id="searchName">
+                </span>
+            </div>
+        </div>
+
         <div id="listeMediums"></div>
 
         <script>
             $(document).ready(function () {
                 $.ajax({
-                url: './ActionServlet',
-                        method: 'GET',
-                        data: {
+                    url: './ActionServlet',
+                    method: 'GET',
+                    data: {
                         todo: 'listeMediums'
-                        },
-                        dataType: 'json'
+                    },
+                    dataType: 'json'
                 })
-                .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
-                    var htmlString = "";
-                    htmlString += "<table>\n";
-                    for (var medium in response.listeMediums) {
-                        htmlString += "<tr><div>";
-                        htmlString += "<h2>" + medium.typeMedium + "</h2>";
-                        htmlString += "<p>" + medium.presentation + "<br>";
-                        
-                        switch(medium.typeMedium){
-                            case "Astrologue":
-                                htmlString += "Formation : " + medium.formation;
-                                break;
-                                
-                            case "Spirite":
-                                htmlString += "Support : " + medium.support;
-                                break;
-                        }
-                        
-                        htmlString += "</p></div></tr>";
-                    }
-                    htmlString += "</table>";
-                    
-                    $('listeMediums').html(htmlString);
-                })
-                .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
-                console.log('Error', error); // LOG dans Console Javascript
-                        alert("Erreur lors de l'appel AJAX");
-                })
-                .always(function () { // Fonction toujours appelée
+                        .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                            console.log(response.listeMediums);
+                            var htmlString = "";
+                            htmlString += "<table style='margin: 5px;'>\n";
+                            for (var id in response.listeMediums) {
+                                var medium = response.listeMediums[id];
+                                htmlString += "<tr><div style='border: 1px solid black;'>";
+                                htmlString += "<h2>" + medium.denomination + "</h2>";
+                                htmlString += "<p>" + medium.presentation + "<br>";
 
-                });
+                                switch (medium.typeMedium) {
+                                    case "Astrologue":
+                                        htmlString += "Formation : " + medium.formation + "<br>";
+                                        htmlString += "Promotion : " + medium.promotion;
+                                        break;
+
+                                    case "Spirite":
+                                        htmlString += "Support : " + medium.support;
+                                        break;
+                                }
+
+                                htmlString += "<br>";
+                                htmlString += "<a style='padding: 5px;' href='?todo=demandeConsultation&idMedium=" + medium.id + "'><button>Prendre RDV</button></a>";
+                                htmlString += "</p></div></tr>";
+                            }
+                            htmlString += "</table>";
+                            console.log(htmlString);
+                            $('#listeMediums').html(htmlString);
+                        })
+                        .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                            console.log('Error', error); // LOG dans Console Javascript
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+                        .always(function () { // Fonction toujours appelée
+
+                        });
             });
         </script>
     </body>
