@@ -24,9 +24,8 @@ public class ArchiverConsultationAction extends Action {
     public void executer(HttpServletRequest request) {
         
         HttpSession session = request.getSession();
-        session.setAttribute("consultation", null);
-        Consultation consultation = (Consultation)session.getAttribute("consultation");
-        request.setAttribute("statut", consultation == null);
+        session.removeAttribute("consultation");
+        request.setAttribute("statut", true);
     }
 
 }

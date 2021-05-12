@@ -15,10 +15,11 @@ public class DeconnexionAction extends Action {
     
     @Override
     public void executer(HttpServletRequest request) {
+        
         // Récupération de la session
         HttpSession session = request.getSession();
-        
         // Suppression de la session
         session.invalidate();
+        
     }
 }

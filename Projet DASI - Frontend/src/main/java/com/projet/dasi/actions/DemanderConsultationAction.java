@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author creep
  */
-public class ActionDemandeConsultation extends Action {
+public class DemanderConsultationAction extends Action {
 
     @Override
     public void executer(HttpServletRequest request) {

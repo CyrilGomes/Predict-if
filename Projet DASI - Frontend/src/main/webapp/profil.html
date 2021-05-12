@@ -17,209 +17,234 @@ and open the template in the editor.
     </head>
     <body style="display: none;">
         <div>
-            
-        <!-- HEADER -->
-        <div class="header">
-            <a href="index.html" class="logo">Predict'IF</a>
-            <div class="header-right" id='headerContent'>
+
+            <!-- HEADER -->
+            <div class="header">
+                <a href="index.html" class="logo">Predict'IF</a>
+                <div class="header-right" id='headerContent'>
+                </div>
             </div>
-        </div>
-        
-        <br />
-        <br />
-        <br />
-        <div class='flex-container'>
-        <div class="Compte">
-            <table style="border-spacing: 10px 20px;">
-                <tr>
-                    <td>Nom : </td>
-                    <td> <input type="text" class="Text" id="champ-nom" value="nom" size="28" disabled="disabled"/> </td>
-                    <td>Prénom : </td>
-                    <td> <input type="text" id="champ-prenom" class="Text" value="prenom" size="28" disabled="disabled"/> </td>
-                </tr>
-                <tr>
-                    <td>Date de Naissance : </td>
-                    <td> <input type="date" id="champ-datenaissance" class="Text" size="28" disabled="disabled" /> </td>
-                    <td>Code Postal : </td>
-                    <td> <input type="text" class="Text" value="cp" id="champ-CP" size="28" disabled="disabled" /> </td>
-                </tr>
-                <tr>
-                    <td> Téléphone : </td>
-                    <td> <input type="text" class="Text" id="champ-tel" value="tel" size="28" disabled="" /> </td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
-            <hr>
-            <table style="border-spacing: 10px 20px;">
-                    <tr>
-                        <td>Adresse Mail : </td>
-                        <td > <input type="text" class="Text" id="champ-mail" size="85" disabled="disabled" /> </td>
-                    </tr>
-                    <tr>
-                        <td>Mot de Passe : </td>
-                        <td> <input type="password" class="Text" id="champ-mdp" size="85" disabled="disabled" /> </td>
-                    </tr>
-            </table>
-            <hr>
-            <form>
-                <input type="button"  class="monBouton" id="button-modif" value="Modifier" onclick="modif()" />
-            </form>
-            
-        </div>
-            <div class="ProfilAstral" id ="pa"> 
-            <table style="border-spacing: 10px 20px;">
-                <tr>
-                    <td>
-                        Couleur chance <br>
-                        <div id="couleur"> </div>
-                        <br>
-                        Signe chinois <br>
-                        <div id="signeChinois"> </div>
-                        <br>
-                        Animal totem<br>
-                        <div id="animalTotem"> </div>
-                        <br>
-                        Signe astrologique <br>
-                        <div id="signeAstro"> </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        </div>
-        <script>
-            $('body').on('click', 'a.boutonDeconnexion', function () {
-               if(confirm("Confirmez la déconnexion")){
+
+            <br />
+            <br />
+            <br />
+            <div class='flex-container'>
+                <div class="Compte">
+                    <table style="border-spacing: 10px 20px;">
+                        <tr>
+                            <td>Nom : </td>
+                            <td> <input type="text" class="Text" id="champ-nom" value="nom" size="28" disabled="disabled"/> </td>
+                            <td>Prénom : </td>
+                            <td> <input type="text" id="champ-prenom" class="Text" value="prenom" size="28" disabled="disabled"/> </td>
+                        </tr>
+                        <tr>
+                            <td>Date de Naissance : </td>
+                            <td> <input type="date" id="champ-datenaissance" class="Text" size="28" disabled="disabled" /> </td>
+                            <td>Code Postal : </td>
+                            <td> <input type="text" class="Text" value="cp" id="champ-CP" size="28" disabled="disabled" /> </td>
+                        </tr>
+                        <tr>
+                            <td> Téléphone : </td>
+                            <td> <input type="text" class="Text" id="champ-tel" value="tel" size="28" disabled="" /> </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <hr>
+                    <table style="border-spacing: 10px 20px;">
+                        <tr>
+                            <td>Adresse Mail : </td>
+                            <td > <input type="text" class="Text" id="champ-mail" size="85" disabled="disabled" /> </td>
+                        </tr>
+                        <tr>
+                            <td>Mot de Passe : </td>
+                            <td> <input type="password" class="Text" id="champ-mdp" size="85" disabled="disabled" /> </td>
+                        </tr>
+                    </table>
+                    <hr>
+                    <form>
+                        <input type="button"  class="monBouton" id="button-modif" value="Modifier" onclick="modif()" />
+                    </form>
+
+                </div>
+                <div class="ProfilAstral" id ="pa"> 
+                    <table style="border-spacing: 10px 20px;">
+                        <tr>
+                            <td>
+                                Couleur chance <br>
+                                <div id="couleur"> </div>
+                                <br>
+                                Signe chinois <br>
+                                <div id="signeChinois"> </div>
+                                <br>
+                                Animal totem<br>
+                                <div id="animalTotem"> </div>
+                                <br>
+                                Signe astrologique <br>
+                                <div id="signeAstro"> </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <script>
+                $('body').on('click', 'a.boutonDeconnexion', function () {
+                    if (confirm("Êtes-vous sûrs de vouloir vous déconnecter ?")) {
+                        $.ajax({
+                            url: './ActionServlet',
+                            method: 'POST',
+                            data: {
+                                todo: 'demandeDeconnexion',
+                            },
+                            dataType: 'json'
+                        })
+                                .done(function () {
+                                    window.location.replace("index.html");
+                                })
+                                .fail(function (error) {
+                                    console.log('Error', error);
+                                    alert("Erreur lors de l'appel AJAX");
+                                });
+                    }
+                });
+
+                function modif()
+                {
+                    if (document.getElementById("button-modif").value == "Modifier") {
+                        $('#button-modif').val("Sauvegarder");
+                    } else {
+                        $('#button-modif').val("Modifier");
+                        var champNom = $('#champ-nom').val();
+                        var champPrenom = $('#champ-prenom').val();
+                        var champDateNaissance = $('#champ-datenaissance').val();
+                        var champCodePostal = $('#champ-CP').val();
+                        var champTel = $('#champ-tel').val();
+                        var champMail = $('#champ-mail').val();
+                        var champMdp = $('#champ-mdp').val();
+
+                        $.ajax({
+                            url: './ActionServlet',
+                            method: 'POST',
+                            data: {
+                                todo: 'sauvegarderProfil',
+                                nom: champNom,
+                                prenom: champPrenom,
+                                dateNaissance: champDateNaissance,
+                                codePostal: champCodePostal,
+                                tel: champTel,
+                                email: champMail,
+                                mdp: champMdp
+
+                            },
+                            dataType: 'json'
+                        });
+                    }
+                    document.getElementById("champ-prenom").disabled = !document.getElementById("champ-prenom").disabled;
+                    document.getElementById("champ-nom").disabled = !document.getElementById("champ-nom").disabled;
+                    document.getElementById("champ-tel").disabled = !document.getElementById("champ-tel").disabled;
+                    document.getElementById("champ-datenaissance").disabled = !document.getElementById("champ-datenaissance").disabled;
+                    document.getElementById("champ-CP").disabled = !document.getElementById("champ-CP").disabled;
+                    document.getElementById("champ-mail").disabled = !document.getElementById("champ-mail").disabled;
+                    document.getElementById("champ-mdp").disabled = !document.getElementById("champ-mdp").disabled;
+
+
+                }
+                $(document).ready(function () {
+
+// REMPLIR LES INFORMATIONS AVEC L'UTILISATEUR COURANT
                     $.ajax({
                         url: './ActionServlet',
-                        method: 'POST',
+                        method: 'GET',
                         data: {
-                            todo: 'demandeDeconnexion',
+                            todo: 'obtenirUtilisateurCourant'
                         },
                         dataType: 'json'
                     })
-                            .done(function () {
-                            window.location.replace("index.html");
-                    })
+                            .done(function (response) {
+
+                                // Si l'utilisateur est déjà logué
+                                if (response.utilisateur) {
+                                    // Changer les boutons du header et le lien du bouton
+                                    if (response.type == "employe") {
+                                        $('#headerContent').html(
+                                                "<a href='tableau-de-bord.html'>Tableau de Bord</a>" +
+                                                "<a href='profil.html' id='currentPage'>Profil</a>" +
+                                                "<a class='boutonDeconnexion'>Déconnexion</a>"
+                                                );
+                                    } else {
+                                        // Changer le header
+                                        $('#headerContent').html(
+                                                "<a href='demande-consultation.html'>Demander une Consultation</a>" +
+                                                "<a href='historique.html'>Historique</a>" +
+                                                "<a href='profil.html' id='currentPage'>Profil</a>" +
+                                                "<a class='boutonDeconnexion'>Déconnexion</a>"
+                                                );
+                                        // Remplir le profil astral
+                                        $('#animalTotem').html("> " + response.animalTotem);
+                                        $('#signeAstro').html("> " + response.signeAstro);
+                                        $('#couleur').html("> " + response.couleur);
+                                        $('#signeChinois').html("> " + response.signeChinois);
+                                        $('#pa').css({'display': "inline-block"});
+                                        // Afficher le bouton modifier 
+                                        $('#button-modif').css({'display': "block"});
+                                    }
+                                    // Remplir les champs d'information
+                                    $('#champ-nom').val(response.nom);
+                                    $('#nameUser').val(response.prenom);
+                                    $('#champ-prenom').val(response.prenom);
+                                    $('#champ-tel').val(response.telephone);
+                                    $('#champ-datenaissance').val(response.dateDeNaissance);
+                                    $('#champ-CP').val(response.codePostal);
+                                    $('#champ-mail').val(response.mail);
+                                    $('#champ-mdp').val(response.motDePasse);
+                                    // Afficher la page
+                                    $('body').css({"display": "block"});
+                                }
+                                // S'il n'est pas logué
+                                else {
+                                    // Rediriger vers l'accueil
+                                    window.location.replace("index.html");
+                                }
+
+                            })
                             .fail(function (error) {
                                 console.log('Error', error);
                                 alert("Erreur lors de l'appel AJAX");
-                    });
-                }
-            });
-            
-            function modif()
-            {
-                if(document.getElementById("button-modif").value == "Modifier"){
-                    $('#button-modif').val("Sauvegarder");
-                }else{
-                    $('#button-modif').val("Modifier");
-                    var champNom = $('#champ-nom').val();
-                    var champPrenom = $('#champ-prenom').val();
-                    var champDateNaissance = $('#champ-datenaissance').val();
-                    var champCodePostal = $('#champ-CP').val();
-                    var champTel = $('#champ-tel').val();
-                    var champMail = $('#champ-mail').val();
-                    var champMdp = $('#champ-mdp').val();
+                            });
 
+
+                    // AJUSTER LE HEADER EN FONCTION DE S'IL Y A UNE CONSULTATION EN COURS (donc pour les employés)
                     $.ajax({
                         url: './ActionServlet',
-                        method: 'POST',
+                        method: 'GET',
                         data: {
-                            todo: 'sauvegarderProfil',
-                            nom: champNom,
-                            prenom: champPrenom,
-                            dateNaissance: champDateNaissance,
-                            codePostal: champCodePostal,
-                            tel: champTel,
-                            email: champMail,
-                            mdp: champMdp
-
+                            todo: 'obtenirEtatConsultationSession'
                         },
                         dataType: 'json'
-                    });
-                }
-                document.getElementById("champ-prenom").disabled = !document.getElementById("champ-prenom").disabled;
-                document.getElementById("champ-nom").disabled = !document.getElementById("champ-nom").disabled;
-                document.getElementById("champ-tel").disabled = !document.getElementById("champ-tel").disabled ;
-                document.getElementById("champ-datenaissance").disabled = !document.getElementById("champ-datenaissance").disabled;
-                document.getElementById("champ-CP").disabled = !document.getElementById("champ-CP").disabled;
-                document.getElementById("champ-mail").disabled = !document.getElementById("champ-mail").disabled;
-                document.getElementById("champ-mdp").disabled = !document.getElementById("champ-mdp").disabled;
-
-                
-            }
-            $(document).ready(function () {
-
-                $.ajax({
-                    url: './ActionServlet',
-                    method: 'GET',
-                    data: {
-                        todo: 'obtenirUtilisateurCourant'
-                    },
-                    dataType: 'json'
-                })
-                        .done(function(response){
-                            
-                            // Si l'utilisateur est déjà logué
-                            if (response.utilisateur) {
-                                // Changer les boutons du header et le lien du bouton
-                                if (response.type == "employe") {
-                                    $('#headerContent').html(
-                                        "<a href='consultation-en-cours.html'>Consultation en cours</a>" +
-                                        "<a href='tableau-de-bord.html'>Tableau de Bord</a>" +
-                                        "<a href='profil.html' id='currentPage'>Profil</a>" +
-                                        "<a class='boutonDeconnexion'>Déconnexion</a>"
-                                    );
+                    })
+                            .done(function (response) {
+                                console.log(response);
+                                // S'il y a une consultation dans la session (donc un employé est loggé)
+                                if (response.etat && (response.etat === "EnAttenteClient" || response.etat === "EnCours")) {
+                                    $('#headerContent').prepend(
+                                            "<a href='consultation-en-cours.html'>Consultation en cours</a>"
+                                            );
                                 }
-                                else {
-                                    // Changer le header
-                                    $('#headerContent').html(
-                                        "<a href='demande-consultation.html'>Demander une Consultation</a>" +
-                                        "<a href='historique.html'>Historique</a>" +
-                                        "<a href='profil.html' id='currentPage'>Profil</a>" +
-                                        "<a class='boutonDeconnexion'>Déconnexion</a>"
-                                    );
-                                    // Remplir le profil astral
-                                    $('#animalTotem').html("> "+ response.animalTotem);
-                                    $('#signeAstro').html("> "+response.signeAstro);
-                                    $('#couleur').html("> "+response.couleur);
-                                    $('#signeChinois').html("> "+response.signeChinois);
-                                    $('#pa').css({'display' : "inline-block"});
-                                    // Afficher le bouton modifier 
-                                    $('#button-modif').css({'display' : "block"});
-                                }
-                                // Remplir les champs d'information
-                                $('#champ-nom').val(response.nom);
-                                $('#nameUser').val(response.prenom);
-                                $('#champ-prenom').val(response.prenom);
-                                $('#champ-tel').val(response.telephone);
-                                $('#champ-datenaissance').val(response.dateDeNaissance);
-                                $('#champ-CP').val(response.codePostal);
-                                $('#champ-mail').val(response.mail);
-                                $('#champ-mdp').val(response.motDePasse);
-                                // Afficher la page
-                                $('body').css({"display": "block"});
-                            }
-                            // S'il n'est pas logué
-                            else {
-                                // Rediriger vers l'accueil
-                                window.location.replace("index.html");
-                            }
-                            
-                        })
-                        .fail(function (error) {
+                            })
+                            .fail(function (error) {
                                 console.log('Error', error);
                                 alert("Erreur lors de l'appel AJAX");
-                        });
-            });
+                            });
 
-           
-  
-        </script>
- 
-        
+                });
+
+
+
+
+            </script>
+
+
         </div>
-        
+
     </body>
 </html>

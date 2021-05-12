@@ -14,9 +14,8 @@
         <div class="header">
             <a href="index.html" class="logo">Predict'IF</a>
             <div class="header-right" id='headerContent'>
-                <a href="consultation-en-cours.html">Consultation en cours</a>
-                <a href="tableau-de-bord.html" id="currentPage">Tableau de Bord</a>
-                <a href="profil.html">Profil</a>
+                <a href='tableau-de-bord.html' id='currentPage'>Tableau de Bord</a>
+                <a href='profil.html'>Profil</a>
                 <a class='boutonDeconnexion'>Déconnexion</a>
             </div>
         </div>
@@ -72,7 +71,7 @@
 
         <script>
             $('body').on('click', 'a.boutonDeconnexion', function () {
-               if(confirm("Confirmez la déconnexion")){
+                if (confirm("Confirmez la déconnexion")) {
                     $.ajax({
                         url: './ActionServlet',
                         method: 'POST',
@@ -82,12 +81,12 @@
                         dataType: 'json'
                     })
                             .done(function () {
-                            window.location.replace("index.html");
-                    })
+                                window.location.replace("index.html");
+                            })
                             .fail(function (error) {
                                 console.log('Error', error);
                                 alert("Erreur lors de l'appel AJAX");
-                    });
+                            });
                 }
             });
             $(document).ready(function () {
@@ -103,24 +102,23 @@
                     },
                     dataType: 'json'
                 })
-                .done(function (response) {
-                    console.log('Response', response);
-                    // Si l'utilisateur n'est pas loggé ou qu'il n'est pas un employé...
-                    if (!(response.utilisateur && response.type == "employe")) {
-                        // Rediriger vers l'accueil
-                        window.location.replace("index.html");
-                    }
-                    // Si tout va bien...
-                    else {
-                        // Afficher la page 
-                        $('body').css({"display": "block"});
-                    }
-                })
-                .fail(function (error) {
-                    console.log('Error', error);
-                    alert("Erreur lors de l'appel AJAX");
-                })
-
+                        .done(function (response) {
+                            console.log('Response', response);
+                            // Si l'utilisateur n'est pas loggé ou qu'il n'est pas un employé...
+                            if (!(response.utilisateur && response.type == "employe")) {
+                                // Rediriger vers l'accueil
+                                window.location.replace("index.html");
+                            }
+                            // Si tout va bien...
+                            else {
+                                // Afficher la page 
+                                $('body').css({"display": "block"});
+                            }
+                        })
+                        .fail(function (error) {
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
+                        });
                 // OBTENIR CONSULTATION ATTRIBUEE 
                 $.ajax({
                     url: './ActionServlet',
@@ -133,7 +131,7 @@
                         .done(function (response) {
                             console.log('Response', response);
                             // Si une consultation a été attribuée à l'utilisateur courant...
-                            if (response.consultation) {
+                            if (response.consultation && response.etat != "Termine") {
                                 // Populer un div avec les informations de la consultation en cours et le montrer
                                 $('#client').html(
                                         response.client.prenom + ' ' + response.client.nom + '<br />' +
@@ -149,9 +147,17 @@
                                         response.medium.type + '<br />'
                                         );
                                 // Renommer le bouton selon si la consultation est démarrée ou pas 
-                                if (!(response.etat === "EnAttenteEmploye")) {
+                                if (response.etat === "EnAttenteClient" || response.etat == "EnCours") {
                                     $('#boutonJeSuisPret').html("Traiter la consultation");
+                                    // Set le header avec consultation en cours
+                                    $('#headerContent').html(
+                                            "<a href='consultation-en-cours.html'>Consultation en cours</a>" +
+                                            "<a href='tableau-de-bord.html' id='currentPage'>Tableau de Bord</a>" +
+                                            "<a href='profil.html'>Profil</a>" +
+                                            "<a class='boutonDeconnexion'>Déconnexion</a>"
+                                            );
                                 }
+
                             } else {
                                 // Signaler le fait qu'il n'y ait aucune consultation à traiter
                                 $('#messageConsultation').html("Il n'y a aucune demande de consultation pour vous.");
@@ -255,6 +261,11 @@
                                 type: 'radar',
                                 data: data,
                                 options: {
+                                    scale: {
+                                        beginAtZero: true,
+                                        min: 0,
+                                        stepSize: 1
+                                    },
                                     elements: {
                                         line: {
                                             borderWidth: 2
@@ -358,7 +369,6 @@
                         })
                         .always(function () {
                         });
-
                 // OBTENIR STATISTIQUE 4 (clients et leurs temps d'appel) 
                 // Appel AJAX
                 $.ajax({
@@ -450,17 +460,14 @@
                                 alert("Erreur lors de l'appel AJAX");
                             })
                 });
-
                 // FONCTIONS DE COULEURS
-                var hsvToRgb = function(h, s, v) {
+                var hsvToRgb = function (h, s, v) {
                     var r, g, b;
-
                     var i = Math.floor(h * 6);
                     var f = h * 6 - i;
                     var p = v * (1 - s);
                     var q = v * (1 - f * s);
                     var t = v * (1 - (1 - f) * s);
-
                     switch (i % 6) {
                         case 0:
                             r = v, g = t, b = p;

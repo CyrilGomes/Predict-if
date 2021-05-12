@@ -86,30 +86,11 @@ and open the template in the editor.
                 <h1>Historique du Client</h1>
             </div>
         </div>
-        
+
         <script>
-            $('body').on('click', 'a.boutonDeconnexion', function () {
-               if(confirm("Confirmez la déconnexion")){
-                    $.ajax({
-                        url: './ActionServlet',
-                        method: 'POST',
-                        data: {
-                            todo: 'demandeDeconnexion',
-                        },
-                        dataType: 'json'
-                    })
-                            .done(function () {
-                            window.location.replace("index.html");
-                    })
-                            .fail(function (error) {
-                                console.log('Error', error);
-                                alert("Erreur lors de l'appel AJAX");
-                    });
-                }
-            });
             $(document).ready(function () {
 
-             // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER 
+                // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER 
                 // Appel AJAX
                 $.ajax({
                     url: './ActionServlet',
@@ -146,29 +127,38 @@ and open the template in the editor.
                     },
                     dataType: 'json'
                 })
-                        .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                        .done(function (response) {
                             console.log('Response', response);
                             if (response.consultation) {
-
+                                // Remplir les informations sur le client et le médium à incarner
                                 $('#clientName').html(response.client.nom + ' ' + response.client.prenom);
                                 $('#signeAstrologique').html(response.client.signeAstro);
                                 $('#signeZodiaqueChinois').html(response.client.signeChinois);
                                 $('#couleurPorteBonheur').html(response.client.couleur);
                                 $('#animalTotem').html(response.client.animalTotem);
-
                                 $('#mediumName').html(response.medium.denomination);
                                 $('#role').html(response.medium.type);
                                 $('#presentation').html(response.medium.presentation);
                                 $('#commentaire').val(response.commentaire);
-                                
+                                // Changer l'état des boutons d'action 
+                                switch (response.etat) {
+                                    case "EnCours":
+                                        $('#boutonDemarrer').css({"display": "none"});
+                                        $('#boutonArreter').css({"display": "block"});
+                                        break;
+                                    case "Termine":
+                                        $('#boutonArreter').css({"display": "none"});
+                                        $('#boutonTerminer').css({"display": "block"});
+                                        break;
+                                }
                             }
                         })
                         .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
                             console.log('Error', error);
                             alert("Erreur lors de l'appel AJAX");
                         })
-                        
-  
+
+
                 $('#bouton-prediction').on('click', function () {
                     $('#bouton-prediction').html("Generation...");
 
@@ -223,8 +213,7 @@ and open the template in the editor.
                             console.log('Response', response);
                             if (response.statut) {
                                 $('#saveCommentaire').html("Sauvegardé !");
-                            } 
-                            else {
+                            } else {
                                 $('#saveCommentaire').html("Erreur");
                             }
                             setTimeout(function () {
@@ -250,22 +239,22 @@ and open the template in the editor.
                     },
                     dataType: 'json'
                 })
-                .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
-                    console.log('Response', response);
-                    if (response.statut) {
-                        $('#boutonDemarrer').css({"display":"none"});
-                        $('#boutonArreter').css({"display":"block"});
-                    } else {
-                        alert("Erreur !");
-                    }
-                })
-                .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
-                    console.log('Error', error);
-                    alert("Erreur lors de l'appel AJAX");
-                })
+                        .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                            console.log('Response', response);
+                            if (response.statut) {
+                                $('#boutonDemarrer').css({"display": "none"});
+                                $('#boutonArreter').css({"display": "block"});
+                            } else {
+                                alert("Erreur !");
+                            }
+                        })
+                        .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
+                        })
 
             });
-            
+
             $('#boutonArreter').on('click', function () {
                 $.ajax({
                     url: './ActionServlet',
@@ -275,22 +264,22 @@ and open the template in the editor.
                     },
                     dataType: 'json'
                 })
-                .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
-                    console.log('Response', response);
-                    if (response.statut) {
-                        $('#boutonArreter').css({"display":"none"});
-                        $('#boutonTerminer').css({"display":"block"});
-                    } else {
-                        alert("Erreur !");
+                        .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                            console.log('Response', response);
+                            if (response.statut) {
+                                $('#boutonArreter').css({"display": "none"});
+                                $('#boutonTerminer').css({"display": "block"});
+                            } else {
+                                alert("Erreur !");
 
-                    }
-                })
-                .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
-                    console.log('Error', error);
-                    alert("Erreur lors de l'appel AJAX");
-                })
+                            }
+                        })
+                        .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
+                        })
             });
-            
+
             $('#boutonTerminer').on('click', function () {
                 $.ajax({
                     url: './ActionServlet',
@@ -300,20 +289,18 @@ and open the template in the editor.
                     },
                     dataType: 'json'
                 })
-                .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
-                    console.log('Response', response);
-                    if (response.statut) {
-                        window.location.replace("tableau-de-bord.html");
-                    } else {
-                        alert("Erreur !"); 
-                    }
-                })
-                .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
-                    console.log('Error', error);
-                    alert("Erreur lors de l'appel AJAX");
-                })
+                        .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                            console.log('Response', response);
+                            if (response.statut) {
+                                window.location.replace("tableau-de-bord.html");
+                            }
+                        })
+                        .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
+                        })
             });
-            
+
             $('#annuler').on('click', function () {
 
 
@@ -341,6 +328,58 @@ and open the template in the editor.
                         })
 
             });
+
+            // DECONNEXION
+            $('body').on('click', 'a.boutonDeconnexion', function () {
+                if (confirm("Confirmez la déconnexion")) {
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'demandeDeconnexion',
+                        },
+                        dataType: 'json'
+                    })
+                            .done(function () {
+                                window.location.replace("index.html");
+                            })
+                            .fail(function (error) {
+                                console.log('Error', error);
+                                alert("Erreur lors de l'appel AJAX");
+                            });
+                }
+            });
+            // CONFIRMATION DE DEPART SI CONSULTATION TERMiNEE
+            $(window).bind("beforeunload", function () {
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'GET',
+                    data: {
+                        todo: 'obtenirEtatConsultationSession',
+                    },
+                    dataType: 'json'
+                }).done(function () {
+                    console.log(response);
+                    if (response.etat == "Termine") {
+                        if (confirm("Voulez-vous vraiment quitter? Vous ne pourrez plus accéder à la consultation")) {
+                            $.ajax({
+                                url: './ActionServlet',
+                                method: 'POST',
+                                data: {
+                                    todo: 'ArchiverConsultationAction',
+                                },
+                                dataType: 'json'
+                            }).done(function () {
+                                if (response.statut) {
+                                    window.location.replace("tableau-de-bord.html");
+                                }
+                            })
+                        }
+                    }
+                });
+            });
+
+
         </script>
     </body>
 </html>

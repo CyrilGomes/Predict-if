@@ -22,6 +22,7 @@ public class ObtenirConsultationAttribueeAction extends Action {
         
         // Appel services
         Consultation consultation = (Consultation)session.getAttribute("consultation");
+
         if (consultation == null) {
             Employe employe = (Employe)session.getAttribute("utilisateur");
             consultation = service.obtenirConsultationAttribueeAEmploye(employe);

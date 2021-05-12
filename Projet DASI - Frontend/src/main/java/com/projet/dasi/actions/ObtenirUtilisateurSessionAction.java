@@ -4,7 +4,7 @@ import com.projet.dasi.model.Utilisateur;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class ObtenirUtilisateurCourantAction extends Action {
+public class ObtenirUtilisateurSessionAction extends Action {
 
     @Override
     public void executer(HttpServletRequest request) {
