@@ -75,7 +75,6 @@
                 // INITIALISATION 
 
                 // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER 
-                // Appel AJAX
                 $.ajax({
                     url: './ActionServlet',
                     method: 'GET',
@@ -84,26 +83,25 @@
                     },
                     dataType: 'json'
                 })
-                        .done(function (response) {
-                            console.log('Response', response);
-                            // Si l'utilisateur n'est pas loggé ou qu'il n'est pas un employé...
-                            if (!(response.utilisateur && response.type == "employe")) {
-                                // Rediriger vers l'accueil
-                                window.location.replace("index.html");
-                            }
-                            // Si tout va bien...
-                            else {
-                                // Afficher la page 
-                                $('body').css({"display": "block"});
-                            }
-                        })
-                        .fail(function (error) {
-                            console.log('Error', error);
-                            alert("Erreur lors de l'appel AJAX");
-                        })
+                .done(function (response) {
+                    console.log('Response', response);
+                    // Si l'utilisateur n'est pas loggé ou qu'il n'est pas un employé...
+                    if (!(response.utilisateur && response.type == "employe")) {
+                        // Rediriger vers l'accueil
+                        window.location.replace("index.html");
+                    }
+                    // Si tout va bien...
+                    else {
+                        // Afficher la page 
+                        $('body').css({"display": "block"});
+                    }
+                })
+                .fail(function (error) {
+                    console.log('Error', error);
+                    alert("Erreur lors de l'appel AJAX");
+                })
 
                 // OBTENIR CONSULTATION ATTRIBUEE 
-                // Appel AJAX
                 $.ajax({
                     url: './ActionServlet',
                     method: 'GET',
@@ -130,6 +128,10 @@
                                         response.medium.presentation + '<br />' +
                                         response.medium.type + '<br />'
                                         );
+                                // Renommer le bouton selon si la consultation est démarrée ou pas 
+                                if (!(response.etat === "EnAttenteEmploye")) {
+                                    $('#boutonJeSuisPret').html("Traiter la consultation");
+                                }
                             } else {
                                 // Signaler le fait qu'il n'y ait aucune consultation à traiter
                                 $('#messageConsultation').html("Il n'y a aucune demande de consultation pour vous.");

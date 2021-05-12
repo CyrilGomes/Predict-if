@@ -21,6 +21,7 @@ import com.projet.dasi.actions.InscriptionAction;
 import com.projet.dasi.actions.ObtenirPredictionsAction;
 import com.projet.dasi.actions.SauvegarderCommentaireConsultationAction;
 import com.projet.dasi.actions.ActionDemandeConsultation;
+import com.projet.dasi.actions.ArchiverConsultationAction;
 import com.projet.dasi.actions.ConnexionAction;
 import com.projet.dasi.actions.GenererStatistiquesAction;
 import com.projet.dasi.actions.InscriptionAction;
@@ -102,6 +103,11 @@ public class ActionServlet extends HttpServlet {
                 
             case "demarrerTerminerConsultation":
                 action = new DemarrerTerminerConsultationAction();
+                serialisation = new StatutSerialisation();
+                break;
+                
+            case "archiverConsultation":
+                action = new ArchiverConsultationAction();
                 serialisation = new StatutSerialisation();
                 break;
                 

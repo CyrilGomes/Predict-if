@@ -75,7 +75,9 @@ and open the template in the editor.
                     <button id="saveCommentaire">Sauvegarder</button>
 
                     <button id="annuler">Annuler</button>
-                    <button id="nextState">Démarrer</button>
+                    <button id="boutonDemarrer">Démarrer</button>
+                    <button id="boutonArreter" style="display: none;">Arrêter</button>
+                    <button id="boutonTerminer" style="display: none;">Terminer</button>
 
                 </div>
             </div>
@@ -168,7 +170,6 @@ and open the template in the editor.
                             .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
                                 console.log('Response', response);
                                 if (response.prediction) {
-
                                     $('#reponseAmour').val(response.amour);
                                     $('#reponseSante').val(response.sante);
                                     $('#reponseTravail').val(response.travail);
@@ -220,7 +221,7 @@ and open the template in the editor.
 
             });
 
-            $('#demarrer').on('click', function () {
+            $('#boutonDemarrer').on('click', function () {
                 $.ajax({
                     url: './ActionServlet',
                     method: 'POST',
@@ -229,21 +230,68 @@ and open the template in the editor.
                     },
                     dataType: 'json'
                 })
-                        .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
-                            console.log('Response', response);
-                            if (response.statut) {
-                                   // ATTENTION, afficher ou cacher les différents boutons (en créer 3 distincts pour démarrer, arrêter, terminer)
+                .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    console.log('Response', response);
+                    if (response.statut) {
+                        $('#boutonDemarrer').css({"display":"none"});
+                        $('#boutonArreter').css({"display":"block"});
+                    } else {
+                        alert("Erreur !");
+                    }
+                })
+                .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error', error);
+                    alert("Erreur lors de l'appel AJAX");
+                })
 
-                            } else {
-                                alert("Erreur !");
+            });
+            
+            $('#boutonArreter').on('click', function () {
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'demarrerTerminerConsultation',
+                    },
+                    dataType: 'json'
+                })
+                .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    console.log('Response', response);
+                    if (response.statut) {
+                        $('#boutonArreter').css({"display":"none"});
+                        $('#boutonTerminer').css({"display":"block"});
+                    } else {
+                        alert("Erreur !");
 
-                            }
-                        })
-                        .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
-                            console.log('Error', error);
-                            alert("Erreur lors de l'appel AJAX");
-                        })
-
+                    }
+                })
+                .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error', error);
+                    alert("Erreur lors de l'appel AJAX");
+                })
+            });
+            
+            $('#boutonTerminer').on('click', function () {
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'archiverConsultation',
+                    },
+                    dataType: 'json'
+                })
+                .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    console.log('Response', response);
+                    if (response.statut) {
+                        window.location.replace("tableau-de-bord.html");
+                    } else {
+                        alert("Erreur !"); 
+                    }
+                })
+                .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error', error);
+                    alert("Erreur lors de l'appel AJAX");
+                })
             });
             
             $('#annuler').on('click', function () {

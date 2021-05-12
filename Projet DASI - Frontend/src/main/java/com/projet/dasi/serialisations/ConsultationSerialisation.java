@@ -58,8 +58,9 @@ public class ConsultationSerialisation extends Serialisation {
             if (medium instanceof Astrologue) { mediumData.addProperty("type", "astrologue"); }
             container.add("medium", mediumData);
             
-            // Sérialiser le commentaire 
+            // Sérialiser le commentaire et l'état
             container.addProperty("commentaire", consultation.getCommentaire());
+            container.addProperty("etat", consultation.getEtat().toString());
         
         }
         
