@@ -1,0 +1,179 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 11 mai 2021, 14:54:10
+    Author     : Cyril
+*/
+
+
+.consultationContainer{
+
+    display: flex;
+    flex-direction: column;
+}
+.slidecontainer {
+    width: 50%; /* Width of the outside container */
+
+
+
+}
+.predictionConteneur
+{
+    display:flex;
+    flex-direction: column;
+}
+
+
+.predict
+{
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex:50%;
+}
+
+/* The slider itself */
+.slider {
+    align-content: flex-end;
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 25px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #04AA6D; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #04AA6D; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+        "Generateur Consultation"
+        "Historique Consultation";
+}
+
+.Generateur { grid-area: Generateur; }
+
+.Consultation { grid-area: Consultation; }
+
+.Historique { grid-area: Historique; }
+
+
+/* ----------------------------------------------------------------- */
+/* BASE STYLES */
+/* ----------------------------------------------------------------- */
+body {
+    font-family: "Lato";
+}
+button {
+    background: #583D72;
+    border-style: none;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    transition: 0.075s;
+}
+button:hover {
+    background: #995ab3;
+    box-shadow: -4px 4px 0 0 #FF8E71;
+
+}
+.hyperlien {
+    color: dodgerblue;
+}
+.ligne {
+    box-shadow: 0px 10px #d0ebda
+}
+input {
+    display: inline-block;
+    float: left;
+}
+hr {
+    width: 65%;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+}
+.texteErreur {
+    color: red;
+}
+
+/* ----------------------------------------------------------------- */
+/* HEADER STYLES */
+/* ----------------------------------------------------------------- */
+
+/* Header BG box */
+.header {
+
+    overflow: hidden;
+    background: url("etoiles.png"), linear-gradient(90deg, #583D72 20%, #612A75);
+    padding: 0px 20px;
+}
+/* Header logo */
+.header a.logo {
+    font-size: 28px;
+    font-weight: bold;
+    padding: 24px 42px 24px 0px;
+    box-shadow: -20px 0 0 0 #FF8E71;
+    font-family: "Georgia";
+    background: #FF8E71;
+    border-radius: 0px 30px 30px 0px;
+}
+/* Header buttons */
+.header a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 24px 12px;
+    text-decoration: none;
+    font-size: 24px;
+    line-height: 25px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0);
+    border-width: 0px 3px 0px 3px;
+    border-radius: 10px;
+}
+/* Header button hover */
+.header-right a:hover {
+    background-color: #995ab3;
+    border-color: white;
+}
+/* Header button selected */
+.header-right a.active {
+    background-color: #995ab3;
+    border-color: white;
+}
+/* Header button alignment */
+.header-right {
+    float: right;
+}
+
+

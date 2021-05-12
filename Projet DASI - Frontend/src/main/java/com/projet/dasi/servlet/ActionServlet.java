@@ -1,5 +1,12 @@
 package com.projet.dasi.servlet;
 
+import com.project.dasi.serialisations.AnnulerConsultationSerialisation;
+import com.project.dasi.serialisations.ConnexionSerialisation;
+import com.project.dasi.serialisations.ConsultationSerialisation;
+import com.project.dasi.serialisations.DemarrerTerminerSerialisation;
+import com.project.dasi.serialisations.InscriptionSerialisation;
+import com.project.dasi.serialisations.PredictionSerialisation;
+import com.project.dasi.serialisations.SaveCommentaireSerialisation;
 import com.project.dasi.serialisations.DemandeConsultationSerialisation;
 import com.project.dasi.serialisations.ListeMediumSerialisation;
 import com.project.dasi.serialisations.GenererStatistiquesSerialisation;
@@ -9,6 +16,13 @@ import com.project.dasi.serialisations.ObtenirHistoriqueSerialisation;
 import com.project.dasi.serialisations.Serialisation;
 import com.project.dasi.serialisations.ObtenirUtilisateurSerialisation;
 import com.projet.dasi.actions.Action;
+import com.projet.dasi.actions.AnnulerConsultationAction;
+import com.projet.dasi.actions.ConnexionAction;
+import com.projet.dasi.actions.ConsultationAction;
+import com.projet.dasi.actions.DemarrerTerminerAction;
+import com.projet.dasi.actions.InscriptionAction;
+import com.projet.dasi.actions.PredictionAction;
+import com.projet.dasi.actions.SaveCommentaireAction;
 import com.projet.dasi.actions.ActionDemandeConsultation;
 import com.projet.dasi.actions.ConnexionAction;
 import com.projet.dasi.actions.GenererStatistiquesAction;
@@ -30,14 +44,14 @@ import javax.servlet.http.HttpServletResponse;
 public class ActionServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
         request.getSession(true);
         request.setCharacterEncoding("UTF-8");
         String typeRequete = request.getParameter("todo");
-        
+
         Action action = null;
         Serialisation serialisation = null;
-           
+
         switch (typeRequete) {
             
             case "obtenirTypeUtilisateurCourant":
@@ -64,11 +78,31 @@ public class ActionServlet extends HttpServlet {
                 action = new ConnexionAction();
                 serialisation = new ObtenirTypeUtilisateurSerialisation();
                 break;
-                
+
             case "inscription":
                 action = new InscriptionAction();
                 serialisation = new ObtenirTypeUtilisateurSerialisation();
                 break;
+
+            case "prediction":
+                action = new PredictionAction();
+                serialisation = new PredictionSerialisation();
+                break;
+            case "consultation":
+                action = new ConsultationAction();
+                serialisation = new ConsultationSerialisation();
+                break;
+            case "saveCommentaire":
+                action = new SaveCommentaireAction();
+                serialisation = new SaveCommentaireSerialisation();
+                break;
+            case "demarrerTerminer":
+                action = new DemarrerTerminerAction();
+                serialisation = new DemarrerTerminerSerialisation();
+                break;
+            case "annulerConsultation":
+                action = new AnnulerConsultationAction();
+                serialisation = new AnnulerConsultationSerialisation();
                 
             case "listeMediums":
                 action = new ListeMediumAction();
@@ -90,15 +124,14 @@ public class ActionServlet extends HttpServlet {
                 serialisation = new GenererStatistiquesSerialisation();
                 break;
         }
-        
+
         if (action != null && serialisation != null) {
             action.executer(request);
             serialisation.serialiser(request, response);
-        }
-        else {
+        } else {
             response.sendError(400, "Bad Request (pas d'action ou de sérialisation à traiter)");
         }
-        
+
     }
 
     @Override
