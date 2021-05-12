@@ -17,40 +17,65 @@ and open the template in the editor.
         <div class="header">
             <a href="index.html" class="logo">Predict'IF</a>
             <div class="header-right" id='headerContent'>
-                    <a href='demande-consultation.html' id='currentPage'>Demander une Consultation</a>
-                    <a href='historique.html'>Historique</a>
-                    <a href='profil.html'>Profil</a>
-                    <!-- <span id="nomClient"></span> -->
+                <a href='demande-consultation.html' id='currentPage'>Demander une Consultation</a>
+                <a href='historique.html'>Historique</a>
+                <a href='profil.html'>Profil</a>
+                <!-- <span id="nomClient"></span> -->
             </div>
         </div>
 
-        <div>
-            <div>
-                <h1 id="nomClient">Bienvenue, </h1>
-                <h2>Consultez un médium maintenant :</h2>
+        <div class="gridBody">
+            <div class="gridLeft">
+                <div>
+                    <h1 id="nomClient">Bienvenue, </h1>
+                    <h2>Consultez un médium maintenant :</h2>
+                </div>
+
+
+                <div style="margin: 5px;">
+                    <span style="margin: 5px;">
+                        Filtre:
+                        <select name="listeMedium">
+                            <option value="tous">Tous types</option>
+                            <option value="astrologue">Astrologue</option>
+                            <option value="cartomancien">Cartomancien</option>
+                            <option value="spirite">Spirite</option>
+                        </select>
+                    </span>
+
+                    <span style="margin: 5px;">
+                        <input type="search" placeholder="Chercher par nom..." id="searchName">
+                    </span>
+                </div>
+
+                <div id="listeMediums"></div>
             </div>
 
-            <div style="margin: 5px;">
-                <span style="margin: 5px;">
-                    Filtre:
-                    <select name="listeMedium">
-                        <option value="tous">Tous types</option>
-                        <option value="astrologue">Astrologue</option>
-                        <option value="cartomancien">Cartomancien</option>
-                        <option value="spirite">Spirite</option>
-                    </select>
-                </span>
-
-                <span style="margin: 5px;">
-                    <input type="search" placeholder="Chercher par nom..." id="searchName">
-                </span>
+            <div class="gridRight">
+                <div class="ProfilAstral" id ="pa"> 
+                    <table style="border-spacing: 10px 20px;">
+                        <tr>
+                            <td>
+                                Couleur chance <br>
+                                <div id="couleur"> </div>
+                                <br>
+                                Signe chinois <br>
+                                <div id="signeChinois"> </div>
+                                <br>
+                                Animal totem<br>
+                                <div id="animalTotem"> </div>
+                                <br>
+                                Signe astrologique <br>
+                                <div id="signeAstro"> </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
-
-        <div id="listeMediums"></div>
 
         <script>
-            
+
             $('body').on('click', 'a.boutonRDV', function () {
                 var mediumId = $(this).attr('id');
                 var buttonState = $('#' + mediumId).html();
@@ -66,10 +91,9 @@ and open the template in the editor.
                     dataType: 'json'
                 })
                         .done(function (response) {
-                            if(response.status){
+                            if (response.status) {
                                 alert("Demande de consultation réussie");
-                            }
-                            else{
+                            } else {
                                 alert("Echec de demande de consultation");
                             }
                         })
@@ -83,7 +107,7 @@ and open the template in the editor.
             });
 
             $(document).ready(function () {
-                
+
                 // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER, OBTENIR PROFIL ASTRAL
                 $.ajax({
                     url: './ActionServlet',
@@ -101,9 +125,11 @@ and open the template in the editor.
                             }
                             // Si tout va bien...
                             else {
-                                // Remplir le profil astral
-                                // TODO
-                                // Afficher la page 
+                                $('#animalTotem').html("> " + response.animalTotem);
+                                $('#signeAstro').html("> " + response.signeAstro);
+                                $('#couleur').html("> " + response.couleur);
+                                $('#signeChinois').html("> " + response.signeChinois);
+                                $('#pa').css({'display' : "inline-block"});
                                 $('#nomClient').html("Bienvenue, " + response.prenom + " " + response.nom);
                                 $('body').css({"display": "block"});
                             }
@@ -112,7 +138,7 @@ and open the template in the editor.
                             console.log('Error', error);
                             alert("Erreur lors de l'appel AJAX");
                         })
-                
+
                 // OBTENIR LA LISTE DES MEDIUMS
                 $.ajax({
                     url: './ActionServlet',
@@ -124,7 +150,7 @@ and open the template in the editor.
                 })
                         .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
                             var htmlString = "";
-                            htmlString += "<table style='margin: 5px;'>\n";
+                            htmlString += "<table style='margin: 5px; width: 100%;'>\n";
                             for (var id in response.listeMediums) {
                                 var medium = response.listeMediums[id];
                                 htmlString += "<tr><div style='border: 1px solid black;'>";
