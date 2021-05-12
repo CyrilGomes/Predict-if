@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>fr.insalyon.dasi</groupId>
-    <artifactId>ProjetDASI</artifactId>
+    <artifactId>ProjetDASIFrontend</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
 
@@ -16,9 +16,9 @@
     
     <dependencies>
         <dependency>
-            <groupId>fr.insalyon.dasi</groupId>
-            <artifactId>ProjetDASI</artifactId>
-            <version>1.0</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>ProjetDASIBackend</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
