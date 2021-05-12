@@ -13,16 +13,16 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
-    <body>
+    <body style="display: none;">
         <div>
+            
         <!-- HEADER -->
         <div class="header">
             <a href="index.html" class="logo">Predict'IF</a>
-            <div class="header-right">  <!-- TODO rediriger vers les pages de l'en-tête qui correspondent -->
-                <a href="tableau-de-bord.html" id="tableauBord">Tableau de Bord </a>
-                <a href="profil.html" id="nameUser"></a>
+            <div class="header-right" id='headerContent'>
             </div>
         </div>
+        
         <br />
         <br />
         <br />
@@ -50,7 +50,6 @@ and open the template in the editor.
             </table>
             <hr>
             <table style="border-spacing: 10px 20px;">
-                    
                     <tr>
                         <td>Adresse Mail : </td>
                         <td > <input type="text" class="Text" id="champ-mail" size="85" disabled="disabled" /> </td>
@@ -62,7 +61,7 @@ and open the template in the editor.
             </table>
             <hr>
             <form>
-                <input type="button"  class="monBouton" id="button-modif" value="Modifier" onclick="modif()" />
+                <input type="button"  class="monBouton" id="button-modif" value="Modifier" style="display: none;" onclick="modif()" />
             </form>
             
         </div>
@@ -135,26 +134,56 @@ and open the template in the editor.
                     url: './ActionServlet',
                     method: 'POST',
                     data: {
-                        todo: 'obtenirInfoProfil'
+                        todo: 'obtenirUtilisateurCourant'
                     },
                     dataType: 'json'
                 })
                         .done(function(response){
-                            if(response.property.type == "client"){
-                                $('#animalTotem').val("> "+ response.property.animalTotem);
-                                $('#signeAstro').val("> "+response.property.signeAstro);
-                                $('#couleur').val("> "+response.property.couleur);
-                                $('#signeChinois').val("> "+response.property.signeChinois);
-                                $('#pa').css({'display' : "inline-block"});
+                            
+                            // Si l'utilisateur est déjà logué
+                            if (response.utilisateur) {
+                                // Changer les boutons du header et le lien du bouton
+                                if (response.type == "employe") {
+                                    $('#headerContent').html(
+                                        "<a href='#'>Consultation en cours</a>" +
+                                        "<a href='tableau-de-bord.html'>Tableau de Bord</a>" +
+                                        "<a href='profil.html' id='currentPage'>Profil</a>"
+                                    );
+                                }
+                                else {
+                                    // Changer le header
+                                    $('#headerContent').html(
+                                        "<a href='demande-consultation.html'>Demander une Consultation</a>" +
+                                        "<a href='#'>Historique</a>" +
+                                        "<a href='profil.html' id='currentPage'>Profil</a>"
+                                    );
+                                    // Remplir le profil astral
+                                    $('#animalTotem').html("> "+ response.animalTotem);
+                                    $('#signeAstro').html("> "+response.signeAstro);
+                                    $('#couleur').html("> "+response.couleur);
+                                    $('#signeChinois').html("> "+response.signeChinois);
+                                    $('#pa').css({'display' : "inline-block"});
+                                    // Afficher le bouton modifier 
+                                    $('#button-modif').css({'display' : "block"});
+                                }
+                                // Remplir les champs d'information
+                                $('#champ-nom').val(response.nom);
+                                $('#nameUser').val(response.prenom);
+                                $('#champ-prenom').val(response.prenom);
+                                $('#champ-tel').val(response.telephone);
+                                $('#champ-datenaissance').val(response.dateDeNaissance);
+                                $('#champ-CP').val(response.codePostal);
+                                $('#champ-mail').val(response.mail);
+                                $('#champ-mdp').val(response.motDePasse);
+                                // Afficher la page
+                                $('body').css({"display": "block"});
                             }
-                            $('#champ-nom').val(response.property.nom)
-                            $('#nameUser').val(response.property.prenom);
-                            $('#champ-prenom').val(response.property.prenom);
-                            $('#champ-tel').val(response.property.telephone);
-                            $('#champ-datenaissance').val(response.property.date-de-naissance);
-                            $('#champ-CP').val(response.property.code-postal);
-                            $('#champ-mail').val(response.property.mail);
-                            $('#champ-mdp').val(response.property.mot-de-passe);
+                            // S'il n'est pas logué
+                            else {
+                                // Rediriger vers l'accueil
+                                window.location.replace("index.html");
+                            }
+                            
                         })
                         .fail(function (error) {
                                 console.log('Error', error);

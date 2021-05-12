@@ -8,18 +8,18 @@ and open the template in the editor.
     <head>
         <title>Predicti'if Demander une consultation</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="demande-consultation.css">
         <!-- Librairie Javascript: jQuery (v3.4.1) -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
-    <body>
+    <body style="display: none;">
         <!-- HEADER -->
         <div class="header">
             <a href="index.html" class="logo">Predict'IF</a>
-            <div class="header-right">
+            <div class="header-right" id='headerContent'>
                     <a href='demande-consultation.html' id='currentPage'>Demander une Consultation</a>
                     <a href='#'>Historique</a>
-                    <a href='#'>Profil</a>
+                    <a href='profil.html'>Profil</a>
                     <!-- <span id="nomClient"></span> -->
                 </a>
             </div>
@@ -51,6 +51,7 @@ and open the template in the editor.
         <div id="listeMediums"></div>
 
         <script>
+            
             $('body').on('click', 'a.boutonRDV', function () {
                 var mediumId = $(this).attr('id');
                 var buttonState = $('#' + mediumId).html();
@@ -83,6 +84,37 @@ and open the template in the editor.
             });
 
             $(document).ready(function () {
+                
+                // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER, OBTENIR PROFIL ASTRAL
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'GET',
+                    data: {
+                        todo: 'obtenirUtilisateurCourant'
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) {
+                            console.log('Response', response);
+                            // Si l'utilisateur n'est pas loggé ou qu'il n'est pas un client...
+                            if (!(response.utilisateur && response.type == "client")) {
+                                // Rediriger vers l'accueil
+                                window.location.replace("index.html");
+                            }
+                            // Si tout va bien...
+                            else {
+                                // Remplir le profil astral
+                                // TODO
+                                // Afficher la page 
+                                $('body').css({"display": "block"});
+                            }
+                        })
+                        .fail(function (error) {
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+                
+                // OBTENIR LA LISTE DES MEDIUMS
                 $.ajax({
                     url: './ActionServlet',
                     method: 'GET',

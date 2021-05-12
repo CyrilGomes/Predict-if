@@ -1,12 +1,12 @@
 package com.projet.dasi.actions;
 
 import com.projet.dasi.AstroAPI;
-import com.projet.dasi.model.Utilisateur;
+import com.projet.dasi.model.Client;
 import com.projet.dasi.service.ServicesApplication;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
-public class SauvegarderDonneesAction extends Action {
+public class SauvegarderProfilAction extends Action {
 
     @Override
     public void executer(HttpServletRequest request) {
@@ -27,7 +27,7 @@ public class SauvegarderDonneesAction extends Action {
         catch (Exception ex) {
             ex.printStackTrace();
         }
-        Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute("utilisateur");
+        Client utilisateur = (Client)request.getSession().getAttribute("utilisateur");
         service.modifierProfil(utilisateur, nom, prenom, dateNaissance.toString(), codePostal, tel, email, mdp);
 
         // Stoquage des résultats dans les attributs de la requête

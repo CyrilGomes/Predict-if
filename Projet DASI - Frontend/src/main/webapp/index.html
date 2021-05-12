@@ -106,9 +106,9 @@
                 // Appel AJAX
                 $.ajax({
                     url: './ActionServlet',
-                    method: 'POST',
+                    method: 'GET',
                     data: {
-                        todo: 'obtenirUtilisateurCourant'
+                        todo: 'obtenirTypeUtilisateurCourant'
                     },
                     dataType: 'json'
                 })
@@ -121,7 +121,7 @@
                                     $('#headerContent').html(
                                         "<a href='#'>Consultation en cours</a>" +
                                         "<a href='tableau-de-bord.html'>Tableau de Bord</a>" +
-                                        "<a href='#'>Profil</a>"
+                                        "<a href='profil.html'>Profil</a>"
                                     );
                                     $('#boutonPopupConnexion2').click(function() { window.location.replace("tableau-de-bord.html")});
                                     
@@ -130,7 +130,7 @@
                                     $('#headerContent').html(
                                         "<a href='demande-consultation.html'>Demander une Consultation</a>" +
                                         "<a href='#'>Historique</a>" +
-                                        "<a href='#'>Profil</a>"
+                                        "<a href='profil.html'>Profil</a>"
                                     );
                                     $('#boutonPopupConnexion2').click(function() { window.location.replace("demande-consultation.html")});
                                 }

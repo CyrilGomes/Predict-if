@@ -7,7 +7,7 @@ import com.project.dasi.serialisations.ObtenirTypeUtilisateurSerialisation;
 import com.project.dasi.serialisations.ObtenirConsultationAttribueeSerialisation;
 import com.project.dasi.serialisations.ObtenirHistoriqueSerialisation;
 import com.project.dasi.serialisations.Serialisation;
-import com.project.dasi.serialisations.ObtenirInfoProfilSerialisation;
+import com.project.dasi.serialisations.ObtenirUtilisateurSerialisation;
 import com.projet.dasi.actions.Action;
 import com.projet.dasi.actions.ActionDemandeConsultation;
 import com.projet.dasi.actions.ConnexionAction;
@@ -17,7 +17,7 @@ import com.projet.dasi.actions.ListeMediumAction;
 import com.projet.dasi.actions.ObtenirConsultationAttribueeAction;
 import com.projet.dasi.actions.ObtenirHistoriqueAction;
 import com.projet.dasi.actions.ObtenirUtilisateurCourantAction;
-import com.projet.dasi.actions.SauvegarderDonneesAction;
+import com.projet.dasi.actions.SauvegarderProfilAction;
 import com.projet.dasi.dao.JpaUtil;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -40,23 +40,24 @@ public class ActionServlet extends HttpServlet {
            
         switch (typeRequete) {
             
-            case "obtenirUtilisateurCourant":
+            case "obtenirTypeUtilisateurCourant":
                 action = new ObtenirUtilisateurCourantAction();
                 serialisation = new ObtenirTypeUtilisateurSerialisation();
                 break;
+                
             case "obtenirListeConsultations":
                 action = new ObtenirHistoriqueAction();
                 serialisation = new ObtenirHistoriqueSerialisation();
                 break;
             
             case "sauvegarderDonnees":
-                action = new SauvegarderDonneesAction();
+                action = new SauvegarderProfilAction();
                 serialisation = new ObtenirTypeUtilisateurSerialisation();
                 break;
                 
-            case "obtenirInfoProfil":
+            case "obtenirUtilisateurCourant":
                 action = new ObtenirUtilisateurCourantAction();
-                serialisation = new ObtenirInfoProfilSerialisation();
+                serialisation = new ObtenirUtilisateurSerialisation();
                 break;
             
             case "connexion":
