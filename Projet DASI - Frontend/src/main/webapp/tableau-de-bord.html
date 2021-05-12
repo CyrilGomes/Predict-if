@@ -3,10 +3,9 @@
     <head>
         <title>Tableau de Bord Employé</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="tableau-de-bord.css">
-        <!-- Librairie Javascript: jQuery (v3.4.1) -->
+        <link rel="stylesheet" href="STYLES/main.css">
+        <link rel="stylesheet" href="STYLES/tableau-de-bord.css">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <!-- Librairie Javascript: Chart.js -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body style="display: none;">
@@ -33,7 +32,6 @@
                                 Client : 
                             </div>
                             <div class="consultationPanelContent" id="client"> 
-                                trululu
                             </div>
                         </div> 
                         <div class="consultationPanel"> 
@@ -41,9 +39,9 @@
                                 Médium à incarner : 
                             </div>
                             <div class="consultationPanelContent" id="medium">
-                                trululu
                             </div>
                         </div>
+                        <button id="boutonJeSuisPret">Je suis prêt.e !</button>
                     </div>
                     <p id="messageConsultation"> </p>
                 </div>
@@ -353,7 +351,6 @@
                         .done(function (response) {
                             console.log('Response', response);
                             // Générer le graphique 4 avec les informations statistiques et le montrer (histogramme de clients)
-
                             var couleurs = [];
                             for (i in response.x) {
                                 couleurs.push(randomColor(1, 0.8, 0.6));
@@ -411,7 +408,7 @@
                         })
 
                 /* SERVICE signalerDebutConsultation */
-                $('#bouton-je-suis-pret').on('click', function () {
+                $('#boutonJeSuisPret').on('click', function () {
                     // Appel AJAX
                     $.ajax({
                         url: './ActionServlet',
@@ -423,7 +420,8 @@
                     })
                             .done(function (response) {
                                 console.log('Response', response);
-                                // TODO: rediriger vers la page Consultation en Cours
+                                // Rediriger vers la page Consultation en Cours
+                                window.location.replace("consultation-en-cours.html");
                             })
                             .fail(function (error) {
                                 console.log('Error', error);

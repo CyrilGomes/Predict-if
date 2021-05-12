@@ -1,37 +1,37 @@
 package com.projet.dasi.servlet;
 
-import com.project.dasi.serialisations.AnnulerConsultationSerialisation;
+import com.project.dasi.serialisations.StatutSerialisation;
 import com.project.dasi.serialisations.ConsultationSerialisation;
-import com.project.dasi.serialisations.DemarrerTerminerSerialisation;
-import com.project.dasi.serialisations.PredictionSerialisation;
-import com.project.dasi.serialisations.SaveCommentaireSerialisation;
-import com.project.dasi.serialisations.DemandeConsultationSerialisation;
+import com.project.dasi.serialisations.PredictionsSerialisation;
 import com.project.dasi.serialisations.ListeMediumSerialisation;
-import com.project.dasi.serialisations.GenererStatistiquesSerialisation;
-import com.project.dasi.serialisations.ObtenirTypeUtilisateurSerialisation;
-import com.project.dasi.serialisations.ObtenirConsultationAttribueeSerialisation;
+
+import com.project.dasi.serialisations.StatistiquesSerialisation;
+import com.project.dasi.serialisations.TypeUtilisateurSerialisation;
+import com.project.dasi.serialisations.ConsultationSerialisation;
 import com.project.dasi.serialisations.ObtenirHistoriqueClientReqClientSerialisation;
 import com.project.dasi.serialisations.ObtenirHistoriqueClientReqEmployeSerialisation;
+
 import com.project.dasi.serialisations.Serialisation;
-import com.project.dasi.serialisations.ObtenirUtilisateurSerialisation;
+import com.project.dasi.serialisations.UtilisateurSerialisation;
 import com.projet.dasi.actions.Action;
 import com.projet.dasi.actions.AnnulerConsultationAction;
 import com.projet.dasi.actions.ConnexionAction;
 import com.projet.dasi.actions.ConsultationAction;
-import com.projet.dasi.actions.DemarrerTerminerAction;
+import com.projet.dasi.actions.DemarrerTerminerConsultationAction;
 import com.projet.dasi.actions.InscriptionAction;
-import com.projet.dasi.actions.PredictionAction;
-import com.projet.dasi.actions.SaveCommentaireAction;
+import com.projet.dasi.actions.ObtenirPredictionsAction;
+import com.projet.dasi.actions.SauvegarderCommentaireConsultationAction;
 import com.projet.dasi.actions.ActionDemandeConsultation;
 import com.projet.dasi.actions.ConnexionAction;
 import com.projet.dasi.actions.GenererStatistiquesAction;
 import com.projet.dasi.actions.InscriptionAction;
-import com.projet.dasi.actions.ListeMediumAction;
+import com.projet.dasi.actions.ObtenirListeMediumAction;
 import com.projet.dasi.actions.ObtenirConsultationAttribueeAction;
 import com.projet.dasi.actions.ObtenirHistoriqueClientReqClientAction;
 import com.projet.dasi.actions.ObtenirHistoriqueClientReqEmployeAction;
 import com.projet.dasi.actions.ObtenirUtilisateurCourantAction;
 import com.projet.dasi.actions.SauvegarderProfilAction;
+import com.projet.dasi.actions.SignalerDebutConsultationAction;
 import com.projet.dasi.dao.JpaUtil;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -51,19 +51,18 @@ public class ActionServlet extends HttpServlet {
 
         Action action = null;
         Serialisation serialisation = null;
-
-        /* TODO: uniformiser les noms de todos et actions/serialisation psque c'est un peu n'importe quoi*/
         
         switch (typeRequete) {
             
             case "obtenirTypeUtilisateurCourant":
                 action = new ObtenirUtilisateurCourantAction();
-                serialisation = new ObtenirTypeUtilisateurSerialisation();
+                serialisation = new TypeUtilisateurSerialisation();
                 break;
                 
             case "obtenirHistoriqueClientReqClient":
                 action = new ObtenirHistoriqueClientReqClientAction();
                 serialisation = new ObtenirHistoriqueClientReqClientSerialisation();
+
                 break;
                 
             case "obtenirHistoriqueClientReqEmploye":
@@ -72,71 +71,77 @@ public class ActionServlet extends HttpServlet {
                 break;
 
             
-            case "sauvegarderDonnees":
+            case "sauvegarderProfil":
                 action = new SauvegarderProfilAction();
-                serialisation = new ObtenirTypeUtilisateurSerialisation();
+                serialisation = new TypeUtilisateurSerialisation();
                 break;
                 
             case "obtenirUtilisateurCourant":
                 action = new ObtenirUtilisateurCourantAction();
-                serialisation = new ObtenirUtilisateurSerialisation();
+                serialisation = new UtilisateurSerialisation();
                 break;
             
             case "connexion":
                 action = new ConnexionAction();
-                serialisation = new ObtenirTypeUtilisateurSerialisation();
+                serialisation = new TypeUtilisateurSerialisation();
                 break;
 
             case "inscription":
                 action = new InscriptionAction();
-                serialisation = new ObtenirTypeUtilisateurSerialisation();
+                serialisation = new TypeUtilisateurSerialisation();
                 break;
 
-            case "prediction":
-                action = new PredictionAction();
-                serialisation = new PredictionSerialisation();
+            case "obtenirPredictions":
+                action = new ObtenirPredictionsAction();
+                serialisation = new PredictionsSerialisation();
                 break;
-            case "consultation":
-                action = new ConsultationAction();
-                serialisation = new ConsultationSerialisation();
+                
+            case "sauvegarderCommentaire":
+                action = new SauvegarderCommentaireConsultationAction();
+                serialisation = new StatutSerialisation();
                 break;
-            case "saveCommentaire":
-                action = new SaveCommentaireAction();
-                serialisation = new SaveCommentaireSerialisation();
+                
+            case "demarrerTerminerConsultation":
+                action = new DemarrerTerminerConsultationAction();
+                serialisation = new StatutSerialisation();
                 break;
-            case "demarrerTerminer":
-                action = new DemarrerTerminerAction();
-                serialisation = new DemarrerTerminerSerialisation();
-                break;
+                
             case "annulerConsultation":
                 action = new AnnulerConsultationAction();
-                serialisation = new AnnulerConsultationSerialisation();
+                serialisation = new StatutSerialisation();
+                break;
                 
-            case "listeMediums":
-                action = new ListeMediumAction();
+            case "obtenirListeMediums":
+                action = new ObtenirListeMediumAction();
                 serialisation = new ListeMediumSerialisation();
                 break;
                 
             case "demanderConsultation":
                 action = new ActionDemandeConsultation();
-                serialisation = new DemandeConsultationSerialisation();
+                serialisation = new StatutSerialisation();
                 break;
                 
             case "obtenirConsultationAttribuee":
                 action = new ObtenirConsultationAttribueeAction();
-                serialisation = new ObtenirConsultationAttribueeSerialisation();
+                serialisation = new ConsultationSerialisation();
                 break;
                 
             case "genererStatistiques":
                 action = new GenererStatistiquesAction();
-                serialisation = new GenererStatistiquesSerialisation();
+                serialisation = new StatistiquesSerialisation();
+                break;
+                
+            case "signalerDebutConsultation":
+                action = new SignalerDebutConsultationAction();
+                serialisation = new StatutSerialisation();
                 break;
         }
 
         if (action != null && serialisation != null) {
             action.executer(request);
             serialisation.serialiser(request, response);
-        } else {
+        } 
+        else {
             response.sendError(400, "Bad Request (pas d'action ou de sérialisation à traiter)");
         }
 

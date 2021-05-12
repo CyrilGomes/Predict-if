@@ -21,7 +21,7 @@ import java.util.Date;
  *
  * @author Cyril
  */
-public class PredictionAction extends Action {
+public class ObtenirPredictionsAction extends Action {
 
     @Override
     public void executer(HttpServletRequest request) {

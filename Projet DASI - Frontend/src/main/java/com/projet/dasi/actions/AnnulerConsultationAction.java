@@ -26,7 +26,7 @@ public class AnnulerConsultationAction extends Action {
         boolean result = service.annulerConsultation(consultation);
 
         // Stoquage des résultats dans les attributs de la requête
-        request.setAttribute("AnnulerConsultation", result);
+        request.setAttribute("statut", result);
     }
     
 }

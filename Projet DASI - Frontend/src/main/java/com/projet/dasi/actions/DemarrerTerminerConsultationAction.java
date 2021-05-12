@@ -5,8 +5,12 @@
  */
 package com.projet.dasi.actions;
 
+import com.projet.dasi.AstroAPI;
+import com.projet.dasi.model.Client;
 import com.projet.dasi.model.Consultation;
+import com.projet.dasi.model.Utilisateur;
 import com.projet.dasi.service.ServicesApplication;
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,16 +18,19 @@ import javax.servlet.http.HttpSession;
  *
  * @author Cyril
  */
-public class SaveCommentaireAction extends Action{
+public class DemarrerTerminerConsultationAction extends Action {
 
     @Override
     public void executer(HttpServletRequest request) {
         ServicesApplication service = new ServicesApplication();
         HttpSession session = request.getSession();
         Consultation consultation = (Consultation) session.getAttribute("consultation");
-        boolean success = service.sauvegarderCommentaireConsultation(consultation, request.getParameter("commentaire"));
+        // Appel services
         
-        request.setAttribute("saveCommentaire", success);
+        boolean result = service.demarrerOuTerminerConsultation(consultation);
+
+        // Stoquage des résultats dans les attributs de la requête
+        request.setAttribute("DemarrerTerminerAction", result);
     }
-    
+
 }
