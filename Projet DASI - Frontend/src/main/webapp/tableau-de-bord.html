@@ -17,6 +17,7 @@
                 <a href="consultation-en-cours.html">Consultation en cours</a>
                 <a href="tableau-de-bord.html" id="currentPage">Tableau de Bord</a>
                 <a href="profil.html">Profil</a>
+                <a class='boutonDeconnexion'>Déconnexion</a>
             </div>
         </div>
 
@@ -70,6 +71,25 @@
 
 
         <script>
+            $('body').on('click', 'a.boutonDeconnexion', function () {
+               if(confirm("Confirmez la déconnexion")){
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'demandeDeconnexion',
+                        },
+                        dataType: 'json'
+                    })
+                            .done(function () {
+                            window.location.replace("index.html");
+                    })
+                            .fail(function (error) {
+                                console.log('Error', error);
+                                alert("Erreur lors de l'appel AJAX");
+                    });
+                }
+            });
             $(document).ready(function () {
 
                 // INITIALISATION 

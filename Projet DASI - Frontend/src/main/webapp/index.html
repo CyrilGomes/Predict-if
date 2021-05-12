@@ -100,6 +100,25 @@
         </div>
 
         <script>
+            $('body').on('click', 'a.boutonDeconnexion', function () {
+               if(confirm("Confirmez la déconnexion")){
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'demandeDeconnexion',
+                        },
+                        dataType: 'json'
+                    })
+                            .done(function () {
+                            window.location.replace("index.html");
+                    })
+                            .fail(function (error) {
+                                console.log('Error', error);
+                                alert("Erreur lors de l'appel AJAX");
+                    });
+                }
+            });
             $(document).ready(function () {
 
                 // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER 
@@ -121,7 +140,8 @@
                                     $('#headerContent').html(
                                         "<a href='consultation-en-cours.html'>Consultation en cours</a>" +
                                         "<a href='tableau-de-bord.html'>Tableau de Bord</a>" +
-                                        "<a href='profil.html'>Profil</a>"
+                                        "<a href='profil.html'>Profil</a>" +
+                                        "<a class='boutonDeconnexion'>Déconnexion</a>"
                                     );
                                     $('#boutonPopupConnexion2').click(function() { window.location.replace("tableau-de-bord.html")});
                                     
@@ -130,7 +150,8 @@
                                     $('#headerContent').html(
                                         "<a href='demande-consultation.html'>Demander une Consultation</a>" +
                                         "<a href='historique.html'>Historique</a>" +
-                                        "<a href='profil.html'>Profil</a>"
+                                        "<a href='profil.html'>Profil</a>" +
+                                        "<a class='boutonDeconnexion'>Déconnexion</a>"
                                     );
                                     $('#boutonPopupConnexion2').click(function() { window.location.replace("demande-consultation.html")});
                                 }

@@ -20,6 +20,7 @@ and open the template in the editor.
                 <a href='demande-consultation.html' id='currentPage'>Demander une Consultation</a>
                 <a href='historique.html'>Historique</a>
                 <a href='profil.html'>Profil</a>
+                <a class='boutonDeconnexion'>Déconnexion</a>
                 <!-- <span id="nomClient"></span> -->
             </div>
         </div>
@@ -75,7 +76,25 @@ and open the template in the editor.
         </div>
 
         <script>
-
+            $('body').on('click', 'a.boutonDeconnexion', function () {
+               if(confirm("Confirmez la déconnexion")){
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'demandeDeconnexion',
+                        },
+                        dataType: 'json'
+                    })
+                            .done(function () {
+                            window.location.replace("index.html");
+                    })
+                            .fail(function (error) {
+                                console.log('Error', error);
+                                alert("Erreur lors de l'appel AJAX");
+                    });
+                }
+            });
             $('body').on('click', 'a.boutonRDV', function () {
                 var mediumId = $(this).attr('id');
                 var buttonState = $('#' + mediumId).html();
