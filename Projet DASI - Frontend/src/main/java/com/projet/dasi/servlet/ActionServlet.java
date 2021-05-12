@@ -59,7 +59,7 @@ public class ActionServlet extends HttpServlet {
                 serialisation = new ObtenirTypeUtilisateurSerialisation();
                 break;
                 
-            case "obtenirListeConsultations":
+            case "obtenirHistorique":
                 action = new ObtenirHistoriqueAction();
                 serialisation = new ObtenirHistoriqueSerialisation();
                 break;
