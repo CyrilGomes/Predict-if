@@ -3,14 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.project.dasi.serialisations;
+package com.projet.dasi.serialisations;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.projet.dasi.model.Client;
-import com.projet.dasi.model.Employe;
-import com.projet.dasi.model.Utilisateur;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;

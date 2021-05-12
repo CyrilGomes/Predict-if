@@ -1,18 +1,18 @@
 package com.projet.dasi.servlet;
 
-import com.project.dasi.serialisations.StatutSerialisation;
-import com.project.dasi.serialisations.ConsultationSerialisation;
-import com.project.dasi.serialisations.PredictionsSerialisation;
-import com.project.dasi.serialisations.ListeMediumSerialisation;
+import com.projet.dasi.serialisations.StatutSerialisation;
+import com.projet.dasi.serialisations.ConsultationSerialisation;
+import com.projet.dasi.serialisations.PredictionsSerialisation;
+import com.projet.dasi.serialisations.ListeMediumSerialisation;
 
-import com.project.dasi.serialisations.StatistiquesSerialisation;
-import com.project.dasi.serialisations.TypeUtilisateurSerialisation;
-import com.project.dasi.serialisations.ConsultationSerialisation;
-import com.project.dasi.serialisations.ObtenirHistoriqueClientReqClientSerialisation;
-import com.project.dasi.serialisations.ObtenirHistoriqueClientReqEmployeSerialisation;
+import com.projet.dasi.serialisations.StatistiquesSerialisation;
+import com.projet.dasi.serialisations.TypeUtilisateurSerialisation;
+import com.projet.dasi.serialisations.ConsultationSerialisation;
+import com.projet.dasi.serialisations.ObtenirHistoriqueClientReqClientSerialisation;
+import com.projet.dasi.serialisations.ObtenirHistoriqueClientReqEmployeSerialisation;
 
-import com.project.dasi.serialisations.Serialisation;
-import com.project.dasi.serialisations.UtilisateurSerialisation;
+import com.projet.dasi.serialisations.Serialisation;
+import com.projet.dasi.serialisations.UtilisateurSerialisation;
 import com.projet.dasi.actions.Action;
 import com.projet.dasi.actions.AnnulerConsultationAction;
 import com.projet.dasi.actions.ConnexionAction;

@@ -1,6 +1,5 @@
-package com.project.dasi.serialisations;
+package com.projet.dasi.serialisations;
 
-import java.util.Calendar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -13,13 +12,14 @@ import com.projet.dasi.model.Spirite;
 import com.projet.dasi.model.Utilisateur;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class ObtenirHistoriqueClientReqClientSerialisation extends Serialisation {
+public class ObtenirHistoriqueClientReqEmployeSerialisation extends Serialisation {
     
     @Override
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -33,7 +33,6 @@ public class ObtenirHistoriqueClientReqClientSerialisation extends Serialisation
         // Populer le container
         container.addProperty("utilisateur", utilisateur != null);
         
-        
         List<Consultation> historique = (List<Consultation>)request.getAttribute("historique");
        
         JsonArray historiqueJson = new JsonArray();
@@ -43,95 +42,18 @@ public class ObtenirHistoriqueClientReqClientSerialisation extends Serialisation
             JsonObject Consultation = new JsonObject();
             
             Date date = consultation.getDateDebut();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            // Récupération du jour du mois
-            int jourDuMois = calendar.get(Calendar.DAY_OF_MONTH);
-            
-            // Récupération du jour de la semaine
-            int jourDeLaSemaine = calendar.get(Calendar.DAY_OF_WEEK);
-            
-            String nomJour = null;
-            switch(jourDeLaSemaine){
-                case 1:
-			nomJour = "Dimanche";
-			break;
-		case 2:
-			nomJour = "Lundi";
-			break;
-		case 3:
-			nomJour = "Mardi";
-			break;
-		case 4:
-			nomJour = "Mercredi";
-			break;
-		case 5:
-			nomJour = "Jeudi";
-			break;
-		case 6:
-			nomJour = "Vendredi";
-			break;
-		case 7:
-			nomJour = "Samedi";
-			
-            }
-            // Récupération du mois
-
-            int mois = calendar.get(Calendar.MONTH);
-            
-            String nomMois = null;
-            switch (mois) {
-		case 0:
-			nomMois = "Janvier";
-			break;
-		case 1:
-			nomMois = "Février";
-			break;
-		case 2:
-			nomMois = "Mars";
-			break;
-		case 3:
-			nomMois = "Avril";
-			break;
-		case 4:
-			nomMois = "Mai";
-			break;
-		case 5:
-			nomMois = "Juin";
-			break;
-		case 6:
-			nomMois = "Juillet";
-			break;
-		case 7:
-			nomMois = "Août";
-			break;
-		case 8:
-			nomMois = "Septembre";
-			break;
-		case 9:
-			nomMois = "Octobre";
-			break;
-		case 10:
-			nomMois = "Novembre";
-			break;
-		case 11:
-			nomMois = "Decembre";
-			break;
-            }
-            
+            String pattern = "dd/MM/yyyy";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            String stringDate = simpleDateFormat.format(date);
+            Consultation.addProperty("employe",consultation.getEmploye().getPrenom()+" "+consultation.getEmploye().getNom());
+            Consultation.addProperty("commentaire",consultation.getCommentaire());
             Consultation.addProperty("denomination", medium.getDenomination());
-            Consultation.addProperty("date",nomJour+" "+jourDuMois+" "+ nomMois);
-            Consultation.addProperty("genre", medium.getGenre().toString());
-            Consultation.addProperty("id", medium.getId());
-            Consultation.addProperty("presentation", medium.getPresentation());
+            Consultation.addProperty("date",stringDate);
             
             if(medium instanceof Astrologue){
-                Consultation.addProperty("formation", ((Astrologue)medium).getFormation());
-                Consultation.addProperty("promotion", ((Astrologue)medium).getPromotion());
                 Consultation.addProperty("typeMedium", "Astrologue");
             }
             else if(medium instanceof Spirite){
-                Consultation.addProperty("support", ((Spirite)medium).getSupport());
                 Consultation.addProperty("typeMedium", "Spirite");
             }
             else if(medium instanceof Cartomancien){

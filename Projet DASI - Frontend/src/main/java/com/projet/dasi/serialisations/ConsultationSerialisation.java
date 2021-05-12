@@ -1,4 +1,4 @@
-package com.project.dasi.serialisations;
+package com.projet.dasi.serialisations;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -1,4 +1,4 @@
-package com.project.dasi.serialisations;
+package com.projet.dasi.serialisations;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class TypeUtilisateurSerialisation extends Serialisation {
+public class HistoriqueSerialisation extends Serialisation {
     
     @Override
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
