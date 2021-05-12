@@ -108,9 +108,11 @@
                 })
                         .done(function(response){
                             console.log(response.historique);
+                            if(!response.utilisateur) { 
+                                console.log("oupsi pas d'utilisateur"); 
+                            }
                             if (response.type == "client") {
-                                var htmlString = "";
-                                htmlString += "a";
+                                var htmlString ="";
 
                                 htmlString += "<table style='margin: 5px;'>\n";
                                 for (var id in response.historique) {
@@ -139,7 +141,7 @@
                                 console.log(htmlString);
                                 $('#historique').html(htmlString);
                             }
-
+                            console.log(htmlString);
                         })
                         .fail(function (error) {
                                 console.log('Error', error);

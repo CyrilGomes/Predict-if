@@ -1,5 +1,6 @@
 package com.project.dasi.serialisations;
 
+import java.util.Calendar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -14,20 +15,22 @@ import com.projet.dasi.model.Spirite;
 import com.projet.dasi.model.Utilisateur;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class ObtenirHistoriqueSerialisation extends Serialisation {
     
     @Override
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        
+        HttpSession session = request.getSession();
         // Initialiser le container
         JsonObject container = new JsonObject();
         
-        // Récupérer les attributs de la requête
-        Utilisateur utilisateur = (Utilisateur)request.getAttribute("utilisateur");
+        // Récupérer les attributs de la session
+        Utilisateur utilisateur = (Utilisateur)session.getAttribute("utilisateur");
         
         // Populer le container
         container.addProperty("utilisateur", utilisateur != null);
@@ -43,7 +46,85 @@ public class ObtenirHistoriqueSerialisation extends Serialisation {
             Medium medium = consultation.getMedium();
             JsonObject Consultation = new JsonObject();
             
-            Consultation.addProperty("date", consultation.getDateDebut().toString());
+            Date date = consultation.getDateDebut();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            // Récupération du jour du mois
+            int jourDuMois = calendar.get(Calendar.DAY_OF_MONTH);
+            
+            // Récupération du jour de la semaine
+            int jourDeLaSemaine = calendar.get(Calendar.DAY_OF_WEEK);
+            
+            String nomJour = null;
+            switch(jourDeLaSemaine){
+                case 1:
+			nomJour = "Dimanche";
+			break;
+		case 2:
+			nomJour = "Lundi";
+			break;
+		case 3:
+			nomJour = "Mardi";
+			break;
+		case 4:
+			nomJour = "Mercredi";
+			break;
+		case 5:
+			nomJour = "Jeudi";
+			break;
+		case 6:
+			nomJour = "Vendredi";
+			break;
+		case 7:
+			nomJour = "Samedi";
+			
+            }
+            // Récupération du mois
+
+            int mois = calendar.get(Calendar.MONTH);
+            
+            String nomMois = null;
+            switch (mois) {
+		case 0:
+			nomMois = "Janvier";
+			break;
+		case 1:
+			nomMois = "Février";
+			break;
+		case 2:
+			nomMois = "Mars";
+			break;
+		case 3:
+			nomMois = "Avril";
+			break;
+		case 4:
+			nomMois = "Mai";
+			break;
+		case 5:
+			nomMois = "Juin";
+			break;
+		case 6:
+			nomMois = "Juillet";
+			break;
+		case 7:
+			nomMois = "Août";
+			break;
+		case 8:
+			nomMois = "Septembre";
+			break;
+		case 9:
+			nomMois = "Octobre";
+			break;
+		case 10:
+			nomMois = "Novembre";
+			break;
+		case 11:
+			nomMois = "Decembre";
+			break;
+            }
+            
+            Consultation.addProperty("denomination", medium.getDenomination());
+            Consultation.addProperty("date",nomJour+" "+jourDuMois+" "+ nomMois);
             Consultation.addProperty("genre", medium.getGenre().toString());
             Consultation.addProperty("id", medium.getId());
             Consultation.addProperty("presentation", medium.getPresentation());
