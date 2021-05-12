@@ -55,7 +55,7 @@
                         });
             });
             $(document).ready(function () {
-                   
+                var typeUtilisateur = "";
                 $.ajax({
                     url: './ActionServlet',
                     method: 'GET',
@@ -68,8 +68,9 @@
                             
                             // Si l'utilisateur est déjà logué
                             if (response.utilisateur) {
+                                typeUtilisateur = response.type;
                                 // Changer les boutons du header et le lien du bouton
-                                if (response.type == "employe") {
+                                if (typeUtilisateur == "employe") {
                                     $('#headerContent').html(
                                         "<a href='consultation-en-cours.html'>Consultation en cours</a>" +
                                         "<a href='tableau-de-bord.html' id='currentPage'>Tableau de Bord</a>" +
@@ -98,20 +99,17 @@
                                 console.log('Error', error);
                                 alert("Erreur lors de l'appel AJAX");
                         });
-                $.ajax({
-                    url: './ActionServlet',
-                    method: 'GET',
-                    data: {
-                        todo: 'obtenirHistorique'
-                    },
-                    dataType: 'json'
-                })
-                        .done(function(response){
-                            console.log(response.historique);
-                            if(!response.utilisateur) { 
-                                console.log("oupsi pas d'utilisateur"); 
-                            }
-                            if (response.type == "client") {
+                if (typeUtilisateur == "client") {
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'GET',
+                        data: {
+                            todo: 'obtenirHistoriqueClientReqClient'
+                        },
+                        dataType: 'json'
+                    })
+                            .done(function(response){
+                                console.log(response.historique);
                                 var htmlString ="";
 
                                 htmlString += "<table style='margin: 5px;'>\n";
@@ -140,17 +138,50 @@
                                 htmlString += "</table>";
                                 console.log(htmlString);
                                 $('#historique').html(htmlString);
-                            }
-                            console.log(htmlString);
+                            })
+                            .fail(function (error) {
+                                    console.log('Error', error);
+                                    alert("Erreur lors de l'appel AJAX");
+                            });
+                        }
+                if (typeUtilisateur == "employe") {
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'GET',
+                        data: {
+                            todo: 'obtenirHistoriqueClientParEmploye'
+                        },
+                        dataType: 'json'
+                    })
+                           .done(function(response){
+
+
+                                if (response.type == "employe") {
+                                    var htmlString ="";
+
+                                    htmlString += "<table style='margin: 5px;'>\n";
+                                        for (var id in response.historique) {
+                                        var consultation = response.historique[id];
+                                        htmlString += "<tr><div style='border: 1px solid black;'><p> Date :"+ consultation.date;
+                                        htmlString += " Employé en charge : " + consultation.employe;
+                                        htmlString += " Médium incarné: " + consultation.denomination + "(" + consultation.typeMedium + ")";
+                                        htmlString += "Commentaire" + consultation.commentaire + "<br>";
+                                        htmlString += "<br></p></div></tr>";
+                                    }
+                                    htmlString += "</table>";
+                                    console.log(htmlString);
+                                    $('#historique').html(htmlString);
+                                }
+
                         })
                         .fail(function (error) {
                                 console.log('Error', error);
                                 alert("Erreur lors de l'appel AJAX");
                         });
-                        
+                    }
                    
             });
-           
+        
   
         </script>
     </body>

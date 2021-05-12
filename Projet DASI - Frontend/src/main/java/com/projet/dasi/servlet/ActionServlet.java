@@ -10,7 +10,8 @@ import com.project.dasi.serialisations.ListeMediumSerialisation;
 import com.project.dasi.serialisations.GenererStatistiquesSerialisation;
 import com.project.dasi.serialisations.ObtenirTypeUtilisateurSerialisation;
 import com.project.dasi.serialisations.ObtenirConsultationAttribueeSerialisation;
-import com.project.dasi.serialisations.ObtenirHistoriqueSerialisation;
+import com.project.dasi.serialisations.ObtenirHistoriqueClientReqClientSerialisation;
+import com.project.dasi.serialisations.ObtenirHistoriqueClientReqEmployeSerialisation;
 import com.project.dasi.serialisations.Serialisation;
 import com.project.dasi.serialisations.ObtenirUtilisateurSerialisation;
 import com.projet.dasi.actions.Action;
@@ -27,7 +28,8 @@ import com.projet.dasi.actions.GenererStatistiquesAction;
 import com.projet.dasi.actions.InscriptionAction;
 import com.projet.dasi.actions.ListeMediumAction;
 import com.projet.dasi.actions.ObtenirConsultationAttribueeAction;
-import com.projet.dasi.actions.ObtenirHistoriqueAction;
+import com.projet.dasi.actions.ObtenirHistoriqueClientReqClientAction;
+import com.projet.dasi.actions.ObtenirHistoriqueClientReqEmployeAction;
 import com.projet.dasi.actions.ObtenirUtilisateurCourantAction;
 import com.projet.dasi.actions.SauvegarderProfilAction;
 import com.projet.dasi.dao.JpaUtil;
@@ -59,10 +61,16 @@ public class ActionServlet extends HttpServlet {
                 serialisation = new ObtenirTypeUtilisateurSerialisation();
                 break;
                 
-            case "obtenirHistorique":
-                action = new ObtenirHistoriqueAction();
-                serialisation = new ObtenirHistoriqueSerialisation();
+            case "obtenirHistoriqueClientReqClient":
+                action = new ObtenirHistoriqueClientReqClientAction();
+                serialisation = new ObtenirHistoriqueClientReqClientSerialisation();
                 break;
+                
+            case "obtenirHistoriqueClientReqEmploye":
+                action = new ObtenirHistoriqueClientReqEmployeAction();
+                serialisation = new ObtenirHistoriqueClientReqEmployeSerialisation();
+                break;
+
             
             case "sauvegarderDonnees":
                 action = new SauvegarderProfilAction();
