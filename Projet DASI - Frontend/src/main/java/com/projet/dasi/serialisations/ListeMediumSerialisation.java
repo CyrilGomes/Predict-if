@@ -43,14 +43,14 @@ public class ListeMediumSerialisation extends Serialisation {
             if(medium instanceof Astrologue){
                 objetMedium.addProperty("formation", ((Astrologue)medium).getFormation());
                 objetMedium.addProperty("promotion", ((Astrologue)medium).getPromotion());
-                objetMedium.addProperty("typeMedium", "Astrologue");
+                objetMedium.addProperty("type", "Astrologue");
             }
             else if(medium instanceof Spirite){
                 objetMedium.addProperty("support", ((Spirite)medium).getSupport());
-                objetMedium.addProperty("typeMedium", "Spirite");
+                objetMedium.addProperty("type", "Spirite");
             }
             else if(medium instanceof Cartomancien){
-                objetMedium.addProperty("typeMedium", "Cartomancien");
+                objetMedium.addProperty("type", "Cartomancien");
             }
             listeMediumsJson.add(objetMedium);
         }

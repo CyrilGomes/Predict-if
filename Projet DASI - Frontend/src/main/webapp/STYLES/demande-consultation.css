@@ -1,20 +1,17 @@
 /* ----------------------------------------------------------------- */
 /* PAGE SPECIFIC STYLES */
 /* ----------------------------------------------------------------- */
-
 /* Grid container */
 .gridBody{
-    padding-top: 5em;
+    padding: 15px 30px;
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 3fr 1fr;
     grid-template-rows: 1fr;
-    gap: 1em 1em;
+    gap: 3em 3em;
 }
-
 .gridLeft{
     grid-column: 1;
 }
-
 .gridRight{
     grid-column: 2;
     width: 100%;
@@ -22,38 +19,132 @@
     flex-direction: column;
     align-items: center;
 }
+/* Liste Mediums */
+.bienvenue {
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 30px;
+    font-family: 'Scada';
+}
+#nomClient {
+    font-size: 36px;
+}
+#listeMediums {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0px;
+}
+.itemMedium {
+    margin: 10px 0px;
+    border-radius: 6px;
+    padding: 15px 0px 0px 0px;
+    position: relative;
+}
+.itemMedium[genre="Homme"] {
+    background: linear-gradient(90deg, rgba(227, 113, 255, 0.3), rgba(116, 113, 255, 0.3));
+}
+.itemMedium[genre="Femme"] {
+    background: linear-gradient(90deg, rgba(255, 222, 48, 0.3), rgba(232, 48, 37, 0.3));
+}
+.flexContainerMedium {
+    display: flex;
+    flex-direction: row;
+}
+.mediumLeft {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 0;   
+    flex-shrink: 0;
+    flex-basis: 12em;
+}
+.imageMedium {
+    -webkit-filter: drop-shadow(2px 2px 0 black)
+                    drop-shadow(-2px 2px 0 black)
+                    drop-shadow(2px -2px 0 black)
+                    drop-shadow(-2px -2px 0 black);
+    filter: drop-shadow(2px 2px 0 black)
+            drop-shadow(-2px 2px 0 black)
+            drop-shadow(2px -2px 0 black)
+            drop-shadow(-2px -2px 0 black);
+}
+.typeMedium {
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 6px grey;
+    margin: 10px;
+}
 
-/* Astral Profile */
-.ProfilAstral {
-    align-self: stretch;
-    margin-top: 10px;
-    font-size: 25px;
+.denominationMedium {
+    font-size: 30px;
     font-weight: bold;
     color: #583D72;
-    font-family: "Calibri";
+}
+.presentationMedium {
+    font-size: 24px;
+    color: black;
+}
+.complementMedium {
+    color: #555;
+    font-size: 22px;
+    font-style: oblique;
+}
+.boutonRDV {
+    position: absolute;
+    bottom:0;
+    right:0;
+    z-index: 10;
+    padding: 10px 30px;
+    font-size: 26px;
+    font-family: 'Scada';
+}
+
+/* Profil Astral */
+.profilAstral {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 30px;
+}
+.profilAstralHeader {
+    background: #FF8E71;
+    border-radius: 6px 6px 0px 0px;
+    padding: 10px 20px;
+    font-size: 36px;
+    font-weight: bold;
+    font-family: 'Scada';
+}
+.profilAstralContent { 
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.01);
     border: solid;
-    border-image: linear-gradient(0deg, #583D72 30%, #FF8E71) 10;
-    border-image-repeat: stretch;
-    border-width: 10px;
-    border-radius: 5px 5px 5px 5px;
-    display: none;
+    border-image: linear-gradient(180deg, #FF8E71 5%, #583D72) 10;
+    border-width: 0px 6px 6px 6px;
+    padding: 5px 25px 20px 25px;
+}
+.profilAstralLabel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #583D72;
+    font-size: 28px;
+}
+.profilAstralEntry {
+    color: black;
+    font-size: 25px;
+    margin: -24px 0px 6px 0px;
+}
+#voirProfilComplet {
+    display: inline-block;
+    float: right;
+    font-size: 17px
 }
 
 /* ----------------------------------------------------------------- */
 /* RESPONSIVENESS */
 /* ----------------------------------------------------------------- */
 @media screen and (max-width: 500px) {
-    .header a {
-        float: none;
-        display: block;
-        text-align: left;
-    }
-    .header-right {
-        float: none;
-    }
-    .gridBody {
-        display: block;
-    }
     .ProfilAstral {
         position: unset;
     }

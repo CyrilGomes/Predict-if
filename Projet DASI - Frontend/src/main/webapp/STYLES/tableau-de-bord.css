@@ -8,6 +8,7 @@
     border-radius: 6px;
     border-color: #AAA;
     margin: 5px;
+    background: white;
 }
 .panelContent {
     display: flex;
@@ -16,7 +17,8 @@
     color: black;
     border: solid;
     border-image: linear-gradient(180deg, #FF8E71 5%, #583D72) 10;
-    border-width: 6px;
+    border-width: 0px 6px 6px 6px ;
+    background: rgba(0, 0, 0, 0.01);
 }
 .panelHeader {
     background: #FF8E71;
@@ -24,6 +26,7 @@
     padding: 10px 20px;
     font-size: 30px;
     font-weight: bold;
+    font-family: 'Scada';
 }
 .panel {
     display: flex;
@@ -42,26 +45,4 @@
 }
 #informationsConsultation {
     font-weight: bold;
-}
-.panelContent {
-    display: flex;
-    flex-direction: column;
-    padding: 5px;
-    color: black;
-    border: solid;
-    border-image: linear-gradient(180deg, #FF8E71 5%, #583D72) 10;
-    border-width: 6px;
-}
-.panelHeader {
-    background: #FF8E71;
-    border-radius: 6px 6px 0px 0px;
-    padding: 10px 20px;
-    font-size: 30px;
-    font-weight: bold;
-}
-.panel {
-    display: flex;
-    flex-direction: column;
-    width: 48%;
-    margin: 20px;
 }

@@ -14,8 +14,8 @@ public class Client extends Utilisateur {
     private ProfilAstral profilAstral;
     
     /* Constructeurs */
-    public Client(String nom, String prenom, String mail, String motDePasse, String telephone, String codePostal, Date dateNaissance) {
-        super(nom, prenom, mail, motDePasse, telephone, codePostal, dateNaissance);
+    public Client(String prenom, String nom, String mail, String motDePasse, String telephone, String codePostal, Date dateNaissance) {
+        super(prenom, nom, mail, motDePasse, telephone, codePostal, dateNaissance);
     }    
     public Client(){
     }

@@ -96,10 +96,10 @@ public class ServicesApplication {
             mediums.add(new Spirite(Genre.Homme, "Barkaba Junior", "Explorons votre inconscient pour révéler les grands secrets de votre avenir !", "Marques de thé, pattes d'igouanes"));
             mediums.add(new Cartomancien(Genre.Femme, "Mme Irma", "Comprenez votre entourage grâce à mes cartes ! Résultats rapides..."));
             mediums.add(new Cartomancien(Genre.Femme, "Endora", "Mes cartes répondront à toutes vos questions personnelles."));
-            mediums.add(new Cartomancien(Genre.Homme, "Sire Kartmalo", "Voulez-vous voir un tour de magie ?"));
-            mediums.add(new Cartomancien(Genre.Homme, "Le Grand Maître", "Je détiens le contrôle absolu sur les cartes."));
+            mediums.add(new Cartomancien(Genre.Homme, "Sire Kartmalo", "Je détiens le contrôle absolu sur les cartes."));
+            mediums.add(new Astrologue(Genre.Homme, "ASTROMAN", "Voulez-vous voir un tour de MAGIE ?", "Sous la tutelle du Christ Cosmique", "2014"));
             mediums.add(new Astrologue(Genre.Femme, "Serena", "Basée à Champigny-sur-Marne, Serena vous révèlera votre avenir pour éclairer votre passé.", "École Normale Supérieure d’Astrologie (ENS-Astro)", "2006"));
-            mediums.add(new Astrologue(Genre.Homme, "Mr M", "Avenir, avenir, que nous réserves-tu ? N'attendez plus, demandez à me consulter!", "nstitut des Nouveaux Savoirs Astrologiques (ENE)", "2010"));
+            mediums.add(new Astrologue(Genre.Homme, "Mr M", "Avenir, avenir, que nous réserves-tu ? N'attendez plus, demandez à me consulter!", "Institut des Nouveaux Savoirs Astrologiques (ENE)", "2010"));
             mediums.add(new Astrologue(Genre.Homme, "Monsieur N'TOMA", "Arrêtez de pleurer. Je vais résoudre vos problèmes.", "École Nouvelle des Étoiles (ENE)", "2015"));
             mediums.add(new Astrologue(Genre.Femme, "Lady Chalala", "Trouve des solutions à tous vos problèmes d'impuissance, de finances, de mariage, et de dos", "Formation Intensive aux Métiers Interstellaires (FIMI)", "2012"));
             

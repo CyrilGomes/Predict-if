@@ -13,8 +13,8 @@ public class Employe extends Utilisateur {
     private Genre genre;
 
     /* Constructeurs */
-    public Employe(Genre genre, String nom, String prenom, String mail, String motDePasse, String telephone, String codePostal, Date dateNaissance) {
-        super(nom, prenom, mail, motDePasse, telephone, codePostal, dateNaissance);
+    public Employe(Genre genre, String prenom, String nom, String mail, String motDePasse, String telephone, String codePostal, Date dateNaissance) {
+        super(prenom, nom, mail, motDePasse, telephone, codePostal, dateNaissance);
         this.genre = genre;
     }
     public Employe(){

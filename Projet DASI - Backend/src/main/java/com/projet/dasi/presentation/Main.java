@@ -22,11 +22,8 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         
         JpaUtil.init();
-        
-        
-        
+
         // Créer des employés, et des médiums
-        /*
         servicesApplication.initialiserEmployes();
         servicesApplication.initialiserMediums();
         
@@ -34,7 +31,6 @@ public class Main {
         //requeteCreationClient();
         servicesApplication.genererClients();
         servicesApplication.genererConsultations();
-        */
         
         // Authentifier le client test
         utilisateurConnecte = requeteAuthentification(false);

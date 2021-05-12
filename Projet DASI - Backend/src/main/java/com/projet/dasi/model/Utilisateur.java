@@ -31,7 +31,7 @@ public abstract class Utilisateur implements Serializable {
     private Date dateNaissance;
     
     /* Constructeurs */
-    public Utilisateur(String nom, String prenom, String mail, String motDePasse, String telephone, String codePostal, Date dateNaissance) {
+    public Utilisateur(String prenom, String nom, String mail, String motDePasse, String telephone, String codePostal, Date dateNaissance) {
         this.nom = nom;
         this.prenom = prenom;
         this.mail = mail;

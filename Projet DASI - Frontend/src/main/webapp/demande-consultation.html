@@ -13,6 +13,7 @@ and open the template in the editor.
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
     <body style="display: none;">
+
         <!-- HEADER -->
         <div class="header">
             <a href="index.html" class="logo">Predict'IF</a>
@@ -26,13 +27,14 @@ and open the template in the editor.
         </div>
 
         <div class="gridBody">
-            <div class="gridLeft">
-                <div>
-                    <h1 id="nomClient">Bienvenue, </h1>
-                    <h2>Consultez un médium maintenant :</h2>
+
+            <!-- Liste des Mediums -->
+            <div class="gridLeft">       
+                <div class="bienvenue">
+                    <span id="nomClient">Bienvenue, </span><br/>
+                    <span>Consultez un médium maintenant :</span>
                 </div>
-
-
+                <!--
                 <div style="margin: 5px;">
                     <span style="margin: 5px;">
                         Filtre:
@@ -48,86 +50,49 @@ and open the template in the editor.
                         <input type="search" placeholder="Chercher par nom..." id="searchName">
                     </span>
                 </div>
-
+                -->
                 <div id="listeMediums"></div>
             </div>
 
+            <!-- Profil Astral -->
             <div class="gridRight">
-                <div class="ProfilAstral" id ="pa"> 
-                    <table style="border-spacing: 10px 20px;">
-                        <tr>
-                            <td>
-                                Couleur chance <br>
-                                <div id="couleur"> </div>
-                                <br>
-                                Signe chinois <br>
-                                <div id="signeChinois"> </div>
-                                <br>
-                                Animal totem<br>
-                                <div id="animalTotem"> </div>
-                                <br>
-                                Signe astrologique <br>
-                                <div id="signeAstro"> </div>
-                            </td>
-                        </tr>
-                    </table>
+                <div class="profilAstral"> 
+                    <div class="profilAstralHeader"> Votre Profil Astral </div> 
+                    <div class="profilAstralContent">
+                        <div class="profilAstralLabel">
+                            <img src="STYLES/IMAGES/astro-icon.png" width="40"> 
+                            <p>&nbsp;&nbsp;Signe Astrologique</p> 
+                        </div>
+                        <div class="profilAstralEntry" id="signeAstro"> </div>
+                        <div class="profilAstralLabel">
+                            <img src="STYLES/IMAGES/chinese-icon.png" width="40"> 
+                            <p>&nbsp;&nbsp;Signe Zodiaque Chinois</p> 
+                        </div>
+                        <div class="profilAstralEntry" id="signeChinois"> </div>
+                        <div class="profilAstralLabel">
+                            <img src="STYLES/IMAGES/color-icon.png" width="40"> 
+                            <p>&nbsp;&nbsp;Couleur Porte-bonheur</p> 
+                        </div>
+                        <div class="profilAstralEntry" id="couleur"> </div>
+                        <div class="profilAstralLabel">
+                            <img src="STYLES/IMAGES/animal-icon.png" width="40"> 
+                            <p>&nbsp;&nbsp;Animal Totem</p> 
+                        </div>
+                        <div class="profilAstralEntry" id="animalTotem"> </div>
+                        <a href="profil.html" class="hyperlien" id="voirProfilComplet">Voir profil complet</a>
+                    </div> 
                 </div>
             </div>
+
         </div>
 
         <script>
-            $('body').on('click', 'a.boutonDeconnexion', function () {
-               if(confirm("Confirmez la déconnexion")){
-                    $.ajax({
-                        url: './ActionServlet',
-                        method: 'POST',
-                        data: {
-                            todo: 'demandeDeconnexion',
-                        },
-                        dataType: 'json'
-                    })
-                            .done(function () {
-                            window.location.replace("index.html");
-                    })
-                            .fail(function (error) {
-                                console.log('Error', error);
-                                alert("Erreur lors de l'appel AJAX");
-                    });
-                }
-            });
-            $('body').on('click', 'a.boutonRDV', function () {
-                var mediumId = $(this).attr('id');
-                var buttonState = $('#' + mediumId).html();
-                $('#' + mediumId).html("Demande en cours...");
 
-                $.ajax({
-                    url: './ActionServlet',
-                    method: 'POST',
-                    data: {
-                        todo: 'demanderConsultation',
-                        id: mediumId
-                    },
-                    dataType: 'json'
-                })
-                        .done(function (response) {
-                            if (response.status) {
-                                alert("Demande de consultation réussie");
-                            } else {
-                                alert("Echec de demande de consultation");
-                            }
-                        })
-                        .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
-                            console.log('Error', error); // LOG dans Console Javascript
-                            alert("Erreur lors de l'appel AJAX");
-                        })
-                        .always(function () {
-                            $('#' + mediumId).html(buttonState);
-                        });
-            });
-
+            // INITIALISATION
             $(document).ready(function () {
 
-                // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER, OBTENIR PROFIL ASTRAL
+                // Rediriger vers une autre page si privilèges pas bons,
+                // Remplir Profil Astral
                 $.ajax({
                     url: './ActionServlet',
                     method: 'GET',
@@ -138,27 +103,29 @@ and open the template in the editor.
                 })
                         .done(function (response) {
                             // Si l'utilisateur n'est pas loggé ou qu'il n'est pas un client...
-                            if (!(response.utilisateur && response.type == "client")) {
+                            if (!(response.utilisateur && response.type === "client")) {
                                 // Rediriger vers l'accueil
                                 window.location.replace("index.html");
                             }
                             // Si tout va bien...
                             else {
-                                $('#animalTotem').html("> " + response.animalTotem);
-                                $('#signeAstro').html("> " + response.signeAstro);
-                                $('#couleur').html("> " + response.couleur);
-                                $('#signeChinois').html("> " + response.signeChinois);
-                                $('#pa').css({'display' : "inline-block"});
-                                $('#nomClient').html("Bienvenue, " + response.prenom + " " + response.nom);
+                                // Remplir le profil astral
+                                $('#animalTotem').html("► " + response.animalTotem);
+                                $('#signeAstro').html("► " + response.signeAstro);
+                                $('#couleur').html("► " + response.couleur);
+                                $('#signeChinois').html("► " + response.signeChinois);
+                                // Remplir le message de bienvenue
+                                $('#nomClient').html("Bienvenue, " + response.prenom + ".");
+                                // Afficher la page
                                 $('body').css({"display": "block"});
                             }
                         })
                         .fail(function (error) {
                             console.log('Error', error);
-                            alert("Erreur lors de l'appel AJAX");
-                        })
+                            alert("Erreur obtenirUtilisateurCourant");
+                        });
 
-                // OBTENIR LA LISTE DES MEDIUMS
+                // Remplir la liste des mediums
                 $.ajax({
                     url: './ActionServlet',
                     method: 'GET',
@@ -167,40 +134,102 @@ and open the template in the editor.
                     },
                     dataType: 'json'
                 })
-                        .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                        .done(function (response) {
                             var htmlString = "";
-                            htmlString += "<table style='margin: 5px; width: 100%;'>\n";
                             for (var id in response.listeMediums) {
                                 var medium = response.listeMediums[id];
-                                htmlString += "<tr><div style='border: 1px solid black;'>";
-                                htmlString += "<h2>" + medium.denomination + "</h2>";
-                                htmlString += "<p>" + medium.presentation + "<br>";
-
-                                switch (medium.typeMedium) {
+                                htmlString += "<div class='itemMedium' genre='" + medium.genre + "'>";
+                                
+                                htmlString += "<div class='flexContainerMedium'>";
+                                // Image et type
+                                htmlString += "<div class='mediumLeft'>";
+                                htmlString += "<img class='imageMedium' src='STYLES/IMAGES/default-icon.png' width='120'>";
+                                htmlString += "<span class='typeMedium'>" + medium.type + "</span>";
+                                htmlString += "</div>";
+                                
+                                // Description textuelle
+                                htmlString += "<div class='mediumRight'>";
+                                htmlString += "<span class='denominationMedium'>" + medium.denomination + "</span><br/>";
+                                htmlString += "<span class='presentationMedium'>" + medium.presentation + "</span><br/>";
+                                switch (medium.type) {
                                     case "Astrologue":
-                                        htmlString += "Formation : " + medium.formation + "<br>";
-                                        htmlString += "Promotion : " + medium.promotion;
+                                        htmlString += "<span class='complementMedium'><strong>Formation : </strong>" + medium.formation + "<br/>";
+                                        htmlString += "<strong>Promotion : </strong>" + medium.promotion + "</span>";
                                         break;
 
                                     case "Spirite":
-                                        htmlString += "Support : " + medium.support;
+                                        htmlString += "<span class='complementMedium'><strong>Support :</strong> " + medium.support + "</span>";
                                         break;
                                 }
-
-                                htmlString += "<br>";
-                                htmlString += "<a id='" + medium.id + "' class='boutonRDV'><button>Prendre RDV</button></a>";
-                                htmlString += "</p></div></tr>";
+                                htmlString += "</div>";
+                                htmlString += "</div>";
+                                
+                                // Bouton de RDV
+                                htmlString += "<button id='" + medium.id + "' class='boutonRDV'>Prendre RDV</button>";
+                                
+                                htmlString += "</div>";
                             }
-                            htmlString += "</table>";
                             $('#listeMediums').html(htmlString);
                         })
-                        .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
-                            console.log('Error', error); // LOG dans Console Javascript
-                            alert("Erreur lors de l'appel AJAX");
+                        .fail(function (error) {
+                            console.log('Error', error);
+                            alert("Erreur obtenirListeMediums");
                         })
-                        .always(function () { // Fonction toujours appelée
+            });
 
-                        });
+            // BOUTON DE DECONNEXION
+            $('body').on('click', 'a.boutonDeconnexion', function () {
+                if (confirm("Confirmez la déconnexion")) {
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'demandeDeconnexion',
+                        },
+                        dataType: 'json'
+                    })
+                            .done(function () {
+                                window.location.replace("index.html");
+                            })
+                            .fail(function (error) {
+                                console.log('Error', error);
+                                alert("Erreur lors de l'appel AJAX");
+                            });
+                }
+            });
+
+            // BOUTON DE PRISE DE RDV
+            $('body').on('click', 'button.boutonRDV', function () {
+                var mediumId = $(this).attr('id');
+                var oldText = $('#' + mediumId).html();
+                $('#' + mediumId).html("Demande en cours...");
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'demanderConsultation',
+                        id: mediumId
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) {
+                            console.log(response);
+                            if (response.statut) {
+                                // Alerter l'utilisateur
+                                alert("Le médium vous contactera par téléphone bientôt... Veuillez patienter");
+                                // Changer le bouton
+                                $('#' + mediumId).html("RDV Pris");
+                            } else {
+                                // Alerter l'utilisateur
+                                alert("Le médium demandé n'est pas disponible... Essayez plus tard");
+                                // Changer le bouton
+                                $('#' + mediumId).html(oldText);
+                            }
+                        })
+                        .fail(function (error) {
+                            console.log('Error', error);
+                            alert("Erreur demanderConsultation");
+                        })
             });
         </script>
     </body>
