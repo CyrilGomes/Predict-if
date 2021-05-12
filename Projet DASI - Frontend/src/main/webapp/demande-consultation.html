@@ -21,13 +21,12 @@ and open the template in the editor.
                     <a href='historique.html'>Historique</a>
                     <a href='profil.html'>Profil</a>
                     <!-- <span id="nomClient"></span> -->
-                </a>
             </div>
         </div>
 
         <div>
             <div>
-                <h1>Bienvenue, </h1><h1 id="nomClient"></h1>
+                <h1 id="nomClient">Bienvenue, </h1>
                 <h2>Consultez un médium maintenant :</h2>
             </div>
 
@@ -95,7 +94,6 @@ and open the template in the editor.
                     dataType: 'json'
                 })
                         .done(function (response) {
-                            console.log('Response', response);
                             // Si l'utilisateur n'est pas loggé ou qu'il n'est pas un client...
                             if (!(response.utilisateur && response.type == "client")) {
                                 // Rediriger vers l'accueil
@@ -106,6 +104,7 @@ and open the template in the editor.
                                 // Remplir le profil astral
                                 // TODO
                                 // Afficher la page 
+                                $('#nomClient').html("Bienvenue, " + response.prenom + " " + response.nom);
                                 $('body').css({"display": "block"});
                             }
                         })
@@ -124,7 +123,6 @@ and open the template in the editor.
                     dataType: 'json'
                 })
                         .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
-                            console.log(response.listeMediums);
                             var htmlString = "";
                             htmlString += "<table style='margin: 5px;'>\n";
                             for (var id in response.listeMediums) {
@@ -149,7 +147,6 @@ and open the template in the editor.
                                 htmlString += "</p></div></tr>";
                             }
                             htmlString += "</table>";
-                            console.log(htmlString);
                             $('#listeMediums').html(htmlString);
                         })
                         .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
