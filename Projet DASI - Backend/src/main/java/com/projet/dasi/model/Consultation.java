@@ -76,6 +76,7 @@ public class Consultation implements Serializable {
     public void setEmploye(Employe employe) {
         this.employe = employe;
     }
+    
     public Client getClient() {
         return client;
     }

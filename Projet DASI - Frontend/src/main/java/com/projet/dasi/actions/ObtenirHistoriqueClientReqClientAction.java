@@ -9,7 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class ObtenirHistoriqueAction extends Action {
+public class ObtenirHistoriqueClientReqClientAction extends Action {
 
     @Override
     public void executer(HttpServletRequest request) {
