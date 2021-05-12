@@ -42,7 +42,6 @@ hr {
 
 /* Header BG box */
 .header {
-    
     overflow: hidden;
     background: url("etoiles.png"), linear-gradient(90deg, #583D72 20%, #612A75);
     padding: 0px 20px;
@@ -76,9 +75,9 @@ hr {
     background-color: #995ab3;
 }
 /* Header button selected */
-.currentPage {
-    background-color: #995ab3;
-    border-color: white;
+#currentPage {
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0px -0.25em #FF8E71;
 }
 /* Header button alignment */
 .header-right {

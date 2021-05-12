@@ -27,8 +27,11 @@ public class ListeMediumSerialisation extends Serialisation {
 
     @Override
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        
+        JsonObject container = new JsonObject();
+        
         List<Medium> listeMediums = (List<Medium>)request.getAttribute("listeMediums");
-        Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
+       
         JsonArray listeMediumsJson = new JsonArray();
         for(Medium medium : listeMediums){
             JsonObject objetMedium = new JsonObject();
@@ -52,9 +55,10 @@ public class ListeMediumSerialisation extends Serialisation {
             listeMediumsJson.add(objetMedium);
         }
         
-        JsonObject container = new JsonObject();
-        container.add("listeMediums", listeMediumsJson);        
+        container.add("listeMediums", listeMediumsJson);       
+        
         PrintWriter out = this.getWriter(response);
+        Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
         gson.toJson(container, out);
         out.close();
     }

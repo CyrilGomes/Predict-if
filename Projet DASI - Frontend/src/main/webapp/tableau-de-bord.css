@@ -75,12 +75,9 @@ hr {
     background-color: #995ab3;
 }
 /* Header button selected */
-.currentPage {
-    border-style: solid;
-    border-width: 0px 3px 0px 3px;
-    border-color: white;
-    background-color: #995ab3;
-    
+#currentPage {
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0px -0.25em #FF8E71;
 }
 /* Header button alignment */
 .header-right {

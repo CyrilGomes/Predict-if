@@ -15,9 +15,8 @@
         <div class="header">
             <a href="index.html" class="logo">Predict'IF</a>
             <div class="header-right">
-
                 <a href="#">Consultation en cours</a>
-                <a href="tableau-de-bord.html" class="currentPage">Tableau de Bord</a>
+                <a href="tableau-de-bord.html" id="currentPage">Tableau de Bord</a>
                 <a href="#">Profil</a>
             </div>
         </div>
@@ -104,8 +103,6 @@
                             console.log('Error', error);
                             alert("Erreur lors de l'appel AJAX");
                         })
-                        .always(function () {
-                        });
 
                 // OBTENIR CONSULTATION ATTRIBUEE 
                 // Appel AJAX
@@ -125,16 +122,16 @@
                                 $('#client').html(
                                         response.client.prenom + ' ' + response.client.nom + '<br />' +
                                         '> Signe Astrologique : ' + response.client.profil.signeAstro + '<br />' +
-                                        '> Signe Zodiaque Chinois : ' + response.client.profil.signeChinois + '<br />' + 
+                                        '> Signe Zodiaque Chinois : ' + response.client.profil.signeChinois + '<br />' +
                                         '> Couleur Porte-Bonheur : ' + response.client.profil.couleur + '<br />' +
-                                        '> Animal Totem : ' + response.client.profil.animalTotem + '<br />' + 
+                                        '> Animal Totem : ' + response.client.profil.animalTotem + '<br />' +
                                         'Voir son historique complet <br /><br />'
-                                );
+                                        );
                                 $('#medium').html(
                                         response.medium.denomination + '<br />' +
-                                        response.medium.presentation + '<br />' + 
+                                        response.medium.presentation + '<br />' +
                                         response.medium.type + '<br />'
-                                );
+                                        );
                             } else {
                                 // Signaler le fait qu'il n'y ait aucune consultation à traiter
                                 $('#messageConsultation').html("Il n'y a aucune demande de consultation pour vous.");
@@ -145,8 +142,6 @@
                             console.log('Error', error);
                             alert("Erreur lors de l'appel AJAX");
                         })
-                        .always(function () {
-                        });
 
                 // OBTENIR STATISTIQUES 1 (mediums et leurs clients) 
                 // Appel AJAX
@@ -162,15 +157,12 @@
                         .done(function (response) {
                             console.log('Response', response);
                             // Générer le graphique 1 avec les informations statistiques et le montrer (piechart de mediums)
-                            var denomination = [];
-                            var nombreConsultations = [];
                             var couleurs = [];
-                            for (i in response.listeMediums) {
-                                var mediumData = response.listeMediums[i]
-                                denomination.push(mediumData.denomination);
-                                nombreConsultations.push(mediumData.nombreConsultations);
-                                couleurs.push(randomColor(0.8));
+                            for (i in response.x) {
+                                couleurs.push(randomColor(1, 0.8, 0.6));
                             }
+                            var denomination = response.x;
+                            var nombreConsultations = response.y;
                             const data = {
                                 labels: denomination,
                                 datasets: [{
@@ -211,8 +203,6 @@
                             console.log('Error', error);
                             alert("Erreur lors de l'appel AJAX");
                         })
-                        .always(function () {
-                        });
 
                 // OBTENIR STATISTIQUE 2 (employes et leurs clients) 
                 // Appel AJAX
@@ -228,14 +218,8 @@
                         .done(function (response) {
                             console.log('Response', response);
                             // Générer le graphique 2 avec les informations statistiques et le montrer (radar d'employés)
-                            var noms = [];
-                            var nombreClients = [];
-                            var couleurs = [];
-                            for (i in response.listeEmployes) {
-                                var employeData = response.listeEmployes[i];
-                                noms.push(employeData.nom);
-                                nombreClients.push(employeData.nombreClients);
-                            }
+                            var noms = response.x;
+                            var nombreClients = response.y;
                             const data = {
                                 labels: noms,
                                 datasets: [{
@@ -283,8 +267,6 @@
                             console.log('Error', error);
                             alert("Erreur lors de l'appel AJAX");
                         })
-                        .always(function () {
-                        });
 
                 // OBTENIR STATISTIQUE 3 (mediums les plus populaires) 
                 // Appel AJAX
@@ -300,15 +282,12 @@
                         .done(function (response) {
                             console.log('Response', response);
                             // Générer le graphique 3 avec les informations statistiques et le montrer (histogramme de médiums)
-                            var denomination = [];
-                            var nombreConsultations = [];
                             var couleurs = [];
-                            for (i in response.listeMediums) {
-                                var mediumData = response.listeMediums[i]
-                                denomination.push(mediumData.denomination);
-                                nombreConsultations.push(mediumData.nombreConsultations);
-                                couleurs.push(randomColor(0.8));
+                            for (i in response.x) {
+                                couleurs.push(randomColor(1, 0.8, 0.6));
                             }
+                            var denomination = response.x;
+                            var nombreConsultations = response.y;
                             const data = {
                                 labels: denomination,
                                 datasets: [{
@@ -374,15 +353,13 @@
                         .done(function (response) {
                             console.log('Response', response);
                             // Générer le graphique 4 avec les informations statistiques et le montrer (histogramme de clients)
-                            var noms = [];
-                            var tempsAppelTotal = [];
+
                             var couleurs = [];
-                            for (i in response.listeClients) {
-                                var clientData = response.listeClients[i];
-                                noms.push(clientData.nom);
-                                tempsAppelTotal.push(clientData.tempsAppelTotal);
-                                couleurs.push(randomColor(0.8));
+                            for (i in response.x) {
+                                couleurs.push(randomColor(1, 0.8, 0.6));
                             }
+                            var noms = response.x;
+                            var tempsAppelTotal = response.y;
                             const data = {
                                 labels: noms,
                                 datasets: [{
@@ -432,8 +409,6 @@
                             console.log('Error', error);
                             alert("Erreur lors de l'appel AJAX");
                         })
-                        .always(function () {
-                        });
 
                 /* SERVICE signalerDebutConsultation */
                 $('#bouton-je-suis-pret').on('click', function () {
@@ -454,16 +429,45 @@
                                 console.log('Error', error);
                                 alert("Erreur lors de l'appel AJAX");
                             })
-                            .always(function () {
-                            });
                 });
 
                 // FONCTIONS DE COULEURS
-                var randomColor = function (alpha) {
-                    var r = Math.floor(Math.random() * 255);
-                    var g = Math.floor(Math.random() * 255);
-                    var b = Math.floor(Math.random() * 255);
-                    return "rgba(" + r + "," + g + "," + b + "," + alpha + ")";
+                var hsvToRgb = function(h, s, v) {
+                    var r, g, b;
+
+                    var i = Math.floor(h * 6);
+                    var f = h * 6 - i;
+                    var p = v * (1 - s);
+                    var q = v * (1 - f * s);
+                    var t = v * (1 - (1 - f) * s);
+
+                    switch (i % 6) {
+                        case 0:
+                            r = v, g = t, b = p;
+                            break;
+                        case 1:
+                            r = q, g = v, b = p;
+                            break;
+                        case 2:
+                            r = p, g = v, b = t;
+                            break;
+                        case 3:
+                            r = p, g = q, b = v;
+                            break;
+                        case 4:
+                            r = t, g = p, b = v;
+                            break;
+                        case 5:
+                            r = v, g = p, b = q;
+                            break;
+                    }
+
+                    return [r * 255, g * 255, b * 255];
+                }
+                var randomColor = function (saturation, value, alpha) {
+                    var hue = Math.random();
+                    var rgb = hsvToRgb(hue, saturation, value);
+                    return "rgba(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + "," + alpha + ")";
                 };
             });
         </script>

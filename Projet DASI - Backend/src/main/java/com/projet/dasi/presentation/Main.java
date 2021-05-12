@@ -1,6 +1,5 @@
 package com.projet.dasi.presentation;
 
-import com.google.gson.JsonObject;
 import com.projet.dasi.AstroAPI;
 import com.projet.dasi.dao.ClientDao;
 import com.projet.dasi.dao.JpaUtil;
@@ -8,7 +7,6 @@ import com.projet.dasi.model.Client;
 import com.projet.dasi.model.Consultation;
 import com.projet.dasi.model.Medium;
 import com.projet.dasi.model.Utilisateur;
-import com.projet.dasi.presentation.Saisie;
 import com.projet.dasi.service.ServicesApplication;
 import java.text.ParseException;
 import java.util.Date;
@@ -24,7 +22,10 @@ public class Main {
         
         JpaUtil.init();
         
+        
+        
         // Créer des employés, et des médiums
+        /*
         servicesApplication.initialiserEmployes();
         servicesApplication.initialiserMediums();
         
@@ -32,6 +33,7 @@ public class Main {
         //requeteCreationClient();
         servicesApplication.genererClients();
         servicesApplication.genererConsultations();
+        */
         
         // Authentifier le client test
         utilisateurConnecte = requeteAuthentification(false);
@@ -198,7 +200,7 @@ public class Main {
     
     public static void requeteStatistiques() {
         
-        HashMap<String, Integer> res = servicesApplication.genererStatistiquesMediumsPopulaires(true);
+        LinkedHashMap<String, Long> res = servicesApplication.genererStatistiquesMediumsPopulaires(true);
         if (res != null) {
             System.out.println("> Succès demande statistiques mediums");
             System.out.println(res.toString());

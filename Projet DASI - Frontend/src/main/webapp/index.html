@@ -120,7 +120,7 @@
                                 if (response.type == "employe") {
                                     $('#headerContent').html(
                                         "<a href='#'>Consultation en cours</a>" +
-                                        "<a href='tableau-de-bord.html' class='currentPage'>Tableau de Bord</a>" +
+                                        "<a href='tableau-de-bord.html'>Tableau de Bord</a>" +
                                         "<a href='#'>Profil</a>"
                                     );
                                     $('#boutonPopupConnexion2').click(function() { window.location.replace("tableau-de-bord.html")});
@@ -128,11 +128,11 @@
                                 }
                                 else {
                                     $('#headerContent').html(
-                                        "<a href='#' class='currentPage'>Demander une Consultation</a>" +
+                                        "<a href='demande-consultation.html'>Demander une Consultation</a>" +
                                         "<a href='#'>Historique</a>" +
                                         "<a href='#'>Profil</a>"
                                     );
-                                    //$('#boutonPopupConnexion2').click(function() { window.location.replace("demande-consultation.html")});
+                                    $('#boutonPopupConnexion2').click(function() { window.location.replace("demande-consultation.html")});
                                 }
                             }
                         })
@@ -178,7 +178,7 @@
                                     // S'il est de type client...
                                     if (response.type == "client") {
                                         // Rediriger vers la page Demande Consultation
-                                        // TODO
+                                        window.location.replace("demande-consultation.html");
                                     }
                                     // S'il est de type employé...
                                     else {
