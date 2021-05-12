@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Consultation en cours</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="consultationEnCours.css">
+        <!-- Librairie Javascript: jQuery (v3.4.1) -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    </head>
+    <body>
+        <!-- HEADER -->
+        <div class="header">
+            <a href="index.html" class="logo">Predict'IF</a>
+            <div class="header-right">
+                <a href="#">Consultation En Cours</a>
+                <a href="#">Tableau de bord</a>
+                <a href="#">Profil</a>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            <div class="Generateur">
+                <h1>Générateur de prédictions</h1>
+                <div class="predictionConteneur">
+
+
+                    <div class="predict">
+                        <h2 class="predictTitle">Amour :</h2> 
+                        <div class="slidecontainer">
+                            <input type="range" min="1" max="4" value="1" class="slider" id="amourInput">
+                        </div>
+
+                    </div>
+                    <textarea rows="10" cols="40" id="reponseAmour" class="responseInput"></textarea>
+                    <div class="predict">
+                        <h2 class="predictTitle">Santé :</h2> 
+                        <div class="slidecontainer">
+                            <input type="range" min="1" max="4" value="1" class="slider" id="santeInput">
+                        </div>
+
+                    </div>
+                    <textarea rows="10" cols="40" id="reponseSante" class ="responseInput"></textarea>
+                    <div class="predict">
+                        <h2 class="predictTitle">Travail :</h2> 
+                        <div class="slidecontainer">
+                            <input type="range" min="1" max="4" value="1" class="slider" id="travailInput">
+                        </div>
+                    </div>
+                    <textarea  rows="10" cols="40" id="reponseTravail" class ="responseInput"></textarea>
+                    <button id='bouton-prediction'>Generer</button>
+                </div>
+            </div>
+            <div class="Consultation">
+                <h1>Consultation</h1>
+                <div class="consultationContainer">
+                    <h2>Client :</h2>
+                    <div id="client" style="background: #FF8E71">
+                        <h3 id="clientName">Jean Jean</h3>
+                        <p id="signeAstrologique">Signe Astrologique : Sagittaire</p>
+                        <p id="signeZodiaqueChinois">Signe Zodiaque Chinois : Dragon</p>
+                        <p id="couleurPorteBonheur">Couleur porte-bonheur : Vermillion</p>
+                        <p id="animalTotem">Animal Totem : Loutre</p>
+                        <a href="#">Voir son historique de consultation</a>
+                    </div>
+                    <h2>Médium incarnée :</h2>
+                    <div id="medium" style="background: #04AA6D">
+                        <h3 id="mediumName">Mme. Irma</h3>
+                        <p id="role">cartomancière</p>
+                        <p id="presentation">blablabla arnaque blablabla</p>
+
+                    </div>
+                    <h2>Commentaires :</h2>
+                    <textarea rows="10" id="commentaire" ></textarea>
+                    <button id="saveCommentaire">Sauvegarder</button>
+
+                    <button id="annuler">Annuler</button>
+                    <button id="demarrer">Démarrer</button>
+
+                </div>
+            </div>
+            <div class="Historique">
+                <h1>Historique du Client</h1>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'GET',
+                    data: {
+                        todo: 'consultation',
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                            console.log('Response', response);
+                            if (response.consultation) {
+
+                                $('#clientName').html(response.clientName);
+                                $('#signeAstrologique').html(response.signeAstrologique);
+                                $('#signeZodiaqueChinois').html(response.signeZodiaqueChinois);
+                                $('#couleurPorteBonheur').html(response.couleurPorteBonheur);
+                                $('#animalTotem').html(response.animalTotem);
+
+                                $('#mediumName').html(response.mediumName);
+                                $('#role').html(response.role);
+                                $('#presentation').html(response.presentation);
+                                $('#commentaire').html(response.commentaire);
+                            }
+                        })
+                        .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+                /* SERVICE CONNEXION */
+                $('#bouton-prediction').on('click', function () {
+                    $('#bouton-prediction').html("Generation...");
+
+                    var valAmour = $('#amourInput').val();
+                    var valSante = $('#santeInput').val();
+                    var valTravail = $('#travailInput').val();
+
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'prediction',
+                            amour: valAmour,
+                            sante: valSante,
+                            travail: valTravail
+                        },
+                        dataType: 'json'
+                    })
+                            .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                                console.log('Response', response);
+                                if (response.prediction) {
+
+                                    $('#reponseAmour').val(response.amour);
+                                    $('#reponseSante').val(response.sante);
+                                    $('#reponseTravail').val(response.travail);
+                                } else {
+                                    $('#bouton-prediction').html("Erreur");
+                                }
+                            })
+                            .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                                console.log('Error', error);
+                                alert("Erreur lors de l'appel AJAX");
+                            })
+                            .always(function () { // Fonction toujours appelée
+                                $('#bouton-prediction').html("Generer");
+                            });
+
+                });
+            });
+            $('#saveCommentaire').on('click', function () {
+                $('#saveCommentaire').html("Sauvegarde en cours...");
+                var commentaire = $('#commentaire').val();
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'saveCommentaire',
+                        commentaire: commentaire,
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                            console.log('Response', response);
+                            if (response.saveCommentaire) {
+
+                                $('#saveCommentaire').html("Sauvegardé !");
+                            } else {
+                                $('#saveCommentaire').html("Erreur");
+                            }
+                            setTimeout(
+                                    function ()
+                                    {
+                                        $('#saveCommentaire').html("Sauvegarder");
+                                    }, 3000);
+                        })
+                        .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+                        .always(function () { // Fonction toujours appelée
+                            $('#saveCommentaire').html("Sauvegarder");
+                        });
+
+            });
+
+            $('#demarrer').on('click', function () {
+
+
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'demarrerTerminer',
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                            console.log('Response', response);
+                            if (response.demarrerTerminer) {
+                                //TODO : Ajouter l'action correspondante
+
+                            } else {
+                                alert("Erreur !");
+
+                            }
+                        })
+                        .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+
+            });
+            
+            $('#annuler').on('click', function () {
+
+
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'annulerConsultation',
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                            console.log('Response', response);
+                            if (response.annulerConsultation) {
+                                //TODO : Ajouter l'action correspondante
+
+                            } else {
+                                alert("Erreur !");
+
+                            }
+                        })
+                        .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+
+            });
+        </script>
+    </body>
+</html>
