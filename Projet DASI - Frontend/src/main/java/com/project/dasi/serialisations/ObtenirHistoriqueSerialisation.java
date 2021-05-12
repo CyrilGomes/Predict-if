@@ -65,7 +65,6 @@ public class ObtenirHistoriqueSerialisation extends Serialisation {
         
         container.add("historique", historiqueJson);
         
-        
         // L'écrire sur le flux de sortie
         PrintWriter out = this.getWriter(response);
         Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
