@@ -18,8 +18,11 @@ public class ListeMediumAction extends Action {
 
     @Override
     public void executer(HttpServletRequest request) {
+        
         ServicesApplication serviceApplication = new ServicesApplication();
+        
         List<Medium> listeMediums = serviceApplication.obtenirMediums();
+        
         request.setAttribute("listeMediums", listeMediums);
     }
     

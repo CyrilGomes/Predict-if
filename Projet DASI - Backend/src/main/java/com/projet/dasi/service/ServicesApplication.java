@@ -260,12 +260,18 @@ public class ServicesApplication {
     }
     
     public Medium obtenirMediumSelonId(long id){
+        
+        // Créer les DAOs et le contexte de persistance
         MediumDao mediumDao = new MediumDao();
         JpaUtil.creerContextePersistance();
+        
+        // Récupérer le médium de l'ID donné
         Medium medium = mediumDao.chercherParId(id);
+
         JpaUtil.fermerContextePersistance();
         
         return medium;
+        
     }
     
     /* Lister tous les mediums selon leur type */
