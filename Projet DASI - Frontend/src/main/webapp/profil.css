@@ -1,0 +1,228 @@
+/* ----------------------------------------------------------------- */
+/* BASE STYLES */
+/* ----------------------------------------------------------------- */
+
+body {
+    font-family: "Lato";
+}
+button:hover {
+    background: #995ab3;
+    box-shadow: -4px 4px 0 0 #FF8E71;
+}
+.hyperlien {
+    color: dodgerblue;
+}
+.ligne {
+    box-shadow: 0px 10px #d0ebda
+}
+label{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 250px;
+    text-align: right;
+}
+input {
+  display: inline-block;
+  float: left;
+}
+hr {
+    width: 80%;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+}
+.texteErreur {
+    color: red;
+}
+/* ----------------------------------------------------------------- */
+/* HEADER STYLES */
+/* ----------------------------------------------------------------- */
+
+/* Header BG box */
+.header {
+    overflow: hidden;
+    background: url("etoiles.png"), linear-gradient(90deg, #583D72 20%, #612A75);
+    padding: 0px 20px;
+}
+/* Header logo */
+.header a.logo {
+    font-size: 28px;
+    font-weight: bold;
+    padding: 24px 42px 24px 0px;
+    box-shadow: -20px 0 0 0 #FF8E71;
+    font-family: "Georgia";
+    background: #FF8E71;
+    border-radius: 0px 30px 30px 0px;
+}
+/* Header buttons */
+.header a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 24px 12px;
+    text-decoration: none;
+    font-size: 24px;
+    line-height: 25px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0);
+    border-width: 0px 3px 0px 3px;
+    border-radius: 10px;
+}
+/* Header button hover */
+.header-right a:hover {
+    background-color: #995ab3;
+}
+/* Header button selected */
+#currentPage {
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0px -0.25em #FF8E71;
+}
+/* Header button alignment */
+.header-right {
+    float: right;
+}
+
+/* ----------------------------------------------------------------- */
+/* PAGE STYLES */
+/* ----------------------------------------------------------------- */
+
+.date{
+    font-size: 30px; 
+}
+.flex-container {
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    }
+
+.flex-item:nth-child(1) {
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
+}
+
+
+.flex-item:nth-child(2) {
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
+}
+
+.Compte {
+    width: 1300px;
+    margin-top:70px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #583D72;
+    font-family: "Calibri";
+    border: solid;
+    border-image: linear-gradient(0deg, #583D72 30%, #FF8E71) 10;
+    border-image-repeat: stretch;
+    border-width: 10px;
+    border-radius: 5px 5px 5px 5px;
+}
+.ProfilAstral {
+    width: 375px;
+    margin-top:70px;
+    margin-left: 100px;
+    font-size: 25px;
+    font-weight: bold;
+    color: #583D72;
+    font-family: "Calibri";
+    border: solid;
+    border-image: linear-gradient(0deg, #583D72 30%, #FF8E71) 10;
+    border-image-repeat: stretch;
+    border-width: 10px;
+    border-radius: 5px 5px 5px 5px;
+    display: none;
+}
+.ProfilAstral::before{
+    width: 375px;
+    font-size: 40px;
+    margin-top:-70px;
+    margin-left:-10px;
+    font-weight: bold;
+    position:absolute;
+    color: black;
+    background-color: #FF8E71;
+    content: "Mon Profil Astral";
+    font-family: "Calibri";
+    border: solid #FF8E71;
+    font-weight: bold;
+    border-width: 10px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.Compte::before{
+    grid-area: Compte;
+    width: 1300px;
+    font-size: 40px;
+    margin-top:-70px;
+    margin-left:-10px;
+    font-weight: bold;
+    position:absolute;
+    color: black;
+    background-color: #FF8E71;
+    content: "Mon Compte";
+    font-family: "Calibri";
+    border: solid #FF8E71;
+    font-weight: bold;
+    border-width: 10px;
+    border-radius: 5px 5px 5px 5px;
+}
+.monBouton {
+    background-color:#583D72;
+    width: 225px;
+    color:white;
+    font-size: 30px;
+    border: solid;
+    border-width: 10px;
+    border-radius: 5px 5px 5px 5px;
+    border-color: #583D72;
+    margin-left: 1000px;
+    margin-bottom: -30px;
+}
+
+/* ----------------------------------------------------------------- */
+/* RESPONSIVENESS */
+/* ----------------------------------------------------------------- */
+@media screen and (max-width: 500px) {
+    .header a {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+    .header-right {
+        float: none;
+    }
+}
+
+.Text {
+    font-size: 20px;
+}

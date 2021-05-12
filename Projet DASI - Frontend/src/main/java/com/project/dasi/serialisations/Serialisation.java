@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class Serialisation  {
     
     protected PrintWriter getWriter(HttpServletResponse response) throws IOException {
-        response.setContentType("application/json);charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
         return response.getWriter();
     }
     

@@ -42,7 +42,6 @@ hr {
 
 /* Header BG box */
 .header {
-    
     overflow: hidden;
     background: url("etoiles.png"), linear-gradient(90deg, #583D72 20%, #612A75);
     padding: 0px 20px;
@@ -74,12 +73,11 @@ hr {
 /* Header button hover */
 .header-right a:hover {
     background-color: #995ab3;
-    border-color: white;
 }
 /* Header button selected */
-.header-right a.active {
-    background-color: #995ab3;
-    border-color: white;
+#currentPage {
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0px -0.25em #FF8E71;
 }
 /* Header button alignment */
 .header-right {
@@ -189,13 +187,15 @@ hr {
     margin-right: auto;
     border-spacing: 12px;
     border-collapse: separate;
-    table-layout: fixed;
 }
 .popupConnexion td, .popupInscription td {
     height: 30px;
     color: #583D72;
     font-size: 20px;
     text-align: left;
+}
+.popupInscription td {
+    padding: 4px 0px;
 }
 .popupConnexion td[colspan="2"], .popupInscription td[colspan="2"] {
     height: 40px;
@@ -208,7 +208,9 @@ hr {
     height: 100%;
     box-sizing: border-box;
 }
-
+.popupInscription input {
+    height: 65%
+}
 
 /* ----------------------------------------------------------------- */
 /* RESPONSIVENESS */

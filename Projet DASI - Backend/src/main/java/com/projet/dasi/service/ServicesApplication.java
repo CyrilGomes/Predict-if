@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.LinkedHashMap;
 
 public class ServicesApplication {
 
@@ -126,6 +127,8 @@ public class ServicesApplication {
             ArrayList<Client> clients = new ArrayList<Client>();
             clients.add(new Client("Bertrand", "Usclat", "bertrand.usclat@yahoo.ro", "superCanardXXL", "0685123975", "69200", AstroAPI.DATE_FORMAT.parse("25/06/1965")));
             clients.add(new Client("Jeannine", "Odoux", "jeannette_xxx@trashmail.fr", "secretPassword", "0782953267", "32100", AstroAPI.DATE_FORMAT.parse("20/08/1985")));
+            clients.add(new Client("Claude", "Vanony", "claude.vanony@yahoo.co", "incroyableTalent", "0562948325", "69000", AstroAPI.DATE_FORMAT.parse("25/09/1984")));
+            clients.add(new Client("Michelle", "Degoureaux", "michie@gmail.fr", "oublieMonMotDePasse", "0895362845", "42510", AstroAPI.DATE_FORMAT.parse("23/07/1966")));
 
             // Inscrire les clients 
             for (Client c : clients) {
@@ -252,6 +255,21 @@ public class ServicesApplication {
         JpaUtil.fermerContextePersistance();
         
         return listeMediums;  
+        
+    }
+    
+    public Medium obtenirMediumSelonId(long id){
+        
+        // Créer les DAOs et le contexte de persistance
+        MediumDao mediumDao = new MediumDao();
+        JpaUtil.creerContextePersistance();
+        
+        // Récupérer le médium de l'ID donné
+        Medium medium = mediumDao.chercherParId(id);
+
+        JpaUtil.fermerContextePersistance();
+        
+        return medium;
         
     }
     
@@ -536,22 +554,22 @@ public class ServicesApplication {
     }
  
     /* Sauvegarder la modification d'un profil de Client */
-    public boolean modifierProfil(Client client, String nom, String prenom, String dateNaissance, String codePostal, String telephone, String email, String motDePasse) {
+    public boolean modifierProfil(Utilisateur utilisateur, String nom, String prenom, String dateNaissance, String codePostal, String telephone, String email, String motDePasse) {
         
         // Créer les DAOs et le contexte de persistance
-        ClientDao clientDao = new ClientDao();
+        UtilisateurDao utilisateurDao = new UtilisateurDao();
         JpaUtil.creerContextePersistance();
         
         // Modifier la consultation
         boolean reussite = true;
-        client.setNom(nom);
-        client.setPrenom(prenom);
-        client.setCodePostal(codePostal);
-        client.setTelephone(telephone);
-        client.setMail(email);
-        client.setMotDePasse(motDePasse);
+        utilisateur.setNom(nom);
+        utilisateur.setPrenom(prenom);
+        utilisateur.setCodePostal(codePostal);
+        utilisateur.setTelephone(telephone);
+        utilisateur.setMail(email);
+        utilisateur.setMotDePasse(motDePasse);
         try {
-            client.setDateNaissance(AstroAPI.DATE_FORMAT.parse(dateNaissance));
+            utilisateur.setDateNaissance(AstroAPI.DATE_FORMAT.parse(dateNaissance));
         }
         catch (ParseException ex) {
             ex.printStackTrace();
@@ -561,7 +579,7 @@ public class ServicesApplication {
         // Mettre à jour la modification
         try {
             JpaUtil.ouvrirTransaction();
-            clientDao.mettreAJour(client);
+            utilisateurDao.mettreAJour(utilisateur);
             JpaUtil.validerTransaction();
         } 
         catch (Exception ex) {
@@ -593,7 +611,7 @@ public class ServicesApplication {
     }
     
     /* Générer les statistiques des médiums les plus populaires (top 5 ou tous les médiums)*/
-    public JsonObject genererStatistiquesMediumsPopulaires(boolean top5) {
+    public LinkedHashMap<String, Long> genererStatistiquesMediumsPopulaires(boolean top5) {
         
         // Créer les DAOs et le contexte de persistance
         ConsultationDao consultationDao = new ConsultationDao();
@@ -610,17 +628,12 @@ public class ServicesApplication {
         
         JpaUtil.fermerContextePersistance();
         
-        // Construire le JSON Object
-        JsonObject statistiques = new JsonObject();
+        // Construire la Map
+        LinkedHashMap<String, Long> statistiques = new LinkedHashMap();
         if (listeStatistiques != null) {
-            JsonArray jsonArray = new JsonArray();
             for (Object[] coupleStats : listeStatistiques) {
-                JsonObject jsonInfosMedium = new JsonObject();
-                jsonInfosMedium.addProperty("denomination", ((Medium)coupleStats[0]).getDenomination());
-                jsonInfosMedium.addProperty("nombreConsultations", coupleStats[1].toString());
-                jsonArray.add(jsonInfosMedium);
+                statistiques.put(((Medium)coupleStats[0]).getDenomination(), (Long)coupleStats[1]);
             }
-            statistiques.add("listeMediums", jsonArray);
         }
         else {
             statistiques = null;
@@ -630,18 +643,16 @@ public class ServicesApplication {
     }
     
     /* Générer les statistiques de temps d'appel par client */
-    public JsonObject genererStatistiquesTempsAppelClients() {
+    public LinkedHashMap<String, Long> genererStatistiquesTempsAppelClients() {
         
         // Créer les DAOs et le contexte de persistance
         ConsultationDao consultationDao = new ConsultationDao();
         ClientDao clientDao = new ClientDao();
         JpaUtil.creerContextePersistance();
         
-        JsonObject statistiques = new JsonObject();
-        JsonArray jsonArray = new JsonArray();
-        
         // Boucler sur tous les clients
         List<Client> clients = clientDao.chercherTous();
+        LinkedHashMap<String, Long> statistiques = new LinkedHashMap();
         for (Client cli : clients) {
             // Obtenir leur historique de consultations
             List<Consultation> historiqueConsultations = consultationDao.chercherTermineParClient(cli);
@@ -654,22 +665,16 @@ public class ServicesApplication {
                 somme += diff;
             }
             Date temps = new Date(somme);
-            // Ajouter les données de chaque client au JSON
-            JsonObject jsonInfosClient = new JsonObject();
-            jsonInfosClient.addProperty("nom", cli.getNom());
-            jsonInfosClient.addProperty("tempsAppelTotal", temps.getMinutes());
-            jsonArray.add(jsonInfosClient);
+            statistiques.put(cli.getPrenom() + " " + cli.getNom(), new Long(temps.getMinutes()));
         }
         
         JpaUtil.fermerContextePersistance();
-        
-        statistiques.add("listeClients", jsonArray);
         return statistiques;
     
     }
     
     /* Générer les statistiques de répartition des clients par employés */
-    public JsonObject genererStatistiquesRepartitionClientsParEmploye() {
+    public LinkedHashMap<String, Long> genererStatistiquesRepartitionClientsParEmploye() {
         
         // Créer les DAOs et le contexte de persistance
         ConsultationDao consultationDao = new ConsultationDao();
@@ -680,17 +685,12 @@ public class ServicesApplication {
         
         JpaUtil.fermerContextePersistance();
         
-        // Construire le JSON Object
-        JsonObject statistiques = new JsonObject();
+        // Construire la Map
+        LinkedHashMap<String, Long> statistiques = new LinkedHashMap();
         if (listeStatistiques != null){
-            JsonArray jsonArray = new JsonArray();
             listeStatistiques.forEach(infosEmploye -> {
-                JsonObject jsonInfosEmploye = new JsonObject();
-                jsonInfosEmploye.addProperty("nom", (String)infosEmploye[0] + " " + (String)infosEmploye[1]);
-                jsonInfosEmploye.addProperty("nombreClients", (long)infosEmploye[2]);
-                jsonArray.add(jsonInfosEmploye);
+                statistiques.put((String)infosEmploye[0] + " " + (String)infosEmploye[1], (Long)infosEmploye[2]);
             });
-            statistiques.add("listeEmployes", jsonArray);
         }
         
         return statistiques;

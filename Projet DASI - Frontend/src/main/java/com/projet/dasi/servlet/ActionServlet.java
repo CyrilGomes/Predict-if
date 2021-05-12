@@ -7,7 +7,14 @@ import com.project.dasi.serialisations.DemarrerTerminerSerialisation;
 import com.project.dasi.serialisations.InscriptionSerialisation;
 import com.project.dasi.serialisations.PredictionSerialisation;
 import com.project.dasi.serialisations.SaveCommentaireSerialisation;
+import com.project.dasi.serialisations.DemandeConsultationSerialisation;
+import com.project.dasi.serialisations.ListeMediumSerialisation;
+import com.project.dasi.serialisations.GenererStatistiquesSerialisation;
+import com.project.dasi.serialisations.ObtenirTypeUtilisateurSerialisation;
+import com.project.dasi.serialisations.ObtenirConsultationAttribueeSerialisation;
+import com.project.dasi.serialisations.ObtenirHistoriqueSerialisation;
 import com.project.dasi.serialisations.Serialisation;
+import com.project.dasi.serialisations.ObtenirUtilisateurSerialisation;
 import com.projet.dasi.actions.Action;
 import com.projet.dasi.actions.AnnulerConsultationAction;
 import com.projet.dasi.actions.ConnexionAction;
@@ -16,15 +23,22 @@ import com.projet.dasi.actions.DemarrerTerminerAction;
 import com.projet.dasi.actions.InscriptionAction;
 import com.projet.dasi.actions.PredictionAction;
 import com.projet.dasi.actions.SaveCommentaireAction;
+import com.projet.dasi.actions.ActionDemandeConsultation;
+import com.projet.dasi.actions.ConnexionAction;
+import com.projet.dasi.actions.GenererStatistiquesAction;
+import com.projet.dasi.actions.InscriptionAction;
+import com.projet.dasi.actions.ListeMediumAction;
+import com.projet.dasi.actions.ObtenirConsultationAttribueeAction;
+import com.projet.dasi.actions.ObtenirHistoriqueAction;
+import com.projet.dasi.actions.ObtenirUtilisateurCourantAction;
+import com.projet.dasi.actions.SauvegarderProfilAction;
 import com.projet.dasi.dao.JpaUtil;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.projet.dasi.service.ServicesApplication;
 
 @WebServlet(urlPatterns = {"/ActionServlet"})
 public class ActionServlet extends HttpServlet {
@@ -39,16 +53,37 @@ public class ActionServlet extends HttpServlet {
         Serialisation serialisation = null;
 
         switch (typeRequete) {
-
+            
+            case "obtenirTypeUtilisateurCourant":
+                action = new ObtenirUtilisateurCourantAction();
+                serialisation = new ObtenirTypeUtilisateurSerialisation();
+                break;
+                
+            case "obtenirListeConsultations":
+                action = new ObtenirHistoriqueAction();
+                serialisation = new ObtenirHistoriqueSerialisation();
+                break;
+            
+            case "sauvegarderDonnees":
+                action = new SauvegarderProfilAction();
+                serialisation = new ObtenirTypeUtilisateurSerialisation();
+                break;
+                
+            case "obtenirUtilisateurCourant":
+                action = new ObtenirUtilisateurCourantAction();
+                serialisation = new ObtenirUtilisateurSerialisation();
+                break;
+            
             case "connexion":
                 action = new ConnexionAction();
-                serialisation = new ConnexionSerialisation();
+                serialisation = new ObtenirTypeUtilisateurSerialisation();
                 break;
 
             case "inscription":
                 action = new InscriptionAction();
-                serialisation = new InscriptionSerialisation();
+                serialisation = new ObtenirTypeUtilisateurSerialisation();
                 break;
+
             case "prediction":
                 action = new PredictionAction();
                 serialisation = new PredictionSerialisation();
@@ -68,6 +103,25 @@ public class ActionServlet extends HttpServlet {
             case "annulerConsultation":
                 action = new AnnulerConsultationAction();
                 serialisation = new AnnulerConsultationSerialisation();
+                
+            case "listeMediums":
+                action = new ListeMediumAction();
+                serialisation = new ListeMediumSerialisation();
+                break;
+                
+            case "demanderConsultation":
+                action = new ActionDemandeConsultation();
+                serialisation = new DemandeConsultationSerialisation();
+                break;
+                
+            case "obtenirConsultationAttribuee":
+                action = new ObtenirConsultationAttribueeAction();
+                serialisation = new ObtenirConsultationAttribueeSerialisation();
+                break;
+                
+            case "genererStatistiques":
+                action = new GenererStatistiquesAction();
+                serialisation = new GenererStatistiquesSerialisation();
                 break;
         }
 
@@ -80,15 +134,6 @@ public class ActionServlet extends HttpServlet {
 
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
@@ -106,14 +151,6 @@ public class ActionServlet extends HttpServlet {
         super.destroy();
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);

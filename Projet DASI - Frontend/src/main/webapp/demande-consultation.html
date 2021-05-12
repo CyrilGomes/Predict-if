@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Predicti'if Demander une consultation</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="demande-consultation.css">
+        <!-- Librairie Javascript: jQuery (v3.4.1) -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    </head>
+    <body style="display: none;">
+        <!-- HEADER -->
+        <div class="header">
+            <a href="index.html" class="logo">Predict'IF</a>
+            <div class="header-right" id='headerContent'>
+                    <a href='demande-consultation.html' id='currentPage'>Demander une Consultation</a>
+                    <a href='#'>Historique</a>
+                    <a href='profil.html'>Profil</a>
+                    <!-- <span id="nomClient"></span> -->
+                </a>
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <h1>Bienvenue, </h1><h1 id="nomClient"></h1>
+                <h2>Consultez un médium maintenant :</h2>
+            </div>
+
+            <div style="margin: 5px;">
+                <span style="margin: 5px;">
+                    Filtre:
+                    <select name="listeMedium">
+                        <option value="tous">Tous types</option>
+                        <option value="astrologue">Astrologue</option>
+                        <option value="cartomancien">Cartomancien</option>
+                        <option value="spirite">Spirite</option>
+                    </select>
+                </span>
+
+                <span style="margin: 5px;">
+                    <input type="search" placeholder="Chercher par nom..." id="searchName">
+                </span>
+            </div>
+        </div>
+
+        <div id="listeMediums"></div>
+
+        <script>
+            
+            $('body').on('click', 'a.boutonRDV', function () {
+                var mediumId = $(this).attr('id');
+                var buttonState = $('#' + mediumId).html();
+                $('#' + mediumId).html("Demande en cours...");
+
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'demanderConsultation',
+                        id: mediumId
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) {
+                            if(response.status){
+                                alert("Demande de consultation réussie");
+                            }
+                            else{
+                                alert("Echec de demande de consultation");
+                            }
+                        })
+                        .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                            console.log('Error', error); // LOG dans Console Javascript
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+                        .always(function () {
+                            $('#' + mediumId).html(buttonState);
+                        });
+            });
+
+            $(document).ready(function () {
+                
+                // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER, OBTENIR PROFIL ASTRAL
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'GET',
+                    data: {
+                        todo: 'obtenirUtilisateurCourant'
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) {
+                            console.log('Response', response);
+                            // Si l'utilisateur n'est pas loggé ou qu'il n'est pas un client...
+                            if (!(response.utilisateur && response.type == "client")) {
+                                // Rediriger vers l'accueil
+                                window.location.replace("index.html");
+                            }
+                            // Si tout va bien...
+                            else {
+                                // Remplir le profil astral
+                                // TODO
+                                // Afficher la page 
+                                $('body').css({"display": "block"});
+                            }
+                        })
+                        .fail(function (error) {
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+                
+                // OBTENIR LA LISTE DES MEDIUMS
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'GET',
+                    data: {
+                        todo: 'listeMediums'
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                            console.log(response.listeMediums);
+                            var htmlString = "";
+                            htmlString += "<table style='margin: 5px;'>\n";
+                            for (var id in response.listeMediums) {
+                                var medium = response.listeMediums[id];
+                                htmlString += "<tr><div style='border: 1px solid black;'>";
+                                htmlString += "<h2>" + medium.denomination + "</h2>";
+                                htmlString += "<p>" + medium.presentation + "<br>";
+
+                                switch (medium.typeMedium) {
+                                    case "Astrologue":
+                                        htmlString += "Formation : " + medium.formation + "<br>";
+                                        htmlString += "Promotion : " + medium.promotion;
+                                        break;
+
+                                    case "Spirite":
+                                        htmlString += "Support : " + medium.support;
+                                        break;
+                                }
+
+                                htmlString += "<br>";
+                                htmlString += "<a id='" + medium.id + "' class='boutonRDV'><button>Prendre RDV</button></a>";
+                                htmlString += "</p></div></tr>";
+                            }
+                            htmlString += "</table>";
+                            console.log(htmlString);
+                            $('#listeMediums').html(htmlString);
+                        })
+                        .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                            console.log('Error', error); // LOG dans Console Javascript
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+                        .always(function () { // Fonction toujours appelée
+
+                        });
+            });
+        </script>
+    </body>
+</html>
