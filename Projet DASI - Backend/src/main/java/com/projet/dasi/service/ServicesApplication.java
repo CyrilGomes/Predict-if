@@ -259,6 +259,15 @@ public class ServicesApplication {
         
     }
     
+    public Medium obtenirMediumSelonId(long id){
+        MediumDao mediumDao = new MediumDao();
+        JpaUtil.creerContextePersistance();
+        Medium medium = mediumDao.chercherParId(id);
+        JpaUtil.fermerContextePersistance();
+        
+        return medium;
+    }
+    
     /* Lister tous les mediums selon leur type */
     public List<Medium> obtenirMediumsSelonType(String type) {
         
