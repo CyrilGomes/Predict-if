@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <!-- Banner Image --> 
+        <!-- Banner Image -->
         <div class="banner-image">
             <div class="banner-text"> </div>
             <div class="banner-text">
@@ -87,7 +87,7 @@
                         </tr>
                     </table>
                     <p id="messageErreurInscription" class="texteErreur"></p>
-                </div> 
+                </div>
                 <div id="confirmationInscription" style="display: none;">
                     <hr /><br />
                     <p><strong>
@@ -100,9 +100,28 @@
         </div>
 
         <script>
+            $('body').on('click', 'a.boutonDeconnexion', function () {
+               if(confirm("Confirmez la déconnexion")){
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'demandeDeconnexion',
+                        },
+                        dataType: 'json'
+                    })
+                            .done(function () {
+                            window.location.replace("index.html");
+                    })
+                            .fail(function (error) {
+                                console.log('Error', error);
+                                alert("Erreur lors de l'appel AJAX");
+                    });
+                }
+            });
             $(document).ready(function () {
 
-                // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER 
+                // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER
                 // Appel AJAX
                 $.ajax({
                     url: './ActionServlet',
@@ -125,7 +144,8 @@
                                     $('#headerContent').html(
                                         "<a href='demande-consultation.html'>Demander une Consultation</a>" +
                                         "<a href='historique.html'>Historique</a>" +
-                                        "<a href='profil.html'>Profil</a>"
+                                        "<a href='profil.html'>Profil</a>" +
+                                        "<a class='boutonDeconnexion'>Déconnexion</a>"
                                     );
                                     $('#boutonPopupConnexion2').click(function() { window.location.replace("demande-consultation.html")});
                                 }
@@ -136,10 +156,10 @@
                             alert("Erreur lors de l'appel AJAX");
                         })
                         .always(function () {
-                            // Afficher la page 
+                            // Afficher la page
                             $('body').css({"display": "block"});
                         });
-                // SERVICE CONNEXION 
+                // SERVICE CONNEXION
                 $('#bouton-connexion').on('click', function () {
 
                     console.log("clic sur le bouton de connexion");
@@ -195,7 +215,7 @@
                                 $('#bouton-connexion').html("Connexion");
                             });
                 });
-                // SERVICE INSCRIPTION 
+                // SERVICE INSCRIPTION
                 $('#bouton-inscription').on('click', function () {
 
                     console.log("clic sur le bouton de inscription");
@@ -256,7 +276,7 @@
                             });
                 });
             });
-            // POPUP DE CONNEXION 
+            // POPUP DE CONNEXION
             // Fonction d'ouverture du popup
             function showPopupConnexion() {
                 // Désafficher popup inscription
@@ -273,7 +293,7 @@
             function hidePopupConnexion() {
                 overlayConnexion.style.display = "none";
             }
-            // Attribuer les fonctions 
+            // Attribuer les fonctions
             $('#boutonPopupConnexion1').click(showPopupConnexion);
             $('#boutonPopupConnexion2').click(showPopupConnexion);
             $('#boutonPopupConnexion3').click(showPopupConnexion);
@@ -281,7 +301,7 @@
             // POPUP D'INSCRIPTION
             // Fonction d'ouverture du popup
             function showPopupInscription() {
-                // Reset les divs 
+                // Reset les divs
                 formulaireInscription.style.display = "block";
                 confirmationInscription.style.display = "none";
                 // Désafficher popup connexion
@@ -304,7 +324,7 @@
             function hidePopupInscription() {
                 overlayInscription.style.display = "none";
             }
-            // Attribuer les fonctions 
+            // Attribuer les fonctions
             $('#boutonPopupInscription1').click(showPopupInscription);
             $('#boutonPopupInscription2').click(showPopupInscription);
             $('#fermerPopupInscription').click(hidePopupInscription);

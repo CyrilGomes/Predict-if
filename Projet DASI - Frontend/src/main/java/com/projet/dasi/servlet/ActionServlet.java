@@ -23,6 +23,7 @@ import com.projet.dasi.actions.SauvegarderCommentaireConsultationAction;
 import com.projet.dasi.actions.ActionDemandeConsultation;
 import com.projet.dasi.actions.ArchiverConsultationAction;
 import com.projet.dasi.actions.ConnexionAction;
+import com.projet.dasi.actions.DeconnexionAction;
 import com.projet.dasi.actions.GenererStatistiquesAction;
 import com.projet.dasi.actions.InscriptionAction;
 import com.projet.dasi.actions.ObtenirListeMediumAction;
@@ -56,6 +57,11 @@ public class ActionServlet extends HttpServlet {
             
             case "obtenirTypeUtilisateurCourant":
                 action = new ObtenirUtilisateurCourantAction();
+                serialisation = new TypeUtilisateurSerialisation();
+                break;
+                
+            case "demandeDeconnexion":
+                action = new DeconnexionAction();
                 serialisation = new TypeUtilisateurSerialisation();
                 break;
                 

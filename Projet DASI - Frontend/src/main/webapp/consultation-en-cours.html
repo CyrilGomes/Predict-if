@@ -20,6 +20,7 @@ and open the template in the editor.
                 <a href="consultation-en-cours.html" id="currentPage">Consultation en cours</a>
                 <a href="tableau-de-bord.html">Tableau de Bord</a>
                 <a href="profil.html">Profil</a>
+                <a class='boutonDeconnexion'>Déconnexion</a>
             </div>
         </div>
 
@@ -85,8 +86,27 @@ and open the template in the editor.
                 <h1>Historique du Client</h1>
             </div>
         </div>
-
+        
         <script>
+            $('body').on('click', 'a.boutonDeconnexion', function () {
+               if(confirm("Confirmez la déconnexion")){
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'demandeDeconnexion',
+                        },
+                        dataType: 'json'
+                    })
+                            .done(function () {
+                            window.location.replace("index.html");
+                    })
+                            .fail(function (error) {
+                                console.log('Error', error);
+                                alert("Erreur lors de l'appel AJAX");
+                    });
+                }
+            });
             $(document).ready(function () {
 
              // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER 

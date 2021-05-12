@@ -88,7 +88,26 @@ and open the template in the editor.
         </div>
         </div>
         <script>
- 
+            $('body').on('click', 'a.boutonDeconnexion', function () {
+               if(confirm("Confirmez la déconnexion")){
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'demandeDeconnexion',
+                        },
+                        dataType: 'json'
+                    })
+                            .done(function () {
+                            window.location.replace("index.html");
+                    })
+                            .fail(function (error) {
+                                console.log('Error', error);
+                                alert("Erreur lors de l'appel AJAX");
+                    });
+                }
+            });
+            
             function modif()
             {
                 if(document.getElementById("button-modif").value == "Modifier"){
@@ -149,7 +168,8 @@ and open the template in the editor.
                                     $('#headerContent').html(
                                         "<a href='consultation-en-cours.html'>Consultation en cours</a>" +
                                         "<a href='tableau-de-bord.html'>Tableau de Bord</a>" +
-                                        "<a href='profil.html' id='currentPage'>Profil</a>"
+                                        "<a href='profil.html' id='currentPage'>Profil</a>" +
+                                        "<a class='boutonDeconnexion'>Déconnexion</a>"
                                     );
                                 }
                                 else {
@@ -157,7 +177,8 @@ and open the template in the editor.
                                     $('#headerContent').html(
                                         "<a href='demande-consultation.html'>Demander une Consultation</a>" +
                                         "<a href='historique.html'>Historique</a>" +
-                                        "<a href='profil.html' id='currentPage'>Profil</a>"
+                                        "<a href='profil.html' id='currentPage'>Profil</a>" +
+                                        "<a class='boutonDeconnexion'>Déconnexion</a>"
                                     );
                                     // Remplir le profil astral
                                     $('#animalTotem').html("> "+ response.animalTotem);
