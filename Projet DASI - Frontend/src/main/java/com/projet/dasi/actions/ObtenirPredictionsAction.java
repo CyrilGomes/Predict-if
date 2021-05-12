@@ -27,13 +27,6 @@ public class ObtenirPredictionsAction extends Action {
     public void executer(HttpServletRequest request) {
         HttpSession session = request.getSession();
 
-        Employe employeLogge = (Employe) request.getSession().getAttribute("utilisateur");
-        Medium mediumTest = new Cartomancien(Genre.Homme, "ASTROMAN", "LE CHRIST COSMIQUE");
-        ProfilAstral profilAstralTest = new ProfilAstral("OSEF", "PLEASE", "LAISSEZ MOI", "TRANQUILLE");
-        Client clientTest = new Client("NOM", "PRENOM", "ceciEstMonMail@gmail.com", "secretMdp", "0695932520", "69230", new Date());
-        clientTest.setProfilAstral(profilAstralTest);
-        session.setAttribute("consultation", new Consultation(employeLogge, clientTest, mediumTest));
-
         ServicesApplication service = new ServicesApplication();
         Consultation consultation = (Consultation) session.getAttribute("consultation");
         int amour = Integer.parseInt(request.getParameter("amour"));

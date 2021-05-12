@@ -42,6 +42,8 @@ hr {
 
 /* Header BG box */
 .header {
+    /* position: fixed; */
+    /* width: 95vw; */
     overflow: hidden;
     background: url("IMAGES/etoiles.png"), linear-gradient(90deg, #583D72 20%, #612A75);
     padding: 0px 20px;

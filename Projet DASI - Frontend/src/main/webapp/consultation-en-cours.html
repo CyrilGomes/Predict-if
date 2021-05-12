@@ -75,7 +75,7 @@ and open the template in the editor.
                     <button id="saveCommentaire">Sauvegarder</button>
 
                     <button id="annuler">Annuler</button>
-                    <button id="demarrer">Démarrer</button>
+                    <button id="nextState">Démarrer</button>
 
                 </div>
             </div>
@@ -137,7 +137,7 @@ and open the template in the editor.
                                 $('#mediumName').html(response.medium.denomination);
                                 $('#role').html(response.medium.type);
                                 $('#presentation').html(response.medium.presentation);
-                                $('#commentaire').html(response.medium.commentaire);
+                                $('#commentaire').val(response.commentaire);
                                 
                             }
                         })
@@ -146,7 +146,7 @@ and open the template in the editor.
                             alert("Erreur lors de l'appel AJAX");
                         })
                         
-                /* SERVICE CONNEXION */
+  
                 $('#bouton-prediction').on('click', function () {
                     $('#bouton-prediction').html("Generation...");
 
@@ -200,7 +200,7 @@ and open the template in the editor.
                 })
                         .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
                             console.log('Response', response);
-                            if (response.saveCommentaire) {
+                            if (response.statut) {
                                 $('#saveCommentaire').html("Sauvegardé !");
                             } 
                             else {
@@ -231,8 +231,8 @@ and open the template in the editor.
                 })
                         .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
                             console.log('Response', response);
-                            if (response.demarrerTerminer) {
-                                //TODO : Ajouter l'action correspondante
+                            if (response.statut) {
+                                   // ATTENTION, afficher ou cacher les différents boutons (en créer 3 distincts pour démarrer, arrêter, terminer)
 
                             } else {
                                 alert("Erreur !");
@@ -259,7 +259,7 @@ and open the template in the editor.
                 })
                         .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
                             console.log('Response', response);
-                            if (response.annulerConsultation) {
+                            if (response.statut) {
                                 //TODO : Ajouter l'action correspondante
 
                             } else {

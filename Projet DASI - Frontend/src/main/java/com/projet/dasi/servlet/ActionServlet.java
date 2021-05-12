@@ -16,7 +16,6 @@ import com.projet.dasi.serialisations.UtilisateurSerialisation;
 import com.projet.dasi.actions.Action;
 import com.projet.dasi.actions.AnnulerConsultationAction;
 import com.projet.dasi.actions.ConnexionAction;
-import com.projet.dasi.actions.ConsultationAction;
 import com.projet.dasi.actions.DemarrerTerminerConsultationAction;
 import com.projet.dasi.actions.InscriptionAction;
 import com.projet.dasi.actions.ObtenirPredictionsAction;

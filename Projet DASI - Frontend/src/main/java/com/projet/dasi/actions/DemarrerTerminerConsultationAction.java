@@ -25,12 +25,8 @@ public class DemarrerTerminerConsultationAction extends Action {
         ServicesApplication service = new ServicesApplication();
         HttpSession session = request.getSession();
         Consultation consultation = (Consultation) session.getAttribute("consultation");
-        // Appel services
-        
         boolean result = service.demarrerOuTerminerConsultation(consultation);
-
-        // Stoquage des résultats dans les attributs de la requête
-        request.setAttribute("DemarrerTerminerAction", result);
+        request.setAttribute("statut", result);
     }
 
 }

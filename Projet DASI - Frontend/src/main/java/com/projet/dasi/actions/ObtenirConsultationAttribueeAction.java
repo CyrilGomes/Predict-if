@@ -27,12 +27,14 @@ public class ObtenirConsultationAttribueeAction extends Action {
             consultation = service.obtenirConsultationAttribueeAEmploye(employe);
             
             //DEBUG
+            /*
             Employe employeLogge = (Employe) request.getSession().getAttribute("utilisateur");
             Medium mediumTest = new Cartomancien(Genre.Homme, "ASTROMAN", "LE CHRIST COSMIQUE");
             ProfilAstral profilAstralTest = new ProfilAstral("OSEF", "PLEASE", "LAISSEZ MOI", "TRANQUILLE");
             Client clientTest = new Client("NOM", "PRENOM", "ceciEstMonMail@gmail.com", "secretMdp", "0695932520", "69230", new Date());
             clientTest.setProfilAstral(profilAstralTest);
             consultation = new Consultation(employeLogge, clientTest, mediumTest);
+            */
             
             session.setAttribute("consultation", consultation);
         }

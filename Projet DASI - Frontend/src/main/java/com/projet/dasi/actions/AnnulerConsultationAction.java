@@ -21,11 +21,7 @@ public class AnnulerConsultationAction extends Action {
                 ServicesApplication service = new ServicesApplication();
         HttpSession session = request.getSession();
         Consultation consultation = (Consultation) session.getAttribute("consultation");
-        // Appel services
-        
         boolean result = service.annulerConsultation(consultation);
-
-        // Stoquage des résultats dans les attributs de la requête
         request.setAttribute("statut", result);
     }
     
