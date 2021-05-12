@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author creep
  */
-public class ListeMediumAction extends Action {
+public class ObtenirListeMediumAction extends Action {
 
     @Override
     public void executer(HttpServletRequest request) {

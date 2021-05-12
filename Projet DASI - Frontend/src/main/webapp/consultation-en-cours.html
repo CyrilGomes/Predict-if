@@ -8,8 +8,8 @@ and open the template in the editor.
     <head>
         <title>Consultation en cours</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="consultation-en-cours.css">
-        <!-- Librairie Javascript: jQuery (v3.4.1) -->
+        <link rel="stylesheet" href="STYLES/main.css">
+        <link rel="stylesheet" href="STYLES/consultation-en-cours.css">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
     <body style="display: none;">
@@ -120,7 +120,7 @@ and open the template in the editor.
                     url: './ActionServlet',
                     method: 'GET',
                     data: {
-                        todo: 'consultation',
+                        todo: 'obtenirConsultationAttribuee',
                     },
                     dataType: 'json'
                 })
@@ -128,22 +128,24 @@ and open the template in the editor.
                             console.log('Response', response);
                             if (response.consultation) {
 
-                                $('#clientName').html(response.clientName);
-                                $('#signeAstrologique').html(response.signeAstrologique);
-                                $('#signeZodiaqueChinois').html(response.signeZodiaqueChinois);
-                                $('#couleurPorteBonheur').html(response.couleurPorteBonheur);
-                                $('#animalTotem').html(response.animalTotem);
+                                $('#clientName').html(response.client.nom + ' ' + response.client.prenom);
+                                $('#signeAstrologique').html(response.client.signeAstro);
+                                $('#signeZodiaqueChinois').html(response.client.signeChinois);
+                                $('#couleurPorteBonheur').html(response.client.couleur);
+                                $('#animalTotem').html(response.client.animalTotem);
 
-                                $('#mediumName').html(response.mediumName);
-                                $('#role').html(response.role);
-                                $('#presentation').html(response.presentation);
-                                $('#commentaire').html(response.commentaire);
+                                $('#mediumName').html(response.medium.denomination);
+                                $('#role').html(response.medium.type);
+                                $('#presentation').html(response.medium.presentation);
+                                $('#commentaire').html(response.medium.commentaire);
+                                
                             }
                         })
                         .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
                             console.log('Error', error);
                             alert("Erreur lors de l'appel AJAX");
                         })
+                        
                 /* SERVICE CONNEXION */
                 $('#bouton-prediction').on('click', function () {
                     $('#bouton-prediction').html("Generation...");
@@ -156,7 +158,7 @@ and open the template in the editor.
                         url: './ActionServlet',
                         method: 'POST',
                         data: {
-                            todo: 'prediction',
+                            todo: 'obtenirPredictions',
                             amour: valAmour,
                             sante: valSante,
                             travail: valTravail
@@ -191,7 +193,7 @@ and open the template in the editor.
                     url: './ActionServlet',
                     method: 'POST',
                     data: {
-                        todo: 'saveCommentaire',
+                        todo: 'sauvegarderCommentaire',
                         commentaire: commentaire,
                     },
                     dataType: 'json'
@@ -199,16 +201,14 @@ and open the template in the editor.
                         .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
                             console.log('Response', response);
                             if (response.saveCommentaire) {
-
                                 $('#saveCommentaire').html("Sauvegardé !");
-                            } else {
+                            } 
+                            else {
                                 $('#saveCommentaire').html("Erreur");
                             }
-                            setTimeout(
-                                    function ()
-                                    {
-                                        $('#saveCommentaire').html("Sauvegarder");
-                                    }, 3000);
+                            setTimeout(function () {
+                                $('#saveCommentaire').html("Sauvegarder");
+                            }, 3000);
                         })
                         .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
                             console.log('Error', error);
@@ -221,13 +221,11 @@ and open the template in the editor.
             });
 
             $('#demarrer').on('click', function () {
-
-
                 $.ajax({
                     url: './ActionServlet',
                     method: 'POST',
                     data: {
-                        todo: 'demarrerTerminer',
+                        todo: 'demarrerTerminerConsultation',
                     },
                     dataType: 'json'
                 })
