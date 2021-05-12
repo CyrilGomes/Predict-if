@@ -1,10 +1,8 @@
 package com.projet.dasi.servlet;
 
 import com.project.dasi.serialisations.AnnulerConsultationSerialisation;
-import com.project.dasi.serialisations.ConnexionSerialisation;
 import com.project.dasi.serialisations.ConsultationSerialisation;
 import com.project.dasi.serialisations.DemarrerTerminerSerialisation;
-import com.project.dasi.serialisations.InscriptionSerialisation;
 import com.project.dasi.serialisations.PredictionSerialisation;
 import com.project.dasi.serialisations.SaveCommentaireSerialisation;
 import com.project.dasi.serialisations.DemandeConsultationSerialisation;
@@ -52,6 +50,8 @@ public class ActionServlet extends HttpServlet {
         Action action = null;
         Serialisation serialisation = null;
 
+        /* TODO: uniformiser les noms de todos et actions/serialisation psque c'est un peu n'importe quoi*/
+        
         switch (typeRequete) {
             
             case "obtenirTypeUtilisateurCourant":

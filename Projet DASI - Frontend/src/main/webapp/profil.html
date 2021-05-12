@@ -132,7 +132,7 @@ and open the template in the editor.
 
                 $.ajax({
                     url: './ActionServlet',
-                    method: 'POST',
+                    method: 'GET',
                     data: {
                         todo: 'obtenirUtilisateurCourant'
                     },
@@ -145,7 +145,7 @@ and open the template in the editor.
                                 // Changer les boutons du header et le lien du bouton
                                 if (response.type == "employe") {
                                     $('#headerContent').html(
-                                        "<a href='#'>Consultation en cours</a>" +
+                                        "<a href='consultation-en-cours.html'>Consultation en cours</a>" +
                                         "<a href='tableau-de-bord.html'>Tableau de Bord</a>" +
                                         "<a href='profil.html' id='currentPage'>Profil</a>"
                                     );
@@ -154,7 +154,7 @@ and open the template in the editor.
                                     // Changer le header
                                     $('#headerContent').html(
                                         "<a href='demande-consultation.html'>Demander une Consultation</a>" +
-                                        "<a href='#'>Historique</a>" +
+                                        "<a href='historique.html'>Historique</a>" +
                                         "<a href='profil.html' id='currentPage'>Profil</a>"
                                     );
                                     // Remplir le profil astral

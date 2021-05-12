@@ -8,18 +8,18 @@ and open the template in the editor.
     <head>
         <title>Consultation en cours</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="consultationEnCours.css">
+        <link rel="stylesheet" href="consultation-en-cours.css">
         <!-- Librairie Javascript: jQuery (v3.4.1) -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
-    <body>
+    <body style="display: none;">
         <!-- HEADER -->
         <div class="header">
             <a href="index.html" class="logo">Predict'IF</a>
-            <div class="header-right">
-                <a href="#">Consultation En Cours</a>
-                <a href="#">Tableau de bord</a>
-                <a href="#">Profil</a>
+            <div class="header-right" id='headerContent'>
+                <a href="consultation-en-cours.html" id="currentPage">Consultation en cours</a>
+                <a href="tableau-de-bord.html">Tableau de Bord</a>
+                <a href="profil.html">Profil</a>
             </div>
         </div>
 
@@ -27,14 +27,11 @@ and open the template in the editor.
             <div class="Generateur">
                 <h1>Générateur de prédictions</h1>
                 <div class="predictionConteneur">
-
-
                     <div class="predict">
                         <h2 class="predictTitle">Amour :</h2> 
                         <div class="slidecontainer">
                             <input type="range" min="1" max="4" value="1" class="slider" id="amourInput">
                         </div>
-
                     </div>
                     <textarea rows="10" cols="40" id="reponseAmour" class="responseInput"></textarea>
                     <div class="predict">
@@ -42,7 +39,6 @@ and open the template in the editor.
                         <div class="slidecontainer">
                             <input type="range" min="1" max="4" value="1" class="slider" id="santeInput">
                         </div>
-
                     </div>
                     <textarea rows="10" cols="40" id="reponseSante" class ="responseInput"></textarea>
                     <div class="predict">
@@ -91,6 +87,35 @@ and open the template in the editor.
         <script>
             $(document).ready(function () {
 
+             // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER 
+                // Appel AJAX
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'GET',
+                    data: {
+                        todo: 'obtenirTypeUtilisateurCourant'
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) {
+                            console.log('Response', response);
+                            // Si l'utilisateur n'est pas loggé ou qu'il n'est pas un employé...
+                            if (!(response.utilisateur && response.type == "employe")) {
+                                // Rediriger vers l'accueil
+                                window.location.replace("index.html");
+                            }
+                            // Si tout va bien...
+                            else {
+                                // Afficher la page 
+                                $('body').css({"display": "block"});
+                            }
+                        })
+                        .fail(function (error) {
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+
+                // OBTENIR LA CONSULTATION ATTRIBUEE
                 $.ajax({
                     url: './ActionServlet',
                     method: 'GET',
