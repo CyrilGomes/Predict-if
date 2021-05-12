@@ -5,7 +5,9 @@ import com.project.dasi.serialisations.ListeMediumSerialisation;
 import com.project.dasi.serialisations.GenererStatistiquesSerialisation;
 import com.project.dasi.serialisations.ObtenirTypeUtilisateurSerialisation;
 import com.project.dasi.serialisations.ObtenirConsultationAttribueeSerialisation;
+import com.project.dasi.serialisations.ObtenirHistoriqueSerialisation;
 import com.project.dasi.serialisations.Serialisation;
+import com.project.dasi.serialisations.ObtenirInfoProfilSerialisation;
 import com.projet.dasi.actions.Action;
 import com.projet.dasi.actions.ActionDemandeConsultation;
 import com.projet.dasi.actions.ConnexionAction;
@@ -13,7 +15,9 @@ import com.projet.dasi.actions.GenererStatistiquesAction;
 import com.projet.dasi.actions.InscriptionAction;
 import com.projet.dasi.actions.ListeMediumAction;
 import com.projet.dasi.actions.ObtenirConsultationAttribueeAction;
+import com.projet.dasi.actions.ObtenirHistoriqueAction;
 import com.projet.dasi.actions.ObtenirUtilisateurCourantAction;
+import com.projet.dasi.actions.SauvegarderDonneesAction;
 import com.projet.dasi.dao.JpaUtil;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -39,6 +43,20 @@ public class ActionServlet extends HttpServlet {
             case "obtenirUtilisateurCourant":
                 action = new ObtenirUtilisateurCourantAction();
                 serialisation = new ObtenirTypeUtilisateurSerialisation();
+                break;
+            case "obtenirListeConsultations":
+                action = new ObtenirHistoriqueAction();
+                serialisation = new ObtenirHistoriqueSerialisation();
+                break;
+            
+            case "sauvegarderDonnees":
+                action = new SauvegarderDonneesAction();
+                serialisation = new ObtenirTypeUtilisateurSerialisation();
+                break;
+                
+            case "obtenirInfoProfil":
+                action = new ObtenirUtilisateurCourantAction();
+                serialisation = new ObtenirInfoProfilSerialisation();
                 break;
             
             case "connexion":

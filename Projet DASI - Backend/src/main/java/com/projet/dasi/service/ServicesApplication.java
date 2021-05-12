@@ -27,7 +27,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class ServicesApplication {
@@ -555,22 +554,22 @@ public class ServicesApplication {
     }
  
     /* Sauvegarder la modification d'un profil de Client */
-    public boolean modifierProfil(Client client, String nom, String prenom, String dateNaissance, String codePostal, String telephone, String email, String motDePasse) {
+    public boolean modifierProfil(Utilisateur utilisateur, String nom, String prenom, String dateNaissance, String codePostal, String telephone, String email, String motDePasse) {
         
         // Créer les DAOs et le contexte de persistance
-        ClientDao clientDao = new ClientDao();
+        UtilisateurDao utilisateurDao = new UtilisateurDao();
         JpaUtil.creerContextePersistance();
         
         // Modifier la consultation
         boolean reussite = true;
-        client.setNom(nom);
-        client.setPrenom(prenom);
-        client.setCodePostal(codePostal);
-        client.setTelephone(telephone);
-        client.setMail(email);
-        client.setMotDePasse(motDePasse);
+        utilisateur.setNom(nom);
+        utilisateur.setPrenom(prenom);
+        utilisateur.setCodePostal(codePostal);
+        utilisateur.setTelephone(telephone);
+        utilisateur.setMail(email);
+        utilisateur.setMotDePasse(motDePasse);
         try {
-            client.setDateNaissance(AstroAPI.DATE_FORMAT.parse(dateNaissance));
+            utilisateur.setDateNaissance(AstroAPI.DATE_FORMAT.parse(dateNaissance));
         }
         catch (ParseException ex) {
             ex.printStackTrace();
@@ -580,7 +579,7 @@ public class ServicesApplication {
         // Mettre à jour la modification
         try {
             JpaUtil.ouvrirTransaction();
-            clientDao.mettreAJour(client);
+            utilisateurDao.mettreAJour(utilisateur);
             JpaUtil.validerTransaction();
         } 
         catch (Exception ex) {

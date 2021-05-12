@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="profil.css" type="text/css"/>
+
+        <title>Mon compte</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    </head>
+    <body>
+        <!-- HEADER -->
+        <div class="header">
+            <a href="index.html" class="logo">Predict'IF</a>
+            <div class="header-right">  <!-- TODO rediriger vers les pages de l'en-tête qui correspondent -->
+                <a href="#" id="tableauBord">Tableau de Bord </a>
+                <a href="#" id="nameUser"></a>
+            </div>
+            <div>
+                <h1>Mon historique de consultations</h1>
+                <div id="listeMediums">
+                    
+                </div>
+            </div>
+        </div>
+        <script>
+            $('body').on('click', 'a.boutonRDV', function () {
+                var mediumId = $(this).attr('id');
+                var buttonState = $('#' + mediumId).html();
+                $('#' + mediumId).html("Demande en cours...");
+
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'demanderConsultation',
+                        id: mediumId
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) {
+                            if(response.status){
+                                alert("Demande de consultation réussie");
+                            }
+                            else{
+                                alert("Echec de demande de consultation");
+                            }
+                        })
+                        .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                            console.log('Error', error); // LOG dans Console Javascript
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+                        .always(function () {
+                            $('#' + mediumId).html(buttonState);
+                        });
+            });
+            $(document).ready(function () {
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'GET',
+                    data: {
+                        todo: 'obtenirListeConsultation'
+                    },
+                    dataType: 'json'
+                })
+                        .done(function(response){
+                            console.log(response.historique);
+                            var htmlString = "";
+                            htmlString += "<table style='margin: 5px;'>\n";
+                            for (var id in response.historique) {
+                                var consultation = response.historique[id];
+                                htmlString += "<h2>" + consultation.date + "</h2>";
+                                htmlString += "<tr><div style='border: 1px solid black;'>";
+                                htmlString += "<h2>" + consultation.denomination + "</h2>";
+                                htmlString += "<p>" + consultation.presentation + "<br>";
+
+                                switch (medium.typeMedium) {
+                                    case "Astrologue":
+                                        htmlString += "Formation : " + consultation.formation + "<br>";
+                                        htmlString += "Promotion : " + consultation.promotion;
+                                        break;
+
+                                    case "Spirite":
+                                        htmlString += "Support : " + consultation.support;
+                                        break;
+                                }
+
+                                htmlString += "<br>";
+                                htmlString += "<a id='" + consultation.id + "' class='boutonRDV'><button>Prendre RDV</button></a>";
+                                htmlString += "</p></div></tr>";
+                            }
+                            htmlString += "</table>";
+                            console.log(htmlString);
+                            $('#listeMediums').html(htmlString);
+                        })
+                        .fail(function (error) {
+                                console.log('Error', error);
+                                alert("Erreur lors de l'appel AJAX");
+                        });
+            });
+           
+  
+        </script>
+    </body>
+</html>

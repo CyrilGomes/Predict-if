@@ -200,7 +200,7 @@ public class Main {
     
     public static void requeteStatistiques() {
         
-        HashMap<String, Long> res = servicesApplication.genererStatistiquesMediumsPopulaires(true);
+        LinkedHashMap<String, Long> res = servicesApplication.genererStatistiquesMediumsPopulaires(true);
         if (res != null) {
             System.out.println("> Succès demande statistiques mediums");
             System.out.println(res.toString());
