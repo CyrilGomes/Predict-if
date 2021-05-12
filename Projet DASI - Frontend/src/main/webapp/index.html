@@ -12,7 +12,7 @@
         <!-- HEADER -->
         <div class="header">
             <a href="index.html" class="logo">Predict'IF</a>
-            <div class="header-right">
+            <div class="header-right" id='headerContent'>
                 <a href="#" id="boutonPopupConnexion1">Se connecter</a>
                 <a href="#" id="boutonPopupInscription1">S'inscrire</a>
             </div>
@@ -104,7 +104,6 @@
 
                 // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER 
                 // Appel AJAX
-                /*
                 $.ajax({
                     url: './ActionServlet',
                     method: 'POST',
@@ -118,7 +117,23 @@
                             // Si l'utilisateur est déjà logué
                             if (response.utilisateur) {
                                 // Changer les boutons du header et le lien du bouton
-                                window.location.replace("index.html");
+                                if (response.type == "employe") {
+                                    $('#headerContent').html(
+                                        "<a href='#'>Consultation en cours</a>" +
+                                        "<a href='tableau-de-bord.html'>Tableau de Bord</a>" +
+                                        "<a href='#'>Profil</a>"
+                                    );
+                                    $('#boutonPopupConnexion2').click(function() { window.location.replace("tableau-de-bord.html")});
+                                    
+                                }
+                                else {
+                                    $('#headerContent').html(
+                                        "<a href='#'>Demander une Consultation</a>" +
+                                        "<a href='#'>Historique</a>" +
+                                        "<a href='#'>Profil</a>"
+                                    );
+                                    //$('#boutonPopupConnexion2').click(function() { window.location.replace("demande-consultation.html")});
+                                }
                             }
                         })
                         .fail(function (error) {
@@ -129,18 +144,15 @@
                             // Afficher la page 
                             $('body').css({"display": "block"});
                         });
-                */
                 // SERVICE CONNEXION 
                 $('#bouton-connexion').on('click', function () {
 
                     console.log("clic sur le bouton de connexion");
                     $('#bouton-connexion').html("Connexion...");
                     $('#messageErreurConnexion').html("");
-
                     // Récupération de la valeur des champs du formulaire
                     var champMail = $('#champ-mail-connexion').val();
                     var champMdp = $('#champ-mdp-connexion').val();
-
                     // Si les champs sont vides, arrêter
                     if (champMail == '' || champMdp == '') {
                         $('#messageErreurConnexion').html("Veuillez compléter tous les champs");
@@ -188,14 +200,12 @@
                                 $('#bouton-connexion').html("Connexion");
                             });
                 });
-
                 // SERVICE INSCRIPTION 
                 $('#bouton-inscription').on('click', function () {
 
                     console.log("clic sur le bouton de inscription");
                     $('#bouton-inscription').html("Inscription...");
                     $('#messageErreurInscription').html("");
-
                     // Récupération de la valeur des champs du formulaire
                     var champNom = $('#champ-nom-inscription').val();
                     var champPrenom = $('#champ-prenom-inscription').val();
@@ -204,7 +214,6 @@
                     var champTel = $('#champ-tel-inscription').val();
                     var champMail = $('#champ-mail-inscription').val();
                     var champMdp = $('#champ-mdp-inscription').val();
-
                     // Si les champs sont vides, arrêter
                     if (champNom == '' || champPrenom == '' || champDateNaissance == '' || champCodePostal == '' || champTel == '' || champMail == '' || champMdp == '') {
                         $('#messageErreurInscription').html("Veuillez compléter tous les champs");
@@ -251,9 +260,7 @@
                                 $('#bouton-inscription').html("Inscription");
                             });
                 });
-
             });
-
             // POPUP DE CONNEXION 
             // Fonction d'ouverture du popup
             function showPopupConnexion() {
@@ -276,7 +283,6 @@
             $('#boutonPopupConnexion2').click(showPopupConnexion);
             $('#boutonPopupConnexion3').click(showPopupConnexion);
             $('#fermerPopupConnexion').click(hidePopupConnexion);
-
             // POPUP D'INSCRIPTION
             // Fonction d'ouverture du popup
             function showPopupInscription() {
@@ -307,7 +313,6 @@
             $('#boutonPopupInscription1').click(showPopupInscription);
             $('#boutonPopupInscription2').click(showPopupInscription);
             $('#fermerPopupInscription').click(hidePopupInscription);
-
             // FERMETURE AUTOMATIQUE DES POPUPS
             window.onclick = function (event) {
                 if (event.target === overlayConnexion) {
