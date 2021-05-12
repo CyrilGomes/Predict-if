@@ -30,7 +30,7 @@ public class DemandeConsultationSerialisation extends Serialisation {
         Boolean statutConsultation = (Boolean)request.getAttribute("statut");
         
         // Populer le container
-        container.addProperty("utilisateur", statutConsultation);
+        container.addProperty("status", statutConsultation);
         
         // L'écrire sur le flux de sortie
         PrintWriter out = this.getWriter(response);
