@@ -61,6 +61,7 @@
                 <h1><span class="ligne">S'inscrire</span></h1>
                 <br/>
                 <div id="formulaireInscription">
+                    <!--
                     <table>
                         <tr>
                             <td><strong>Nom :</strong> <input type="text" id="champ-nom-inscription" /></td>
@@ -86,6 +87,43 @@
                             <td colspan=2><div><button id="bouton-inscription">Inscription</button></div></td>
                         </tr>
                     </table>
+                    -->
+                    <!-- MON COMPTE -->
+                    <div class="compteGrid">
+                        <div class="compteInfoPrenom">
+                            <div class='compteLabel'> Prénom : </div>  
+                            <div class='compteForm'> <input type="text" id="champ-prenom-inscription" value="votre prénom"/> </div>
+                        </div>
+                        <div class="compteInfoNom">
+                            <div class='compteLabel'> Nom : </div>  
+                            <div class='compteForm'> <input type="text" id="champ-nom-inscription" value="votre nom"/> </div>
+                        </div>
+                        <div class="compteInfoDateNaissance">
+                            <div class='compteLabel'> Date de Naissance : </div>  
+                            <div class='compteForm'> <input type="date" id="champ-date-naissance-inscription"/> </div>
+                        </div>
+                        <div class="compteInfoCodePostal">
+                            <div class='compteLabel'> Code Postal : </div>  
+                            <div class='compteForm'> <input type="text" id="champ-code-postal-inscription" value="votre code postal"/> </div>
+                        </div>
+                        <div class="compteInfoTelephone">
+                            <div class='compteLabel'> Téléphone : </div>  
+                            <div class='compteForm'> <input type="tel" id="champ-tel-inscription" value="votre téléphone"/> </div>
+                        </div>
+                        <div class="separateur1"><hr/></div>
+                        <div class="compteInfoEmail">
+                            <div class='compteLabel'> Adresse Mail : </div>  
+                            <div class='compteForm'> <input type="text" id="champ-mail-inscription" value="votre adresse mail"/> </div>
+                        </div>
+                        <div class="compteInfoMdp">
+                            <div class='compteLabel'> Mot de Passe : </div>  
+                            <div class='compteForm'> <input type="password" id="champ-mdp-inscription" value="votre mot de passe"/> </div>
+                        </div>
+                         <div class="separateur2"><hr/></div>
+                        <div class="boutonInscrire"> 
+                            <button id="bouton-inscription">Inscription</button>
+                        </div>
+                    </div>
                     <p id="messageErreurInscription" class="texteErreur"></p>
                 </div>
                 <div id="confirmationInscription" style="display: none;">
@@ -100,95 +138,39 @@
         </div>
 
         <script>
-        
-        // INITIALISATION
-        $(document).ready(function () {
 
-            // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER
-            $.ajax({
-                url: './ActionServlet',
-                method: 'GET',
-                data: {
-                    todo: 'obtenirTypeUtilisateurCourant'
-                },
-                dataType: 'json'
-            })
-                    .done(function (response) {
-                        console.log('Response', response);
-                        // Si l'utilisateur est déjà logué
-                        if (response.utilisateur) {
-                            // Employé: le rediriger
-                            if (response.type == "employe") {
-                                window.location.replace("tableau-de-bord.html");
-                            }
-                            // Client: changer les boutons du header et le lien du bouton
-                            else {
-                                $('#headerContent').html(
-                                        "<a href='demande-consultation.html'>Demander une Consultation</a>" +
-                                        "<a href='historique.html'>Historique</a>" +
-                                        "<a href='profil.html'>Profil</a>" +
-                                        "<a class='boutonDeconnexion'>Déconnexion</a>"
-                                        );
-                                $('#boutonPopupConnexion2').click(function () {
-                                    window.location.replace("demande-consultation.html")
-                                });
-                            }
-                        }
-                    })
-                    .fail(function (error) {
-                        console.log('Error', error);
-                        alert("Erreur lors de l'appel AJAX");
-                    })
-                    .always(function () {
-                        // Afficher la page
-                        $('body').css({"display": "block"});
-                    });
-            // SERVICE CONNEXION
-            $('#bouton-connexion').on('click', function () {
+            // INITIALISATION
+            $(document).ready(function () {
 
-                console.log("clic sur le bouton de connexion");
-                $('#bouton-connexion').html("Connexion...");
-                $('#messageErreurConnexion').html("");
-                // Récupération de la valeur des champs du formulaire
-                var champMail = $('#champ-mail-connexion').val();
-                var champMdp = $('#champ-mdp-connexion').val();
-                // Si les champs sont vides, arrêter
-                if (champMail == '' || champMdp == '') {
-                    $('#messageErreurConnexion').html("Veuillez compléter tous les champs");
-                    $('#bouton-connexion').html("Connexion");
-                    return;
-                }
-
-                // Appel AJAX
+                // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER
                 $.ajax({
                     url: './ActionServlet',
-                    method: 'POST',
+                    method: 'GET',
                     data: {
-                        todo: 'connexion',
-                        login: champMail,
-                        password: champMdp
+                        todo: 'obtenirTypeUtilisateurCourant'
                     },
                     dataType: 'json'
                 })
                         .done(function (response) {
                             console.log('Response', response);
-                            // Si la connexion a réussi (utilisateur retourné)...
+                            // Si l'utilisateur est déjà logué
                             if (response.utilisateur) {
-                                // S'il est de type client...
-                                if (response.type == "client") {
-                                    // Rediriger vers la page Demande Consultation
-                                    window.location.replace("demande-consultation.html");
-                                }
-                                // S'il est de type employé...
-                                else {
-                                    // Rediriger vers la page Tableau de Bord
+                                // Employé: le rediriger
+                                if (response.type == "employe") {
                                     window.location.replace("tableau-de-bord.html");
                                 }
-                            }
-                            // Sinon...
-                            else {
-                                // Afficher un message d'erreur
-                                $('#messageErreurConnexion').html("Erreur de connexion. Veuillez réessayer");
+                                // Client: changer les boutons du header et le lien du bouton
+                                else {
+                                    $('#headerContent').html(
+                                            "<a href='demande-consultation.html'>Demander une Consultation</a>" +
+                                            "<a href='historique.html'>Historique</a>" +
+                                            "<a href='profil.html'>Profil</a>" +
+                                            "<a class='boutonDeconnexion'>Déconnexion</a>"
+                                            );
+                                    $('#boutonPopupConnexion2').click(function () {
+                                        window.location.replace("demande-consultation.html")
+                                    });
+                                }
                             }
                         })
                         .fail(function (error) {
@@ -196,154 +178,210 @@
                             alert("Erreur lors de l'appel AJAX");
                         })
                         .always(function () {
-                            $('#bouton-connexion').html("Connexion");
+                            // Afficher la page
+                            $('body').css({"display": "block"});
                         });
-            });
-            // SERVICE INSCRIPTION
-            $('#bouton-inscription').on('click', function () {
+                // SERVICE CONNEXION
+                $('#bouton-connexion').on('click', function () {
 
-                console.log("clic sur le bouton de inscription");
-                $('#bouton-inscription').html("Inscription...");
+                    console.log("clic sur le bouton de connexion");
+                    $('#bouton-connexion').html("Connexion...");
+                    $('#messageErreurConnexion').html("");
+                    // Récupération de la valeur des champs du formulaire
+                    var champMail = $('#champ-mail-connexion').val();
+                    var champMdp = $('#champ-mdp-connexion').val();
+                    // Si les champs sont vides, arrêter
+                    if (champMail == '' || champMdp == '') {
+                        $('#messageErreurConnexion').html("Veuillez compléter tous les champs");
+                        $('#bouton-connexion').html("Connexion");
+                        return;
+                    }
+
+                    // Appel AJAX
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'connexion',
+                            login: champMail,
+                            password: champMdp
+                        },
+                        dataType: 'json'
+                    })
+                            .done(function (response) {
+                                console.log('Response', response);
+                                // Si la connexion a réussi (utilisateur retourné)...
+                                if (response.utilisateur) {
+                                    // S'il est de type client...
+                                    if (response.type == "client") {
+                                        // Rediriger vers la page Demande Consultation
+                                        window.location.replace("demande-consultation.html");
+                                    }
+                                    // S'il est de type employé...
+                                    else {
+                                        // Rediriger vers la page Tableau de Bord
+                                        window.location.replace("tableau-de-bord.html");
+                                    }
+                                }
+                                // Sinon...
+                                else {
+                                    // Afficher un message d'erreur
+                                    $('#messageErreurConnexion').html("Erreur de connexion. Veuillez réessayer");
+                                }
+                            })
+                            .fail(function (error) {
+                                console.log('Error', error);
+                                alert("Erreur lors de l'appel AJAX");
+                            })
+                            .always(function () {
+                                $('#bouton-connexion').html("Connexion");
+                            });
+                });
+                // SERVICE INSCRIPTION
+                $('#bouton-inscription').on('click', function () {
+
+                    console.log("clic sur le bouton de inscription");
+                    $('#bouton-inscription').html("Inscription...");
+                    $('#messageErreurInscription').html("");
+                    // Récupération de la valeur des champs du formulaire
+                    var champNom = $('#champ-nom-inscription').val();
+                    var champPrenom = $('#champ-prenom-inscription').val();
+                    var champDateNaissance = $('#champ-date-naissance-inscription').val();
+                    var champCodePostal = $('#champ-code-postal-inscription').val();
+                    var champTel = $('#champ-tel-inscription').val();
+                    var champMail = $('#champ-mail-inscription').val();
+                    var champMdp = $('#champ-mdp-inscription').val();
+                    // Si les champs sont vides, arrêter
+                    if (champNom == '' || champPrenom == '' || champDateNaissance == '' || champCodePostal == '' || champTel == '' || champMail == '' || champMdp == '') {
+                        $('#messageErreurInscription').html("Veuillez compléter tous les champs");
+                        $('#bouton-inscription').html("Inscription");
+                        return;
+                    }
+
+                    // Appel AJAX
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'inscription',
+                            nom: champNom,
+                            prenom: champPrenom,
+                            dateNaissance: champDateNaissance,
+                            codePostal: champCodePostal,
+                            tel: champTel,
+                            email: champMail,
+                            mdp: champMdp
+
+                        },
+                        dataType: 'json'
+                    })
+                            .done(function (response) {
+                                console.log('Response', response);
+                                // Si l'inscription a réussi (utilisateur retourné)...
+                                if (response.utilisateur) {
+                                    // Cacher le formulaire et afficher la confirmation d'inscription
+                                    formulaireInscription.style.display = "none";
+                                    confirmationInscription.style.display = "block";
+                                }
+                                // Sinon...
+                                else {
+                                    // Afficher un message d'erreur
+                                    $('#messageErreurInscription').html("Erreur d'inscription. Veuillez réessayer");
+                                }
+                            })
+                            .fail(function (error) {
+                                console.log('Error', error);
+                                alert("Erreur lors de l'appel AJAX");
+                            })
+                            .always(function () {
+                                $('#bouton-inscription').html("Inscription");
+                            });
+                });
+            });
+            // POPUP DE CONNEXION
+            // Fonction d'ouverture du popup
+            function showPopupConnexion() {
+                // Désafficher popup inscription
+                overlayInscription.style.display = "none";
+                // Afficher
+                overlayConnexion.style.display = "block";
+                // Reset les éléments
+                $('#messageErreurConnexion').html("");
+                $('#bouton-connexion').html("Connexion");
+                $('#champ-mail-connexion').val('');
+                $('#champ-mdp-connexion').val('');
+            }
+            // Fonction de fermeture
+            function hidePopupConnexion() {
+                overlayConnexion.style.display = "none";
+            }
+            // Attribuer les fonctions
+            $('#boutonPopupConnexion1').click(showPopupConnexion);
+            $('#boutonPopupConnexion2').click(showPopupConnexion);
+            $('#boutonPopupConnexion3').click(showPopupConnexion);
+            $('#fermerPopupConnexion').click(hidePopupConnexion);
+            // POPUP D'INSCRIPTION
+            // Fonction d'ouverture du popup
+            function showPopupInscription() {
+                // Reset les divs
+                formulaireInscription.style.display = "block";
+                confirmationInscription.style.display = "none";
+                // Désafficher popup connexion
+                overlayConnexion.style.display = "none";
+                // Afficher
+                overlayInscription.style.display = "block";
+                // Reset les éléments
                 $('#messageErreurInscription').html("");
-                // Récupération de la valeur des champs du formulaire
-                var champNom = $('#champ-nom-inscription').val();
-                var champPrenom = $('#champ-prenom-inscription').val();
-                var champDateNaissance = $('#champ-date-naissance-inscription').val();
-                var champCodePostal = $('#champ-code-postal-inscription').val();
-                var champTel = $('#champ-tel-inscription').val();
-                var champMail = $('#champ-mail-inscription').val();
-                var champMdp = $('#champ-mdp-inscription').val();
-                // Si les champs sont vides, arrêter
-                if (champNom == '' || champPrenom == '' || champDateNaissance == '' || champCodePostal == '' || champTel == '' || champMail == '' || champMdp == '') {
-                    $('#messageErreurInscription').html("Veuillez compléter tous les champs");
-                    $('#bouton-inscription').html("Inscription");
-                    return;
+                $('#bouton-inscription').html("Inscription");
+                $('#champ-nom-inscription').val('');
+                $('#champ-prenom-inscription').val('');
+                $('#champ-date-naissance-inscription').val('');
+                $('#champ-mail-inscription').val('');
+                $('#champ-code-postal-inscription').val('');
+                $('#champ-tel-inscription').val('');
+                $('#champ-mail-inscription').val('');
+                $('#champ-mdp-inscription').val('');
+            }
+            // Fonction de fermeture
+            function hidePopupInscription() {
+                overlayInscription.style.display = "none";
+            }
+            // Attribuer les fonctions
+            $('#boutonPopupInscription1').click(showPopupInscription);
+            $('#boutonPopupInscription2').click(showPopupInscription);
+            $('#fermerPopupInscription').click(hidePopupInscription);
+            // FERMETURE AUTOMATIQUE DES POPUPS
+            window.onclick = function (event) {
+                if (event.target === overlayConnexion) {
+                    hidePopupConnexion();
                 }
+                if (event.target === overlayInscription) {
+                    hidePopupInscription();
+                }
+            };
 
-                // Appel AJAX
-                $.ajax({
-                    url: './ActionServlet',
-                    method: 'POST',
-                    data: {
-                        todo: 'inscription',
-                        nom: champNom,
-                        prenom: champPrenom,
-                        dateNaissance: champDateNaissance,
-                        codePostal: champCodePostal,
-                        tel: champTel,
-                        email: champMail,
-                        mdp: champMdp
-
-                    },
-                    dataType: 'json'
-                })
-                        .done(function (response) {
-                            console.log('Response', response);
-                            // Si l'inscription a réussi (utilisateur retourné)...
-                            if (response.utilisateur) {
-                                // Cacher le formulaire et afficher la confirmation d'inscription
-                                formulaireInscription.style.display = "none";
-                                confirmationInscription.style.display = "block";
-                            }
-                            // Sinon...
-                            else {
-                                // Afficher un message d'erreur
-                                $('#messageErreurInscription').html("Erreur d'inscription. Veuillez réessayer");
-                            }
-                        })
-                        .fail(function (error) {
-                            console.log('Error', error);
-                            alert("Erreur lors de l'appel AJAX");
-                        })
-                        .always(function () {
-                            $('#bouton-inscription').html("Inscription");
-                        });
+            // BOUTON DECONNEXION 
+            $('body').on('click', 'a.boutonDeconnexion', function () {
+                if (confirm("Êtes-vous sûrs de vouloir vous déconnecter ?")) {
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'demandeDeconnexion'
+                        },
+                        dataType: 'json'
+                    })
+                            .done(function () {
+                                window.location.replace("index.html");
+                            })
+                            .fail(function (error) {
+                                console.log('Error', error);
+                                alert("Nous n'avons pas pu vous déconnecter.");
+                            });
+                }
             });
-        });
-        // POPUP DE CONNEXION
-        // Fonction d'ouverture du popup
-        function showPopupConnexion() {
-            // Désafficher popup inscription
-            overlayInscription.style.display = "none";
-            // Afficher
-            overlayConnexion.style.display = "block";
-            // Reset les éléments
-            $('#messageErreurConnexion').html("");
-            $('#bouton-connexion').html("Connexion");
-            $('#champ-mail-connexion').val('');
-            $('#champ-mdp-connexion').val('');
-        }
-        // Fonction de fermeture
-        function hidePopupConnexion() {
-            overlayConnexion.style.display = "none";
-        }
-        // Attribuer les fonctions
-        $('#boutonPopupConnexion1').click(showPopupConnexion);
-        $('#boutonPopupConnexion2').click(showPopupConnexion);
-        $('#boutonPopupConnexion3').click(showPopupConnexion);
-        $('#fermerPopupConnexion').click(hidePopupConnexion);
-        // POPUP D'INSCRIPTION
-        // Fonction d'ouverture du popup
-        function showPopupInscription() {
-            // Reset les divs
-            formulaireInscription.style.display = "block";
-            confirmationInscription.style.display = "none";
-            // Désafficher popup connexion
-            overlayConnexion.style.display = "none";
-            // Afficher
-            overlayInscription.style.display = "block";
-            // Reset les éléments
-            $('#messageErreurInscription').html("");
-            $('#bouton-inscription').html("Inscription");
-            $('#champ-nom-inscription').val('');
-            $('#champ-prenom-inscription').val('');
-            $('#champ-date-naissance-inscription').val('');
-            $('#champ-mail-inscription').val('');
-            $('#champ-code-postal-inscription').val('');
-            $('#champ-tel-inscription').val('');
-            $('#champ-mail-inscription').val('');
-            $('#champ-mdp-inscription').val('');
-        }
-        // Fonction de fermeture
-        function hidePopupInscription() {
-            overlayInscription.style.display = "none";
-        }
-        // Attribuer les fonctions
-        $('#boutonPopupInscription1').click(showPopupInscription);
-        $('#boutonPopupInscription2').click(showPopupInscription);
-        $('#fermerPopupInscription').click(hidePopupInscription);
-        // FERMETURE AUTOMATIQUE DES POPUPS
-        window.onclick = function (event) {
-            if (event.target === overlayConnexion) {
-                hidePopupConnexion();
-            }
-            if (event.target === overlayInscription) {
-                hidePopupInscription();
-            }
-        };
 
-        // BOUTON DECONNEXION 
-        $('body').on('click', 'a.boutonDeconnexion', function () {
-            if (confirm("Êtes-vous sûrs de vouloir vous déconnecter ?")) {
-                $.ajax({
-                    url: './ActionServlet',
-                    method: 'POST',
-                    data: {
-                        todo: 'demandeDeconnexion'
-                    },
-                    dataType: 'json'
-                })
-                        .done(function () {
-                            window.location.replace("index.html");
-                        })
-                        .fail(function (error) {
-                            console.log('Error', error);
-                            alert("Nous n'avons pas pu vous déconnecter.");
-                        });
-            }
-        });
 
-            
         </script>
 
     </body>

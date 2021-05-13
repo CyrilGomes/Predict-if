@@ -79,7 +79,7 @@
     width: 33%; 
 }
 .popupInscription {
-    width: 40%;
+    width: 50%;
 }
 /* Bouton fermer les popups */
 .fermerPopup {
@@ -95,33 +95,81 @@
     cursor: pointer;
 }
 /* Tableaux de formulaires */
-.popupConnexion table, .popupInscription table {
+.popupConnexion table {
     width: 80%; 
     margin-left: auto; 
     margin-right: auto;
     border-spacing: 12px;
     border-collapse: separate;
 }
-.popupConnexion td, .popupInscription td {
+.popupConnexion td {
     height: 30px;
     color: #583D72;
     font-size: 20px;
     text-align: left;
 }
-.popupInscription td {
-    padding: 4px 0px;
-}
-.popupConnexion td[colspan="2"], .popupInscription td[colspan="2"] {
+.popupConnexion td[colspan="2"] {
     height: 40px;
     padding: 12px 0px;
 }
-.popupConnexion input, .popupInscription input, 
-.popupConnexion div, .popupInscription div, 
-.popupConnexion button, .popupInscription button  {
+.popupConnexion input, .popupConnexion div, .popupConnexion button {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
 }
-.popupInscription input {
-    height: 65%
+
+.compteGrid {
+  display: grid;
+  margin: 0px 80px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 6px 50px;
+  grid-template-areas:
+    "compteInfo compteInfoNom"
+    "compteInfoDateNaissance compteInfoCodePostal"
+    "compteInfoTelephone ."
+    "separateur1 separateur1"
+    "compteInfoEmail compteInfoMdp"
+    "separateur2 separateur2"
+    "boutonInscrire boutonInscrire";
+}
+.compteInfoPrenom { grid-area: compteInfo; }
+.compteInfoNom { grid-area: compteInfoNom; }
+.compteInfoDateNaissance { grid-area: compteInfoDateNaissance; }
+.compteInfoCodePostal { grid-area: compteInfoCodePostal; }
+.compteInfoTelephone { grid-area: compteInfoTelephone; }
+.separateur1 { grid-area: separateur1; }
+.compteInfoEmail { grid-area: compteInfoEmail; }
+.compteInfoMdp { grid-area: compteInfoMdp; }
+.separateur2 { grid-area: separateur2; }
+.boutonInscrire { grid-area: boutonInscrire; }
+
+.compteInfoPrenom, .compteInfoNom, .compteInfoDateNaissance, .compteInfoCodePostal, .compteInfoTelephone, .compteInfoEmail, .compteInfoMdp, .separateur1, .separateur2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.compteLabel {
+    color: #583D72;
+    font-weight: bold;
+    font-size: 20px;
+    align-self: center;
+}
+.compteForm {
+    margin-left: 20px;
+    flex-grow: 1;
+    align-self: center;
+}
+.compteForm input {
+    width: 100%;
+    font-size: 20px;
+}
+.separateur1 hr, .separateur2 hr {
+    align-self: center;
+    width: 80%;
+}
+.boutonInscrire button {
+    width: 100%;
+    font-size: 20px;
+    height: 40px;
 }
