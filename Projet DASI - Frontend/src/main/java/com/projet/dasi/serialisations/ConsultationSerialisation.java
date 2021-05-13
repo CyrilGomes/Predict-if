@@ -52,10 +52,24 @@ public class ConsultationSerialisation extends Serialisation {
 
             // Sérialiser le médium de la consultation
             Medium medium = consultation.getMedium();
-            JsonObject mediumData = (JsonObject)gson.toJsonTree(medium);
-            if (medium instanceof Cartomancien) { mediumData.addProperty("type", "cartomancien"); }
-            if (medium instanceof Spirite) { mediumData.addProperty("type", "spirite"); }
-            if (medium instanceof Astrologue) { mediumData.addProperty("type", "astrologue"); }
+            //JsonObject mediumData = (JsonObject)gson.toJsonTree(medium);
+            JsonObject mediumData = new JsonObject();
+            mediumData.addProperty("denomination", medium.getDenomination());
+            mediumData.addProperty("genre", medium.getGenre().toString());
+            mediumData.addProperty("id", medium.getId());
+            mediumData.addProperty("presentation", medium.getPresentation());
+            if(medium instanceof Astrologue){
+                mediumData.addProperty("formation", ((Astrologue)medium).getFormation());
+                mediumData.addProperty("promotion", ((Astrologue)medium).getPromotion());
+                mediumData.addProperty("type", "Astrologue");
+            }
+            else if(medium instanceof Spirite){
+                mediumData.addProperty("support", ((Spirite)medium).getSupport());
+                mediumData.addProperty("type", "Spirite");
+            }
+            else if(medium instanceof Cartomancien){
+                mediumData.addProperty("type", "Cartomancien");
+            }
             container.add("medium", mediumData);
             
             // Sérialiser le commentaire et l'état

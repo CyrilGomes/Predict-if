@@ -34,25 +34,25 @@ public class ListeMediumSerialisation extends Serialisation {
        
         JsonArray listeMediumsJson = new JsonArray();
         for(Medium medium : listeMediums){
-            JsonObject objetMedium = new JsonObject();
-            objetMedium.addProperty("denomination", medium.getDenomination());
-            objetMedium.addProperty("genre", medium.getGenre().toString());
-            objetMedium.addProperty("id", medium.getId());
-            objetMedium.addProperty("presentation", medium.getPresentation());
+            JsonObject mediumData = new JsonObject();
+            mediumData.addProperty("denomination", medium.getDenomination());
+            mediumData.addProperty("genre", medium.getGenre().toString());
+            mediumData.addProperty("id", medium.getId());
+            mediumData.addProperty("presentation", medium.getPresentation());
             
             if(medium instanceof Astrologue){
-                objetMedium.addProperty("formation", ((Astrologue)medium).getFormation());
-                objetMedium.addProperty("promotion", ((Astrologue)medium).getPromotion());
-                objetMedium.addProperty("type", "Astrologue");
+                mediumData.addProperty("formation", ((Astrologue)medium).getFormation());
+                mediumData.addProperty("promotion", ((Astrologue)medium).getPromotion());
+                mediumData.addProperty("type", "Astrologue");
             }
             else if(medium instanceof Spirite){
-                objetMedium.addProperty("support", ((Spirite)medium).getSupport());
-                objetMedium.addProperty("type", "Spirite");
+                mediumData.addProperty("support", ((Spirite)medium).getSupport());
+                mediumData.addProperty("type", "Spirite");
             }
             else if(medium instanceof Cartomancien){
-                objetMedium.addProperty("type", "Cartomancien");
+                mediumData.addProperty("type", "Cartomancien");
             }
-            listeMediumsJson.add(objetMedium);
+            listeMediumsJson.add(mediumData);
         }
         
         container.add("listeMediums", listeMediumsJson);       

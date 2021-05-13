@@ -46,7 +46,7 @@
                         <td><div><input type="password" id="champ-mdp-connexion" /></div></td>
                     </tr>
                     <tr>
-                        <td colspan=2><div><button id="bouton-connexion">Connexion</button></div></td>
+                        <td colspan=2><div class="boutonConnecter"><button id="bouton-connexion">Connexion</button></div></td>
                     </tr>
                 </table>
                 <p><strong>Vous n'avez pas de compte? <a href="#" id="boutonPopupInscription2" class="hyperlien">Inscrivez-vous</a> en 2 clics</strong></p>
@@ -143,16 +143,18 @@
                                     $('#boutonPopupConnexion2').click(function () {
                                         window.location.replace("demande-consultation.html")
                                     });
+                                    // Afficher la page
+                                    $('body').css({"display": "block"});
                                 }
+                            }
+                            else {
+                                // Afficher la page
+                                $('body').css({"display": "block"});
                             }
                         })
                         .fail(function (error) {
                             console.log('Error', error);
-                            alert("Erreur lors de l'appel AJAX");
-                        })
-                        .always(function () {
-                            // Afficher la page
-                            $('body').css({"display": "block"});
+                            alert("Erreur obtenirTypeUtilisateurCourant");
                         });
                         
                 // SERVICE CONNEXION
@@ -207,7 +209,7 @@
                             })
                             .fail(function (error) {
                                 console.log('Error', error);
-                                alert("Erreur lors de l'appel AJAX");
+                                alert("Erreur connexion");
                             })
                             .always(function () {
                                 $('#bouton-connexion').html("Connexion");
@@ -271,7 +273,7 @@
                             })
                             .fail(function (error) {
                                 console.log('Error', error);
-                                alert("Erreur lors de l'appel AJAX");
+                                alert("Erreur inscription");
                             })
                             .always(function () {
                                 $('#bouton-inscription').html("Inscription"); 

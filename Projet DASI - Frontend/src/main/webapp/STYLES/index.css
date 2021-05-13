@@ -117,6 +117,11 @@
     height: 100%;
     box-sizing: border-box;
 }
+.boutonConnecter button {
+    width: 100%;
+    font-size: 22px;
+    height: 40px;
+}
 
 .compteGrid {
   display: grid;
@@ -170,6 +175,6 @@
 }
 .boutonInscrire button {
     width: 100%;
-    font-size: 20px;
+    font-size: 22px;
     height: 40px;
 }

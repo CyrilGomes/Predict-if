@@ -1,7 +1,6 @@
 /* ----------------------------------------------------------------- */
 /* PANEL STYLES */
 /* ----------------------------------------------------------------- */
-/* Panels */
 .panelContent {
     display: flex;
     flex-direction: column;
@@ -33,7 +32,9 @@
     padding: 20px;
 }
 
-/* Graphs */
+/* ----------------------------------------------------------------- */
+/* GRAPH STYLES */
+/* ----------------------------------------------------------------- */
 .graphique {
     padding: 20px;
     border-style: solid;
@@ -44,11 +45,107 @@
     background: white;
 }
 
-/* Consultation attribuée */
+/* ----------------------------------------------------------------- */
+/* CONSULTATION ATTRIBUEE */
+/* ----------------------------------------------------------------- */
+#consultationAttribuee {
+    padding: 1.25em 1.5em 2em 1.5em;
+    position: relative;
+}
+.consultationPanel {
+    margin: 15px;
+}
+.consultationPanelHeader {
+    display: flex;
+    flex-direction: row;
+}
+.consultationPanelHeaderLabel {
+    font-size: 26px;
+    font-weight: bold;
+    align-self: center;
+}
+.consultationPanelHeaderLine hr {
+    border-width: 2px;
+    border-color: black;
+    width: 99%;
+}
+.consultationPanelHeaderLine {
+    align-self: center;
+    margin-left: 15px;
+    flex-grow: 2;
+}
+
+#messageConsultation {
+    font-size: 20px;
+    margin: 5px;
+}
+#boutonJeSuisPret {
+    position: absolute;
+    bottom: -1em;
+    right: 1.5em;
+    z-index: 10;
+    padding: 10px 30px;
+    font-size: 26px;
+}
+
+/* ----------------------------------------------------------------- */
+/* CLIENT STYLES */
+/* ----------------------------------------------------------------- */
+.itemClient {
+    margin: 10px 0px;
+    border-radius: 6px;
+    padding: 15px 0px 15px 0px;
+    position: relative;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.16));
+}
+.flexContainerClient {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.clientLeft {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 12em;
+}
+.imageClient {
+    -webkit-filter: drop-shadow(2px 2px 0 black)
+                    drop-shadow(-2px 2px 0 black)
+                    drop-shadow(2px -2px 0 black)
+                    drop-shadow(-2px -2px 0 black);
+    filter: drop-shadow(2px 2px 0 black)
+            drop-shadow(-2px 2px 0 black)
+            drop-shadow(2px -2px 0 black)
+            drop-shadow(-2px -2px 0 black);
+    border-radius: 50%;
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.1);
+}
+.nomClient {
+    font-size: 26px;
+    font-weight: bold;
+    color: #583D72;
+    line-height: 1.5em;
+}
+.profilAstralClient {
+    font-size: 20px;
+    color: black;
+}
+.lienHistoriqueClient {
+    color: black;
+    font-size: 20px;
+}
+
+/* ----------------------------------------------------------------- */
+/* MEDIUM STYLES */
+/* ----------------------------------------------------------------- */
 .itemMedium {
     margin: 10px 0px;
     border-radius: 6px;
-    padding: 15px 0px 0px 0px;
+    padding: 15px 0px 15px 0px;
     position: relative;
 }
 .itemMedium[genre="Homme"] {
@@ -65,7 +162,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex-grow: 0;   
+    flex-grow: 0;
     flex-shrink: 0;
     flex-basis: 12em;
 }
@@ -78,33 +175,31 @@
             drop-shadow(-2px 2px 0 black)
             drop-shadow(2px -2px 0 black)
             drop-shadow(-2px -2px 0 black);
+    border-radius: 50%;
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.1);
 }
 .typeMedium {
     font-size: 18px;
     font-weight: bold;
     text-transform: uppercase;
     text-shadow: 1px 1px 6px grey;
-    margin: 10px;
+    font-style: oblique;
+    margin-top: 15px;
 }
-
 .denominationMedium {
-    font-size: 30px;
+    font-size: 26px;
     font-weight: bold;
     color: #583D72;
+    line-height: 1.5em;
 }
 .presentationMedium {
-    font-size: 24px;
+    font-size: 20px;
     color: black;
+    line-height: 1.5em;
 }
 .complementMedium {
     color: #555;
-    font-size: 22px;
+    font-size: 18px;
     font-style: oblique;
-}
-
-#consultationAttribuee {
-    padding: 20px;
-}
-#informationsConsultation {
-    font-weight: bold;
+    line-height: 1.5em;
 }
