@@ -1,15 +1,7 @@
 /* ----------------------------------------------------------------- */
 /* PANEL STYLES */
 /* ----------------------------------------------------------------- */
-.graphique {
-    padding: 20px;
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 6px;
-    border-color: #AAA;
-    margin: 5px;
-    background: white;
-}
+/* Panels */
 .panelContent {
     display: flex;
     flex-direction: column;
@@ -40,6 +32,76 @@
     justify-content: space-around;
     padding: 20px;
 }
+
+/* Graphs */
+.graphique {
+    padding: 20px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 6px;
+    border-color: #AAA;
+    margin: 5px;
+    background: white;
+}
+
+/* Consultation attribuée */
+.itemMedium {
+    margin: 10px 0px;
+    border-radius: 6px;
+    padding: 15px 0px 0px 0px;
+    position: relative;
+}
+.itemMedium[genre="Homme"] {
+    background: linear-gradient(90deg, rgba(227, 113, 255, 0.3), rgba(116, 113, 255, 0.3));
+}
+.itemMedium[genre="Femme"] {
+    background: linear-gradient(90deg, rgba(255, 222, 48, 0.3), rgba(232, 48, 37, 0.3));
+}
+.flexContainerMedium {
+    display: flex;
+    flex-direction: row;
+}
+.mediumLeft {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 0;   
+    flex-shrink: 0;
+    flex-basis: 12em;
+}
+.imageMedium {
+    -webkit-filter: drop-shadow(2px 2px 0 black)
+                    drop-shadow(-2px 2px 0 black)
+                    drop-shadow(2px -2px 0 black)
+                    drop-shadow(-2px -2px 0 black);
+    filter: drop-shadow(2px 2px 0 black)
+            drop-shadow(-2px 2px 0 black)
+            drop-shadow(2px -2px 0 black)
+            drop-shadow(-2px -2px 0 black);
+}
+.typeMedium {
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 6px grey;
+    margin: 10px;
+}
+
+.denominationMedium {
+    font-size: 30px;
+    font-weight: bold;
+    color: #583D72;
+}
+.presentationMedium {
+    font-size: 24px;
+    color: black;
+}
+.complementMedium {
+    color: #555;
+    font-size: 22px;
+    font-style: oblique;
+}
+
 #consultationAttribuee {
     padding: 20px;
 }

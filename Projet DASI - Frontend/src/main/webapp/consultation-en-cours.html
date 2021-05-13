@@ -355,25 +355,25 @@ and open the template in the editor.
                     url: './ActionServlet',
                     method: 'GET',
                     data: {
-                        todo: 'obtenirEtatConsultationSession',
+                        todo: 'obtenirEtatConsultationSession'
                     },
                     dataType: 'json'
                 }).done(function () {
                     console.log(response);
-                    if (response.etat == "Termine") {
+                    if (response.etat === "Termine") {
                         if (confirm("Voulez-vous vraiment quitter? Vous ne pourrez plus accéder à la consultation")) {
                             $.ajax({
                                 url: './ActionServlet',
                                 method: 'POST',
                                 data: {
-                                    todo: 'ArchiverConsultationAction',
+                                    todo: 'ArchiverConsultationAction'
                                 },
                                 dataType: 'json'
                             }).done(function () {
                                 if (response.statut) {
                                     window.location.replace("tableau-de-bord.html");
                                 }
-                            })
+                            });
                         }
                     }
                 });

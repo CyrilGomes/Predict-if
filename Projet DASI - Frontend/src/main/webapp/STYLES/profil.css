@@ -1,127 +1,130 @@
 /* ----------------------------------------------------------------- */
 /* PAGE STYLES */
 /* ----------------------------------------------------------------- */
-
 .date{
     font-size: 30px; 
 }
-.flex-container {
-    display: -ms-inline-flexbox;
-    display: -webkit-inline-flex;
-    display: inline-flex;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
+
+/* Panels */
+.flexContainer {
+    display: flex;
     flex-direction: row;
-    -webkit-flex-wrap: nowrap;
-    -ms-flex-wrap: nowrap;
-    flex-wrap: nowrap;
-    -webkit-justify-content: flex-start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
-    -webkit-align-content: stretch;
-    -ms-flex-line-pack: stretch;
-    align-content: stretch;
-    -webkit-align-items: flex-start;
-    -ms-flex-align: start;
-    align-items: flex-start;
-    }
-
-.flex-item:nth-child(1) {
-    -webkit-order: 0;
-    -ms-flex-order: 0;
-    order: 0;
-    -webkit-flex: 0 1 auto;
-    -ms-flex: 0 1 auto;
-    flex: 0 1 auto;
-    -webkit-align-self: auto;
-    -ms-flex-item-align: auto;
-    align-self: auto;
+    justify-content: space-between;
+    padding: 20px;
 }
 
-
-.flex-item:nth-child(2) {
-    -webkit-order: 0;
-    -ms-flex-order: 0;
-    order: 0;
-    -webkit-flex: 0 1 auto;
-    -ms-flex: 0 1 auto;
-    flex: 0 1 auto;
-    -webkit-align-self: auto;
-    -ms-flex-item-align: auto;
-    align-self: auto;
+/* Compte */
+.compte {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    margin: 20px;
 }
-
-.Compte {
-    width: 1300px;
-    margin-top:70px;
-    font-size: 30px;
+.compteHeader {
+    background: #FF8E71;
+    border-radius: 6px 6px 0px 0px;
+    padding: 10px 20px;
+    font-size: 36px;
     font-weight: bold;
-    color: #583D72;
-    font-family: "Calibri";
-    border: solid;
-    border-image: linear-gradient(0deg, #583D72 30%, #FF8E71) 10;
-    border-image-repeat: stretch;
-    border-width: 10px;
-    border-radius: 5px 5px 5px 5px;
+    font-family: 'Scada';
 }
-.ProfilAstral {
-    width: 375px;
-    margin-top:70px;
-    margin-left: 100px;
-    font-size: 25px;
-    font-weight: bold;
-    color: #583D72;
-    font-family: "Calibri";
-    border: solid;
-    border-image: linear-gradient(0deg, #583D72 30%, #FF8E71) 10;
-    border-image-repeat: stretch;
-    border-width: 10px;
-    border-radius: 5px 5px 5px 5px;
-    display: none;
-}
-.ProfilAstral::before{
-    width: 375px;
-    font-size: 40px;
-    margin-top:-70px;
-    margin-left:-10px;
-    font-weight: bold;
-    position:absolute;
+.compteContent {
+    padding: 2.5em 3em 4em 3em;
     color: black;
-    background-color: #FF8E71;
-    content: "Mon Profil Astral";
-    font-family: "Calibri";
-    border: solid #FF8E71;
+    border: solid;
+    border-image: linear-gradient(180deg, #FF8E71 5%, #583D72) 10;
+    border-width: 0px 6px 6px 6px;
+    background: rgba(0, 0, 0, 0.01);
+    position: relative;
+}
+.compteGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 20px 30px;
+  grid-template-areas:
+    "compteInfo compteInfoNom"
+    "compteInfoDateNaissance compteInfoCodePostal"
+    "compteInfoTelephone ."
+    "separateur separateur"
+    "compteInfoEmail compteInfoEmail"
+    "compteInfoMdp compteInfoMdp";
+}
+.compteInfoPrenom { grid-area: compteInfo; }
+.compteInfoNom { grid-area: compteInfoNom; }
+.compteInfoDateNaissance { grid-area: compteInfoDateNaissance; }
+.compteInfoCodePostal { grid-area: compteInfoCodePostal; }
+.compteInfoTelephone { grid-area: compteInfoTelephone; }
+.separateur { grid-area: separateur; }
+.compteInfoEmail { grid-area: compteInfoEmail; }
+.compteInfoMdp { grid-area: compteInfoMdp; }
+
+.compteInfoPrenom, .compteInfoNom, .compteInfoDateNaissance, .compteInfoCodePostal, .compteInfoTelephone, .compteInfoEmail, .compteInfoMdp, .separateur {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.compteLabel {
+    color: #583D72;
     font-weight: bold;
-    border-width: 10px;
-    border-radius: 5px 5px 5px 5px;
+    font-size: 26px;
+    align-self: center;
+}
+.compteForm {
+    margin-left: 20px;
+    flex-grow: 1;
+    align-self: center;
+}
+.compteForm input {
+    width: 100%;
+    font-size: 26px;
+}
+.separateur hr {
+    align-self: center;
 }
 
-.Compte::before{
-    grid-area: Compte;
-    width: 1300px;
-    font-size: 40px;
-    margin-top:-70px;
-    margin-left:-10px;
-    font-weight: bold;
-    position:absolute;
-    color: black;
-    background-color: #FF8E71;
-    content: "Mon Compte";
-    font-family: "Calibri";
-    border: solid #FF8E71;
-    font-weight: bold;
-    border-width: 10px;
-    border-radius: 5px 5px 5px 5px;
-}
-.monBouton {
-    background-color:#583D72;
-    width: 225px;
-    color:white;
+/* Bouton de modification */
+#boutonModif {
+    padding: 10px 20px;
     font-size: 30px;
+    position: absolute;
+    bottom: -1em;
+    right: 1.5em;
+    z-index: 10;
+}
+
+/* Profil Astral */
+.profilAstral {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    margin: 20px;
+}
+.profilAstralHeader {
+    background: #FF8E71;
+    border-radius: 6px 6px 0px 0px;
+    padding: 10px 20px;
+    font-size: 36px;
+    font-weight: bold;
+    font-family: 'Scada';
+}
+.profilAstralContent { 
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.01);
     border: solid;
-    border-width: 10px;
-    border-radius: 5px 5px 5px 5px;
-    border-color: #583D72;
-    margin-left: 1000px;
-    margin-bottom: -30px;
+    border-image: linear-gradient(180deg, #FF8E71 5%, #583D72) 10;
+    border-width: 0px 6px 6px 6px;
+    padding: 5px 25px 20px 25px;
+}
+.profilAstralLabel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #583D72;
+    font-size: 28px;
+}
+.profilAstralEntry {
+    color: black;
+    font-size: 26px;
+    margin: -24px 0px 6px 0px;
 }

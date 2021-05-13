@@ -23,7 +23,7 @@
 .bienvenue {
     font-size: 32px;
     font-weight: bold;
-    margin-top: 30px;
+    margin-top: 25px;
     font-family: 'Scada';
 }
 #nomClient {
@@ -105,7 +105,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 25px;
 }
 .profilAstralHeader {
     background: #FF8E71;
@@ -132,7 +132,7 @@
 }
 .profilAstralEntry {
     color: black;
-    font-size: 25px;
+    font-size: 26px;
     margin: -24px 0px 6px 0px;
 }
 #voirProfilComplet {

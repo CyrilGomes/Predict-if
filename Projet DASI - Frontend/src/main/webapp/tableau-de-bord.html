@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Tableau de Bord Employé</title>
+        <title>Tableau de Bord</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="STYLES/main.css">
         <link rel="stylesheet" href="STYLES/tableau-de-bord.css">
@@ -16,7 +16,7 @@
             <div class="header-right" id='headerContent'>
                 <a href='tableau-de-bord.html' id='currentPage'>Tableau de Bord</a>
                 <a href='profil.html'>Profil</a>
-                <a class='boutonDeconnexion'>Déconnexion</a>
+                <a href='#' id='boutonDeconnexion'>Déconnexion</a>
             </div>
         </div>
 
@@ -70,28 +70,9 @@
 
 
         <script>
-            $('body').on('click', 'a.boutonDeconnexion', function () {
-                if (confirm("Confirmez la déconnexion")) {
-                    $.ajax({
-                        url: './ActionServlet',
-                        method: 'POST',
-                        data: {
-                            todo: 'demandeDeconnexion',
-                        },
-                        dataType: 'json'
-                    })
-                            .done(function () {
-                                window.location.replace("index.html");
-                            })
-                            .fail(function (error) {
-                                console.log('Error', error);
-                                alert("Erreur lors de l'appel AJAX");
-                            });
-                }
-            });
+            
+            // INITIALISATION 
             $(document).ready(function () {
-
-                // INITIALISATION 
 
                 // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER 
                 $.ajax({
@@ -119,6 +100,7 @@
                             console.log('Error', error);
                             alert("Erreur lors de l'appel AJAX");
                         });
+                        
                 // OBTENIR CONSULTATION ATTRIBUEE 
                 $.ajax({
                     url: './ActionServlet',
@@ -167,7 +149,7 @@
                         .fail(function (error) {
                             console.log('Error', error);
                             alert("Erreur lors de l'appel AJAX");
-                        })
+                        });
 
                 // OBTENIR STATISTIQUES 1 (mediums et leurs clients) 
                 // Appel AJAX
@@ -194,7 +176,7 @@
                                 datasets: [{
                                         data: nombreConsultations,
                                         backgroundColor: couleurs,
-                                        hoverOffset: 10,
+                                        hoverOffset: 10
                                     }]
                             };
                             const config = {
@@ -228,7 +210,7 @@
                         .fail(function (error) {
                             console.log('Error', error);
                             alert("Erreur lors de l'appel AJAX");
-                        })
+                        });
 
                 // OBTENIR STATISTIQUE 2 (employes et leurs clients) 
                 // Appel AJAX
@@ -297,7 +279,7 @@
                         .fail(function (error) {
                             console.log('Error', error);
                             alert("Erreur lors de l'appel AJAX");
-                        })
+                        });
 
                 // OBTENIR STATISTIQUE 3 (mediums les plus populaires) 
                 // Appel AJAX
@@ -366,9 +348,8 @@
                         .fail(function (error) {
                             console.log('Error', error);
                             alert("Erreur lors de l'appel AJAX");
-                        })
-                        .always(function () {
                         });
+                
                 // OBTENIR STATISTIQUE 4 (clients et leurs temps d'appel) 
                 // Appel AJAX
                 $.ajax({
@@ -437,29 +418,8 @@
                         .fail(function (error) {
                             console.log('Error', error);
                             alert("Erreur lors de l'appel AJAX");
-                        })
+                        });
 
-                /* SERVICE signalerDebutConsultation */
-                $('#boutonJeSuisPret').on('click', function () {
-                    // Appel AJAX
-                    $.ajax({
-                        url: './ActionServlet',
-                        method: 'POST',
-                        data: {
-                            todo: 'signalerDebutConsultation'
-                        },
-                        dataType: 'json'
-                    })
-                            .done(function (response) {
-                                console.log('Response', response);
-                                // Rediriger vers la page Consultation en Cours
-                                window.location.replace("consultation-en-cours.html");
-                            })
-                            .fail(function (error) {
-                                console.log('Error', error);
-                                alert("Erreur lors de l'appel AJAX");
-                            })
-                });
                 // FONCTIONS DE COULEURS
                 var hsvToRgb = function (h, s, v) {
                     var r, g, b;
@@ -497,6 +457,50 @@
                     return "rgba(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + "," + alpha + ")";
                 };
             });
+            
+             /* BOUTON JE SUIS PRET */
+            $('#boutonJeSuisPret').on('click', function () {
+                // Appel AJAX
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'signalerDebutConsultation'
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) {
+                            console.log('Response', response);
+                            // Rediriger vers la page Consultation en Cours
+                            window.location.replace("consultation-en-cours.html");
+                        })
+                        .fail(function (error) {
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
+                        });
+            });
+            
+            // BOUTON DECONNEXION
+            $('#boutonDeconnexion').on('click', function () {
+                if (confirm("Confirmez la déconnexion")) {
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'demandeDeconnexion',
+                        },
+                        dataType: 'json'
+                    })
+                            .done(function () {
+                                window.location.replace("index.html");
+                            })
+                            .fail(function (error) {
+                                console.log('Error', error);
+                                alert("Erreur lors de l'appel AJAX");
+                            });
+                }
+            });
+            
         </script>
 
     </body>
