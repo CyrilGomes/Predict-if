@@ -67,6 +67,7 @@
             drop-shadow(-2px 2px 0 black)
             drop-shadow(2px -2px 0 black)
             drop-shadow(-2px -2px 0 black);
+    border-radius: 50%;
 }
 .typeMedium {
     font-size: 18px;
