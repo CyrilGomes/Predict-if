@@ -91,8 +91,7 @@ and open the template in the editor.
         // INITIALISATION
         $(document).ready(function () {
 
-            // Rediriger vers une autre page si privilèges pas bons,
-            // Remplir Profil Astral
+            // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER, REMPLIR PROFIL ASTRAL
             $.ajax({
                 url: './ActionServlet',
                 method: 'GET',
@@ -125,7 +124,7 @@ and open the template in the editor.
                         alert("Erreur obtenirUtilisateurCourant");
                     });
 
-            // Remplir la liste des mediums
+            // REMPLIR LA LISTE DES MEDIUMS
             $.ajax({
                 url: './ActionServlet',
                 method: 'GET',

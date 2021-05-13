@@ -1,0 +1,96 @@
+.panelHistorique {
+    padding: 10px 30px;
+    width: 75%;
+}
+#historique {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 0px;
+}
+
+/* ----------------------------------------------------------------- */
+/* CLIENT STYLES */
+/* ----------------------------------------------------------------- */
+.bienvenue {
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 25px;
+    font-family: 'Scada';
+}
+.itemHistoriqueClient {
+    margin: 30px 0px;
+    border-radius: 6px;
+    padding: 50px 0px 0px 0px;
+    position: relative;
+}
+.itemHistoriqueClient[genre="Homme"] {
+    background: linear-gradient(90deg, rgba(227, 113, 255, 0.3), rgba(116, 113, 255, 0.3));
+}
+.itemHistoriqueClient[genre="Femme"] {
+    background: linear-gradient(90deg, rgba(255, 222, 48, 0.3), rgba(232, 48, 37, 0.3));
+}
+.dateHistoriqueClient {
+    border-radius: 6px;
+    border-style: solid;
+    border-width: 4px;
+    border-color: #583D72;
+    background: #EEE;
+    color: black;
+    font-family: "Scada";
+    font-weight: bold;
+    font-size: 28px;
+    padding: 10px 15px;
+    position: absolute;
+    top: -1em;
+}
+.flexContainerMediumClient {
+    display: flex;
+    flex-direction: row;
+}
+.mediumLeftClient {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 0;   
+    flex-shrink: 0;
+    flex-basis: 12em;
+}
+.imageMediumClient {
+    -webkit-filter: drop-shadow(2px 2px 0 black)
+                    drop-shadow(-2px 2px 0 black)
+                    drop-shadow(2px -2px 0 black)
+                    drop-shadow(-2px -2px 0 black);
+    filter: drop-shadow(2px 2px 0 black)
+            drop-shadow(-2px 2px 0 black)
+            drop-shadow(2px -2px 0 black)
+            drop-shadow(-2px -2px 0 black);
+}
+.typeMediumClient {
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 6px grey;
+    margin: 10px;
+}
+.denominationMediumClient {
+    font-size: 30px;
+    font-weight: bold;
+    color: #583D72;
+}
+.presentationMediumClient {
+    font-size: 24px;
+    color: black;
+}
+.complementMediumClient {
+    color: #555;
+    font-size: 22px;
+    font-style: oblique;
+}
+.boutonRDV {
+    position: absolute;
+    bottom:0;
+    right:0;
+    z-index: 10;
+    padding: 10px 30px;
+    font-size: 26px;
+}
