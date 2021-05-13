@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="profil.css" type="text/css"/>
-
         <title>Mon compte</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,110 +9,93 @@
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
     <body style="display: none;">
-        
+
         <!-- HEADER -->
         <div class="header">
             <a href="index.html" class="logo">Predict'IF</a>
             <div class="header-right" id='headerContent'>
             </div>
         </div>
-        
+
         <div>
             <h1>Mon historique de consultations</h1>
         </div>
         <div id="historique"></div>
-        
-        <script>
-            $('body').on('click', 'a.boutonDeconnexion', function () {
-               if(confirm("Confirmez la déconnexion")){
-                    $.ajax({
-                        url: './ActionServlet',
-                        method: 'POST',
-                        data: {
-                            todo: 'demandeDeconnexion',
-                        },
-                        dataType: 'json'
-                    })
-                            .done(function () {
-                            window.location.replace("index.html");
-                    })
-                            .fail(function (error) {
-                                console.log('Error', error);
-                                alert("Erreur lors de l'appel AJAX");
-                    });
-                }
-            });
-            $('body').on('click', 'a.boutonRDV', function () {
-                var mediumId = $(this).attr('id');
-                var buttonState = $('#' + mediumId).html();
-                $('#' + mediumId).html("Demande en cours...");
 
-                $.ajax({
-                    url: './ActionServlet',
-                    method: 'POST',
-                    data: {
-                        todo: 'demanderConsultation',
-                        id: mediumId
-                    },
-                    dataType: 'json'
-                })
-                        .done(function (response) {
-                            if(response.status){
-                                alert("Demande de consultation réussie");
-                            }
-                            else{
-                                alert("Echec de demande de consultation");
-                            }
-                        })
-                        .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
-                            console.log('Error', error); // LOG dans Console Javascript
-                            alert("Erreur lors de l'appel AJAX");
-                        })
-                        .always(function () {
-                            $('#' + mediumId).html(buttonState);
-                        });
-            });
-            $(document).ready(function () {
-                var typeUtilisateur = "";
-                console.log(typeUtilisateur);
-                $.ajax({
-                    url: './ActionServlet',
-                    method: 'GET',
-                    data: {
-                        todo: 'obtenirTypeUtilisateurCourant'
-                    },
-                    dataType: 'json'
-                })
-                        .done(function(response){
-                            typeUtilisateur = response.type;
-                            console.log(typeUtilisateur);
-                            // Si l'utilisateur est déjà logué
-                            if (response.utilisateur) {
-                                // Changer les boutons du header et le lien du bouton
-                                if (typeUtilisateur == "employe") {
-                                    $('#headerContent').html(
+        <script>
+
+        $('body').on('click', 'a.boutonRDV', function () {
+            var mediumId = $(this).attr('id');
+            var buttonState = $('#' + mediumId).html();
+            $('#' + mediumId).html("Demande en cours...");
+
+            $.ajax({
+                url: './ActionServlet',
+                method: 'POST',
+                data: {
+                    todo: 'demanderConsultation',
+                    id: mediumId
+                },
+                dataType: 'json'
+            })
+                    .done(function (response) {
+                        if (response.status) {
+                            alert("Demande de consultation réussie");
+                        } else {
+                            alert("Echec de demande de consultation");
+                        }
+                    })
+                    .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                        console.log('Error', error); // LOG dans Console Javascript
+                        alert("Erreur lors de l'appel AJAX");
+                    })
+                    .always(function () {
+                        $('#' + mediumId).html(buttonState);
+                    });
+        });
+
+        // INITIALISATION
+        $(document).ready(function () {
+
+            // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER, CHARGER L'HISTORIQUE
+            $.ajax({
+                url: './ActionServlet',
+                method: 'GET',
+                data: {
+                    todo: 'obtenirTypeUtilisateurCourant'
+                },
+                dataType: 'json'
+            })
+                    .done(function (response) {
+                        console.log(response);
+                        // Si l'utilisateur est déjà logué
+                        if (response.utilisateur) {
+                            // Changer les boutons du header et le lien du bouton
+                            if (response.type == "employe") {
+                                $('#headerContent').html(
                                         "<a href='consultation-en-cours.html'>Consultation en cours</a>" +
                                         "<a href='tableau-de-bord.html' id='currentPage'>Tableau de Bord</a>" +
                                         "<a href='profil.html'>Profil</a>" +
-                                        "<a class='boutonDeconnexion'>Déconnexion</a>"
-                                    );
-                                    // requete ajax pour obtenir l'historique du client pris en charge par l'employé courant
-                                    $.ajax({
-                                        url: './ActionServlet',
-                                        method: 'GET',
-                                        data: {
-                                            todo: 'obtenirHistoriqueClientReqEmploye'
-                                        },
-                                        dataType: 'json'
-                                    })
-                                        .done(function(response){
+                                        "<a href='#' class='boutonDeconnexion'>Déconnexion</a>"
+                                        );
 
-                                            var htmlString ="";
+                                // OBTENIR HISTORIQUE DU CLIENT PRIS EN CHARGE PAR L'EMPLOYE COURANT
+                                $.ajax({
+                                    url: './ActionServlet',
+                                    method: 'GET',
+                                    data: {
+                                        todo: 'obtenirHistoriqueClientReqEmploye'
+                                    },
+                                    dataType: 'json'
+                                })
+                                        .done(function (response) {
+
+                                            var htmlString = "";
                                             // affichage des informations de l'historique du client que l'employé prend en charge 
                                             htmlString += "<table style='margin: 5px;'>\n";
-                                                for (var id in response.historique) {
+                                            for (var id in response.historique) {
                                                 var consultation = response.historique[id];
-                                                htmlString += "<tr><div style='border: 1px solid black;'><p> Date :"+ consultation.date;
+                                                htmlString += "<tr><div style='border: 1px solid black;'><p> Date :" + consultation.date;
                                                 htmlString += " Employé en charge : " + consultation.employe;
                                                 htmlString += " Médium incarné: " + consultation.denomination + "(" + consultation.typeMedium + ")";
                                                 htmlString += "Commentaire" + consultation.commentaire + "<br>";
@@ -126,83 +107,103 @@
 
                                         })
                                         .fail(function (error) {
-                                                console.log('Error', error);
-                                                alert("Erreur lors de l'appel AJAX");
+                                            console.log('Error', error);
+                                            alert("Erreur lors de l'appel AJAX");
                                         });
-                                }
-                                else {
-                                    // Changer le header
-                                    $('#headerContent').html(
+                            } else {
+                                // Changer le header
+                                $('#headerContent').html(
                                         "<a href='demande-consultation.html'>Demander une Consultation</a>" +
                                         "<a href='historique.html' id='currentPage'>Historique</a>" +
                                         "<a href='profil.html'>Profil</a>" +
-                                        "<a class='boutonDeconnexion'>Déconnexion</a>"
-                                    );
-                                    // requete ajax pour obtenir l'historique du client
-                                    $.ajax({
-                                        url: './ActionServlet',
-                                        method: 'GET',
-                                        data: {
-                                            todo: 'obtenirHistoriqueClientReqClient'
-                                        },
-                                        dataType: 'json'
-                                    })
-                                            .done(function(response){
-                                                console.log(response.historique);
-                                                var htmlString ="";
-                                                
-                                                // affichage des informations de l'historique client
-                                                htmlString += "<table style='margin: 5px;'>\n";
-                                                for (var id in response.historique) {
-                                                    var consultation = response.historique[id];
-                                                    htmlString += "<h2>" + consultation.date + "</h2>";
-                                                    htmlString += "<tr><div style='border: 1px solid black;'>";
-                                                    htmlString += "<h2>" + consultation.denomination + "</h2>";
-                                                    htmlString += "<p>" + consultation.presentation + "<br>";
+                                        "<a href='#' class='boutonDeconnexion'>Déconnexion</a>"
+                                        );
 
-                                                    switch (consultation.typeMedium) {
-                                                        case "Astrologue":
-                                                            htmlString += "Formation : " + consultation.formation + "<br>";
-                                                            htmlString += "Promotion : " + consultation.promotion;
-                                                            break;
+                                // OBTENIR HISTORIQUE DU CLIENT COURANT
+                                $.ajax({
+                                    url: './ActionServlet',
+                                    method: 'GET',
+                                    data: {
+                                        todo: 'obtenirHistoriqueClientReqClient'
+                                    },
+                                    dataType: 'json'
+                                })
+                                        .done(function (response) {
+                                            console.log(response.historique);
+                                            var htmlString = "";
 
-                                                        case "Spirite":
-                                                            htmlString += "Support : " + consultation.support;
-                                                            break;
-                                                    }
+                                            // affichage des informations de l'historique client
+                                            htmlString += "<table style='margin: 5px;'>\n";
+                                            for (var id in response.historique) {
+                                                var consultation = response.historique[id];
+                                                htmlString += "<h2>" + consultation.date + "</h2>";
+                                                htmlString += "<tr><div style='border: 1px solid black;'>";
+                                                htmlString += "<h2>" + consultation.denomination + "</h2>";
+                                                htmlString += "<p>" + consultation.presentation + "<br>";
 
-                                                    htmlString += "<br>";
-                                                    htmlString += "<a id='" + consultation.id + "' class='boutonRDV'><button>Prendre RDV</button></a>";
-                                                    htmlString += "</p></div></tr>";
+                                                switch (consultation.typeMedium) {
+                                                    case "Astrologue":
+                                                        htmlString += "Formation : " + consultation.formation + "<br>";
+                                                        htmlString += "Promotion : " + consultation.promotion;
+                                                        break;
+
+                                                    case "Spirite":
+                                                        htmlString += "Support : " + consultation.support;
+                                                        break;
                                                 }
-                                                htmlString += "</table>";
-                                                console.log(htmlString);
-                                                $('#historique').html(htmlString);
-                                            })
-                                            .fail(function (error) {
-                                                    console.log('Error', error);
-                                                    alert("Erreur lors de l'appel AJAX");
-                                            });
-                                }
-                                // Afficher la page
-                                $('body').css({"display": "block"});
+
+                                                htmlString += "<br>";
+                                                htmlString += "<a id='" + consultation.id + "' class='boutonRDV'><button>Prendre RDV</button></a>";
+                                                htmlString += "</p></div></tr>";
+                                            }
+                                            htmlString += "</table>";
+                                            console.log(htmlString);
+                                            $('#historique').html(htmlString);
+                                        })
+                                        .fail(function (error) {
+                                            console.log('Error', error);
+                                            alert("Erreur lors de l'appel AJAX");
+                                        });
                             }
-                            // S'il n'est pas logué
-                            else {
-                                // Rediriger vers l'accueil
-                                window.location.replace("index.html");
-                            }
-                            
+                            // Afficher la page
+                            $('body').css({"display": "block"});
+                        }
+                        // Si personne n'est logué
+                        else {
+                            // Rediriger vers l'accueil
+                            window.location.replace("index.html");
+                        }
+
+                    })
+                    .fail(function (error) {
+                        console.log('Error', error);
+                        alert("Erreur lors de l'appel AJAX");
+                    });
+
+        });
+
+        // BOUTON DECONNEXION 
+        $('body').on('click', 'a.boutonDeconnexion', function () {
+            if (confirm("Êtes-vous sûrs de vouloir vous déconnecter ?")) {
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'demandeDeconnexion'
+                    },
+                    dataType: 'json'
+                })
+                        .done(function () {
+                            window.location.replace("index.html");
                         })
                         .fail(function (error) {
-                                console.log('Error', error);
-                                alert("Erreur lors de l'appel AJAX");
+                            console.log('Error', error);
+                            alert("Nous n'avons pas pu vous déconnecter.");
                         });
-            
-            });
+            }
+        });
 
         </script>
     </body>
 </html>
-        
-           
+

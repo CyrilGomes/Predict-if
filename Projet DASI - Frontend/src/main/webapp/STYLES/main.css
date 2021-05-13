@@ -27,12 +27,13 @@ button {
     font-size: 18px;
     font-weight: bold;
     color: white;
+    font-family: 'Scada';
     transition: 0.075s;
 }
 button:hover {
     background: #995ab3;
     box-shadow: -4px 4px 0 0 #FF8E71;
-
+    cursor: pointer;
 }
 .hyperlien {
     color: dodgerblue;
@@ -92,6 +93,7 @@ hr {
 .header-right a:hover {
     background-color: #995ab3;
     border-color: white;
+    cursor: pointer;
 }
 /* Header button selected */
 #currentPage {
