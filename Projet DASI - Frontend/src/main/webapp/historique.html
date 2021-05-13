@@ -24,7 +24,7 @@
             </div>
             <div id="historique"></div>
         </div>
-        
+
         <script>
 
             // INITIALISATION
@@ -57,12 +57,10 @@
                                 if (typeUtilisateur === "employe") {
                                     // Changer le header
                                     $('#headerContent').html(
-                                            "<a href='consultation-en-cours.html'>Consultation en cours</a>" +
-                                            "<a href='tableau-de-bord.html' id='currentPage'>Tableau de Bord</a>" +
+                                            "<a href='tableau-de-bord.html'>Tableau de Bord</a>" +
                                             "<a href='profil.html'>Profil</a>" +
                                             "<a href='#' class='boutonDeconnexion'>Déconnexion</a>"
                                             );
-
                                     // OBTENIR HISTORIQUE DU CLIENT PRIS EN CHARGE PAR L'EMPLOYE COURANT
                                     $.ajax({
                                         url: './ActionServlet',
@@ -74,19 +72,25 @@
                                     })
                                             .done(function (response) {
                                                 console.log(response);
+                                                // Charger le nom du client 
+                                                $('div.bienvenue').html(
+                                                        "<span>Historique de consultations de " + response.client.prenom + " " + response.client.nom + " :</span>"
+                                                        );
                                                 // Charger l'historique
                                                 var htmlString = "";
-                                                htmlString += "<table style='margin: 5px;'>\n";
                                                 for (var id in response.historique) {
                                                     var consultation = response.historique[id];
-                                                    htmlString += "<tr><div style='border: 1px solid black;'><p> Date :" + consultation.date;
-                                                    htmlString += " Employé en charge : " + consultation.employe;
-                                                    htmlString += " Médium incarné: " + consultation.denomination + "(" + consultation.typeMedium + ")";
-                                                    htmlString += "Commentaire" + consultation.commentaire + "<br>";
-                                                    htmlString += "<br></p></div></tr>";
+                                                    htmlString += "<div class='itemHistoriqueEmploye'>";
+                                                    htmlString += "<div class='contenuHistoriqueEmploye'><span class='labelHistoriqueEmploye'>Date : </span>";
+                                                    htmlString += "<span class='infoHistoriqueEmploye'>" + consultation.date + "</span></div>";
+                                                    htmlString += "<div class='contenuHistoriqueEmploye'><span class='labelHistoriqueEmploye'>Employé en charge : </span>";
+                                                    htmlString += "<span class='infoHistoriqueEmploye'>" + consultation.employe + "</span></div>";
+                                                    htmlString += "<div class='contenuHistoriqueEmploye'><span class='labelHistoriqueEmploye'>Médium incarné : </span>";
+                                                    htmlString += "<span class='infoHistoriqueEmploye'>" + consultation.denomination + " <i>(" + consultation.typeMedium + ")</i></span></div>";
+                                                    htmlString += "<div class='contenuHistoriqueEmploye'><span class='labelHistoriqueEmploye'>Commentaire : </span>";
+                                                    htmlString += "<span class='infoHistoriqueEmploye'>" + consultation.commentaire + "</span></div>";
+                                                    htmlString += "</div>";
                                                 }
-                                                htmlString += "</table>";
-                                                console.log(htmlString);
                                                 $('#historique').html(htmlString);
                                             })
                                             .fail(function (error) {
@@ -120,10 +124,10 @@
                                                 for (var id in response.historique) {
                                                     var consultation = response.historique[id];
                                                     htmlString += "<div class='itemHistoriqueClient' genre='" + consultation.medium.genre + "'>";
-                                                    
+
                                                     // Date de la consultation
                                                     htmlString += "<div class='dateHistoriqueClient'>" + consultation.date + "</div>";
-                                                    
+
                                                     htmlString += "<div class='flexContainerMediumClient'>";
                                                     // Image et type du médium
                                                     htmlString += "<div class='mediumLeftClient'>";
@@ -170,6 +174,30 @@
                         .fail(function (error) {
                             console.log('Error', error);
                             alert("Erreur obtenirTypeUtilisateurCourant");
+                        });
+
+                // AJUSTER LE HEADER EN FONCTION DE S'IL Y A UNE CONSULTATION EN COURS (donc pour les employés)
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'GET',
+                    data: {
+                        todo: 'obtenirEtatConsultationSession'
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) {
+                            console.log(response);
+                            // S'il y a une consultation dans la session (donc un employé est loggé)
+                            if (response.etat && (response.etat === "EnAttenteClient" || response.etat === "EnCours")) {
+                                console.log("je suis là");
+                                $('#headerContent').prepend(
+                                        "<a href='consultation-en-cours.html'>Consultation en cours</a>"
+                                        );
+                            }
+                        })
+                        .fail(function (error) {
+                            console.log('Error', error);
+                            alert("Erreur lors de l'appel AJAX");
                         });
             });
 

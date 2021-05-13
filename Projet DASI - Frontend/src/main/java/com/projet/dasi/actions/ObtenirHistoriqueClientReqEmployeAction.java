@@ -19,10 +19,12 @@ public class ObtenirHistoriqueClientReqEmployeAction extends Action {
         
         // Appel services
         Consultation consultation = (Consultation)session.getAttribute("consultation");
-        List<Consultation> historique = service.obtenirHistoriqueConsultationsClient(consultation.getClient());
+        Client client = consultation.getClient();
+        List<Consultation> historique = service.obtenirHistoriqueConsultationsClient(client);
         
         // Stockage des résultats dans les attributs de la requête
         request.setAttribute("historique", historique);
+        request.setAttribute("client", client);
 
     }
 
