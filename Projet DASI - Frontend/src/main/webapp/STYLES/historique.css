@@ -64,12 +64,15 @@
             drop-shadow(-2px 2px 0 black)
             drop-shadow(2px -2px 0 black)
             drop-shadow(-2px -2px 0 black);
+    border-radius: 50%;
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.1);
 }
 .typeMediumClient {
     font-size: 18px;
     font-weight: bold;
     text-transform: uppercase;
     text-shadow: 1px 1px 6px grey;
+    font-style: oblique;
     margin: 10px;
 }
 .denominationMediumClient {
