@@ -165,7 +165,7 @@ and open the template in the editor.
                             htmlString += "</div>";
 
                             // Bouton de RDV
-                            htmlString += "<button id='" + medium.id + "' class='boutonRDV'>Prendre RDV</button>";
+                            htmlString += "<button id='" + medium.id + "' class='boutonRDV'>Prendre RDV &nbsp;&phone;</button>";
 
                             htmlString += "</div>";
                         }
@@ -182,6 +182,7 @@ and open the template in the editor.
             var mediumId = $(this).attr('id');
             var oldText = $('#' + mediumId).html();
             $('#' + mediumId).html("Demande en cours...");
+            $('#' + mediumId).addClass("selected");
             $.ajax({
                 url: './ActionServlet',
                 method: 'POST',
@@ -198,17 +199,21 @@ and open the template in the editor.
                             alert("Le médium vous contactera par téléphone bientôt... Veuillez patienter");
                             // Changer le bouton
                             $('#' + mediumId).html("RDV Pris");
+                            $('#' + mediumId).removeClass("selected");
+                            $('#' + mediumId).addClass("toggled");
+                            $('#' + mediumId).prop('disabled', true);
                         } else {
                             // Alerter l'utilisateur
                             alert("Le médium demandé n'est pas disponible... Essayez plus tard");
                             // Changer le bouton
                             $('#' + mediumId).html(oldText);
+                            $('#' + mediumId).removeClass("selected");
                         }
                     })
                     .fail(function (error) {
                         console.log('Error', error);
                         alert("Erreur demanderConsultation");
-                    })
+                    });
         });
 
         // BOUTON DECONNEXION 

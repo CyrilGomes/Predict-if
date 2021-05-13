@@ -61,7 +61,7 @@ and open the template in the editor.
                                 <div class='compteForm'> <input type="password" id="champ-mdp" value="**********" disabled="disabled"/> </div>
                             </div>
                         </div>
-                        <button id="boutonModif">Modifier</button>
+                        <button id="boutonModif">Modifier ✎</button>
                     </div>
                 </div>
 
@@ -188,14 +188,14 @@ and open the template in the editor.
             // BOUTON MODIFIER COMPTE
             $('#boutonModif').on('click', function () {
                 // Première fois qu'on clique sur le bouton 
-                if ($("#boutonModif").text() === "Modifier") {
+                if ($("#boutonModif").text() === "Modifier ✎") {
                     // Changer le libellé du bouton
-                    $('#boutonModif').text("Sauvegarder");
+                    $('#boutonModif').text("Sauvegarder ✔");
                 }
                 // Deuxième fois qu'on clique sur le bouton
                 else {
                     // Changer le libellé du bouton
-                    $('#boutonModif').text("Modifier");
+                    $('#boutonModif').text("Modifier ✎");
                     // Appel AJAX pour sauvegarder les modifications
                     var champNom = $('#champ-nom').val();
                     var champPrenom = $('#champ-prenom').val();

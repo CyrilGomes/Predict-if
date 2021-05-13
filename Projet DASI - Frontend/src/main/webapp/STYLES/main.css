@@ -35,6 +35,18 @@ button:hover {
     box-shadow: -4px 4px 0 0 #FF8E71;
     cursor: pointer;
 }
+button.selected {
+    background: #995ab3;
+    box-shadow: -4px 4px 0 0 #FF8E71;
+}
+button.toggled {
+    background: #FF8E71;
+    border-style: solid;
+    border-width: 4px;
+    border-color: #583D72;
+    color: black;
+    pointer-events: none;
+}
 .hyperlien {
     color: dodgerblue;
 }
