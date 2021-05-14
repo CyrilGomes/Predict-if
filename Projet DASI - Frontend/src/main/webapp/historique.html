@@ -91,6 +91,10 @@
                                                     htmlString += "<span class='infoHistoriqueEmploye'>" + consultation.commentaire + "</span></div>";
                                                     htmlString += "</div>";
                                                 }
+                                                // Si historique vide
+                                                if (htmlString === "") {
+                                                    htmlString += "<div class='messageHistorique'>Le client n'a jamais consulté... Faites une bonne première impression !</div>"
+                                                }
                                                 $('#historique').html(htmlString);
                                             })
                                             .fail(function (error) {
@@ -158,6 +162,10 @@
                                                     htmlString += "<button id='" + consultation.medium.id + "' class='boutonRDV'>Reprendre RDV &nbsp;&phone;</button>";
 
                                                     htmlString += "</div>";
+                                                }
+                                                // Si historique vide
+                                                if (htmlString === "") {
+                                                    htmlString += "<div class='messageHistorique'>Vous n'avez pas encore consulté de médium. <a href='demande-consultation.html' class='hyperlien'>Prenez RDV</a> maintenant !</div>"
                                                 }
                                                 $('#historique').html(htmlString);
                                             })

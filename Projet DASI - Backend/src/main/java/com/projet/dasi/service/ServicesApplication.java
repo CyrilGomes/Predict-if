@@ -57,7 +57,7 @@ public class ServicesApplication {
             employes.add(new Employe(Genre.Homme, "Louis", "Guyot-Perrin", "louis-gprrin@hotmail.fr", "dar<Mass11", "0667981441", "51414", AstroAPI.DATE_FORMAT.parse("04/10/1992")));
             employes.add(new Employe(Genre.Femme, "Suzanne", "Jacob", "zazanne.jacob@gmail.com", "lushMus+ang36", "0651663718", "42681", AstroAPI.DATE_FORMAT.parse("14/07/1983")));   
             employes.add(new Employe(Genre.Homme, "Dimitri", "Rolland", "dimirolan84@yahoo.com", "fh7rdm3g", "0761596478", "35370", AstroAPI.DATE_FORMAT.parse("03/05/1984")));
-            employes.add(new Employe(Genre.Homme, "Florence", "Pottier", "flora.potter@wanadoo.fr", "ujvz6wpw", "0673861235", "69490", AstroAPI.DATE_FORMAT.parse("26/07/1987")));
+            employes.add(new Employe(Genre.Femme, "Florence", "Pottier", "flora.potter@wanadoo.fr", "ujvz6wpw", "0673861235", "69490", AstroAPI.DATE_FORMAT.parse("26/07/1987")));
             employes.add(new Employe(Genre.Femme, "Marie", "Doucet", "douce-maria@gmail.fr", "a5m66iqt", "0614336007", "02590", AstroAPI.DATE_FORMAT.parse("31/01/1987")));
             employes.add(new Employe(Genre.Femme, "Jennifer", "Gouatloude", "filo.jennie@hotmail.fr", "inleqz42", "0600923533", "22300", AstroAPI.DATE_FORMAT.parse("15/05/1964")));
             employes.add(new Employe(Genre.Homme, "Paul", "Diaz", "paulotdiaz79@gmail.com", "7a4dlcad", "0907265287", "52170", AstroAPI.DATE_FORMAT.parse("04/01/1979")));
@@ -165,11 +165,12 @@ public class ServicesApplication {
         try {
             JpaUtil.ouvrirTransaction();
             for (Employe e : employes) {
-                if(Math.random() < 0.4) continue;
+                if(Math.random() < 0.2) continue;
                 for (Medium m : mediums) {
-                    if(Math.random() < 0.4) continue;
+                    if (m.getGenre() != e.getGenre()) continue;
+                    if(Math.random() < 0.2) continue;
                     for (Client c : clients) {
-                        if(Math.random() < 0.4) continue;
+                        if(Math.random() < 0.6) continue;
                         // Créer une consultation terminée
                         Consultation consultation = new Consultation(e, c, m);
                         consultation.setEtat(Etat.Termine);
