@@ -33,34 +33,35 @@ and open the template in the editor.
                         <div class="compteGrid">
                             <div class="compteInfoPrenom">
                                 <div class='compteLabel'> Prénom : </div>  
-                                <div class='compteForm'> <input type="text" id="champ-prenom" value="Prénom" disabled="disabled"/> </div>
+                                <div class='compteForm'> <input type="text" id="champ-prenom" disabled autocomplete="off"/> </div>
                             </div>
                             <div class="compteInfoNom">
                                 <div class='compteLabel'> Nom : </div>  
-                                <div class='compteForm'> <input type="text" id="champ-nom" value="Nom" disabled="disabled"/> </div>
+                                <div class='compteForm'> <input type="text" id="champ-nom" disabled autocomplete="off"/> </div>
                             </div>
                             <div class="compteInfoDateNaissance">
                                 <div class='compteLabel'> Date de Naissance : </div>  
-                                <div class='compteForm'> <input type="date" id="champ-date-naissance" disabled="disabled"/> </div>
+                                <div class='compteForm'> <input type="date" id="champ-date-naissance" disabled autocomplete="off"/> </div>
                             </div>
                             <div class="compteInfoCodePostal">
                                 <div class='compteLabel'> Code Postal : </div>  
-                                <div class='compteForm'> <input type="text" id="champ-code-postal" value="Code Postal" disabled="disabled"/> </div>
+                                <div class='compteForm'> <input type="text" id="champ-code-postal" disabled autocomplete="off"/> </div>
                             </div>
                             <div class="compteInfoTelephone">
                                 <div class='compteLabel'> Téléphone : </div>  
-                                <div class='compteForm'> <input type="tel" id="champ-tel" value="Téléphone" disabled="disabled"/> </div>
+                                <div class='compteForm'> <input type="tel" id="champ-tel" disabled autocomplete="off"/> </div>
                             </div>
                             <div class="separateur"><hr/></div>
                             <div class="compteInfoEmail">
                                 <div class='compteLabel'> Adresse Mail : </div>  
-                                <div class='compteForm'> <input type="text" id="champ-mail" value="Adresse Mail" disabled="disabled"/> </div>
+                                <div class='compteForm'> <input type="text" id="champ-mail" disabled autocomplete="off"/> </div>
                             </div>
                             <div class="compteInfoMdp">
                                 <div class='compteLabel'> Mot de Passe : </div>  
-                                <div class='compteForm'> <input type="password" id="champ-mdp" value="**********" disabled="disabled"/> </div>
+                                <div class='compteForm'> <input type="password" id="champ-mdp" disabled autocomplete="off"/> </div>
                             </div>
                         </div>
+                        <p id="messageErreurModification" class="texteErreur"></p>
                         <button id="boutonModif">Modifier ✎</button>
                     </div>
                 </div>
@@ -157,7 +158,7 @@ and open the template in the editor.
                         })
                         .fail(function (error) {
                             console.log('Error', error);
-                            alert("Erreur lors de l'appel AJAX");
+                            alert("Erreur obtenirUtilisateurCourant");
                         });
 
                 // AJUSTER LE HEADER EN FONCTION DE S'IL Y A UNE CONSULTATION EN COURS (donc pour les employés)
@@ -180,7 +181,7 @@ and open the template in the editor.
                         })
                         .fail(function (error) {
                             console.log('Error', error);
-                            alert("Erreur lors de l'appel AJAX");
+                            alert("Erreur obtenirEtatConsultationSession");
                         });
 
             });
@@ -191,11 +192,18 @@ and open the template in the editor.
                 if ($("#boutonModif").text() === "Modifier ✎") {
                     // Changer le libellé du bouton
                     $('#boutonModif').text("Sauvegarder ✔");
+                    // Rendre les champs modifiables
+                    $("#champ-prenom").prop("disabled", false);
+                    $("#champ-nom").prop("disabled", false);
+                    $("#champ-tel").prop("disabled", false);
+                    $("#champ-date-naissance").prop("disabled", false);
+                    $("#champ-code-postal").prop("disabled", false);
+                    $("#champ-mail").prop("disabled", false);
+                    $("#champ-mdp").prop("disabled", false);
                 }
                 // Deuxième fois qu'on clique sur le bouton
                 else {
-                    // Changer le libellé du bouton
-                    $('#boutonModif').text("Modifier ✎");
+
                     // Appel AJAX pour sauvegarder les modifications
                     var champNom = $('#champ-nom').val();
                     var champPrenom = $('#champ-prenom').val();
@@ -204,6 +212,12 @@ and open the template in the editor.
                     var champTel = $('#champ-tel').val();
                     var champMail = $('#champ-mail').val();
                     var champMdp = $('#champ-mdp').val();
+                    // Si les champs sont vides, arrêter
+                    if (champNom == '' || champPrenom == '' || champDateNaissance == '' || champCodePostal == '' || champTel == '' || champMail == '' || champMdp == '') {
+                        $('#messageErreurModification').html("<br/>Veuillez compléter tous les champs");
+                        return;
+                    }
+                    
                     $.ajax({
                         url: './ActionServlet',
                         method: 'POST',
@@ -219,16 +233,31 @@ and open the template in the editor.
 
                         },
                         dataType: 'json'
-                    });
+                    })
+                            .done(function (response) {
+                                if (response.statut) {
+                                    // Changer le libellé du bouton
+                                    $('#boutonModif').text("Modifier ✎");
+                                    // Rendre les champs non modifiables
+                                    $("#champ-prenom").prop("disabled", true);
+                                    $("#champ-nom").prop("disabled", true);
+                                    $("#champ-tel").prop("disabled", true);
+                                    $("#champ-date-naissance").prop("disabled", true);
+                                    $("#champ-code-postal").prop("disabled", true);
+                                    $("#champ-mail").prop("disabled", true);
+                                    $("#champ-mdp").prop("disabled", true);
+                                    $('#messageErreurModification').html("");
+                                }
+                                else {
+                                    $('#messageErreurModification').html("<br/>Cette adresse mail est déjà utilisée par un autre utilisateur");
+                                }
+                            })
+                            .fail(function (error) {
+                                console.log('Error', error);
+                                alert("Erreur sauvegarderProfil");
+                            })
+                    ;
                 }
-                // Toggler la propriété disabled des champs
-                $("#champ-prenom").prop("disabled", !$("#champ-prenom").prop("disabled"));
-                $("#champ-nom").prop("disabled", !$("#champ-nom").prop("disabled"));
-                $("#champ-tel").prop("disabled", !$("#champ-tel").prop("disabled"));
-                $("#champ-date-naissance").prop("disabled", !$("#champ-date-naissance").prop("disabled"));
-                $("#champ-code-postal").prop("disabled", !$("#champ-code-postal").prop("disabled"));
-                $("#champ-mail").prop("disabled", !$("#champ-mail").prop("disabled"));
-                $("#champ-mdp").prop("disabled", !$("#champ-mdp").prop("disabled"));
             });
 
             // BOUTON DECONNEXION 

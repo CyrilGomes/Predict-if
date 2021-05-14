@@ -76,7 +76,7 @@ public class ActionServlet extends HttpServlet {
             
             case "sauvegarderProfil":
                 action = new SauvegarderProfilAction();
-                serialisation = new TypeUtilisateurSerialisation();
+                serialisation = new StatutSerialisation();
                 break;
                 
             case "obtenirUtilisateurCourant":

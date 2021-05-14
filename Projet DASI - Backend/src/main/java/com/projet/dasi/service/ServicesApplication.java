@@ -554,7 +554,7 @@ public class ServicesApplication {
     }
  
     /* Sauvegarder la modification d'un profil de Client */
-    public boolean modifierProfil(Utilisateur utilisateur, String nom, String prenom, String dateNaissance, String codePostal, String telephone, String email, String motDePasse) {
+    public boolean modifierProfil(Utilisateur utilisateur, String nom, String prenom, Date dateNaissance, String codePostal, String telephone, String email, String motDePasse) {
         
         // Créer les DAOs et le contexte de persistance
         UtilisateurDao utilisateurDao = new UtilisateurDao();
@@ -568,13 +568,7 @@ public class ServicesApplication {
         utilisateur.setTelephone(telephone);
         utilisateur.setMail(email);
         utilisateur.setMotDePasse(motDePasse);
-        try {
-            utilisateur.setDateNaissance(AstroAPI.DATE_FORMAT.parse(dateNaissance));
-        }
-        catch (ParseException ex) {
-            ex.printStackTrace();
-            reussite = false;
-        }
+        utilisateur.setDateNaissance(dateNaissance);
         
         // Mettre à jour la modification
         try {

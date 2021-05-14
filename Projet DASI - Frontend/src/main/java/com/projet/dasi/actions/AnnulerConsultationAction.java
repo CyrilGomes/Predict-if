@@ -18,9 +18,9 @@ public class AnnulerConsultationAction extends Action {
 
     @Override
     public void executer(HttpServletRequest request) {
-                ServicesApplication service = new ServicesApplication();
+        ServicesApplication service = new ServicesApplication();
         HttpSession session = request.getSession();
-        Consultation consultation = (Consultation) session.getAttribute("consultation");
+        Consultation consultation = (Consultation)session.getAttribute("consultation");
         boolean result = service.annulerConsultation(consultation);
         request.setAttribute("statut", result);
     }

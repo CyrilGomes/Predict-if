@@ -3,12 +3,14 @@ package com.projet.dasi.serialisations;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.projet.dasi.AstroAPI;
 import com.projet.dasi.model.Client;
 import com.projet.dasi.model.Employe;
 import com.projet.dasi.model.ProfilAstral;
 import com.projet.dasi.model.Utilisateur;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -38,9 +40,11 @@ public class UtilisateurSerialisation extends Serialisation {
             }
             if (utilisateur instanceof Employe) { container.addProperty("type", "employe"); }
 
+            SimpleDateFormat dateFormat = AstroAPI.JSON_DATE_FORMAT;
+            
             container.addProperty("nom", utilisateur.getNom());
             container.addProperty("prenom", utilisateur.getPrenom());
-            container.addProperty("dateDeNaissance", utilisateur.getDateNaissance().toString());
+            container.addProperty("dateDeNaissance", dateFormat.format(utilisateur.getDateNaissance()));
             container.addProperty("codePostal", utilisateur.getCodePostal());
             container.addProperty("telephone", utilisateur.getTelephone());
             container.addProperty("mail", utilisateur.getMail());
