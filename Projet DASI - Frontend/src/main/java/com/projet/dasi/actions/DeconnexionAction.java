@@ -21,5 +21,7 @@ public class DeconnexionAction extends Action {
         // Suppression de la session
         session.invalidate();
         
+        return;
+        
     }
 }
