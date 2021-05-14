@@ -38,7 +38,8 @@ public class ConsultationDao {
     public List<Consultation> chercherTermineParClient(Client client) {
         String s = ""
                 + "SELECT c FROM Consultation c "
-                + "WHERE c.client = :unClient AND c.etat = :unEtat ORDER BY c.dateFin DESC";
+                + "WHERE c.client = :unClient AND c.etat = :unEtat "
+                + "ORDER BY c.dateFin DESC";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Consultation.class);
         query.setParameter("unClient", client);
         query.setParameter("unEtat", Etat.Termine);
@@ -49,7 +50,8 @@ public class ConsultationDao {
     public List<Consultation> chercherTermineParClientEtMedium(Client client, Medium medium) {
         String s = ""
                 + "SELECT c FROM Consultation c "
-                + "WHERE c.client = :unClient AND c.medium = :unMedium AND c.etat = :unEtat";
+                + "WHERE c.client = :unClient AND c.medium = :unMedium AND c.etat = :unEtat "
+                + "ORDER BY c.dateFin DESC";
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Consultation.class);
         query.setParameter("unClient", client);
         query.setParameter("unMedium", medium);

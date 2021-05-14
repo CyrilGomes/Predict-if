@@ -21,9 +21,9 @@ public class ObtenirConsultationAttribueeAction extends Action {
         ServicesApplication service = new ServicesApplication();
         HttpSession session = request.getSession();
         Consultation consultation = null;
-        Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+        Utilisateur utilisateur = (Utilisateur)session.getAttribute("utilisateur");
         if (utilisateur instanceof Employe) {
-            Employe employe = (Employe) utilisateur;
+            Employe employe = (Employe)utilisateur;
             consultation = service.obtenirConsultationAttribueeAEmploye(employe);
         }
 
@@ -36,6 +36,7 @@ public class ObtenirConsultationAttribueeAction extends Action {
             clientTest.setProfilAstral(profilAstralTest);
             consultation = new Consultation(employeLogge, clientTest, mediumTest);
          */
+        
         request.setAttribute("consultation", consultation);
 
     }

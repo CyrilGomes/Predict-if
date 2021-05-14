@@ -1,6 +1,9 @@
 package com.projet.dasi.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -91,6 +94,12 @@ public abstract class Utilisateur implements Serializable {
     }
     public void setDateNaissance(Date dateNaissance) {
         this.dateNaissance = dateNaissance;
+    }
+    
+    public int getAge() {
+        LocalDate d1 = dateNaissance.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate d2 = LocalDate.now();
+        return Period.between(d1, d2).getYears();
     }
     
     /* ToString */

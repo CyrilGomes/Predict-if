@@ -131,15 +131,17 @@
                                 htmlString += "<div class='clientLeft'>";
                                 htmlString += "<img class='imageClient' src=\"STYLES/IMAGES/default-icon.png\" width='100'>";
                                 htmlString += "</div>";
-                                // Profil Astral
+                                // Description textuelle (nom, age, profil astral, telephone)
                                 htmlString += "<div class='mediumRight'>";
-                                htmlString += "<span class='nomClient'>" + response.client.prenom + " " + response.client.nom + "</span><br/>";
+                                htmlString += "<span class='nomClient'>" + response.client.prenom + " " + response.client.nom + "</span>";
+                                htmlString += "<span class='ageClient'>, " + response.client.age + " ans</span><br/>";
                                 htmlString += "<span class='profilAstralClient'>";
-                                htmlString += "<strong>► Signe Astrologique : </strong><i>" + response.client.profil.signeAstro + "</i><br/>"
-                                htmlString += "<strong>► Signe Zodiaque Chinois : </strong><i>" + response.client.profil.signeChinois + "</i><br/>"
-                                htmlString += "<strong>► Couleur Porte-Bonheur : </strong><i>" + response.client.profil.couleur + "</i><br/>"
-                                htmlString += "<strong>► Animal Totem : </strong><i>" + response.client.profil.animalTotem + "</i><br/>"
-                                htmlString += "</span><br/>";
+                                htmlString += "<strong>► Signe Astrologique : </strong><i>" + response.client.profil.signeAstro + "</i><br/>";
+                                htmlString += "<strong>► Signe Zodiaque Chinois : </strong><i>" + response.client.profil.signeChinois + "</i><br/>";
+                                htmlString += "<strong>► Couleur Porte-Bonheur : </strong><i>" + response.client.profil.couleur + "</i><br/>";
+                                htmlString += "<strong>► Animal Totem : </strong><i>" + response.client.profil.animalTotem + "</i><br/>";
+                                htmlString += "</span>";
+                                htmlString += "<span class='telClient'>&phone;&nbsp; <i>" + response.client.telephone + "</i></span><br/><br/>";
                                 // Lien vers historique
                                 htmlString += "<div class='lienHistoriqueClient'>";
                                 htmlString += "Voir son <strong><a href='historique.html' class='hyperlien'>historique de consultations</a></strong>";
@@ -174,8 +176,8 @@
                                 htmlString += "</div>";
                                 $('#medium').html(htmlString);
 
-                                // Renommer le bouton selon si la consultation est démarrée ou pas 
-                                if (response.etat === "EnAttenteClient" || response.etat == "EnCours") {
+                                // Renommer le bouton et le titre selon si la consultation est démarrée ou pas 
+                                if (response.etat === "EnAttenteClient" || response.etat === "EnCours") {
                                     $('#boutonJeSuisPret').html("Traiter la consultation");
                                     // Set le header avec consultation en cours
                                     $('#headerContent').html(
@@ -184,11 +186,18 @@
                                             "<a href='profil.html'>Profil</a>" +
                                             "<a class='boutonDeconnexion'>Déconnexion</a>"
                                             );
+                                    $('#demandeConsultationHeader').html("Consultation en cours");
+
+                                }
+                                else {
+                                    $('#demandeConsultationHeader').html("Nouvelle Demande de Consultation !");
+                                    if (response.etat === "EnAttenteEmploye") {
+                                        $('#boutonJeSuisPret').html("Je suis prêt" + ((response.medium.genre === "Femme") ? "e !" : " !"));
+                                    }
                                 }
 
-                                // Afficher le bloc de consultations, renommer le header
+                                // Afficher le bloc de consultations
                                 $('#informationsConsultation').css({"display": "block"});
-                                $('#demandeConsultationHeader').html("Nouvelle Demande de Consultation !");
 
                             } else {
                                 // Signaler le fait qu'il n'y ait aucune consultation à traiter

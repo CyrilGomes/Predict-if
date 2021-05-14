@@ -25,9 +25,11 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.LinkedHashMap;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class ServicesApplication {
 
@@ -97,7 +99,7 @@ public class ServicesApplication {
             mediums.add(new Cartomancien(Genre.Femme, "Mme Irma", "Comprenez votre entourage grâce à mes cartes ! Résultats rapides..."));
             mediums.add(new Cartomancien(Genre.Femme, "Endora", "Mes cartes répondront à toutes vos questions personnelles."));
             mediums.add(new Cartomancien(Genre.Homme, "Sire Kartmalo", "Je détiens le contrôle absolu sur les cartes."));
-            mediums.add(new Astrologue(Genre.Homme, "ASTROMAN", "Voulez-vous voir un tour de MAGIE ?", "Sous la tutelle du Christ Cosmique", "2014"));
+            mediums.add(new Astrologue(Genre.Homme, "ASTROMAN", "Vers l'infini et au delà !", "Sous la tutelle du Christ Cosmique", "2014"));
             mediums.add(new Astrologue(Genre.Femme, "Serena", "Basée à Champigny-sur-Marne, Serena vous révèlera votre avenir pour éclairer votre passé.", "École Normale Supérieure d’Astrologie (ENS-Astro)", "2006"));
             mediums.add(new Astrologue(Genre.Homme, "Mr M", "Avenir, avenir, que nous réserves-tu ? N'attendez plus, demandez à me consulter!", "Institut des Nouveaux Savoirs Astrologiques (ENE)", "2010"));
             mediums.add(new Astrologue(Genre.Homme, "Monsieur N'TOMA", "Arrêtez de pleurer. Je vais résoudre vos problèmes.", "École Nouvelle des Étoiles (ENE)", "2015"));
@@ -168,10 +170,25 @@ public class ServicesApplication {
                     if(Math.random() < 0.4) continue;
                     for (Client c : clients) {
                         if(Math.random() < 0.4) continue;
+                        // Créer une consultation terminée
                         Consultation consultation = new Consultation(e, c, m);
                         consultation.setEtat(Etat.Termine);
-                        consultation.setDateDebut(new Date());
-                        consultation.setDateFin(new Date((new Date()).getTime() + (int)(Math.random()*20)*60*1000));
+                        // Generer une date aléatoire
+                        Calendar cal = Calendar.getInstance();
+                        cal.set(Calendar.YEAR,2021);
+                        cal.set(Calendar.MONTH,1);
+                        cal.set(Calendar.DAY_OF_MONTH,1);
+                        Date d1 = cal.getTime();
+                        cal.set(Calendar.MONTH,4);
+                        Date d2 = cal.getTime();
+                        long startMillis = d1.getTime();
+                        long endMillis = d2.getTime();
+                        long randomMillisSinceEpoch = ThreadLocalRandom.current().nextLong(startMillis, endMillis);
+                        Date d = new Date(randomMillisSinceEpoch);
+                        // Set la date de la consultation
+                        consultation.setDateDebut(d);
+                        consultation.setDateFin(new Date(d.getTime() + (int)(Math.random()*20)*60*1000));
+                        // Persister la consultation
                         consultationDao.creer(consultation);
                     }
                 }

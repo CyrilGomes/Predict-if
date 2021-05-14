@@ -24,9 +24,13 @@ public class EtatConsultationSerialisation extends Serialisation {
         JsonObject container = new JsonObject();
         
         // Récupérer les attributs de la requête
-        String etat = (String)request.getAttribute("etat");
+        Consultation consultation = (Consultation)request.getAttribute("consultation");
         
         // Populer le container
+        String etat = "";
+        if (consultation != null) {
+            etat = consultation.getEtat().toString();
+        }
         container.addProperty("etat", etat);
         
         // L'écrire sur le flux de sortie

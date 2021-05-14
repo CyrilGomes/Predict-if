@@ -41,12 +41,22 @@ public class ConsultationSerialisation extends Serialisation {
             ProfilAstral profil = client.getProfilAstral();
             JsonObject clientData = new JsonObject();
             JsonObject profilData = new JsonObject();
+            
+            // Format phone
+            String telephone = client.getTelephone();
+            String formattedTelephone = "";
+            for (int i = 0; i < telephone.length(); i++) {
+                formattedTelephone += telephone.charAt(i) + ((i % 2 == 1) ? " " : "");
+            }
+            
             profilData.addProperty("signeAstro", profil.getSigneAstro());
             profilData.addProperty("signeChinois", profil.getSigneChinois());
             profilData.addProperty("couleur", profil.getCouleur());
             profilData.addProperty("animalTotem", profil.getAnimalTotem());
             clientData.addProperty("prenom", client.getPrenom());
             clientData.addProperty("nom", client.getNom());
+            clientData.addProperty("age", client.getAge());
+            clientData.addProperty("telephone", formattedTelephone);
             clientData.add("profil", profilData);
             container.add("client", clientData);
 

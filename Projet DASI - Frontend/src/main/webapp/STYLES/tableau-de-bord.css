@@ -130,13 +130,14 @@
     color: #583D72;
     line-height: 1.5em;
 }
-.profilAstralClient {
-    font-size: 20px;
+.ageClient {
+    font-size: 26px;
     color: black;
+    line-height: 1.5em;
 }
-.lienHistoriqueClient {
-    color: black;
+.profilAstralClient, .telClient, .lienHistoriqueClient {
     font-size: 20px;
+    color: black;
 }
 
 /* ----------------------------------------------------------------- */
@@ -195,11 +196,11 @@
 .presentationMedium {
     font-size: 20px;
     color: black;
-    line-height: 1.5em;
+
 }
 .complementMedium {
     color: #555;
     font-size: 18px;
     font-style: oblique;
-    line-height: 1.5em;
+    
 }
