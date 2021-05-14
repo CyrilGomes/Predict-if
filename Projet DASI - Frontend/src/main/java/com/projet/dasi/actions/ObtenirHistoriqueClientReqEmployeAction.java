@@ -18,7 +18,9 @@ public class ObtenirHistoriqueClientReqEmployeAction extends Action {
         HttpSession session = request.getSession();
         
         // Appel services
-        Consultation consultation = (Consultation)session.getAttribute("consultation");
+
+        Employe employe = (Employe) session.getAttribute("utilisateur");
+        Consultation consultation = service.obtenirConsultationAttribueeAEmploye(employe);
         Client client = consultation.getClient();
         List<Consultation> historique = service.obtenirHistoriqueConsultationsClient(client);
         

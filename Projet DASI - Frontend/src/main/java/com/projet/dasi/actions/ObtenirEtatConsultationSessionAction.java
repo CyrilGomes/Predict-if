@@ -20,7 +20,9 @@ public class ObtenirEtatConsultationSessionAction extends Action {
         
         ServicesApplication service = new ServicesApplication();
         HttpSession session = request.getSession();
-        Consultation consultation = (Consultation)session.getAttribute("consultation");
+
+        Employe employe = (Employe) session.getAttribute("utilisateur");
+        Consultation consultation = service.obtenirConsultationAttribueeAEmploye(employe);
         String etat = "";
         if (consultation != null) {
             etat = consultation.getEtat().toString();

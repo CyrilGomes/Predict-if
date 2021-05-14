@@ -28,7 +28,9 @@ public class ObtenirPredictionsAction extends Action {
         HttpSession session = request.getSession();
 
         ServicesApplication service = new ServicesApplication();
-        Consultation consultation = (Consultation) session.getAttribute("consultation");
+
+        Employe employe = (Employe) session.getAttribute("utilisateur");
+        Consultation consultation = service.obtenirConsultationAttribueeAEmploye(employe);
         int amour = Integer.parseInt(request.getParameter("amour"));
         int travail = Integer.parseInt(request.getParameter("travail"));
         int sante = Integer.parseInt(request.getParameter("sante"));

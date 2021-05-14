@@ -135,7 +135,7 @@ public class ActionServlet extends HttpServlet {
                 break;
             
             case "obtenirEtatConsultationSession":
-                action = new ObtenirEtatConsultationSessionAction();
+                action = new ObtenirConsultationAttribueeAction();
                 serialisation = new EtatConsultationSerialisation();
                 break;
                 
