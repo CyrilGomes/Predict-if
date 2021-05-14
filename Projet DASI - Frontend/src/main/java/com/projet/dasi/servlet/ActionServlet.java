@@ -16,14 +16,12 @@ import com.projet.dasi.actions.DemarrerTerminerConsultationAction;
 import com.projet.dasi.actions.ObtenirPredictionsAction;
 import com.projet.dasi.actions.SauvegarderCommentaireConsultationAction;
 import com.projet.dasi.actions.DemanderConsultationAction;
-import com.projet.dasi.actions.ArchiverConsultationAction;
 import com.projet.dasi.actions.ConnexionAction;
 import com.projet.dasi.actions.DeconnexionAction;
 import com.projet.dasi.actions.GenererStatistiquesAction;
 import com.projet.dasi.actions.InscriptionAction;
 import com.projet.dasi.actions.ObtenirListeMediumAction;
 import com.projet.dasi.actions.ObtenirConsultationAttribueeAction;
-import com.projet.dasi.actions.ObtenirEtatConsultationSessionAction;
 import com.projet.dasi.actions.ObtenirHistoriqueClientReqClientAction;
 import com.projet.dasi.actions.ObtenirHistoriqueClientReqEmployeAction;
 import com.projet.dasi.actions.ObtenirUtilisateurSessionAction;
@@ -109,11 +107,6 @@ public class ActionServlet extends HttpServlet {
                 serialisation = new StatutSerialisation();
                 break;
                 
-            case "archiverConsultation":
-                action = new ArchiverConsultationAction();
-                serialisation = new StatutSerialisation();
-                break;
-                
             case "annulerConsultation":
                 action = new AnnulerConsultationAction();
                 serialisation = new StatutSerialisation();
@@ -134,7 +127,7 @@ public class ActionServlet extends HttpServlet {
                 serialisation = new ConsultationSerialisation();
                 break;
             
-            case "obtenirEtatConsultationSession":
+            case "obtenirEtatConsultationAttribuee":
                 action = new ObtenirConsultationAttribueeAction();
                 serialisation = new EtatConsultationSerialisation();
                 break;

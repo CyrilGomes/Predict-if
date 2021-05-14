@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>Consultation en cours</title>
@@ -159,7 +154,7 @@ and open the template in the editor.
                         })
                         .fail(function (error) {
                             console.log('Error', error);
-                            alert("Erreur lors de l'appel AJAX");
+                            alert("Erreur obtenirTypeUtilisateurCourant");
                         })
 
                 // OBTENIR LA CONSULTATION ATTRIBUEE
@@ -201,7 +196,7 @@ and open the template in the editor.
                         })
                         .fail(function (error) {
                             console.log('Error', error);
-                            alert("Erreur lors de l'appel AJAX");
+                            alert("Erreur obtenirConsultationAttribuee");
                         });
 
             });
@@ -237,7 +232,7 @@ and open the template in the editor.
                         })
                         .fail(function (error) {
                             console.log('Error', error);
-                            alert("Erreur lors de l'appel AJAX");
+                            alert("Erreur obtenirPredictions");
                         })
                         .always(function () { // Fonction toujours appelée
                             $('#bouton-prediction').html("Generer");
@@ -271,7 +266,7 @@ and open the template in the editor.
                         })
                         .fail(function (error) {
                             console.log('Error', error);
-                            alert("Erreur lors de l'appel AJAX");
+                            alert("Erreur sauvegarderCommentaire");
                         })
                         .always(function () {
                             $('#saveCommentaire').html("Sauvegarder");
@@ -300,9 +295,8 @@ and open the template in the editor.
                         })
                         .fail(function (error) {
                             console.log('Error', error);
-                            alert("Erreur lors de l'appel AJAX");
-                        })
-
+                            alert("Erreur demarrerTerminerConsultation");
+                        });
             });
 
             // TERMINER CONSULTATION
@@ -327,30 +321,13 @@ and open the template in the editor.
                         })
                         .fail(function (error) {
                             console.log('Error', error);
-                            alert("Erreur lors de l'appel AJAX");
+                            alert("Erreur demarrerTerminerConsultation");
                         })
             });
 
             // TERMINER/ARCHIVER CONSULTATION
             $('#boutonTerminer').on('click', function () {
-                $.ajax({
-                    url: './ActionServlet',
-                    method: 'POST',
-                    data: {
-                        todo: 'archiverConsultation',
-                    },
-                    dataType: 'json'
-                })
-                        .done(function (response) {
-                            console.log('Response', response);
-                            if (response.statut) {
-                                window.location.replace("tableau-de-bord.html");
-                            }
-                        })
-                        .fail(function (error) {
-                            console.log('Error', error);
-                            alert("Erreur lors de l'appel AJAX");
-                        })
+                window.location.replace("tableau-de-bord.html");
             });
 
             // ANNULER CONSULTATION
@@ -366,30 +343,23 @@ and open the template in the editor.
                         .done(function (response) {
                             console.log('Response', response);
                             if (response.statut) {
-                                //TODO : Ajouter l'action correspondante
                                 window.location.replace("tableau-de-bord.html")
                             } else {
-                                alert("Erreur !");
-
+                                alert("Nous n'avons pas pu annuler la consultation");
                             }
                         })
                         .fail(function (error) {
                             console.log('Error', error);
-                            alert("Erreur lors de l'appel AJAX");
+                            alert("Erreur annulerConsultation");
                         });
             });
 
             // CONFIRMATION DE DEPART SI CONSULTATION TERMiNEE
             $(window).bind("beforeunload", function () {
-
                 if($("#boutonTerminer").is(":visible")){
-                    return "Etes vous sûr ?";
+                    return "Vous n'aurez plus accès à cette consultation une fois que vous aurez quitté";
                 }
-
             });
-
-
-
 
             // BOUTON DECONNEXION 
             $('body').on('click', 'a.boutonDeconnexion', function () {
