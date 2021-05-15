@@ -19,6 +19,8 @@ body {
     font-family: "Lato";
     margin: 0px;
     padding: 0px;
+    position: relative;
+    padding-bottom: 60px;
 }
 button {
     background: #583D72;
@@ -97,7 +99,7 @@ hr {
     text-align: center;
     padding: 24px 12px;
     text-decoration: none;
-    font-size: 24px;
+    font-size: 26px;
     line-height: 25px;
     border-style: solid;
     border-color: rgba(0, 0, 0, 0);
@@ -118,6 +120,18 @@ hr {
 /* Header button alignment */
 .header-right {
     float: right;
+}
+
+/* ----------------------------------------------------------------- */
+/* FOOTER STYLES */
+/* ----------------------------------------------------------------- */
+.footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: grey;
+  text-align: center;
 }
 
 /* ----------------------------------------------------------------- */

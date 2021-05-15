@@ -1,6 +1,6 @@
 .panelHistorique {
     padding: 10px 30px;
-    width: 75%;
+    width: 60%;
 }
 #historique {
     display: flex;
@@ -43,7 +43,7 @@
     color: black;
     font-family: "Scada";
     font-weight: bold;
-    font-size: 28px;
+    font-size: 24px;
     padding: 10px 15px;
     position: absolute;
     top: -1em;
@@ -58,7 +58,7 @@
     align-items: center;
     flex-grow: 0;   
     flex-shrink: 0;
-    flex-basis: 12em;
+    flex-basis: 10em;
 }
 .imageMediumClient {
     -webkit-filter: drop-shadow(2px 2px 0 black)
@@ -73,7 +73,7 @@
     box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.1);
 }
 .typeMediumClient {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: bold;
     text-transform: uppercase;
     text-shadow: 1px 1px 6px grey;
@@ -81,17 +81,17 @@
     margin: 10px;
 }
 .denominationMediumClient {
-    font-size: 30px;
+    font-size: 26px;
     font-weight: bold;
     color: #583D72;
 }
 .presentationMediumClient {
-    font-size: 24px;
+    font-size: 20px;
     color: black;
 }
 .complementMediumClient {
     color: #555;
-    font-size: 22px;
+    font-size: 18px;
     font-style: oblique;
 }
 .boutonRDV {
@@ -100,7 +100,7 @@
     right:0;
     z-index: 10;
     padding: 10px 30px;
-    font-size: 26px;
+    font-size: 22px;
 }
 
 /* ----------------------------------------------------------------- */

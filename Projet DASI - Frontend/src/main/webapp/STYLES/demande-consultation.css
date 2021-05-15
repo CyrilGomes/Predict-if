@@ -1,7 +1,6 @@
 /* ----------------------------------------------------------------- */
-/* PAGE SPECIFIC STYLES */
+/* GRID STYLES */
 /* ----------------------------------------------------------------- */
-/* Grid container */
 .gridBody{
     padding: 15px 30px;
     display: grid;
@@ -19,7 +18,10 @@
     flex-direction: column;
     align-items: center;
 }
-/* Liste Mediums */
+
+/* ----------------------------------------------------------------- */
+/* LISTE MEDIUMS STYLES */
+/* ----------------------------------------------------------------- */
 .bienvenue {
     font-size: 32px;
     font-weight: bold;
@@ -101,7 +103,9 @@
     font-size: 26px;
 }
 
-/* Profil Astral */
+/* ----------------------------------------------------------------- */
+/* PROFIL ASTRAL STYLES */
+/* ----------------------------------------------------------------- */
 .profilAstral {
     display: flex;
     flex-direction: column;
