@@ -68,8 +68,7 @@ button.toggled {
     transition: 0.075s;
 }
 .secondaryButton:hover {
-    background: #ffe1a8;
-    box-shadow: 0px 0px 0 0 #FF8E71;
+    background: #f8e0ff;
     cursor: pointer;
 }
 

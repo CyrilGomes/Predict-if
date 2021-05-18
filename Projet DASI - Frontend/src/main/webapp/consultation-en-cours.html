@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="STYLES/main.css">
         <link rel="stylesheet" href="STYLES/consultation-en-cours.css">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     </head>
     <body style="display: none;">
 
@@ -29,7 +30,7 @@
                     <div class="panelHeader"> 
                         Consultation
                     </div> 
-                    <div class="panelContent"> 
+                    <div class="panelContent" id="consultationAttribueePanel"> 
 
                         <!-- Affichage Consultation attribuée -->
                         <div class="panel">
@@ -66,7 +67,7 @@
                                 </div>
                                 <!-- Texte tuto -->
                                 <div class="consultationPanel"> 
-                                    <p id="tutorialText">Le client va bientôt vous appeler. Lorsqu'il le fera, vous devrez cliquer sur le bouton 'Démarrer'.</p>
+                                    <p id="tutorialText">Veuillez patienter, le client va bientôt vous appeler. Lorsqu'il le fera, vous devrez cliquer sur le bouton 'Démarrer' et commencer la conversation.</p>
                                 </div>
                             </div>
                         </div>
@@ -87,24 +88,27 @@
                     <div class="panelContent" id="predictionsPanelContent"> 
                         <div class="predictionConteneur">
                             <div class="predict">
-                                <h2 class="predictTitle">Amour :</h2> 
+                                <h2 class="predictTitle"><i style='color: black;' class='fas fa-heart'></i>&nbsp;&nbsp; Amour :</h2> 
                                 <div class="slidecontainer">
-                                    <input type="range" min="1" max="4" value="1" class="slider" id="amourInput">
+                                    <input type="range" min="1" max="4" value="2" class="slider" id="amourInput" oninput="updateAmourSliderLabel(this.value);">
                                 </div>
+                                <p id='amourLabel'>1/4</p>
                             </div>
                             <textarea rows="2" cols="40" id="reponseAmour" class="responseInput" disabled placeholder="Sélectionnez une note sur 4 et cliquez sur 'Générér'"></textarea>
                             <div class="predict">
-                                <h2 class="predictTitle">Santé :</h2> 
+                                <h2 class="predictTitle"><i style='color: black;' class='fas fa-medkit'></i>&nbsp;&nbsp; Santé :</h2> 
                                 <div class="slidecontainer">
-                                    <input type="range" min="1" max="4" value="1" class="slider" id="santeInput">
+                                    <input type="range" min="1" max="4" value="2" class="slider" id="santeInput" oninput="updateSanteSliderLabel(this.value);">
                                 </div>
+                                <p id='santeLabel'>1/4</p>
                             </div>
                             <textarea rows="2" cols="40" id="reponseSante" class ="responseInput" disabled placeholder="Sélectionnez une note sur 4 et cliquez sur 'Générér'"></textarea>
                             <div class="predict">
-                                <h2 class="predictTitle">Travail :</h2> 
+                                <h2 class="predictTitle"><i style='color: black;' class='fas fa-briefcase'></i>&nbsp;&nbsp; Travail :</h2> 
                                 <div class="slidecontainer">
-                                    <input type="range" min="1" max="4" value="1" class="slider" id="travailInput">
+                                    <input type="range" min="1" max="4" value="2" class="slider" id="travailInput" oninput="updateTravailSliderLabel(this.value);">
                                 </div>
+                                <p id='travailLabel'>1/4</p>
                             </div>
                             <textarea rows="2" cols="40" id="reponseTravail" class ="responseInput" disabled placeholder="Sélectionnez une note sur 4 et cliquez sur 'Générér'"></textarea>
                         </div>
@@ -114,7 +118,7 @@
             </div>
             <div class="historique">
                 <div class="panel" id="historiquePanel">
-                    <div class="panelHeader"> 
+                    <div class="panelHeader" id="panelHeader"> 
                         Historique du Client
                     </div> 
                     <div class="panelContent" id="historiquePanelContent"> 
@@ -129,7 +133,7 @@
             // INITIALISATION
             $(document).ready(function () {
 
-                // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER + Historique
+                // REDIRIGER VERS UNE AUTRE PAGE SI CE N'EST PAS LE BON USER 
                 $.ajax({
                     url: './ActionServlet',
                     method: 'GET',
@@ -141,7 +145,7 @@
                         .done(function (response) {
                             console.log('Response', response);
                             // Si l'utilisateur n'est pas loggé ou qu'il n'est pas un employé...
-                            if (!(response.utilisateur && response.type == "employe")) {
+                            if (!(response.utilisateur && response.type === "employe")) {
                                 // Rediriger vers l'accueil
                                 window.location.replace("index.html");
                             }
@@ -149,42 +153,6 @@
                             else {
                                 // Afficher la page 
                                 $('body').css({"display": "block"});
-                                // OBTENIR HISTORIQUE DU CLIENT PRIS EN CHARGE PAR L'EMPLOYE COURANT
-                                $.ajax({
-                                    url: './ActionServlet',
-                                    method: 'GET',
-                                    data: {
-                                        todo: 'obtenirHistoriqueClientReqEmploye'
-                                    },
-                                    dataType: 'json'
-                                })
-                                        .done(function (response) {
-                                            console.log(response);
-                                            // Charger le nom du client 
-                                            $('div.bienvenue').html(
-                                                    "<span>Historique de consultations de " + response.client.prenom + " " + response.client.nom + " :</span>"
-                                                    );
-                                            // Charger l'historique
-                                            var htmlString = "";
-                                            for (var id in response.historique) {
-                                                var consultation = response.historique[id];
-                                                htmlString += "<div class='itemHistoriqueEmploye'>";
-                                                htmlString += "<div class='contenuHistoriqueEmploye'><span class='labelHistoriqueEmploye'>Date : </span>";
-                                                htmlString += "<span class='infoHistoriqueEmploye'>" + consultation.date + "</span></div>";
-                                                htmlString += "<div class='contenuHistoriqueEmploye'><span class='labelHistoriqueEmploye'>Employé en charge : </span>";
-                                                htmlString += "<span class='infoHistoriqueEmploye'>" + consultation.employe + "</span></div>";
-                                                htmlString += "<div class='contenuHistoriqueEmploye'><span class='labelHistoriqueEmploye'>Médium incarné : </span>";
-                                                htmlString += "<span class='infoHistoriqueEmploye'>" + consultation.denomination + " <i>(" + consultation.typeMedium + ")</i></span></div>";
-                                                htmlString += "<div class='contenuHistoriqueEmploye'><span class='labelHistoriqueEmploye'>Commentaire : </span>";
-                                                htmlString += "<span class='infoHistoriqueEmploye'>" + consultation.commentaire + "</span></div>";
-                                                htmlString += "</div>";
-                                            }
-                                            $('#historique').html(htmlString);
-                                        })
-                                        .fail(function (error) {
-                                            console.log('Error', error);
-                                            alert("Erreur obtenirHistoriqueClientReqEmploye");
-                                        });
                             }
                         })
                         .fail(function (error) {
@@ -197,16 +165,13 @@
                     url: './ActionServlet',
                     method: 'GET',
                     data: {
-                        todo: 'obtenirHistoriqueClientReqEmploye'
+                        todo: 'obtenirHistoriqueClientReqEmploye',
+                        mediumSpecifique: 'true'
                     },
                     dataType: 'json'
                 })
                         .done(function (response) {
                             console.log(response);
-                            // Charger le nom du client 
-                            $('div.bienvenue').html(
-                                    "<span>Historique de consultations de " + response.client.prenom + " " + response.client.nom + " :</span>"
-                                    );
                             // Charger l'historique
                             var htmlString = "";
                             for (var id in response.historique) {
@@ -216,15 +181,13 @@
                                 htmlString += "<span class='infoHistoriqueEmploye'>" + consultation.date + "</span></div>";
                                 htmlString += "<div class='contenuHistoriqueEmploye'><span class='labelHistoriqueEmploye'>Employé en charge : </span>";
                                 htmlString += "<span class='infoHistoriqueEmploye'>" + consultation.employe + "</span></div>";
-                                htmlString += "<div class='contenuHistoriqueEmploye'><span class='labelHistoriqueEmploye'>Médium incarné : </span>";
-                                htmlString += "<span class='infoHistoriqueEmploye'>" + consultation.denomination + " <i>(" + consultation.typeMedium + ")</i></span></div>";
                                 htmlString += "<div class='contenuHistoriqueEmploye'><span class='labelHistoriqueEmploye'>Commentaire : </span>";
                                 htmlString += "<span class='infoHistoriqueEmploye'>" + consultation.commentaire + "</span></div>";
                                 htmlString += "</div>";
                             }
                             // Si historique vide
                             if (htmlString === "") {
-                                htmlString += "<div class='messageHistorique'>Le client n'a jamais consulté... Faites une bonne première impression !</div>"
+                                htmlString += "<div class='messageHistorique'>Le client n'a jamais consulté avec ce médium... Faites une bonne première impression !</div>"
                             }
                             $('#historique').html(htmlString);
                         })
@@ -245,7 +208,7 @@
                         .done(function (response) {
                             console.log('Response', response);
                             // Si une consultation a été attribuée à l'utilisateur courant...
-                            if (response.consultation && response.etat != "Termine") {
+                            if (response.consultation && response.etat !== "Termine") {
 
                                 // Populer un div avec les informations de la consultation en cours et le montrer
                                 var htmlString;
@@ -271,7 +234,7 @@
                                 htmlString += "<span class='telClient'>&phone;&nbsp; <i>" + response.client.telephone + "</i></span><br/><br/>";
                                 // Lien vers historique
                                 htmlString += "<div class='lienHistoriqueClient'>";
-                                htmlString += "Voir son <strong><a href='historique.html' class='hyperlien'>historique de consultations</a></strong>";
+                                htmlString += "Voir son <strong><a href='historique.html' class='hyperlien'>historique complet de consultations</a></strong>";
                                 htmlString += "</div>";
                                 htmlString += "</div>";
                                 htmlString += "</div>";
@@ -324,6 +287,9 @@
                                         $('#tutorialText').html("La consultation est désormais finie. Vous pouvez encore écrire et sauvegarder votre commentaire avant de cliquer sur 'Terminer'. Vous ne pourrez plus revenir sur cette page.");
                                         break;
                                 }
+                                
+                                // Compléter le nom du header de l'historique 
+                                $('#panelHeader').html("Historique du Client avec " +response.medium.denomination);
 
                             }
                         })
@@ -516,6 +482,16 @@
                             });
                 }
             });
+            
+            function updateAmourSliderLabel(val) {
+                document.getElementById('amourLabel').innerHTML = val + "/4"; 
+            }
+            function updateSanteSliderLabel(val) {
+                document.getElementById('santeLabel').innerHTML = val + "/4"; 
+            }
+            function updateTravailSliderLabel(val) {
+                document.getElementById('travailLabel').innerHTML = val + "/4"; 
+            }
 
         </script>
     </body>

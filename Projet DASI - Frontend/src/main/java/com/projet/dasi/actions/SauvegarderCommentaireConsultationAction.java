@@ -22,7 +22,7 @@ public class SauvegarderCommentaireConsultationAction extends Action{
         ServicesApplication service = new ServicesApplication();
         HttpSession session = request.getSession();
         
-        Employe employe = (Employe) session.getAttribute("utilisateur");
+        Employe employe = (Employe)session.getAttribute("utilisateur");
         Consultation consultation = service.obtenirConsultationAttribueeAEmploye(employe);
         boolean success = service.sauvegarderCommentaireConsultation(consultation, request.getParameter("commentaire"));
         

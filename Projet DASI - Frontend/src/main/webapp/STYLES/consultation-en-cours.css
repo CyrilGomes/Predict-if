@@ -2,7 +2,11 @@
 /* PREDICTIONS STYLES */
 /* ----------------------------------------------------------------- */
 #predictionsPanelContent {
-    padding: 20px;
+    padding: 10px 30px 60px 30px;
+}
+.predictTitle {
+    color: #583D72;
+    font-weight: bold;
 }
 .responseInput {
     font-size: 18px;
@@ -12,17 +16,16 @@
     border-width: 0px;
     color: black;
 }
-.consultationContainer{
-    display: flex;
-    flex-direction: column;
-}
 .slidecontainer {
-    width: 50%; /* Width of the outside container */
+    width: 50%; 
+    margin-left: 20px;
+    margin-right: 20px;
 }
 .predictionConteneur {
-    display:flex;
+    display: flex;
     flex-direction: column;
     position: relative;
+    margin: -10px 0px;
 }
 .predict {
     align-items: center;
@@ -33,37 +36,44 @@
 /* The slider itself */
 .slider {
     align-content: flex-end;
-    -webkit-appearance: none;  /* Override default CSS styles */
+    -webkit-appearance: none; 
     appearance: none;
-    width: 100%; /* Full-width */
-    height: 25px; /* Specified height */
-    background: #d3d3d3; /* Grey background */
-    outline: none; /* Remove outline */
-    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
-    transition: opacity .2s;
-}
-/* Mouse-over effects */
-.slider:hover {
-    opacity: 1; /* Fully shown on mouse-over */
+    width: 100%; 
+    height: 10px; 
+    border-radius: 6px;
+    background: #d3d3d3;
+    outline: none;
 }
 /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
 .slider::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
+    -webkit-appearance: none; 
     appearance: none;
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #04AA6D; /* Green background */
-    cursor: pointer; /* Cursor on hover */
+    width: 12px;
+    height: 25px; 
+    background: #583D72; 
+    cursor: pointer; 
+    border-style: none;
+}
+.slider::-webkit-slider-thumb:hover {
+    opacity: 0.9;
 }
 .slider::-moz-range-thumb {
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #04AA6D; /* Green background */
-    cursor: pointer; /* Cursor on hover */
+    width: 12px; 
+    height: 25px; 
+    background: #583D72; 
+    cursor: pointer; 
+    border-style: none;
+}
+.slider::-moz-range-thumb:hover {
+    opacity: 0.9;
 }
 textarea[disabled] {
     background: rgba(0, 0, 0, 0.05);
+    margin-top: -10px;
+}
+.amourLabel, santeLabel, travailLabel {
+    font-size: 20px;
+    font-weight: bold;
 }
 #boutonPrediction {
     position: absolute;
@@ -291,6 +301,7 @@ textarea[disabled] {
     bottom: -1em;
     left: 1.5em;
     padding: 10px 20px;
+    border-width: 5px;
     z-index: 10;
     font-size: 26px;
 }
@@ -313,17 +324,17 @@ textarea[disabled] {
     display: flex;
     flex-direction: column;
     padding: 10px;
+    height: 278px; 
     overflow-y: scroll;
-    height: 233px;
 }
 .itemHistoriqueEmploye {
     margin: 10px;
     border-radius: 6px;
-    padding: 15px 20px;
+    padding: 10px 15px;
     background: linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
 }
 .contenuHistoriqueEmploye {
-    font-size: 22px;
+    font-size: 18px;
     margin: 6px 0px;
 }
 .labelHistoriqueEmploye {
@@ -332,4 +343,8 @@ textarea[disabled] {
 }
 .infoHistoriqueEmploye {
     color: black;
+}
+.messageHistorique {
+    font-size: 18px;
+    padding: 15px;
 }
