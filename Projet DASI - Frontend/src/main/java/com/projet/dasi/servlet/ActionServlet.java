@@ -22,6 +22,7 @@ import com.projet.dasi.actions.GenererStatistiquesAction;
 import com.projet.dasi.actions.InscriptionAction;
 import com.projet.dasi.actions.ObtenirListeMediumAction;
 import com.projet.dasi.actions.ObtenirConsultationAttribueeAction;
+import com.projet.dasi.actions.ObtenirConsultationEnCoursSelonClientAction;
 import com.projet.dasi.actions.ObtenirHistoriqueClientReqClientAction;
 import com.projet.dasi.actions.ObtenirHistoriqueClientReqEmployeAction;
 import com.projet.dasi.actions.ObtenirUtilisateurSessionAction;
@@ -29,6 +30,7 @@ import com.projet.dasi.actions.SauvegarderProfilAction;
 import com.projet.dasi.actions.SignalerDebutConsultationAction;
 import com.projet.dasi.dao.JpaUtil;
 import com.projet.dasi.serialisations.EtatConsultationSerialisation;
+import com.projet.dasi.serialisations.ObtenirConsultationEnCoursSelonClientSerialisation;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -140,6 +142,11 @@ public class ActionServlet extends HttpServlet {
             case "signalerDebutConsultation":
                 action = new SignalerDebutConsultationAction();
                 serialisation = new StatutSerialisation();
+                break;
+                
+            case "obtenirConsultationEnCours":
+                action = new ObtenirConsultationEnCoursSelonClientAction();
+                serialisation = new ObtenirConsultationEnCoursSelonClientSerialisation();
                 break;
         }
 

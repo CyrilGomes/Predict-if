@@ -708,4 +708,15 @@ public class ServicesApplication {
         return statistiques;
     }
     
+    public Consultation obtenirConsultationEnCoursSelonClient(Client client){
+        // Créer les DAOs et le contexte de persistance
+        ConsultationDao consultationDao = new ConsultationDao();
+        
+        JpaUtil.creerContextePersistance();
+        Consultation consultation = consultationDao.obtenirConsultationEnCoursSelonClient(client);
+        JpaUtil.fermerContextePersistance();
+        
+        return consultation;
+    }
+    
 }
