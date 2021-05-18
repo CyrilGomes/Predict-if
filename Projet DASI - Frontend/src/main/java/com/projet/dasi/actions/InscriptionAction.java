@@ -30,7 +30,7 @@ public class InscriptionAction extends Action {
         }
         
         // Appel services
-        Client nouveauClient = new Client(nom, prenom, email, mdp, tel, codePostal, dateNaissance);
+        Client nouveauClient = new Client(prenom, nom, email, mdp, tel, codePostal, dateNaissance);
         Utilisateur utilisateur = service.inscrireClient(nouveauClient);
 
         // Stoquage des résultats dans les attributs de la requête
