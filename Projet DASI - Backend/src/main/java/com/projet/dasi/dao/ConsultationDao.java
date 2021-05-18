@@ -34,7 +34,7 @@ public class ConsultationDao {
         return query.getResultList();
     }
 
-    /* Chercher les consultations d'un certain client */
+    /* Chercher les consultations terminées d'un certain client */
     public List<Consultation> chercherTermineParClient(Client client) {
         String s = ""
                 + "SELECT c FROM Consultation c "
@@ -111,5 +111,23 @@ public class ConsultationDao {
         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Consultation.class);
         query.setParameter("etat", Etat.Termine);
         return query.getResultList();
+    }
+    
+    /* Chercher la consultation en cours pour un client (si existante) */
+    public Consultation obtenirConsultationEnCoursSelonClient(Client client){
+        String s = "SELECT c FROM Consultation c "
+                    + "WHERE c.client = :leClient AND c.etat IN (:unEtat1, :unEtat2, :unEtat3) ";
+        TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(s, Consultation.class);
+        query.setParameter("leClient", client);
+        query.setParameter("unEtat1", Etat.EnAttenteEmploye);
+        query.setParameter("unEtat2", Etat.EnAttenteClient);
+        query.setParameter("unEtat3", Etat.EnCours);
+        
+        List<Consultation> consultations = query.getResultList();
+        Consultation consultation = null;
+        if (consultations.size() > 0) {
+            consultation = consultations.get(0);
+        }
+        return consultation;
     }
 }

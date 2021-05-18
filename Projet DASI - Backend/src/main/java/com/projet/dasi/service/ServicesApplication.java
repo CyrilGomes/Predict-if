@@ -223,7 +223,7 @@ public class ServicesApplication {
             
             // Le notifier de son inscription
             Message.envoyerMail(
-                "contact.predict.if", client.getMail(), "Bienvenu chez PREDICT'IF", 
+                "noreply@predictif.com", client.getMail(), "Bienvenu chez PREDICT'IF", 
                 "Bonjour " + client.getPrenom() + ", nous vous confirmons votre inscription au service PREDICT’IF. Rendez-vous vite sur notre site pour consulter votre profil astrologique et profiter des dons incroyables de nos médiums"
             );
 
@@ -232,7 +232,7 @@ public class ServicesApplication {
             ex.printStackTrace();
             JpaUtil.annulerTransaction();
             Message.envoyerMail(
-                "contact.predict.if", client.getMail(), "Echec de l’inscription chez PREDICT’IF", 
+                "noreply@predictif.com", client.getMail(), "Echec de l’inscription chez PREDICT’IF", 
                 "Bonjour " + client.getPrenom() + ", votre inscription au service PREDICT’IF a malencontreusement échoué... \nMerci de recommencer ultérieurement."
             );
             client = null;
@@ -706,6 +706,17 @@ public class ServicesApplication {
         }
         
         return statistiques;
+    }
+    
+    public Consultation obtenirConsultationEnCoursSelonClient(Client client){
+        // Créer les DAOs et le contexte de persistance
+        ConsultationDao consultationDao = new ConsultationDao();
+        
+        JpaUtil.creerContextePersistance();
+        Consultation consultation = consultationDao.obtenirConsultationEnCoursSelonClient(client);
+        JpaUtil.fermerContextePersistance();
+        
+        return consultation;
     }
     
 }

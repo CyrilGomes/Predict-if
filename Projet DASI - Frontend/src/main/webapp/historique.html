@@ -10,7 +10,7 @@
     </head>
     <body style="display: none;">
 
-       <!-- HEADER / FOOTER -->
+        <!-- HEADER / FOOTER -->
         <div class="header">
             <a href="index.html" class="logo">Predict'IF</a>
             <div class="header-right" id='headerContent'>
@@ -19,7 +19,7 @@
         <div class="footer"> 
             <p>© 2021 Predict'IF - Tous droits réservés</p>
         </div>
-       
+
         <!-- HISTORIQUE --> 
         <div class="panelHistorique">
             <div class="bienvenue">
@@ -30,7 +30,7 @@
         <div class="footer"> 
             <p>© 2021 Predict'IF - Tous droits réservés</p>
         </div>
-        
+
         <script>
 
             // INITIALISATION
@@ -77,7 +77,6 @@
                                         dataType: 'json'
                                     })
                                             .done(function (response) {
-                                                console.log(response);
                                                 // Charger le nom du client 
                                                 $('div.bienvenue').html(
                                                         "<span>Historique de consultations de " + response.client.prenom + " " + response.client.nom + " :</span>"
@@ -118,66 +117,84 @@
                                             "<a href='#' class='boutonDeconnexion'>Déconnexion</a>"
                                             );
 
-                                    // OBTENIR HISTORIQUE DU CLIENT COURANT
                                     $.ajax({
                                         url: './ActionServlet',
                                         method: 'GET',
                                         data: {
-                                            todo: 'obtenirHistoriqueClientReqClient'
+                                            todo: 'obtenirConsultationEnCours'
                                         },
                                         dataType: 'json'
                                     })
                                             .done(function (response) {
-                                                console.log(response);
-                                                // Charger l'historique
-                                                var htmlString = "";
-                                                for (var id in response.historique) {
-                                                    var consultation = response.historique[id];
-                                                    htmlString += "<div class='itemHistoriqueClient' genre='" + consultation.medium.genre + "'>";
+                                                var consultationEnCours = response.consultationEnCours;
 
-                                                    // Date de la consultation
-                                                    htmlString += "<div class='dateHistoriqueClient'>" + consultation.date + "</div>";
+                                                // OBTENIR HISTORIQUE DU CLIENT COURANT
+                                                $.ajax({
+                                                    url: './ActionServlet',
+                                                    method: 'GET',
+                                                    data: {
+                                                        todo: 'obtenirHistoriqueClientReqClient'
+                                                    },
+                                                    dataType: 'json'
+                                                })
+                                                        .done(function (response) {
+                                                            console.log(response);
+                                                            // Charger l'historique
+                                                            var htmlString = "";
+                                                            for (var id in response.historique) {
+                                                                var consultation = response.historique[id];
+                                                                htmlString += "<div class='itemHistoriqueClient' genre='" + consultation.medium.genre + "'>";
 
-                                                    htmlString += "<div class='flexContainerMediumClient'>";
-                                                    // Image et type du médium
-                                                    htmlString += "<div class='mediumLeftClient'>";
-                                                    htmlString += "<img class='imageMediumClient' src=\"STYLES/IMAGES/MEDIUMS/" + consultation.medium.denomination + ".jpg\" width='100'>";
-                                                    htmlString += "<span class='typeMediumClient'>" + consultation.medium.type + "</span>";
-                                                    htmlString += "</div>";
+                                                                // Date de la consultation
+                                                                htmlString += "<div class='dateHistoriqueClient'>" + consultation.date + "</div>";
 
-                                                    // Description textuelle du médium
-                                                    htmlString += "<div class='mediumRightClient'>";
-                                                    htmlString += "<span class='denominationMediumClient'>";
-                                                    htmlString += "<span style='color: black;'>Consultation avec </span>";
-                                                    htmlString += consultation.medium.denomination + "</span><br/>";
-                                                    htmlString += "<span class='presentationMediumClient'>" + consultation.medium.presentation + "</span><br/>";
-                                                    switch (consultation.medium.type) {
-                                                        case "Astrologue":
-                                                            htmlString += "<span class='complementMediumClient'><strong>Formation : </strong>" + consultation.medium.formation + "<br/>";
-                                                            htmlString += "<strong>Promotion : </strong>" + consultation.medium.promotion + "</span>";
-                                                            break;
+                                                                htmlString += "<div class='flexContainerMediumClient'>";
+                                                                // Image et type du médium
+                                                                htmlString += "<div class='mediumLeftClient'>";
+                                                                htmlString += "<img class='imageMediumClient' src=\"STYLES/IMAGES/MEDIUMS/" + consultation.medium.denomination + ".jpg\" width='100'>";
+                                                                htmlString += "<span class='typeMediumClient'>" + consultation.medium.type + "</span>";
+                                                                htmlString += "</div>";
 
-                                                        case "Spirite":
-                                                            htmlString += "<span class='complementMediumClient'><strong>Support :</strong> " + consultation.medium.support + "</span>";
-                                                            break;
-                                                    }
-                                                    htmlString += "</div>";
-                                                    htmlString += "</div>";
+                                                                // Description textuelle du médium
+                                                                htmlString += "<div class='mediumRightClient'>";
+                                                                htmlString += "<span class='denominationMediumClient'>";
+                                                                htmlString += "<span style='color: black;'>Consultation avec </span>";
+                                                                htmlString += consultation.medium.denomination + "</span><br/>";
+                                                                htmlString += "<span class='presentationMediumClient'>" + consultation.medium.presentation + "</span><br/>";
+                                                                switch (consultation.medium.type) {
+                                                                    case "Astrologue":
+                                                                        htmlString += "<span class='complementMediumClient'><strong>Formation : </strong>" + consultation.medium.formation + "<br/>";
+                                                                        htmlString += "<strong>Promotion : </strong>" + consultation.medium.promotion + "</span>";
+                                                                        break;
 
-                                                    // Bouton de reprise de RDV
-                                                    htmlString += "<button id='" + consultation.medium.id + "' class='boutonRDV'>Reprendre RDV &nbsp;&phone;</button>";
+                                                                    case "Spirite":
+                                                                        htmlString += "<span class='complementMediumClient'><strong>Support :</strong> " + consultation.medium.support + "</span>";
+                                                                        break;
+                                                                }
+                                                                htmlString += "</div>";
+                                                                htmlString += "</div>";
 
-                                                    htmlString += "</div>";
-                                                }
-                                                // Si historique vide
-                                                if (htmlString === "") {
-                                                    htmlString += "<div class='messageHistorique'>Vous n'avez pas encore consulté de médium. <a href='demande-consultation.html' class='hyperlien'>Prenez RDV</a> maintenant !</div>"
-                                                }
-                                                $('#historique').html(htmlString);
+                                                                if (!consultationEnCours) {
+                                                                    // Bouton de reprise de RDV
+                                                                    htmlString += "<button id='" + consultation.medium.id + "' class='boutonRDV'>Reprendre RDV &nbsp;&phone;</button>";
+                                                                }
+
+                                                                htmlString += "</div>";
+                                                            }
+                                                            // Si historique vide
+                                                            if (htmlString === "") {
+                                                                htmlString += "<div class='messageHistorique'>Vous n'avez pas encore consulté de médium. <a href='demande-consultation.html' class='hyperlien'>Prenez RDV</a> maintenant !</div>"
+                                                            }
+                                                            $('#historique').html(htmlString);
+                                                        })
+                                                        .fail(function (error) {
+                                                            console.log('Error', error);
+                                                            alert("Erreur obtenirHistoriqueClientReqClient");
+                                                        });
                                             })
                                             .fail(function (error) {
                                                 console.log('Error', error);
-                                                alert("Erreur obtenirHistoriqueClientReqClient");
+                                                alert("Erreur obtenirConsultationEnCours");
                                             });
                                 }
                                 // Afficher la page
@@ -240,6 +257,7 @@
                                 $('#' + mediumId).removeClass("selected");
                                 $('#' + mediumId).addClass("toggled");
                                 $('#' + mediumId).prop('disabled', true);
+                                window.location.replace("demande-consultation.html");
                             } else {
                                 // Alerter l'utilisateur
                                 alert("Le médium demandé n'est pas disponible... Essayez plus tard");
