@@ -22,14 +22,14 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author creep
  */
-public class ObtenirConsultationEnCoursSelonClientSerialisation extends Serialisation {
+public class MediumConsultationSerialisation extends Serialisation {
 
     @Override
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Consultation consultation = (Consultation) request.getAttribute("consultation");
 
         JsonObject container = new JsonObject();
-        container.addProperty("consultationEnCours", consultation != null);
+        container.addProperty("consultation", consultation != null);
         if (consultation != null) {
             Medium medium = consultation.getMedium();
             JsonObject mediumData = new JsonObject();
@@ -48,7 +48,7 @@ public class ObtenirConsultationEnCoursSelonClientSerialisation extends Serialis
             } else if (medium instanceof Cartomancien) {
                 mediumData.addProperty("type", "Cartomancien");
             }
-            container.add("mediumConsulte", mediumData);
+            container.add("medium", mediumData);
         }
         
         PrintWriter out = this.getWriter(response);

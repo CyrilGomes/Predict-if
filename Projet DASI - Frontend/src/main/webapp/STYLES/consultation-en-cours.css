@@ -90,8 +90,8 @@ textarea[disabled] {
 .panelContainer {
     padding: 1em;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
     gap: 0em 0.1em;
     grid-template-areas:
       "predictions consultation"
@@ -284,6 +284,10 @@ textarea[disabled] {
     padding: 5px 15px;
     float: right;
 }
+#saveCommentaire.clicked {
+    background: #583D72;
+    transition: 1s;
+}
 #tutorialText {
     margin-top: 3.5em;
     margin-bottom: 1.5em;
@@ -300,10 +304,9 @@ textarea[disabled] {
     position: absolute;
     bottom: -1em;
     left: 1.5em;
-    padding: 10px 20px;
-    border-width: 5px;
+    padding: 5px 15px;
     z-index: 10;
-    font-size: 26px;
+    font-size: 18px;
 }
 #boutonDemarrer, #boutonArreter, #boutonTerminer {
     position: absolute;

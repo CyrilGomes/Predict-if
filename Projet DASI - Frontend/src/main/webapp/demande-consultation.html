@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>Predicti'if Demander une consultation</title>
@@ -126,54 +121,57 @@ and open the template in the editor.
                             alert("Erreur obtenirUtilisateurCourant");
                         });
 
+                // REMPLIR LA LISTE DES MEDIUMS (un seul si consultation demandee, tous sinon)
                 $.ajax({
                     url: './ActionServlet',
                     method: 'GET',
                     data: {
-                        todo: 'obtenirConsultationEnCours'
+                        todo: 'obtenirConsultationDemandee'
                     },
                     dataType: 'json'
                 })
                         .done(function (response) {
-                            if (response.consultationEnCours) {
+                            // REMPLIR AVEC LE MEDIUM DEMANDÉ
+                            if (response.consultation) {
                                 $('#sousTitre').html("Votre consultation est en attente. Vous recevrez prochainement un SMS de votre médium.");
-                                var medium = response.mediumConsulte;
                                 var htmlString = "";
 
-                                htmlString += "<div class='itemMedium' genre='" + medium.genre + "'>";
+                                htmlString += "<div class='itemMedium' genre='" + response.medium.genre + "'>";
                                 htmlString += "<div class='flexContainerMedium'>";
                                 // Image et type
                                 htmlString += "<div class='mediumLeft'>";
-                                htmlString += "<img class='imageMedium' src=\"STYLES/IMAGES/MEDIUMS/" + medium.denomination + ".jpg\" width='120'>";
-                                htmlString += "<span class='typeMedium'>" + medium.type + "</span>";
+                                htmlString += "<img class='imageMedium' src=\"STYLES/IMAGES/MEDIUMS/" + response.medium.denomination + ".jpg\" width='120'>";
+                                htmlString += "<span class='typeMedium'>" + response.medium.type + "</span>";
                                 htmlString += "</div>";
                                 // Description textuelle
                                 htmlString += "<div class='mediumRight'>";
-                                htmlString += "<span class='denominationMedium'>" + medium.denomination + "</span><br/>";
-                                htmlString += "<span class='presentationMedium'>" + medium.presentation + "</span><br/>";
-                                switch (medium.type) {
+                                htmlString += "<span class='denominationMedium'>" + response.medium.denomination + "</span><br/>";
+                                htmlString += "<span class='presentationMedium'>" + response.medium.presentation + "</span><br/>";
+                                switch (response.medium.type) {
                                     case "Astrologue":
-                                        htmlString += "<span class='complementMedium'><strong>Formation : </strong>" + medium.formation + "<br/>";
-                                        htmlString += "<strong>Promotion : </strong>" + medium.promotion + "</span>";
+                                        htmlString += "<span class='complementMedium'><strong>Formation : </strong>" + response.medium.formation + "<br/>";
+                                        htmlString += "<strong>Promotion : </strong>" + response.medium.promotion + "</span>";
                                         break;
                                     case "Spirite":
-                                        htmlString += "<span class='complementMedium'><strong>Support :</strong> " + medium.support + "</span>";
+                                        htmlString += "<span class='complementMedium'><strong>Support :</strong> " + response.medium.support + "</span>";
                                         break;
                                 }
                                 htmlString += "</div>";
                                 htmlString += "</div>";
                                 // Bouton de RDV
-                                htmlString += "<button id='" + medium.id + "' class='boutonRDV'>Prendre RDV &nbsp;&phone;</button>";
+                                htmlString += "<button id='" + response.medium.id + "' class='boutonRDV'>Prendre RDV &nbsp;&phone;</button>";
                                 htmlString += "</div>";
                                 
                                 $('#listeMediums').html(htmlString);
                                 
                                 // Changer le bouton
-                                $('#' + medium.id).html("RDV Pris");
-                                $('#' + medium.id).removeClass("selected");
-                                $('#' + medium.id).addClass("toggled");
-                                $('#' + medium.id).prop('disabled', true);
-                            } else {
+                                var id = response.medium.id;
+                                $('#' + id).html("RDV Pris");
+                                $('#' + id).removeClass("selected");
+                                $('#' + id).addClass("toggled");
+                                $('#' + id).prop('disabled', true);
+                            } 
+                            else {
                                 // REMPLIR LA LISTE DES MEDIUMS
                                 $.ajax({
                                     url: './ActionServlet',
@@ -223,7 +221,7 @@ and open the template in the editor.
                         })
                         .fail(function (error) {
                             console.log('Error', error);
-                            alert("Erreur obtenirConsultationEnCours");
+                            alert("Erreur obtenirConsultationDemandee");
                         });
             });
 

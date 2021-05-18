@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author creep
  */
-public class ObtenirConsultationEnCoursSelonClientAction extends Action {
+public class ObtenirConsultationDemandeeParClientAction extends Action {
 
     @Override
     public void executer(HttpServletRequest request) {
@@ -28,6 +28,7 @@ public class ObtenirConsultationEnCoursSelonClientAction extends Action {
         Client client = (Client)session.getAttribute("utilisateur");
         Consultation consultation = serviceApplication.obtenirConsultationEnCoursSelonClient(client);
         request.setAttribute("consultation", consultation);
+        
     }
     
 }

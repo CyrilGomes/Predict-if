@@ -116,18 +116,19 @@
                                             "<a href='profil.html'>Profil</a>" +
                                             "<a href='#' class='boutonDeconnexion'>Déconnexion</a>"
                                             );
-
+                                    
+                                    // VERIFIER QU'IL N'Y AIT PAS DE CONSULTATION DEMANDEE
                                     $.ajax({
                                         url: './ActionServlet',
                                         method: 'GET',
                                         data: {
-                                            todo: 'obtenirConsultationEnCours'
+                                            todo: 'obtenirConsultationDemandee'
                                         },
                                         dataType: 'json'
                                     })
                                             .done(function (response) {
-                                                var consultationEnCours = response.consultationEnCours;
-
+                                                var consultationDemandee = response.consultation;
+                                        
                                                 // OBTENIR HISTORIQUE DU CLIENT COURANT
                                                 $.ajax({
                                                     url: './ActionServlet',
@@ -174,8 +175,8 @@
                                                                 htmlString += "</div>";
                                                                 htmlString += "</div>";
 
-                                                                if (!consultationEnCours) {
-                                                                    // Bouton de reprise de RDV
+                                                                // Bouton de reprise de RDV
+                                                                if (!consultationDemandee) {
                                                                     htmlString += "<button id='" + consultation.medium.id + "' class='boutonRDV'>Reprendre RDV &nbsp;&phone;</button>";
                                                                 }
 
@@ -194,7 +195,7 @@
                                             })
                                             .fail(function (error) {
                                                 console.log('Error', error);
-                                                alert("Erreur obtenirConsultationEnCours");
+                                                alert("Erreur obtenirConsultationDemandee");
                                             });
                                 }
                                 // Afficher la page

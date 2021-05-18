@@ -21,7 +21,7 @@ and open the template in the editor.
             <div class="header-right" id='headerContent'>
             </div>
         </div>
-        <div class="footer" style="position: fixed;"> 
+        <div class="footer"> 
             <p>© 2021 Predict'IF - Tous droits réservés</p>
         </div>
 
@@ -113,13 +113,14 @@ and open the template in the editor.
 
                                 // Si l'utilisateur est déjà logué
                                 if (response.utilisateur) {
-                                    // Changer les boutons du header et le lien du bouton
+                                    // Changer les boutons du header et enlever le bouton modifier
                                     if (response.type == "employe") {
                                         $('#headerContent').html(
                                                 "<a href='tableau-de-bord.html'>Tableau de Bord</a>" +
                                                 "<a href='profil.html' id='currentPage'>Profil</a>" +
                                                 "<a href='#' class='boutonDeconnexion'>Déconnexion</a>"
                                                 );
+                                        $('#boutonModif').css({"display":"none"});
                                     } else {
                                         // Changer le header
                                         $('#headerContent').html(

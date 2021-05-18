@@ -333,7 +333,7 @@
                             console.log('Error', error);
                             alert("Erreur obtenirPredictions");
                         })
-                        .always(function () { // Fonction toujours appelée
+                        .always(function () { 
                             $('#boutonPrediction').html("Generer");
                         });
 
@@ -341,7 +341,6 @@
 
             // SAUVEGARDER COMMENTAIRE
             $('#saveCommentaire').on('click', function () {
-                $('#saveCommentaire').html("Sauvegarde en cours...");
                 var commentaire = $('#texteCommentaire').val();
                 $.ajax({
                     url: './ActionServlet',
@@ -361,16 +360,12 @@
                             }
                             setTimeout(function () {
                                 $('#saveCommentaire').html("Sauvegarder");
-                            }, 3000);
+                            }, 500);
                         })
                         .fail(function (error) {
                             console.log('Error', error);
                             alert("Erreur sauvegarderCommentaire");
                         })
-                        .always(function () {
-                            $('#saveCommentaire').html("Sauvegarder");
-                        });
-
             });
 
             // DEMARRER CONSULTATION

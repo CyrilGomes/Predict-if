@@ -24,6 +24,7 @@ body {
     padding: 0px;
     position: relative;
     padding-bottom: 60px;
+    min-height: 93vh;
 }
 
 /* Boutons */
