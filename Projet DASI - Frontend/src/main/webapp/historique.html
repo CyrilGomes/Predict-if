@@ -223,7 +223,7 @@
                             if (response.etat && (response.etat === "EnAttenteClient" || response.etat === "EnCours")) {
                                 console.log("je suis là");
                                 $('#headerContent').prepend(
-                                        "<a href='consultation-en-cours.html'>Consultation en cours</a>"
+                                        "<a href='consultation-en-cours.html'>Consultation en cours <div class='blob'></div></a>"
                                         );
                             }
                         })

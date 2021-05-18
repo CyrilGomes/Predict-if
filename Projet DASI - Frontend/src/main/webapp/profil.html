@@ -176,7 +176,7 @@ and open the template in the editor.
                                 // S'il y a une consultation dans la session (donc un employé est loggé)
                                 if (response.etat && (response.etat === "EnAttenteClient" || response.etat === "EnCours")) {
                                     $('#headerContent').prepend(
-                                            "<a href='consultation-en-cours.html'>Consultation en cours</a>"
+                                            "<a href='consultation-en-cours.html'>Consultation en cours <div class='blob'></div></a>"
                                             );
                                 }
                             })

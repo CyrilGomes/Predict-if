@@ -26,10 +26,13 @@ public class DemarrerTerminerConsultationAction extends Action {
         ServicesApplication service = new ServicesApplication();
         HttpSession session = request.getSession();
 
-        Employe employe = (Employe) session.getAttribute("utilisateur");
+        Employe employe = (Employe)session.getAttribute("utilisateur");
         Consultation consultation = service.obtenirConsultationAttribueeAEmploye(employe);
         boolean result = service.demarrerOuTerminerConsultation(consultation);
         request.setAttribute("statut", result);
+        
+        //Sauvegarder temporairement la consultation en session 
+        session.setAttribute("consultation", consultation);
     }
 
 }

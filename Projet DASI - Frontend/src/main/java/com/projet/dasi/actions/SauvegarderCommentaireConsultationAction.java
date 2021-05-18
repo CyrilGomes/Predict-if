@@ -19,12 +19,24 @@ public class SauvegarderCommentaireConsultationAction extends Action{
 
     @Override
     public void executer(HttpServletRequest request) {
+        
         ServicesApplication service = new ServicesApplication();
         HttpSession session = request.getSession();
         
+        String commentaire = request.getParameter("commentaire");
+        if ("null".equals(commentaire)) {
+            commentaire = "Aucun";
+        }
         Employe employe = (Employe)session.getAttribute("utilisateur");
         Consultation consultation = service.obtenirConsultationAttribueeAEmploye(employe);
-        boolean success = service.sauvegarderCommentaireConsultation(consultation, request.getParameter("commentaire"));
+        boolean success = false;
+        if (consultation != null) {
+            success = service.sauvegarderCommentaireConsultation(consultation, commentaire);
+        }
+        else {
+            consultation = (Consultation)session.getAttribute("consultation");
+            success = service.sauvegarderCommentaireConsultation(consultation, commentaire);
+        }
         
         request.setAttribute("statut", success);
     }

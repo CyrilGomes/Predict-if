@@ -27,8 +27,8 @@ public class ObtenirHistoriqueClientReqEmployeAction extends Action {
         Medium medium = consultation.getMedium();
         List<Consultation> historique; 
         
-        // Si on ne demande aucun médium en particulier 
-        if ("".equals(mediumSpecifique)) {
+        // Si on ne demande aucun médium en particulier
+        if (mediumSpecifique == null) {
             historique = service.obtenirHistoriqueConsultationsClient(client);
         }
         else {
