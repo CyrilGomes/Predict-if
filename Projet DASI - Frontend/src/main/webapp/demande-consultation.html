@@ -135,11 +135,9 @@ and open the template in the editor.
                     dataType: 'json'
                 })
                         .done(function (response) {
-                            console.log(response);
                             if (response.consultationEnCours) {
                                 $('#sousTitre').html("Votre consultation est en attente. Vous recevrez prochainement un SMS de votre médium.");
                                 var medium = response.mediumConsulte;
-                                console.log(medium);
                                 var htmlString = "";
 
                                 htmlString += "<div class='itemMedium' genre='" + medium.genre + "'>";
@@ -164,8 +162,17 @@ and open the template in the editor.
                                 }
                                 htmlString += "</div>";
                                 htmlString += "</div>";
+                                // Bouton de RDV
+                                htmlString += "<button id='" + medium.id + "' class='boutonRDV'>Prendre RDV &nbsp;&phone;</button>";
+                                htmlString += "</div>";
                                 
                                 $('#listeMediums').html(htmlString);
+                                
+                                // Changer le bouton
+                                $('#' + medium.id).html("RDV Pris");
+                                $('#' + medium.id).removeClass("selected");
+                                $('#' + medium.id).addClass("toggled");
+                                $('#' + medium.id).prop('disabled', true);
                             } else {
                                 // REMPLIR LA LISTE DES MEDIUMS
                                 $.ajax({
@@ -245,6 +252,7 @@ and open the template in the editor.
                                 $('#' + mediumId).removeClass("selected");
                                 $('#' + mediumId).addClass("toggled");
                                 $('#' + mediumId).prop('disabled', true);
+                                window.location.replace("demande-consultation.html");
                             } else {
                                 // Alerter l'utilisateur
                                 alert("Le médium demandé n'est pas disponible... Essayez plus tard");

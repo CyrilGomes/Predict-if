@@ -5,6 +5,8 @@
  */
 package com.projet.dasi.serialisations;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.projet.dasi.model.Astrologue;
 import com.projet.dasi.model.Cartomancien;
@@ -12,6 +14,7 @@ import com.projet.dasi.model.Consultation;
 import com.projet.dasi.model.Medium;
 import com.projet.dasi.model.Spirite;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,8 +28,8 @@ public class ObtenirConsultationEnCoursSelonClientSerialisation extends Serialis
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Consultation consultation = (Consultation) request.getAttribute("consultation");
 
-        request.setAttribute("consultationEnCours", consultation != null);
-        System.out.println(request.getAttribute("consultationEnCours"));
+        JsonObject container = new JsonObject();
+        container.addProperty("consultationEnCours", consultation != null);
         if (consultation != null) {
             Medium medium = consultation.getMedium();
             JsonObject mediumData = new JsonObject();
@@ -45,8 +48,13 @@ public class ObtenirConsultationEnCoursSelonClientSerialisation extends Serialis
             } else if (medium instanceof Cartomancien) {
                 mediumData.addProperty("type", "Cartomancien");
             }
-            request.setAttribute("mediumConsulte", mediumData);
+            container.add("mediumConsulte", mediumData);
         }
+        
+        PrintWriter out = this.getWriter(response);
+        Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
+        gson.toJson(container, out);
+        out.close();
     }
 
 }
