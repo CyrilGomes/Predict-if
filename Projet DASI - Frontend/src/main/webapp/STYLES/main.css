@@ -1,6 +1,8 @@
 /* ----------------------------------------------------------------- */
 /* BASE STYLES */
 /* ----------------------------------------------------------------- */
+
+/* Polices de Caractères */
 @font-face {
   font-family: "Scada";
   src: url("FONTS/Scada-Bold.ttf");
@@ -11,6 +13,7 @@
   src: url("FONTS/Rowdies-Regular.ttf");
 }
 
+/* Bases*/
 html {
     overflow: -moz-scrollbars-vertical; 
     overflow-y: scroll;
@@ -22,6 +25,8 @@ body {
     position: relative;
     padding-bottom: 60px;
 }
+
+/* Boutons */
 button {
     background: #583D72;
     border-style: none;
@@ -42,30 +47,68 @@ button.selected {
     box-shadow: -4px 4px 0 0 #FF8E71;
 }
 button.toggled {
-    background: #FF8E71;
+    background: #FF8E71; 
     border-style: solid;
     border-width: 4px;
     border-color: #583D72;
     color: black;
     pointer-events: none;
 }
+/* Boutons secondaires */
+.secondaryButton {
+    background: white;
+    border-style: solid;
+    border-width: 3px;
+    border-color: #583D72;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    font-family: 'Scada';
+    transition: 0.075s;
+}
+.secondaryButton:hover {
+    background: #ffe1a8;
+    box-shadow: 0px 0px 0 0 #FF8E71;
+    cursor: pointer;
+}
+
+/* Hyperliens */
 .hyperlien {
     color: dodgerblue;
 }
+
+/* Titre avec ligne verte en dessous */
 .ligne {
     color: black;
     font-size: 36px;
     font-family: "Scada";
     box-shadow: 0px 10px #d0ebda
 }
+
+/* Inputs */
 input {
     display: inline-block;
     float: left;
+    font-family: "Lato";
 }
+/* Inputs larges*/
+textarea {
+    resize: none;
+    font-family: "Lato";
+    padding: 0.5em;
+    border-style: solid;
+    border-width: 1.5px;
+    border-color: grey;
+}
+
+/* Ligne horizontale */
 hr {
     width: 65%;
     border: 1px solid rgba(0, 0, 0, 0.3);
 }
+
+/* Messages d'erreur */
 .texteErreur {
     color: red;
 }
@@ -73,7 +116,6 @@ hr {
 /* ----------------------------------------------------------------- */
 /* HEADER STYLES */
 /* ----------------------------------------------------------------- */
-
 /* Header BG box */
 .header {
     /* position: fixed; */

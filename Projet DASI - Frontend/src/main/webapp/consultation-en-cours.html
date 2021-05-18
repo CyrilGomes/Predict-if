@@ -22,76 +22,111 @@
         <div class="footer"> 
             <p>© 2021 Predict'IF - Tous droits réservés</p>
         </div>
-        
-        <div class="grid-container">
-            <div class="Generateur">
-                <h1>Générateur de prédictions</h1>
-                <div class="predictionConteneur">
-                    <div class="predict">
-                        <h2 class="predictTitle">Amour :</h2> 
-                        <div class="slidecontainer">
-                            <input type="range" min="1" max="4" value="1" class="slider" id="amourInput">
+
+        <div class="panelContainer">
+            <div class="consultation">
+                <div class="panel" id="consultationPanel">
+                    <div class="panelHeader"> 
+                        Consultation
+                    </div> 
+                    <div class="panelContent"> 
+
+                        <!-- Affichage Consultation attribuée -->
+                        <div class="panel">
+
+                            <div id="informationsConsultation" style="display: none;"> 
+                                <!-- Client -->
+                                <div class="consultationPanel"> 
+                                    <div class="consultationPanelHeader"> 
+                                        <div class="consultationPanelHeaderLabel">Client : </div> 
+                                        <div class="consultationPanelHeaderLine"><hr/></div> 
+                                    </div>
+                                    <div class="consultationPanelContent" id="client"> 
+                                    </div>
+                                </div> 
+                                <!-- Médium -->
+                                <div class="consultationPanel"> 
+                                    <div class="consultationPanelHeader">
+                                        <div class="consultationPanelHeaderLabel">Médium à incarner : </div> 
+                                        <div class="consultationPanelHeaderLine"><hr/></div> 
+                                    </div>
+                                    <div class="consultationPanelContent" id="medium">
+                                    </div>
+                                </div>
+                                <!-- Commentaire -->
+                                <div class="consultationPanel"> 
+                                    <div class="consultationPanelHeader">
+                                        <div class="consultationPanelHeaderLabel">Commentaire : </div> 
+                                        <div class="consultationPanelHeaderLine"><hr/></div> 
+                                    </div>
+                                    <div class="consultationPanelContent" id="commentaire">
+                                        <textarea rows="5" placeholder="Écrivez vos commentaires sur la consultation ici" id="texteCommentaire"></textarea>
+                                        <button class="secondaryButton" id="saveCommentaire">Sauvegarder</button>
+                                    </div>
+                                </div>
+                                <!-- Texte tuto -->
+                                <div class="consultationPanel"> 
+                                    <p id="tutorialText">Le client va bientôt vous appeler. Lorsqu'il le fera, vous devrez cliquer sur le bouton 'Démarrer'.</p>
+                                </div>
+                            </div>
                         </div>
+                        
+                        <button id="annuler" class="secondaryButton">Annuler</button>
+                        <button id="boutonDemarrer">Démarrer</button>
+                        <button id="boutonArreter" style="display: none;">Arrêter</button>
+                        <button id="boutonTerminer" style="display: none;">Terminer</button>
+
                     </div>
-                    <textarea rows="10" cols="40" id="reponseAmour" class="responseInput"></textarea>
-                    <div class="predict">
-                        <h2 class="predictTitle">Santé :</h2> 
-                        <div class="slidecontainer">
-                            <input type="range" min="1" max="4" value="1" class="slider" id="santeInput">
-                        </div>
-                    </div>
-                    <textarea rows="10" cols="40" id="reponseSante" class ="responseInput"></textarea>
-                    <div class="predict">
-                        <h2 class="predictTitle">Travail :</h2> 
-                        <div class="slidecontainer">
-                            <input type="range" min="1" max="4" value="1" class="slider" id="travailInput">
-                        </div>
-                    </div>
-                    <textarea  rows="10" cols="40" id="reponseTravail" class ="responseInput"></textarea>
-                    <button id='bouton-prediction'>Generer</button>
                 </div>
             </div>
-            <div class="Consultation">
-                <h1>Consultation</h1>
-                <div class="consultationContainer">
-                    <h2>Client :</h2>
-                    <div id="client" style="background: #FF8E71">
-                        <h3 id="clientName">Jean Jean</h3>
-                        <p id="signeAstrologique">Signe Astrologique : Sagittaire</p>
-                        <p id="signeZodiaqueChinois">Signe Zodiaque Chinois : Dragon</p>
-                        <p id="couleurPorteBonheur">Couleur porte-bonheur : Vermillion</p>
-                        <p id="animalTotem">Animal Totem : Loutre</p>
-                        <a href="historique.html">Voir son historique de consultation</a>
-                    </div>
-                    <h2>Médium incarnée :</h2>
-                    <div id="medium" style="background: #04AA6D">
-                        <h3 id="mediumName">Mme. Irma</h3>
-                        <p id="role">cartomancière</p>
-                        <p id="presentation">blablabla arnaque blablabla</p>
+            <div class="predictions">
+                <div class="panel" id="predictionsPanel">
+                    <div class="panelHeader"> 
+                        Générateur de Prédictions
+                    </div> 
+                    <div class="panelContent" id="predictionsPanelContent"> 
+
+                        <div class="predictionConteneur">
+                            <div class="predict">
+                                <h2 class="predictTitle">Amour :</h2> 
+                                <div class="slidecontainer">
+                                    <input type="range" min="1" max="4" value="1" class="slider" id="amourInput">
+                                </div>
+                            </div>
+                            <textarea rows="5" cols="40" id="reponseAmour" class="responseInput" disabled placeholder="Sélectionnez une note sur 4 et cliquez sur 'Générér'"></textarea>
+                            <div class="predict">
+                                <h2 class="predictTitle">Santé :</h2> 
+                                <div class="slidecontainer">
+                                    <input type="range" min="1" max="4" value="1" class="slider" id="santeInput">
+                                </div>
+                            </div>
+                            <textarea rows="5" cols="40" id="reponseSante" class ="responseInput" disabled placeholder="Sélectionnez une note sur 4 et cliquez sur 'Générér'"></textarea>
+                            <div class="predict">
+                                <h2 class="predictTitle">Travail :</h2> 
+                                <div class="slidecontainer">
+                                    <input type="range" min="1" max="4" value="1" class="slider" id="travailInput">
+                                </div>
+                            </div>
+                            <textarea rows="5" cols="40" id="reponseTravail" class ="responseInput" disabled placeholder="Sélectionnez une note sur 4 et cliquez sur 'Générér'"></textarea>
+                            <button id='bouton-prediction'>Generer</button>
+                        </div>
 
                     </div>
-                    <h2>Commentaires :</h2>
-                    <textarea rows="10" id="commentaire" ></textarea>
-                    <button id="saveCommentaire">Sauvegarder</button>
-
-                    <button id="annuler">Annuler</button>
-                    <button id="boutonDemarrer">Démarrer</button>
-                    <button id="boutonArreter" style="display: none;">Arrêter</button>
-                    <button id="boutonTerminer" style="display: none;">Terminer</button>
-
                 </div>
             </div>
-            <div class="Historique">
-                <div class="bienvenue">
-                    <span>Mon historique de consultations :</span>
+            <div class="historique">
+                <div class="panel" id="historiquePanel">
+                    <div class="panelHeader"> 
+                        Historique du Client
+                    </div> 
+                    <div class="panelContent" id="historiquePanelContent"> 
+                        <div id="historique"> </div>
+                    </div>
                 </div>
-                <div id="historique"></div>
             </div>
         </div>
 
         <script>
-
-
 
             // INITIALISATION
             $(document).ready(function () {
@@ -111,7 +146,6 @@
                             if (!(response.utilisateur && response.type == "employe")) {
                                 // Rediriger vers l'accueil
                                 window.location.replace("index.html");
-
                             }
                             // Si tout va bien...
                             else {
@@ -159,7 +193,48 @@
                             console.log('Error', error);
                             alert("Erreur obtenirTypeUtilisateurCourant");
                         })
-
+                
+                // OBTENIR HISTORIQUE DU CLIENT PRIS EN CHARGE PAR L'EMPLOYE COURANT
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'GET',
+                    data: {
+                        todo: 'obtenirHistoriqueClientReqEmploye'
+                    },
+                    dataType: 'json'
+                })
+                        .done(function (response) {
+                            console.log(response);
+                            // Charger le nom du client 
+                            $('div.bienvenue').html(
+                                    "<span>Historique de consultations de " + response.client.prenom + " " + response.client.nom + " :</span>"
+                                    );
+                            // Charger l'historique
+                            var htmlString = "";
+                            for (var id in response.historique) {
+                                var consultation = response.historique[id];
+                                htmlString += "<div class='itemHistoriqueEmploye'>";
+                                htmlString += "<div class='contenuHistoriqueEmploye'><span class='labelHistoriqueEmploye'>Date : </span>";
+                                htmlString += "<span class='infoHistoriqueEmploye'>" + consultation.date + "</span></div>";
+                                htmlString += "<div class='contenuHistoriqueEmploye'><span class='labelHistoriqueEmploye'>Employé en charge : </span>";
+                                htmlString += "<span class='infoHistoriqueEmploye'>" + consultation.employe + "</span></div>";
+                                htmlString += "<div class='contenuHistoriqueEmploye'><span class='labelHistoriqueEmploye'>Médium incarné : </span>";
+                                htmlString += "<span class='infoHistoriqueEmploye'>" + consultation.denomination + " <i>(" + consultation.typeMedium + ")</i></span></div>";
+                                htmlString += "<div class='contenuHistoriqueEmploye'><span class='labelHistoriqueEmploye'>Commentaire : </span>";
+                                htmlString += "<span class='infoHistoriqueEmploye'>" + consultation.commentaire + "</span></div>";
+                                htmlString += "</div>";
+                            }
+                            // Si historique vide
+                            if (htmlString === "") {
+                                htmlString += "<div class='messageHistorique'>Le client n'a jamais consulté... Faites une bonne première impression !</div>"
+                            }
+                            $('#historique').html(htmlString);
+                        })
+                        .fail(function (error) {
+                            console.log('Error', error);
+                            alert("Erreur obtenirHistoriqueClientReqEmploye");
+                        });
+                
                 // OBTENIR LA CONSULTATION ATTRIBUEE
                 $.ajax({
                     url: './ActionServlet',
@@ -171,30 +246,87 @@
                 })
                         .done(function (response) {
                             console.log('Response', response);
-                            if (response.consultation) {
-                                // Remplir les informations sur le client et le médium à incarner
-                                $('#clientName').html(response.client.nom + ' ' + response.client.prenom);
-                                $('#signeAstrologique').html(response.client.signeAstro);
-                                $('#signeZodiaqueChinois').html(response.client.signeChinois);
-                                $('#couleurPorteBonheur').html(response.client.couleur);
-                                $('#animalTotem').html(response.client.animalTotem);
-                                $('#mediumName').html(response.medium.denomination);
-                                $('#role').html(response.medium.type);
-                                $('#presentation').html(response.medium.presentation);
-                                $('#commentaire').val(response.commentaire);
-                                // Changer l'état des boutons d'action 
+                            // Si une consultation a été attribuée à l'utilisateur courant...
+                            if (response.consultation && response.etat != "Termine") {
+
+                                // Populer un div avec les informations de la consultation en cours et le montrer
+                                var htmlString;
+
+                                // CLIENT
+                                htmlString = "";
+                                htmlString += "<div class='itemClient'>";
+                                htmlString += "<div class='flexContainerClient'>";
+                                // Image 
+                                htmlString += "<div class='clientLeft'>";
+                                htmlString += "<img class='imageClient' src=\"STYLES/IMAGES/default-icon.png\" width='100'>";
+                                htmlString += "</div>";
+                                // Description textuelle (nom, age, profil astral, telephone)
+                                htmlString += "<div class='mediumRight'>";
+                                htmlString += "<span class='nomClient'>" + response.client.prenom + " " + response.client.nom + "</span>";
+                                htmlString += "<span class='ageClient'>, " + response.client.age + " ans</span><br/>";
+                                htmlString += "<span class='profilAstralClient'>";
+                                htmlString += "<strong>► Signe Astrologique : </strong><i>" + response.client.profil.signeAstro + "</i><br/>";
+                                htmlString += "<strong>► Signe Zodiaque Chinois : </strong><i>" + response.client.profil.signeChinois + "</i><br/>";
+                                htmlString += "<strong>► Couleur Porte-Bonheur : </strong><i>" + response.client.profil.couleur + "</i><br/>";
+                                htmlString += "<strong>► Animal Totem : </strong><i>" + response.client.profil.animalTotem + "</i><br/>";
+                                htmlString += "</span>";
+                                htmlString += "<span class='telClient'>&phone;&nbsp; <i>" + response.client.telephone + "</i></span><br/><br/>";
+                                // Lien vers historique
+                                htmlString += "<div class='lienHistoriqueClient'>";
+                                htmlString += "Voir son <strong><a href='historique.html' class='hyperlien'>historique de consultations</a></strong>";
+                                htmlString += "</div>";
+                                htmlString += "</div>";
+                                htmlString += "</div>";
+                                $('#client').html(htmlString);
+
+                                // MEDIUM
+                                htmlString = "";
+                                htmlString += "<div class='itemMedium' genre='" + response.medium.genre + "'>";
+                                htmlString += "<div class='flexContainerMedium'>";
+                                // Image et type
+                                htmlString += "<div class='mediumLeft'>";
+                                htmlString += "<img class='imageMedium' src=\"STYLES/IMAGES/MEDIUMS/" + response.medium.denomination + ".jpg\" width='100'>";
+                                htmlString += "<span class='typeMedium'>" + response.medium.type + "</span>";
+                                htmlString += "</div>";
+                                // Description textuelle
+                                htmlString += "<div class='mediumRight'>";
+                                htmlString += "<span class='denominationMedium'>" + response.medium.denomination + "</span><br/>";
+                                htmlString += "<span class='presentationMedium'>" + response.medium.presentation + "</span><br/>";
+                                switch (response.medium.type) {
+                                    case "Astrologue":
+                                        htmlString += "<span class='complementMedium'><strong>Formation : </strong>" + response.medium.formation + "<br/>";
+                                        htmlString += "<strong>Promotion : </strong>" + response.medium.promotion + "</span>";
+                                        break;
+                                    case "Spirite":
+                                        htmlString += "<span class='complementMedium'><strong>Support :</strong> " + response.medium.support + "</span>";
+                                        break;
+                                }
+                                htmlString += "</div>";
+                                htmlString += "</div>";
+                                $('#medium').html(htmlString);
+
+                                //COMMENTAIRE 
+                                $('#texteCommentaire').val(response.commentaire);
+                                
+                                // Afficher le bloc de consultations
+                                $('#informationsConsultation').css({"display": "block"});
+
+                                // Changer l'état des boutons d'actions et textes tutos
                                 switch (response.etat) {
                                     case "EnCours":
                                         $('#boutonDemarrer').css({"display": "none"});
                                         $('#boutonTerminer').css({"display": "none"});
                                         $('#boutonArreter').css({"display": "block"});
+                                        $('#tutorialText').html("Vous êtes en consultation avec le client. Prenez votre temps. Une fois qu'il aura raccroché, vous pourrez cliquer sur 'Arrêter'.");
                                         break;
                                     case "Termine":
                                         $('#boutonDemarrer').css({"display": "none"});
                                         $('#boutonArreter').css({"display": "none"});
                                         $('#boutonTerminer').css({"display": "block"});
+                                        $('#tutorialText').html("La consultation est désormais finie. Vous pouvez encore écrire et sauvegarder votre commentaire avant de cliquer sur 'Terminer'. Vous ne pourrez plus revenir sur cette page.");
                                         break;
                                 }
+
                             }
                         })
                         .fail(function (error) {
@@ -246,7 +378,7 @@
             // SAUVEGARDER COMMENTAIRE
             $('#saveCommentaire').on('click', function () {
                 $('#saveCommentaire').html("Sauvegarde en cours...");
-                var commentaire = $('#commentaire').val();
+                var commentaire = $('#texteCommentaire').val();
                 $.ajax({
                     url: './ActionServlet',
                     method: 'POST',
@@ -292,6 +424,7 @@
                             if (response.statut) {
                                 $('#boutonDemarrer').css({"display": "none"});
                                 $('#boutonArreter').css({"display": "block"});
+                                $('#tutorialText').html("Vous êtes en consultation avec le client. Prenez votre temps. Une fois qu'il aura raccroché, vous pourrez cliquer sur 'Arrêter'.");
                             } else {
                                 alert("Erreur !");
                             }
@@ -317,6 +450,7 @@
                             if (response.statut) {
                                 $('#boutonArreter').css({"display": "none"});
                                 $('#boutonTerminer').css({"display": "block"});
+                                $('#tutorialText').html("La consultation est désormais finie. Vous pouvez encore écrire et sauvegarder votre commentaire avant de cliquer sur 'Terminer'. Vous ne pourrez plus revenir sur cette page.");
                             } else {
                                 alert("Erreur !");
 
@@ -359,7 +493,7 @@
 
             // CONFIRMATION DE DEPART SI CONSULTATION TERMiNEE
             $(window).bind("beforeunload", function () {
-                if($("#boutonTerminer").is(":visible")){
+                if ($("#boutonTerminer").is(":visible")) {
                     return "Vous n'aurez plus accès à cette consultation une fois que vous aurez quitté";
                 }
             });
