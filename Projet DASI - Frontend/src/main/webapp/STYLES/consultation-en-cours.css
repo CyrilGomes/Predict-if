@@ -4,6 +4,14 @@
 #predictionsPanelContent {
     padding: 20px;
 }
+.responseInput {
+    font-size: 18px;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 6px;
+    border-width: 0px;
+    color: black;
+}
 .consultationContainer{
     display: flex;
     flex-direction: column;
@@ -14,6 +22,7 @@
 .predictionConteneur {
     display:flex;
     flex-direction: column;
+    position: relative;
 }
 .predict {
     align-items: center;
@@ -56,6 +65,14 @@
 textarea[disabled] {
     background: rgba(0, 0, 0, 0.05);
 }
+#boutonPrediction {
+    position: absolute;
+    bottom: -1em;
+    right: 1.5em;
+    padding: 10px 20px;
+    z-index: 10;
+    font-size: 26px;
+}
 
 /* ----------------------------------------------------------------- */
 /* PAGE STYLES */
@@ -65,7 +82,7 @@ textarea[disabled] {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    gap: 0.5em 0.5em;
+    gap: 0em 0.1em;
     grid-template-areas:
       "predictions consultation"
       "historique consultation";
@@ -105,7 +122,7 @@ textarea[disabled] {
     position: relative;
 }
 .consultationPanel {
-    margin: 15px;
+    margin: 10px;
 }
 .consultationPanelHeader {
     display: flex;
@@ -251,22 +268,15 @@ textarea[disabled] {
     box-sizing: border-box;
     position: relative;
     margin: 10px 0px;
+    font-size: 18px;
 }
 #saveCommentaire {
     padding: 5px 15px;
     float: right;
 }
-#annuler {
-    position: absolute;
-    bottom: -1em;
-    left: 1.5em;
-    padding: 10px 20px;
-    z-index: 10;
-    font-size: 26px;
-}
 #tutorialText {
-    margin-top: 4em;
-    margin-bottom: 2em;
+    margin-top: 3.5em;
+    margin-bottom: 1.5em;
     font-size: 18px;
     background: rgba(0, 0, 0, 0.1);
     padding: 10px;
@@ -276,6 +286,14 @@ textarea[disabled] {
 /* ----------------------------------------------------------------- */
 /* ACTION BUTTON STYLES */
 /* ----------------------------------------------------------------- */
+#annuler {
+    position: absolute;
+    bottom: -1em;
+    left: 1.5em;
+    padding: 10px 20px;
+    z-index: 10;
+    font-size: 26px;
+}
 #boutonDemarrer, #boutonArreter, #boutonTerminer {
     position: absolute;
     bottom: -1em;
@@ -296,7 +314,7 @@ textarea[disabled] {
     flex-direction: column;
     padding: 10px;
     overflow-y: scroll;
-    height: 500px;
+    height: 233px;
 }
 .itemHistoriqueEmploye {
     margin: 10px;
