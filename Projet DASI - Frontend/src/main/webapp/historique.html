@@ -77,7 +77,6 @@
                                         dataType: 'json'
                                     })
                                             .done(function (response) {
-                                                console.log(response);
                                                 // Charger le nom du client 
                                                 $('div.bienvenue').html(
                                                         "<span>Historique de consultations de " + response.client.prenom + " " + response.client.nom + " :</span>"
