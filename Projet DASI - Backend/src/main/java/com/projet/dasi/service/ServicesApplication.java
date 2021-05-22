@@ -189,6 +189,8 @@ public class ServicesApplication {
                         // Set la date de la consultation
                         consultation.setDateDebut(d);
                         consultation.setDateFin(new Date(d.getTime() + (int)(Math.random()*20)*60*1000));
+                        // Set le commentaire de la consultation
+                        consultation.setCommentaire("Rien à signaler pour cette consultation.");
                         // Persister la consultation
                         consultationDao.creer(consultation);
                     }

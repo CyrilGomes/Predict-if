@@ -168,13 +168,13 @@
     align-self: center;
 }
 .compteForm {
-    margin-left: 20px;
+    margin-left: 18px;
     flex-grow: 1;
     align-self: center;
 }
 .compteForm input {
     width: 100%;
-    font-size: 20px;
+    font-size: 18px;
 }
 .separateur1 hr, .separateur2 hr {
     align-self: center;

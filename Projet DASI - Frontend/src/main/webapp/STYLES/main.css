@@ -4,6 +4,26 @@
 
 /* Polices de Caractères */
 @font-face {
+    font-family: "Lato";
+    src: url("FONTS/Lato-Regular.ttf");
+}
+@font-face {
+    font-family: "Lato";
+    src: url("FONTS/Lato-Bold.ttf");
+    font-weight: bold;
+}
+@font-face {
+    font-family: "Lato";
+    src: url("FONTS/Lato-Italic.ttf");
+    font-style: oblique;
+}
+@font-face {
+    font-family: "Lato";
+    src: url("FONTS/Lato-BoldItalic.ttf");
+    font-weight: bold;
+    font-style: oblique;
+}
+@font-face {
     font-family: "Scada";
     src: url("FONTS/Scada-Bold.ttf");
     font-weight: bold;
