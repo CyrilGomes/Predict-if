@@ -678,8 +678,10 @@ public class ServicesApplication {
                 long diff = Math.abs(fin.getTime() - debut.getTime());
                 somme += diff;
             }
-            Date temps = new Date(somme);
-            statistiques.put(cli.getPrenom() + " " + cli.getNom(), new Long(temps.getMinutes()));
+            //Date temps = new Date(somme);
+            //Long minutes = new Long(temps.getMinutes());
+            Long minutes = (somme/1000)/60;
+            statistiques.put(cli.getPrenom() + " " + cli.getNom(), minutes);
         }
         
         JpaUtil.fermerContextePersistance();
